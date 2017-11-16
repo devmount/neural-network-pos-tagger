@@ -1,0 +1,239 @@
+: nouns: SI/PL
+Abbildung Abbildungen Ergebnis Ergebnisse
+Abbildung Abbildungen Name Namen
+Abbildung Abbildungen Person Personen
+Abbildung Abbildungen Ziel Ziele
+Abbildung Abbildungen Nacht Nächte
+Absatz Absätze Wohnung Wohnungen
+Absatz Absätze Boden Böden
+Absatz Absätze Straße Straßen
+Absatz Absätze Erfahrung Erfahrungen
+Absatz Absätze Schule Schulen
+[...]
+: nouns: PL/SI
+Abbildungen Abbildung Schulen Schule
+Abbildungen Abbildung Orte Ort
+Abbildungen Abbildung Minuten Minute
+Abbildungen Abbildung Erfahrungen Erfahrung
+Abbildungen Abbildung Bereiche Bereich
+Absätze Absatz Herren Herr
+Absätze Absatz Nächte Nacht
+Absätze Absatz Universitäten Universität
+Absätze Absatz Zeiten Zeit
+Absätze Absatz Familien Familie
+[...]
+: adjectives: GR/KOM
+ähnlich ähnlicher faul fauler
+ähnlich ähnlicher ruhig ruhiger
+ähnlich ähnlicher nett netter
+ähnlich ähnlicher eckig eckiger
+ähnlich ähnlicher alt älter
+alt älter bestimmt bestimmter
+alt älter früh früher
+alt älter ähnlich ähnlicher
+alt älter lang länger
+alt älter wichtig wichtiger
+[...]
+: adjectives: KOM/GR
+ähnlicher ähnlich eckiger eckig
+ähnlicher ähnlich schärfer scharf
+ähnlicher ähnlich trauriger traurig
+ähnlicher ähnlich wahrscheinlicher wahrscheinlich
+ähnlicher ähnlich langsamer langsam
+älter alt genauer genau
+älter alt voller voll
+älter alt krümmer krumm
+älter alt sauberer sauber
+älter alt unterschiedlicher unterschiedlich
+[...]
+: adjectives: GR/SUP
+ähnlich ähnlichste kalt kälteste
+ähnlich ähnlichste schlank schlankeste
+ähnlich ähnlichste nett netteste
+ähnlich ähnlichste spannend spannendste
+ähnlich ähnlichste schön schönste
+alt älteste deutlich deutlichste
+alt älteste hart härteste
+alt älteste sauber sauberste
+alt älteste schmal schmalste
+alt älteste nett netteste
+[...]
+: adjectives: SUP/GR
+ähnlichste ähnlich persönlichste persönlich
+ähnlichste ähnlich langsamste langsam
+ähnlichste ähnlich frischste frisch
+ähnlichste ähnlich vollste voll
+ähnlichste ähnlich wertvollste wertvoll
+älteste alt liebste lieb
+älteste alt häufigste häufig
+älteste alt weiteste weit
+älteste alt kürzeste kurz
+älteste alt sonnigste sonnig
+[...]
+: adjectives: KOM/SUP
+ähnlicher ähnlichste größer größte
+ähnlicher ähnlichste sonniger sonnigste
+ähnlicher ähnlichste schrecklicher schrecklichste
+ähnlicher ähnlichste schmutziger schmutzigste
+ähnlicher ähnlichste schneller schnellste
+älter älteste schärfer schärfste
+älter älteste gerader geradeste
+älter älteste später späteste
+älter älteste gerader geradeste
+älter älteste fleißiger fleißigste
+[...]
+: adjectives: SUP/KOM
+ähnlichste ähnlicher schnellste schneller
+ähnlichste ähnlicher bestimmteste bestimmter
+ähnlichste ähnlicher leichteste leichter
+ähnlichste ähnlicher richtigste richtiger
+ähnlichste ähnlicher schwierigste schwieriger
+älteste älter müdeste müder
+älteste älter stärkste stärker
+älteste älter stillste stiller
+älteste älter frischste frischer
+älteste älter ruhigste ruhiger
+[...]
+: verbs (pres): INF/1SP
+ändern ändere schauen schaue
+ändern ändere wissen weiß
+ändern ändere suchen suche
+ändern ändere kommen komme
+ändern ändere denken denke
+arbeiten arbeite erhalten erhalte
+arbeiten arbeite tragen trage
+arbeiten arbeite erwarten erwarte
+arbeiten arbeite fühlen fühle
+arbeiten arbeite wohnen wohne
+[...]
+: verbs (pres): 1SP/INF
+ändere ändern brauche brauchen
+ändere ändern werde werden
+ändere ändern schaffe schaffen
+ändere ändern zeige zeigen
+ändere ändern bleibe bleiben
+arbeite arbeiten sehe sehen
+arbeite arbeiten liege liegen
+arbeite arbeiten stelle stellen
+arbeite arbeiten muss müssen
+arbeite arbeiten schließe schließen
+[...]
+: verbs (pres): INF/2PP
+ändern ändert verstehen versteht
+ändern ändert fehlen fehlt
+ändern ändert erwarten erwartet
+ändern ändert entstehen entsteht
+ändern ändert wachsen wachst
+arbeiten arbeitet fragen fragt
+arbeiten arbeitet sprechen sprecht
+arbeiten arbeitet sitzen sitzt
+arbeiten arbeitet suchen sucht
+arbeiten arbeitet fallen fallt
+[...]
+: verbs (pres): 2PP/INF
+ändert ändern erkennt erkennen
+ändert ändern geltet gelten
+ändert ändern geltet gelten
+ändert ändern vergleicht vergleichen
+ändert ändern lebt leben
+arbeitet arbeiten erscheint erscheinen
+arbeitet arbeiten versucht versuchen
+arbeitet arbeiten bekommt bekommen
+arbeitet arbeiten ergebt ergeben
+arbeitet arbeiten sitzt sitzen
+[...]
+: verbs (pres): 1SP/2PP
+ändere ändert soll sollt
+ändere ändert vergleiche vergleicht
+ändere ändert treffe trefft
+ändere ändert wohne wohnt
+ändere ändert rede redet
+arbeite arbeitet laufe lauft
+arbeite arbeitet entwickle entwickelt
+arbeite arbeitet gehöre gehört
+arbeite arbeitet rede redet
+arbeite arbeitet versuche versucht
+[...]
+: verbs (pres): 2PP/1SP
+ändert ändere besteht bestehe
+ändert ändere kommt komme
+ändert ändere bietet biete
+ändert ändere gewinnt gewinne
+ändert ändere arbeitet arbeite
+arbeitet arbeite fehlt fehle
+arbeitet arbeite vergleicht vergleiche
+arbeitet arbeite erkennt erkenne
+arbeitet arbeite führt führe
+arbeitet arbeite seht sehe
+[...]
+: verbs (past): INF/3SV
+ändern änderte mögen mochte
+ändern änderte gehören gehörte
+ändern änderte entwickeln entwickelte
+ändern änderte gelten galt
+ändern änderte machen machte
+arbeiten arbeitete ändern änderte
+arbeiten arbeitete bleiben blieb
+arbeiten arbeitete wollen wollte
+arbeiten arbeitete kommen kam
+arbeiten arbeitete brauchen brauchte
+[...]
+: verbs (past): 3SV/INF
+änderte ändern musste müssen
+änderte ändern spielte spielen
+änderte ändern bot bieten
+änderte ändern studierte studieren
+änderte ändern redete reden
+arbeitete arbeiten betraf betreffen
+arbeitete arbeiten hieß heißen
+arbeitete arbeiten saß sitzen
+arbeitete arbeiten legte legen
+arbeitete arbeiten fiel fallen
+[...]
+: verbs (past): INF/3PV
+ändern änderten leben lebten
+ändern änderten halten hielten
+ändern änderten sagen sagten
+ändern änderten erkennen erkannten
+ändern änderten gelten galten
+arbeiten arbeiteten sagen sagten
+arbeiten arbeiteten können konnten
+arbeiten arbeiteten lernen lernten
+arbeiten arbeiteten müssen mussten
+arbeiten arbeiteten gehören gehörten
+[...]
+: verbs (past): 3PV/INF
+änderten ändern verbanden verbinden
+änderten ändern handelten handeln
+änderten ändern trafen treffen
+änderten ändern lasen lesen
+änderten ändern erschienen erscheinen
+arbeiteten arbeiten folgten folgen
+arbeiteten arbeiten saßen sitzen
+arbeiteten arbeiten wussten wissen
+arbeiteten arbeiten schrieben schreiben
+arbeiteten arbeiten halfen helfen
+[...]
+: verbs (past): 3SV/3PV
+änderte änderten sprach sprachen
+änderte änderten verband verbanden
+änderte änderten fand fanden
+änderte änderten zeigte zeigten
+änderte änderten nahm nahmen
+arbeitete arbeiteten fiel fielen
+arbeitete arbeiteten dachte dachten
+arbeitete arbeiteten schrieb schrieben
+arbeitete arbeiteten trug trugen
+arbeitete arbeiteten dachte dachten
+[...]
+: verbs (past): 3PV/3SV
+änderten änderte interessierten interessierte
+änderten änderte lebten lebte
+änderten änderte bildeten bildete
+änderten änderte schlossen schloss
+änderten änderte brauchten brauchte
+arbeiteten arbeitete mochten mochte
+arbeiteten arbeitete hatten hatte
+arbeiteten arbeitete setzten setzte
+arbeiteten arbeitete handelten handelte
+arbeiteten arbeitete fragten fragte
