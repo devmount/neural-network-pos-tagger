@@ -1,0 +1,195 @@
+\documentclass[fontsize=12pt, paper=a4, headinclude, twoside=false, parskip=half+, pagesize=auto, numbers=noenddot, open=right, toc=listof, toc=bibliography]{scrreprt}
+% PDF-Kompression
+\pdfminorversion=5
+\pdfobjcompresslevel=1
+% Allgemeines
+\usepackage[automark]{scrpage2} % Kopf- und Fußzeilen
+\usepackage{amsmath,marvosym} % Mathesachen
+\usepackage[T1]{fontenc} % Ligaturen, richtige Umlaute im PDF
+\usepackage[utf8]{inputenc}% UTF8-Kodierung für Umlaute usw
+% Schriften
+\usepackage{mathpazo} % Palatino für Mathemodus
+\usepackage{setspace} % Zeilenabstand
+\onehalfspacing % 1,5 Zeilen
+% Schriften-Größen
+\setkomafont{chapter}{\Huge\rmfamily} % Überschrift der Ebene
+\setkomafont{section}{\Large\rmfamily}
+\setkomafont{subsection}{\large\rmfamily}
+\setkomafont{subsubsection}{\large\rmfamily}
+\setkomafont{chapterentry}{\large\rmfamily} % Überschrift der Ebene in Inhaltsverzeichnis
+\setkomafont{descriptionlabel}{\bfseries\rmfamily} % für description Umgebungen
+\setkomafont{captionlabel}{\small\bfseries}
+\setkomafont{caption}{\small}
+% Sprache: Deutsch
+\usepackage[ngerman]{babel} % Silbentrennung
+\usepackage{csquotes} % quotes
+% PDF
+\usepackage[ngerman]{hyperref}
+\addto\extrasngerman{% Umbenennung der Kapitel Referenzen
+  \def\subsectionautorefname{Abschnitt}%
+  \def\subsubsectionautorefname{Abschnitt}%
+}
+\usepackage[final]{microtype} % mikrotypographische Optimierungen
+\clubpenalty = 10000 
+\widowpenalty = 10000 
+\displaywidowpenalty = 10000
+\usepackage{url}
+\renewcommand*{\UrlFont}{\footnotesize}
+\usepackage{pdflscape} % einzelne Seiten drehen können
+% Tabellen
+\usepackage{multirow} % Tabellen-Zellen über mehrere Zeilen
+\usepackage{multicol} % mehre Spalten auf eine Seite
+\usepackage{tabularx} % Für Tabellen mit vorgegeben Größen
+\usepackage{longtable} % Tabellen über mehrere Seiten
+\usepackage{array}
+\usepackage{float}
+%  Bibliographie
+\usepackage{bibgerm} % Umlaute in BibTeX
+\usepackage{natbib}
+% Bilder
+\usepackage{graphicx} % Bilder
+\usepackage{color} % Farben
+\usepackage{xcolor,colortbl} % Text Hintergrundfarben und Tabellenfarben
+\usepackage{varwidth}
+\usepackage{changepage}
+\graphicspath{{images/}}
+\DeclareGraphicsExtensions{.pdf,.png,.jpg} % bevorzuge pdf-Dateien
+\usepackage{subcaption}  % mehrere Abbildungen nebeneinander/übereinander
+\usepackage[all]{hypcap} % Beim Klicken auf Links zum Bild und nicht zu Caption gehen
+% Bildunterschrift
+\setcapindent{0em} % kein Einrücken der Caption von Figures und Tabellen
+\setcapwidth{0.9\textwidth} % Breite der Caption nur 90% der Textbreite, damit sie sich vom restlichen Text abhebt
+\setlength{\abovecaptionskip}{0.2cm} % Abstand der zwischen Bild- und Bildunterschrift
+% Quellcode
+\usepackage{listings} % für Formatierung in Quelltexten
+\usepackage{DejaVuSansMono} % ttfamily font
+\usepackage{todonotes}% Todo Notes
+\presetkeys{todonotes}{inline}{}
+% Bibliography multicoloumn
+\usepackage{etoolbox}
+\usepackage{relsize}
+\patchcmd{\thebibliography}{\list}{\begin{multicols}{2}\small\list}{}{}\appto{\endthebibliography}{\end{multicols}}
+
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{orange}{rgb}{.99,0.5,0}
+\definecolor{green}{rgb}{0,0.4,0}
+\definecolor{lightgreen}{rgb}{0.7,1,0.7}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{backcolour}{rgb}{0.97,0.97,0.95}
+
+\lstdefinestyle{mystyle}{
+  inputencoding={utf8},
+  xleftmargin=1em,
+  backgroundcolor=\color{backcolour},   
+  basicstyle=\tiny\ttfamily,
+  commentstyle=\color{gray},
+  keywordstyle=\color{green}\textbf,
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{orange},
+  breakautoindent  = true,
+  breakindent      = 2em,
+  breaklines       = true,
+  postbreak        = ,
+  prebreak         = \raisebox{-.8ex}[0ex][0ex]{\Righttorque},                
+  captionpos=b,                    
+  keepspaces=true,                 
+  numbers=left,                    
+  numbersep=5pt,
+  numberstyle=\tiny\ttfamily\color{gray},               
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2,
+  literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {~}{{\textasciitilde}}1
+}
+\lstset{style=mystyle}
+% linksbündige Fußboten
+\deffootnote{1.5em}{1em}{\makebox[1.5em][l]{\thefootnotemark}}
+
+\typearea{14} % typearea berechnet einen sinnvollen Satzspiegel (das heißt die Seitenränder) siehe auch http://www.ctan.org/pkg/typearea. Diese Berechnung befindet sich am Schluss, damit die Einstellungen oben berücksichtigt werden
+\textwidth=440pt % text width
+
+\usepackage{scrhack} % Vermeidung einer Warnung
+\usepackage{acronym} % Abkürzungsverzeichnis
+
+% chapter margin
+\renewcommand*{\chapterheadstartvskip}{\vspace*{0cm}}
+\renewcommand*{\chapterheadendvskip}{\vspace{.5cm}}
+
+
+% Eigene Befehle %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% Matrix
+\renewcommand*{\i}[1]{%
+      {\textit{#1}}%
+}
+\renewcommand*{\b}[1]{%
+      {\textbf{#1}}%
+}
+\renewcommand*{\tt}[1]{%
+      {\footnotesize\texttt{#1}}%
+}
+\newcommand{\q}[1]{%
+      {\enquote{#1}}%
+}
+\newcommand{\sq}[1]{%
+      {\enquote*{#1}}%
+}
+
+% break inside a table cell
+\newcommand{\br}[3]{%
+      {\parbox{#1cm}{#2\\#3\vspace{3pt}}}%
+}
+
+\newcommand{\mat}[1]{%
+      {\textbf{#1}}%
+}
+\newcommand{\info}[1]{
+      {\colorbox{blue}{ (INFO: #1)}}
+}
+% Hinweis auf Programme in Datei
+\newcommand{\datei}[1]{%
+      {\ttfamily{#1}}%
+}
+\newcommand{\code}[1]{%
+      {\footnotesize\ttfamily{\colorbox{gray!20}{\begin{varwidth}{\dimexpr\linewidth-2\fboxsep}#1\end{varwidth}}}}%
+}
+% bild mit defnierter Breite einfügen
+\newcommand{\bild}[4]{
+  \begin{figure}[H]
+    \centering
+      \vspace{1ex}
+      \includegraphics[width=#2]{images/#1}
+      \caption[#4]{\label{img.#1} #3}
+    \vspace{1ex}
+  \end{figure}
+}
+% bild mit defnierter Breite und Leftshift einfügen
+\newcommand{\bildl}[5]{
+  \begin{figure}[H]
+    \centering
+      \vspace{1ex}
+      \hspace*{#3}
+      \includegraphics[width=#2]{images/#1}
+      \caption[#5]{\label{img.#1} #4}
+    \vspace{1ex}
+  \end{figure}
+}
+% bild mit eigener Breite
+\newcommand{\bilda}[3]{
+  \begin{figure}[H]
+    \centering
+      \vspace{1ex}
+      \includegraphics{images/#1}
+      \caption[#3]{\label{img.#1} #2}
+      \vspace{1ex}
+  \end{figure}
+}
