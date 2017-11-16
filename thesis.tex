@@ -11,7 +11,7 @@
 \vspace{8mm}
 
 {\huge Technische Universität Berlin}\\
-\vspace{3mm}
+\vspace{2mm}
 {\large Quality and Usability Lab}\\
 % \vspace{1mm}
 % {\large Institute of Software Engineering\\and Theoretical Computer Science}\\
@@ -34,12 +34,17 @@
 
 \end{center}
 \clearpage
-
 \pagestyle{useheadings} % normale Kopf- und Fußzeilen für den Rest
 
 % ==================================================================================================
+\BlankPage
+
+% ==================================================================================================
 \chapter*{Eidesstattliche Erklärung}
-Hiermit erkläre ich, dass ich die vorliegende Arbeit selbstständig und eigenhändig sowie ohne unerlaubte fremde Hilfe und ausschließlich unter Verwendung der aufgeführten Quellen und Hilfsmittel angefertigt habe.
+Hiermit versichere ich, dass ich die vorliegende Arbeit selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt habe. Alle Ausführungen, die anderen veröffentlichten oder nicht veröffentlichten Schriften wörtlich oder sinngemäß entnommen wurden, habe ich kenntlich gemacht.
+
+Die Arbeit hat in gleicher oder ähnlicher Fassung noch keiner anderen Prüfungsbehörde vorgelegen.
+\vspace{10mm}
 
 Berlin, den \today\\
 
@@ -48,18 +53,18 @@ Berlin, den \today\\
 Unterschrift
 
 % ==================================================================================================
+\BlankPage
+
+% ==================================================================================================
 \chapter*{Zusammenfassung}
 Zur Verarbeitung großer Textmengen und automatisierter Modellierung von Sprache gibt es viele Ansätze. Dabei erreicht \i{Deep Learning} mithilfe neuronaler Netzwerke basierend auf englischer Sprache heutzutage nicht nur hervorragende Ergebnisse, sondern kann Modelle mithilfe geeigneter Architekturen auch unüberwacht trainieren.
 
 Diese Arbeit beschreibt die Modellierung natürlicher Sprache mithilfe von neuronalen Netzwerken basierend auf deutschen Textkorpora. Es soll eine Aussage darüber getroffen werden, wie gut die resultierenden Wort-Vektoren die deutsche Sprache repräsentieren. Dazu werden unter Parametervariation verschiedene Modelle trainiert und mithilfe in dieser Arbeit entwickelter Test-Sets evaluiert. Das resultierende Modell mit den besten Evaluationsergebnissen dient anschließend als Grundlage für die Darstellung komplexer Wortzusammenhänge und zur Visualisierung sprachlicher Konzepte.\\
 
-% Für den Aufbau des Korpus, das Training, die Erstellung von Test-Sets und die anschließende Evaluierung wurde im Rahmen dieser Arbeit ein Toolkit implementiert, welches gemeinsam mit den generierten Test-Set-Fragen online zum freien Download zur Verfügung steht.
+% ==================================================================================================
+\BlankPage
 
-\begingroup
-\renewcommand{\cleardoublepage}{}
-\renewcommand{\clearpage}{}
 \chapter*{Abstract}
-\endgroup
 There are several approaches to process large amounts of text and to model language automatically. \i{Deep Learning} not only achieves outstanding results in modeling the English language with the help of neural networks, but is also able to train models unsupervised with appropriate architectures.
 
 This thesis describes the modeling of natural language using neural networks with German text corpora. The precision of the resulting German word embeddings is analyzed. Various models are trained under parameter variation and evaluated with the help of test sets, that are generated within this work. The resulting model with optimal parameter configuration is then used for complex semantic word connections and visualization of linguistic concepts.
