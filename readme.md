@@ -1,4 +1,5 @@
-# Part-of-Speech Tagging with Neural Networks for a conversational agent
+# Master Thesis
+**Part-of-Speech Tagging with Neural Networks for a conversational agent**
 
 This master thesis aims to improve the natural language understanding of an artificial conversational agent, that uses a Hidden Markov Model to calculate Part-of-Speech tags for input words. In order to achieve better results especially for uncommon word combinations and sentence structures, two new classification models are implemented and evaluated: a Feed-forward Neural Network and a Recurrent Neural Network.
 
@@ -25,8 +26,8 @@ This master thesis aims to improve the natural language understanding of an arti
 # Links
 
 ### Alex
-https://gitlab.tubit.tu-berlin.de/thilo.michael/aaca-alex/wikis/home
-https://gitlab.tubit.tu-berlin.de/thilo.michael/aaca-alex/wikis/documentation-tagging
+- https://gitlab.tubit.tu-berlin.de/thilo.michael/aaca-alex/wikis/home
+- https://gitlab.tubit.tu-berlin.de/thilo.michael/aaca-alex/wikis/documentation-tagging
 
 ### Similar Tagger
-https://github.com/mrahtz/tensorflow-pos-tagger
+- https://github.com/mrahtz/tensorflow-pos-tagger
