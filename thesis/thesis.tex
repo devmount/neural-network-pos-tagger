@@ -96,7 +96,7 @@ Unterschrift
 This is just a test
 
 % ===================================================================================
-\chapter{Alex: Artificial Conversational Agent}\label{c.alex}
+\chapter{\Alex: Artificial Conversational Agent}\label{c.alex}
 ...
 
 \section{System Overview}\label{c.alex.overview}
@@ -106,8 +106,9 @@ This is just a test
 ...
 
 \section{Tagging Interface}\label{c.alex.tagging}
-The modular structure of \i{Alex} allows for easier separation of various functions and therefore easier replaceability of a certain functionality. One of these modules is the HMM-Tagger, which is used to train a language model on the one hand and to assign tags to the words of a given sentence on the other hand.
+The modular structure of \Alex allows for easier separation of various functions and therefore easier replaceability of certain functionalities. One of these modules is the tagger, which is used to train a language model on the one hand and to assign tags to the words of a given input sentence on the other hand.
 
+The implementation of this tagger utilizes a Hidden Markov Model (HMM), which is a statistical model that is particularly used for pattern recognition, speech recognition and part-of-speech tagging. \Alex uses an already existing implementation of the HMM Tagger from the Natural Language Toolkit (NLTK)\footnote{The Natural Language Toolkit is a collection of \i{Python} programming libraries for natural language processing, see \link{http://nltk.org}}, called \tt{HiddenMarkovModelTagger}.
 
 % ===================================================================================
 \chapter{Evaluation and Comparison}\label{c.evaluation}
