@@ -1,0 +1,14 @@
+[
+	[
+		('the', TAG),
+		('dog', TAG),
+		('is', TAG),
+		('running', TAG)
+	],
+	[
+		('the', TAG),
+		('cat', TAG),
+		('is', TAG),
+		('sleeping', TAG)
+	]
+]

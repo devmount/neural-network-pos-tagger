@@ -83,10 +83,11 @@ Unterschrift
 \addcontentsline{toc}{chapter}{Abbreviations}
 \markboth{Abbreviations}{Abbreviations}
 \begin{acronym}[----------------]
- \acro{NLP}{\i{Natural Language Processing}}
  \acro{Alex}{\i{Artificial Conversational Agent}}
- \acro{HMM}{\i{Hidden Markov Model}}
  \acro{FNN}{\i{(Feed-forward) Neural Network}}
+ \acro{HMM}{\i{Hidden Markov Model}}
+ \acro{NLP}{\i{Natural Language Processing}}
+ \acro{NLTK}{\i{Natural Language Toolkit}}
  \acro{RNN}{\i{Recurrent Neural Network}}
 \end{acronym}
 
@@ -109,6 +110,12 @@ This is just a test
 The modular structure of \Alex allows for easier separation of various functions and therefore easier replaceability of certain functionalities. One of these modules is the tagger, which is used to train a language model on the one hand and to assign tags to the words of a given input sentence on the other hand.
 
 The implementation of this tagger utilizes a Hidden Markov Model (HMM), which is a statistical model that is particularly used for pattern recognition, speech recognition and part-of-speech tagging. \Alex uses an already existing implementation of the HMM Tagger from the Natural Language Toolkit (NLTK)\footnote{The Natural Language Toolkit is a collection of \i{Python} programming libraries for natural language processing, see \link{http://nltk.org}}, called \tt{HiddenMarkovModelTagger}.
+
+To replace the existing tagger, a new tagger has to provide a class with two methods: \tt{train} and \tt{tag}. The \tt{train} method creates a new instance of the tagger class, trains it with the given training data and returns it. The training data itself must be a list of sentences, where a sentence is a list of tuples, containing each word of this sentence and its corresponding tag. Listing \ref{l.trainingdata} exemplifies the structure of the input data containing two tagged sentences.
+
+\lstinputlisting[language=JSON, label={l.trainingdata}]{listings/method-tag.example}
+\begingroup\captionof{lstlisting}{The structure of the input data containing two tagged sentences}\endgroup
+
 
 % ===================================================================================
 \chapter{Evaluation and Comparison}\label{c.evaluation}

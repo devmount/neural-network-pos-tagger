@@ -70,6 +70,7 @@
 \usepackage{relsize}
 \patchcmd{\thebibliography}{\list}{\begin{multicols}{2}\small\list}{}{}\appto{\endthebibliography}{\end{multicols}}
 
+\definecolor{white}{rgb}{1,1,1}
 \definecolor{gray}{rgb}{0.5,0.5,0.5}
 \definecolor{orange}{rgb}{.99,0.5,0}
 \definecolor{green}{rgb}{0,0.4,0}
@@ -78,40 +79,75 @@
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
 \definecolor{backcolour}{rgb}{0.97,0.97,0.95}
 
-\lstdefinestyle{mystyle}{
-  inputencoding={utf8},
-  xleftmargin=1em,
-  backgroundcolor=\color{backcolour},
-  basicstyle=\tiny\ttfamily,
-  commentstyle=\color{gray},
-  keywordstyle=\color{green}\textbf,
-  numberstyle=\tiny\color{codegray},
-  stringstyle=\color{orange},
-  breakautoindent  = true,
-  breakindent      = 2em,
-  breaklines       = true,
-  postbreak        = ,
-  prebreak         = \raisebox{-.8ex}[0ex][0ex]{\Righttorque},
-  captionpos=b,
-  keepspaces=true,
-  numbers=left,
-  numbersep=5pt,
-  numberstyle=\tiny\ttfamily\color{gray},
-  showspaces=false,
-  showstringspaces=false,
-  showtabs=false,
-  tabsize=2,
-  literate=%
-    {Ö}{{\"O}}1
-    {Ä}{{\"A}}1
-    {Ü}{{\"U}}1
-    {ß}{{\ss}}1
-    {ü}{{\"u}}1
-    {ä}{{\"a}}1
-    {ö}{{\"o}}1
-    {~}{{\textasciitilde}}1
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\lstdefinelanguage{json}{
+  backgroundcolor   = \color{white},
+  basicstyle        = \footnotesize\ttfamily,
+  breaklines        = true,
+  frame             = none,
+  numbers           = none,
+  numbersep         = 8pt,
+  numberstyle       = \scriptsize,
+  showstringspaces  = false,
+  stepnumber        = 1,
+  xleftmargin       = 0em,
+  literate =
+   *{0}{{{\color{numb}0}}}{1}
+    {1}{{{\color{numb}1}}}{1}
+    {2}{{{\color{numb}2}}}{1}
+    {3}{{{\color{numb}3}}}{1}
+    {4}{{{\color{numb}4}}}{1}
+    {5}{{{\color{numb}5}}}{1}
+    {6}{{{\color{numb}6}}}{1}
+    {7}{{{\color{numb}7}}}{1}
+    {8}{{{\color{numb}8}}}{1}
+    {9}{{{\color{numb}9}}}{1}
+    {:}{{{\color{punct}{:}}}}{1}
+    {,}{{{\color{punct}{,}}}}{1}
+    {\{}{{{\color{delim}{\{}}}}{1}
+    {\}}{{{\color{delim}{\}}}}}{1}
+    {[}{{{\color{delim}{[}}}}{1}
+    {]}{{{\color{delim}{]}}}}{1},
 }
-\lstset{style=mystyle}
+
+\lstdefinestyle{master}{
+  backgroundcolor   = \color{white},
+  basicstyle        = \footnotesize\ttfamily,
+  breakautoindent   = true,
+  breakindent       = 2em,
+  breaklines        = true,
+  captionpos        = b,
+  commentstyle      = \color{gray},
+  inputencoding     = {utf8},
+  keepspaces        = true,
+  keywordstyle      = \color{green}\textbf,
+  numbers           = none,
+  numbersep         = 5pt,
+  numberstyle       = \footnotesize\color{codegray},
+  numberstyle       = \footnotesize\ttfamily\color{gray},
+  postbreak         = ,
+  prebreak          = \raisebox{-.8ex}[0ex][0ex]{\Righttorque},
+  showspaces        = false,
+  showstringspaces  = false,
+  showtabs          = false,
+  stringstyle       = \color{orange},
+  tabsize           = 2,
+  xleftmargin       = 1em,
+  literate =
+    {Ö}{{\"O}}
+    {Ä}{{\"A}}
+    {Ü}{{\"U}}
+    {ß}{{\ss}}
+    {ü}{{\"u}}
+    {ä}{{\"a}}
+    {ö}{{\"o}}
+    {~}{{\textasciitilde}}
+}
+\lstset{style=master}
 % linksbündige Fußboten
 \deffootnote{1.5em}{1em}{\makebox[1.5em][l]{\thefootnotemark}}
 
@@ -196,6 +232,6 @@
 % insert blank page
 \newcommand*\BlankPage{\newpage\null\thispagestyle{empty}\newpage}
 % Name Alex
-\newcommand*\Alex{\textsc{Alex} }
+\newcommand*\Alex{\textsc{Alex}}
 % Link formatting
 \newcommand{\link}[1]{ \scriptsize\url{#1}}
