@@ -111,10 +111,19 @@ The modular structure of \Alex allows for easier separation of various functions
 
 The implementation of this tagger utilizes a Hidden Markov Model (HMM), which is a statistical model that is particularly used for pattern recognition, speech recognition and part-of-speech tagging. \Alex uses an already existing implementation of the HMM Tagger from the Natural Language Toolkit (NLTK)\footnote{The Natural Language Toolkit is a collection of \i{Python} programming libraries for natural language processing, see \link{http://nltk.org}}, called \tt{HiddenMarkovModelTagger}.
 
-To replace the existing tagger, a new tagger has to provide a class with two methods: \tt{train} and \tt{tag}. The \tt{train} method creates a new instance of the tagger class, trains it with the given training data and returns it. The training data itself must be a list of sentences, where a sentence is a list of tuples, containing each word of this sentence and its corresponding tag. Listing \ref{l.trainingdata} exemplifies the structure of the input data containing two tagged sentences.
+To replace the existing tagger, a new tagger has to provide a class with two methods: \tt{train} and \tt{tag}. These methods are used to create the language model and apply it to unknown data.
 
-\lstinputlisting[language=JSON, label={l.trainingdata}]{listings/method-tag.example}
-\begingroup\captionof{lstlisting}{The structure of the input data containing two tagged sentences}\endgroup
+The \tt{train} method creates a new instance of the tagger class, trains this class with the given training data and returns it. The training data itself must be a list of sentences, where a sentence is a list of tuples, containing each word of this sentence and its corresponding tag. The following exemplifies the structure of the training input data containing two sentences where each word is tagged with \i{TAG}:
+
+\lstinputlisting[language=JSON, label={l.trainingdata}]{listings/method-train.example}
+
+The \tt{tag} method attaches a tag to each word of an input sentence, according to the previously trained language model. The input has to be an unknown sentence as a simple list of words:
+
+\lstinputlisting[language=JSON, label={l.tagdata}]{listings/method-tag-input.example}
+
+The output is a corresponding list of tuples containing a word and its assigned tag (see Listing \ref{l.tagdata}).
+
+\lstinputlisting[language=JSON, label={l.tagdata}]{listings/method-tag-output.example}
 
 
 % ===================================================================================
