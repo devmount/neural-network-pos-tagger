@@ -94,7 +94,19 @@ Unterschrift
 % ===================================================================================
 \chapter{Introduction}\label{c.introduction}
 \pagenumbering{arabic} % now normal arabic numeration
-This is just a test
+% A part-of-speech tagger is a system which automatically assigns the part of speech to words using contextual information. Potential applications for part-of-speech taggers exist in many areas including speech recognition, speech synthesis, machine translation and information retrieval.
+
+% Part-of-speech tagging for natural language processing is also used in an advisory artificial conversational agent called Alex. Alex was developed to answer questions about modules and courses at the TU Berlin [2]. The system takes the written natural language requests from the user and tries to model SQL-queries out of that. To understand the natural language queries, the system uses a Hidden Markov Model (HMM) to assign tags to each word of the query (part-of-speech tagging). This HMM tagger is trained with manually created training templates that are filled with the data in the database to be queried. The few manually created sentence-templates and the slot-filling result in training data that has largely the same structure. This often leads to unwanted result when the HMM tagger is presented with a sentence, that doesn’t fit into the structure of the training templates.
+
+\section{Scope of this Thesis}\label{c.introduction.scope}
+% It was shown before, that the neural network approach outperforms part-of-speech tagger that are based on statistical models (like the HMM) [3]. To address the lack of flexibility of the HMM that is currently in use, two new types of classification-models should be implemented and evaluated: Feedforward Neural Networks [1] and Recurrent Neural Networks [4].
+
+% Since the HMM is only one of many processing elements of Alex, the implementation of the neural networks should be done without having to change other components of the conversational agent. If those changes are nevertheless necessary, they should be kept minimal.
+
+% To train the neural network models, a large enough data corpus should be retrieved. Already existing logfiles of user data can be used for this purpose.
+
+\section{Related Work}\label{c.introduction.related}
+...
 
 % ===================================================================================
 \chapter{\Alex: Artificial Conversational Agent}\label{c.alex}
@@ -103,7 +115,7 @@ This is just a test
 \section{System Overview}\label{c.alex.overview}
 ...
 
-\section{Language Model}\label{c.alex.languagemodel}
+\section{Hidden Markov Model}\label{c.alex.hmm}
 ...
 
 \section{Tagging Interface}\label{c.alex.tagging}
@@ -119,11 +131,11 @@ The \tt{train} method creates a new instance of the tagger class, trains this cl
 
 The \tt{tag} method attaches a tag to each word of an input sentence, according to the previously trained language model. The input has to be an unknown sentence as a simple list of words:
 
-\lstinputlisting[language=JSON, label={l.tagdata}]{listings/method-tag-input.example}
+\lstinputlisting[language=JSON]{listings/method-tag-input.example}
 
-The output is a corresponding list of tuples containing a word and its assigned tag (see Listing \ref{l.tagdata}).
+The output is a corresponding list of tuples containing a word and its assigned tag:
 
-\lstinputlisting[language=JSON, label={l.tagdata}]{listings/method-tag-output.example}
+\lstinputlisting[language=JSON]{listings/method-tag-output.example}
 
 
 % ===================================================================================
