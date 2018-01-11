@@ -1,8 +1,7 @@
 """
-The tagger module provides the training of a language model via a Feed-forward Neural Network
+This tagger module provides the training of a language model via a Feed-forward Neural Network
 and the assignment of tags to the words of an untagged sentence.
 """
-import os
 import sys
 
 class Tagger:
@@ -11,6 +10,8 @@ class Tagger:
     def __init__(self, training_file_path):
         """ Takes in the file path to a training file and returns a Tagger object
         that is able to tag sentences"""
+
+        self.train(training_file_path)
 
 
         # if settings.LOAD_HMM:
@@ -23,7 +24,7 @@ class Tagger:
 
         # if not self._tagger:
         #     training_file = ""
-
+n
         #     # Open the training file
         #     with open(training_file_path, encoding="utf-8") as f:
         #         training_file = f.readlines()
@@ -72,11 +73,5 @@ class Tagger:
 
 
 
-
-
 # The default tagger
 t = Tagger(settings.TRAINING_DATA_PATH)
-
-if __name__ == '__main__':
-    path = os.path.dirname(os.path.realpath(__file__))
-    t = Tagger(path + "/data/training_data.txt")
