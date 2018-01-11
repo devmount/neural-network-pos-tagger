@@ -5,73 +5,77 @@ and the assignment of tags to the words of an untagged sentence.
 import sys
 
 class Tagger:
-    """A tagger class that trains a Feed-forward Neural Network when instantiated"""
+	"""A tagger class that trains a Feed-forward Neural Network when instantiated"""
 
-    def __init__(self, training_file_path):
-        """ Takes in the file path to a training file and returns a Tagger object
-        that is able to tag sentences"""
+	def __init__(self, training_file_path):
+		""" Takes in the file path to a training file and returns a Tagger object
+		that is able to tag sentences"""
 
-        self.train(training_file_path)
-
-
-        # if settings.LOAD_HMM:
-        #     print("Loading HMM from file...")
-        #     try:
-        #         with open(settings.HMM_LOCATION, "rb") as tagger_input:
-        #             self._tagger = dill.load(tagger_input)
-        #     except:
-        #         print("Could not load HMM from file! Now creating one...")
-
-        # if not self._tagger:
-        #     training_file = ""
-n
-        #     # Open the training file
-        #     with open(training_file_path, encoding="utf-8") as f:
-        #         training_file = f.readlines()
+		self.train(training_file_path)
 
 
-        #     print("Generating the training set from file '%s'..." % training_file_path.split("/")[-1])
-        #     training_set = loader.generate_training_set(training_file)
+		# if settings.LOAD_HMM:
+		#     print("Loading HMM from file...")
+		#     try:
+		#         with open(settings.HMM_LOCATION, "rb") as tagger_input:
+		#             self._tagger = dill.load(tagger_input)
+		#     except:
+		#         print("Could not load HMM from file! Now creating one...")
 
-        #     temp_list = [list(zip(words, tags)) for words, tags in training_set]
+		# if not self._tagger:
+		#     training_file = ""
 
-        #     if settings.HMM_ADVANCED_TRAINING:
-        #         print("Evaluating each training sentence!\nThis may take several hours!")
-        #         new_list = []
-        #         temp_list_length = len(temp_list)
+		#     # Open the training file
+		#     with open(training_file_path, encoding="utf-8") as f:
+		#         training_file = f.readlines()
 
-        #         for i, entry in enumerate(temp_list):
 
-        #             # Debug output
-        #             if i%100 == 0:
-        #                 percentage = (i/temp_list_length)*100
-        #                 sys.stdout.write('\r')
-        #                 sys.stdout.write("[%-100s] %.2f%%" % ('='*int(percentage), percentage))
-        #                 sys.stdout.flush()
+		#     print("Generating the training set from file '%s'..." % training_file_path.split("/")[-1])
+		#     training_set = loader.generate_training_set(training_file)
 
-        #             # Check for result
-        #             if gives_query_result(entry):
-        #                 new_list.append(entry)
+		#     temp_list = [list(zip(words, tags)) for words, tags in training_set]
 
-        #         print("Old size / new size: %d/%d" % (len(temp_list), len(new_list)))
-        #         temp_list = new_list
+		#     if settings.HMM_ADVANCED_TRAINING:
+		#         print("Evaluating each training sentence!\nThis may take several hours!")
+		#         new_list = []
+		#         temp_list_length = len(temp_list)
 
-        #     self._tagger = TAGGING_CLASS.train(temp_list)
+		#         for i, entry in enumerate(temp_list):
 
-        #     if settings.SAVE_HMM:
-        #         print("Saving the HMM...")
-        #         with open(settings.HMM_LOCATION, "wb") as output:
-        #             dill.dump(self._tagger, output)
+		#             # Debug output
+		#             if i%100 == 0:
+		#                 percentage = (i/temp_list_length)*100
+		#                 sys.stdout.write('\r')
+		#                 sys.stdout.write("[%-100s] %.2f%%" % ('='*int(percentage), percentage))
+		#                 sys.stdout.flush()
 
-    def train(training_file_path):
-        """Trains a language model with a given training file"""
+		#             # Check for result
+		#             if gives_query_result(entry):
+		#                 new_list.append(entry)
 
-    def tag(self, sentence):
-        """Tags the given sentence"""
+		#         print("Old size / new size: %d/%d" % (len(temp_list), len(new_list)))
+		#         temp_list = new_list
 
-        # return self._tagger.tag(helper.tokenize(sentence, True))
+		#     self._tagger = TAGGING_CLASS.train(temp_list)
+
+		#     if settings.SAVE_HMM:
+		#         print("Saving the HMM...")
+		#         with open(settings.HMM_LOCATION, "wb") as output:
+		#             dill.dump(self._tagger, output)
+
+	def train(self, training_file_path):
+		"""Trains a language model with a given training file"""
+
+		sys.stdout.write('training starts...')
+
+	def tag(self, sentence):
+		"""Tags the given sentence"""
+
+		sys.stdout.write(sentence)
+		# return self._tagger.tag(helper.tokenize(sentence, True))
 
 
 
 # The default tagger
-t = Tagger(settings.TRAINING_DATA_PATH)
+t = Tagger('test/path')
+t.tag('test sentence\n')
