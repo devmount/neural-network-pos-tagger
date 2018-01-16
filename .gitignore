@@ -26,3 +26,4 @@
 # -- os, software
 .vscode
 Thumbs.db
+__pycache__
