@@ -34,5 +34,9 @@ This master thesis aims to improve the natural language understanding of an arti
 - https://gitlab.tubit.tu-berlin.de/thilo.michael/aaca-alex/wikis/home
 - https://gitlab.tubit.tu-berlin.de/thilo.michael/aaca-alex/wikis/documentation-tagging
 
+### TensorFlow
+- https://www.tensorflow.org/get_started/mnist/pros
+- https://www.tensorflow.org/versions/master/api_docs/python/tf/nn
+
 ### Similar Tagger
 - https://github.com/mrahtz/tensorflow-pos-tagger

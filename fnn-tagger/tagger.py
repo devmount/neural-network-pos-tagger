@@ -1,8 +1,9 @@
 """
 This tagger module provides the training of a language model via a Feed-forward Neural Network
-and the assignment of tags to the words of an untagged sentence.
+and the assignment of tags to the words of a given untagged sentence.
 
 @see https://www.tensorflow.org/get_started/mnist/pros
+@see https://www.tensorflow.org/versions/master/api_docs/python/tf/nn
 @see https://github.com/mrahtz/tensorflow-pos-tagger
 """
 
