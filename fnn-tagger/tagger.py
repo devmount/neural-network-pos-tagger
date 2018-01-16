@@ -16,13 +16,18 @@ import time
 import loader
 import model
 
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 class Tagger:
-	"""A tagger class that trains a Feed-forward Neural Network when instantiated"""
+	"""
+	A tagger class that trains a Feed-forward Neural Network when instantiated
+	"""
 
 
 	def __init__(self, training_file_path, vocab_size, n_past_words, embedding_size, h_size, test_ratio, batch_size, n_epochs, evaluate_every, checkpoint_every):
-		""" Takes in the file path to a training file and returns a Tagger object that is able to train and tag sentences"""
-
+		"""
+		Takes in the file path to a training file and returns a Tagger object that is able to train and tag sentences
+		"""
 		# set path to the training data, vocabulary size and the number of words to include into training (n_past_words)
 		self.training_file_path = training_file_path
 		self.vocab_size = vocab_size
@@ -35,10 +40,15 @@ class Tagger:
 		self.evaluate_every = evaluate_every
 		self.checkpoint_every = checkpoint_every
 
-	def train(self):
-		"""Trains and evaluates a language model on a given training file"""
+		self.vocab_path = 'saved/vocabulary'
+		self.tensor_path = 'saved/tensors'
 
-		sys.stdout.write('Training starts ...\n')
+	def train(self):
+		"""
+		Trains and evaluates a language model on a given training file
+		"""
+
+		print('Training starts ...')
 
 		# start TensorFlow session
 		sess = tf.Session()
@@ -47,7 +57,7 @@ class Tagger:
 		x_test = test_data['x']
 		y_test = test_data['y']
 		# initialize model
-		sys.stdout.write('Initializing model ...\n')
+		print('Initializing model ...')
 		fnn_model, train_op, global_step = self.__model_init(self.vocab_size, self.embedding_size, self.n_past_words, n_pos_tags)
 		train_summary_ops, test_summary_ops, summary_writer = self.__logging_init(fnn_model, sess.graph)
 		saver = self.__checkpointing_init()
@@ -70,29 +80,55 @@ class Tagger:
 				print("")
 
 			if current_step % self.checkpoint_every == 0:
-				path = saver.save(sess, 'data/model', global_step=current_step)
+				path = saver.save(sess, 'saved/model', global_step=current_step)
 				print("Saved model checkpoint to '%s'" % path)
 
 
 	def tag(self, sentence):
-		"""Tags the given sentence"""
+		"""
+		Tags a given sentence with the help of a previously trained model
+		"""
 
-		sys.stdout.write(sentence)
+		textloader = loader.TextLoader(sentence, self.vocab_size, self.n_past_words, self.vocab_path)
+
+		sess = tf.Session()
+
+		checkpoint_file = tf.train.latest_checkpoint('saved/')
+		saver = tf.train.import_meta_graph(checkpoint_file + '.meta')
+		saver.restore(sess, checkpoint_file)
+
+		graph = tf.get_default_graph()
+		input_x = graph.get_operation_by_name("input_x").outputs[0]
+		predictions = graph.get_operation_by_name("predictions").outputs[0]
+
+		predicted_pos_ids = sess.run(predictions, feed_dict={input_x: textloader.features})
+
+		words = []
+		for sentence_word_ids in textloader.features:
+			word_id = sentence_word_ids[0]
+			words.append(textloader.id_to_word[word_id])
+		predicted_pos = []
+		for pred_id in predicted_pos_ids:
+			predicted_pos.append(textloader.id_to_pos[pred_id])
+
+		word_pos_tuples = zip(words, predicted_pos)
+		annotated_words = []
+		for tup in word_pos_tuples:
+			annotated_word = '%s/%s' % (tup[0], tup[1])
+			annotated_words.append(annotated_word)
+
+		return ' '.join(annotated_words)
 
 
 	def __load_data(self):
 		"""Loads and processes training data from a given training file"""
 
-		sys.stdout.write('Loading training data from "' + self.training_file_path + '" ...\n')
+		print('Loading training data from "' + self.training_file_path + '" ...')
 		# open training file
 		with open(self.training_file_path, 'r') as f:
 			tagged_sentences = f.read()
 
-		# set vocabulary and tensor paths
-		vocab_path = 'data/vocabulary'
-		tensor_path = 'data/tensors'
-
-		textloader = loader.TextLoader(tagged_sentences, self.vocab_size, self.n_past_words, vocab_path, tensor_path)
+		textloader = loader.TextLoader(tagged_sentences, self.vocab_size, self.n_past_words, self.vocab_path, self.tensor_path)
 
 		x = textloader.features
 		y = textloader.labels
@@ -198,5 +234,5 @@ t = Tagger(
 
 # only execute training when file is invoked as a script and not just imported
 if __name__ == "__main__":
-	t.train()
-	t.tag('Module im Master Eletrotechnik\n')
+	# t.train()
+	print(t.tag('Module im Bachelor Informatik'))

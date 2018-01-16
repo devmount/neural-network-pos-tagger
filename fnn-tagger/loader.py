@@ -35,8 +35,7 @@ UNTAGGED_POS = "<UNTAGGED_POS>"
 
 class TextLoader:
 
-	def __init__(self, sentences, vocab_size, n_past_words, vocab_path,
-			tensor_path=None):
+	def __init__(self, sentences, vocab_size, n_past_words, vocab_path, tensor_path=None):
 		self.vocab_size = vocab_size
 		self.n_past_words = n_past_words
 
@@ -61,8 +60,7 @@ class TextLoader:
 
 
 	def gen_vocab(self, tagged_sentences):
-		words, pos_tags = \
-			self.split_sentence(tagged_sentences, drop_untagged=True)
+		words, pos_tags = self.split_sentence(tagged_sentences, drop_untagged=True)
 
 		word_counts = Counter(words)
 		unique_pos_tags = set(pos_tags)
@@ -70,16 +68,13 @@ class TextLoader:
 		# most_common() returns (word, count) tuples
 		# Why the '- 1'? To account for the extra word we add for words
 		# not in the vocabulary, UNKNOWN_WORD.
-		words_to_keep = \
-			[t[0] for t in word_counts.most_common(self.vocab_size - 1)]
+		words_to_keep = [t[0] for t in word_counts.most_common(self.vocab_size - 1)]
 
-		self.word_to_id = \
-			{word: i for i, word in enumerate(words_to_keep, start=1)}
+		self.word_to_id = {word: i for i, word in enumerate(words_to_keep, start=1)}
 		# words not in the vocabulary will be mapped to this word
 		self.word_to_id[UNKNOWN_WORD] = UNKNOWN_WORD_ID # = 0
 
-		self.pos_to_id = \
-			{pos: i for i, pos in enumerate(list(unique_pos_tags), start=1)}
+		self.pos_to_id = {pos: i for i, pos in enumerate(list(unique_pos_tags), start=1)}
 		self.pos_to_id[UNTAGGED_POS] = UNTAGGED_POS_ID # = 0
 
 		self.id_to_word = {v: k for k, v in self.word_to_id.items()}
@@ -89,10 +84,7 @@ class TextLoader:
 
 
 	def save_vocab(self, vocab_filename):
-		dicts = [self.word_to_id,
-				self.pos_to_id,
-				self.id_to_word,
-				self.id_to_pos]
+		dicts = [self.word_to_id, self.pos_to_id, self.id_to_word, self.id_to_pos]
 		with open(vocab_filename, 'wb') as f:
 			pickle.dump(dicts, f)
 
