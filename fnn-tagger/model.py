@@ -9,10 +9,14 @@ This module provides the structure and initialization of a Feed-forward Neural N
 import tensorflow as tf
 
 class FnnModel:
-	"""A tagger class that trains a Feed-forward Neural Network when instantiated"""
+	"""
+    A tagger class that trains a Feed-forward Neural Network when instantiated
+    """
 
 	def __init__(self, vocab_size, n_past_words, embedding_size, h_size, n_pos_tags):
-		""" Takes in the file path to a training file and returns a Tagger object that is able to train and tag sentences"""
+		"""
+        Initializes the Feed-forward Neural Network model
+        """
 
 		# initialize input word vectors. None: "variable size"
 		self.input_x = tf.placeholder(tf.int32, [None, n_past_words + 1], name="input_x")
