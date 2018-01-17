@@ -21,15 +21,27 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 class Tagger:
 	"""
-	A tagger class that trains a Feed-forward Neural Network when instantiated
+	A Part-of-Speech tagging class that trains a Feed-forward Neural Network with already tagged data
+	and applies POS tags to untagged sentences
 	"""
 
 
 	def __init__(self, training_file_path, vocab_size, n_past_words, embedding_size, h_size, test_ratio, batch_size, n_epochs, evaluate_every, checkpoint_every):
 		"""
 		Takes in the file path to a training file and returns a Tagger object that is able to train and tag sentences
+
+		@param training_file_path: Path to a file with tagged sentences of this form: word1|TAG word2|TAG ...
+		@param vocab_size: Dimension of the vocabulary (number of distinct words)
+		@param n_past_words: Number of preceding words to take into account for the POS tag training of the current word
+		@param embedding_size: Dimension of the word embeddings
+		@param h_size: Dimension of the hidden layer
+		@param test_ratio: Ratio of test data extracted from the training data
+		@param batch_size: Size of the training batches
+		@param n_epochs: Number of training epochs
+		@param evaluate_every: Show evaluation result after this number of trainings steps
+		@param checkpoint_every: Save model state after this number of trainings steps
 		"""
-		# set path to the training data, vocabulary size and the number of words to include into training (n_past_words)
+		# initialize given parameters
 		self.training_file_path = training_file_path
 		self.vocab_size = vocab_size
 		self.n_past_words = n_past_words
@@ -41,35 +53,40 @@ class Tagger:
 		self.evaluate_every = evaluate_every
 		self.checkpoint_every = checkpoint_every
 
+		# set vocabulary and tensor files for saving and loading
 		self.vocab_path = 'saved/vocabulary'
 		self.tensor_path = 'saved/tensors'
+
 
 	def train(self):
 		"""
 		Trains and evaluates a language model on a given training file
 		"""
-
+		# start tensorflow session
 		print('Training starts ...')
-
-		# start TensorFlow session
 		sess = tf.Session()
-		# load necessary training data
+
+		# get training and test data and the number of existing POS tags
 		train_batches, test_data, n_pos_tags = self.__load_data()
 		x_test = test_data['x']
 		y_test = test_data['y']
-		# initialize model
+
 		print('Initializing model ...')
+		# initialize the model by specifying initial values for the tensorflow variables
 		fnn_model, train_op, global_step = self.__model_init(self.vocab_size, self.embedding_size, self.n_past_words, n_pos_tags)
 		train_summary_ops, test_summary_ops, summary_writer = self.__logging_init(fnn_model, sess.graph)
 		saver = self.__checkpointing_init()
 
+		# take the initial values that have already been specified, and assign them to each Variable
 		sess.run(tf.global_variables_initializer())
+		# make the graph read-only to ensure that no operations are added to it when shared between multiple threads
 		sess.graph.finalize()
 
 		standard_ops = [global_step, fnn_model.loss, fnn_model.accuracy]
 		train_ops = [train_op, train_summary_ops]
 		test_ops = [test_summary_ops]
 
+		# start training with taking one training batch each step
 		for batch in train_batches:
 			x_batch, y_batch = zip(*batch)
 			self.__step(sess, fnn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
@@ -86,30 +103,36 @@ class Tagger:
 	def tag(self, sentence):
 		"""
 		Tags a given sentence with the help of a previously trained model
+
+		@param sentence: a string of space separated words, like "word1 word2 wore3"
+		@return a string of space separated word-tag tuples, like "word1|TAG word2|TAG wird3|TAG"
 		"""
+		data = loader.TextLoader(sentence, self.vocab_size, self.n_past_words, self.vocab_path)
 
-		textloader = loader.TextLoader(sentence, self.vocab_size, self.n_past_words, self.vocab_path)
-
+		# start tensorflow session
 		sess = tf.Session()
 
+		# load saved session
 		checkpoint_file = tf.train.latest_checkpoint('saved/')
 		saver = tf.train.import_meta_graph(checkpoint_file + '.meta')
 		saver.restore(sess, checkpoint_file)
 
+		# load input words and predictions from the saved session
 		graph = tf.get_default_graph()
 		input_x = graph.get_operation_by_name("input_x").outputs[0]
 		predictions = graph.get_operation_by_name("predictions").outputs[0]
+		predicted_pos_ids = sess.run(predictions, feed_dict={input_x: data.features})
 
-		predicted_pos_ids = sess.run(predictions, feed_dict={input_x: textloader.features})
-
+		# create lists of the sentence words and their corresponding predicted POS tags
 		words = []
-		for sentence_word_ids in textloader.features:
+		for sentence_word_ids in data.features:
 			word_id = sentence_word_ids[0]
-			words.append(textloader.id_to_word[word_id])
+			words.append(data.id_to_word[word_id])
 		predicted_pos = []
 		for pred_id in predicted_pos_ids:
-			predicted_pos.append(textloader.id_to_pos[pred_id])
+			predicted_pos.append(data.id_to_pos[pred_id])
 
+		# merge word and tag lists
 		word_pos_tuples = zip(words, predicted_pos)
 		annotated_words = []
 		for tup in word_pos_tuples:
@@ -120,24 +143,30 @@ class Tagger:
 
 
 	def __load_data(self):
-		"""Loads and processes training data from a given training file"""
+		"""
+		Loads and processes training data from a given training file
 
+		@return train_batches: training data splitted into iterable batches
+		@return test_data: data to test the trained model
+		@return n_pos_tags: total number of existing POS tags
+		"""
+		# read tagged data from training file
 		print('Loading training data from "' + self.training_file_path + '" ...')
-		# open training file
 		with open(self.training_file_path, 'r') as f:
 			tagged_sentences = f.read()
 			f.close()
 
-		textloader = loader.TextLoader(tagged_sentences, self.vocab_size, self.n_past_words, self.vocab_path, self.tensor_path)
+		data = loader.TextLoader(tagged_sentences, self.vocab_size, self.n_past_words, self.vocab_path, self.tensor_path)
+		x = data.features
+		y = data.labels
+		n_pos_tags = len(data.pos_to_id)
 
-		x = textloader.features
-		y = textloader.labels
-		n_pos_tags = len(textloader.pos_to_id)
-
+		# split data for training and testing according to the test ratio
 		idx = int(self.test_ratio * len(x))
 		x_test, x_train = x[:idx], x[idx:]
 		y_test, y_train = y[:idx], y[idx:]
 
+		# create iterable training batches
 		train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs)
 		test_data = {'x': x_test, 'y': y_test}
 
@@ -146,13 +175,13 @@ class Tagger:
 
 	def __batch_iterator(self, data, num_epochs, shuffle=True):
 		"""
-		Generates a batch iterator for a dataset.
+		Generates a batch iterator for a dataset
 		"""
 		data = np.array(data)
 		data_size = len(np.atleast_1d(data))
 		num_batches_per_epoch = int((data_size-1)/self.batch_size) + 1
 		for epoch in range(num_epochs):
-			# Shuffle the data at each epoch
+			# shuffle the data at each epoch
 			if shuffle:
 				shuffle_indices = np.random.permutation(np.arange(data_size))
 				shuffled_data = data[shuffle_indices]
@@ -178,16 +207,14 @@ class Tagger:
 
 	def __logging_init(self, fnn_model, graph):
 		"""
-		Set up logging so that progress can be visualised in TensorBoard.
+		Set up logging that the progress can be visualised in TensorBoard
 		"""
 		# Add ops to record summaries for loss and accuracy...
 		train_loss = tf.summary.scalar("train_loss", fnn_model.loss)
 		train_accuracy = tf.summary.scalar("train_accuracy", fnn_model.accuracy)
-		# ...then merge these ops into one single op so that they easily be run
-		# together
+		# ...then merge these ops into one single op so that they easily be run together
 		train_summary_ops = tf.summary.merge([train_loss, train_accuracy])
-		# Same ops, but with different names, so that train/test results show up
-		# separately in TensorBoard
+		# Same ops, but with different names, so that train/test results show up separately in TensorBoard
 		test_loss = tf.summary.scalar("test_loss", fnn_model.loss)
 		test_accuracy = tf.summary.scalar("test_accuracy", fnn_model.accuracy)
 		test_summary_ops = tf.summary.merge([test_loss, test_accuracy])
@@ -195,19 +222,24 @@ class Tagger:
 		timestamp = int(time.time())
 		run_log_dir = os.path.join('logs', str(timestamp))
 		os.makedirs(run_log_dir)
-		# (this step also writes the graph to the events file so that
-		# it shows up in TensorBoard)
+		# (this step also writes the graph to the events file so that it shows up in TensorBoard)
 		summary_writer = tf.summary.FileWriter(run_log_dir, graph)
 
 		return train_summary_ops, test_summary_ops, summary_writer
 
 
 	def __checkpointing_init(self):
+		"""
+		Initialize the Saver class to save and restore variables
+		"""
 		saver = tf.train.Saver(tf.global_variables(), max_to_keep=5)
 		return saver
 
 
 	def __step(self, sess, model, standard_ops, train_ops, test_ops, x, y, summary_writer, train):
+		"""
+		Execute one training step
+		"""
 		feed_dict = {model.input_x: x, model.input_y: y}
 
 		if train:

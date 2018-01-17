@@ -5,21 +5,27 @@ This module provides the structure and initialization of a Feed-forward Neural N
 @see https://www.tensorflow.org/versions/master/api_docs/python/tf/nn
 
 The code is based on the TensorFlow Part-of-Speech Tagger from Matthew Rahtz
-@see https://github.com/mrahtz/tensorflow-pos-tagger
+@see https://github.com/mrahtz/tensorflow-pos-tagger/blob/master/model.py
 """
 
 import tensorflow as tf
 
 class FnnModel:
 	"""
-    A tagger class that trains a Feed-forward Neural Network when instantiated
+    A class that initializes the structure of a Feed-forward Neural Network when instantiated
     """
+
 
 	def __init__(self, vocab_size, n_past_words, embedding_size, h_size, n_pos_tags):
 		"""
         Initializes the Feed-forward Neural Network model
-        """
 
+		@param vocab_size: Dimension of the vocabulary (number of distinct words)
+		@param n_past_words: Number of preceding words to take into account for the POS tag training of the current word
+		@param embedding_size: Dimension of the word embeddings
+		@param h_size: Dimension of the hidden layer
+		@param n_pos_tags: Number of existing POS tags
+        """
 		# initialize input word vectors. None: "variable size"
 		self.input_x = tf.placeholder(tf.int32, [None, n_past_words + 1], name="input_x")
 		# initialize input lables (tags)

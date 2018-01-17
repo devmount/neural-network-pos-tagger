@@ -6,7 +6,7 @@ to generate a vocabulary and save this vocabulary and generated tensors.
 @see https://www.tensorflow.org/versions/master/api_docs/python/tf/nn
 
 The code is based on the TensorFlow Part-of-Speech Tagger from Matthew Rahtz
-@see https://github.com/mrahtz/tensorflow-pos-tagger
+@see https://github.com/mrahtz/tensorflow-pos-tagger/blob/master/data_utils.py
 """
 
 import os
@@ -20,6 +20,11 @@ UNTAGGED_POS_ID = 0
 UNTAGGED_POS = "<UNTAGGED_POS>"
 
 class TextLoader:
+	"""
+	A class that loads annotated training data, generates a vocabulary of words and of POS tags
+	and provides loading and saving of this vocabulary and generated tensors
+	"""
+
 
 	def __init__(self, sentences, vocab_size, n_past_words, vocab_path, tensor_path=None):
 		self.vocab_size = vocab_size
