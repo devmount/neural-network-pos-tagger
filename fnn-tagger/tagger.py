@@ -13,6 +13,7 @@ import tensorflow as tf
 import numpy as np
 import os
 import time
+import argparse
 
 import loader
 import model
@@ -252,6 +253,16 @@ class Tagger:
 		summary_writer.add_summary(summaries, step)
 
 
+	def parse_args(self):
+		"""
+		Get script arguments
+		"""
+		parser = argparse.ArgumentParser()
+		parser.add_argument("--train", action='store_true', help="Activate training")
+		parser.add_argument("--tag", type=str, help="A sentence to be tagged")
+
+		return parser.parse_args()
+
 # The default tagger
 t = Tagger(
 	training_file_path='data/test.corpus',
@@ -267,5 +278,8 @@ t = Tagger(
 
 # only execute training when file is invoked as a script and not just imported
 if __name__ == "__main__":
-	t.train()
-	# print(t.tag('Module im Bachelor Informatik'))
+	args = t.parse_args()
+	if args.train:
+		t.train()
+	if args.tag is not None:
+		print(t.tag(args.tag))
