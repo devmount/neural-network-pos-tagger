@@ -4,10 +4,11 @@ and the assignment of tags to the words of a given untagged sentence.
 
 @see https://www.tensorflow.org/get_started/mnist/pros
 @see https://www.tensorflow.org/versions/master/api_docs/python/tf/nn
+
+The code is based on the TensorFlow Part-of-Speech Tagger from Matthew Rahtz
 @see https://github.com/mrahtz/tensorflow-pos-tagger
 """
 
-import sys
 import tensorflow as tf
 import numpy as np
 import os
@@ -75,9 +76,7 @@ class Tagger:
 			current_step = tf.train.global_step(sess, global_step)
 
 			if current_step % self.evaluate_every == 0:
-				print("\nEvaluation:")
 				self.__step(sess, fnn_model, standard_ops, train_ops, test_ops, x_test, y_test, summary_writer, train=False)
-				print("")
 
 			if current_step % self.checkpoint_every == 0:
 				path = saver.save(sess, 'saved/model', global_step=current_step)
@@ -127,6 +126,7 @@ class Tagger:
 		# open training file
 		with open(self.training_file_path, 'r') as f:
 			tagged_sentences = f.read()
+			f.close()
 
 		textloader = loader.TextLoader(tagged_sentences, self.vocab_size, self.n_past_words, self.vocab_path, self.tensor_path)
 
@@ -213,9 +213,10 @@ class Tagger:
 		if train:
 			step, loss, accuracy, _, summaries = sess.run(standard_ops + train_ops, feed_dict)
 		else:
+			print('')
 			step, loss, accuracy, summaries = sess.run(standard_ops + test_ops, feed_dict)
 
-		print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy))
+		print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="\r", flush=True)
 		summary_writer.add_summary(summaries, step)
 
 
@@ -234,5 +235,5 @@ t = Tagger(
 
 # only execute training when file is invoked as a script and not just imported
 if __name__ == "__main__":
-	# t.train()
-	print(t.tag('Module im Bachelor Informatik'))
+	t.train()
+	# print(t.tag('Module im Bachelor Informatik'))

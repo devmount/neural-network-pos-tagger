@@ -3,6 +3,8 @@ This module provides the structure and initialization of a Feed-forward Neural N
 
 @see https://www.tensorflow.org/get_started/mnist/pros
 @see https://www.tensorflow.org/versions/master/api_docs/python/tf/nn
+
+The code is based on the TensorFlow Part-of-Speech Tagger from Matthew Rahtz
 @see https://github.com/mrahtz/tensorflow-pos-tagger
 """
 

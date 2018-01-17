@@ -4,24 +4,10 @@ to generate a vocabulary and save this vocabulary and generated tensors.
 
 @see https://www.tensorflow.org/get_started/mnist/pros
 @see https://www.tensorflow.org/versions/master/api_docs/python/tf/nn
+
+The code is based on the TensorFlow Part-of-Speech Tagger from Matthew Rahtz
 @see https://github.com/mrahtz/tensorflow-pos-tagger
 """
-
-# tensorflow-pos-tagger
-# Copyright (C) 2017 Matthew Rahtz
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 import os
 from collections import Counter
@@ -42,8 +28,6 @@ class TextLoader:
 		if os.path.exists(vocab_path):
 			print("Loading saved vocabulary...")
 			self.load_vocab(vocab_path)
-			# TODO: check that the loaded vocabulary matches
-			# vocab_size and n_past_words
 		else:
 			print("Generating vocabulary...")
 			self.gen_vocab(sentences)
@@ -87,11 +71,13 @@ class TextLoader:
 		dicts = [self.word_to_id, self.pos_to_id, self.id_to_word, self.id_to_pos]
 		with open(vocab_filename, 'wb') as f:
 			pickle.dump(dicts, f)
+			f.close()
 
 
 	def load_vocab(self, vocab_path):
 		with open(vocab_path, 'rb') as f:
 			dicts = pickle.load(f)
+			f.close
 		self.word_to_id = dicts[0]
 		self.pos_to_id = dicts[1]
 		self.id_to_word = dicts[2]
@@ -102,11 +88,13 @@ class TextLoader:
 		tensors = [self.features, self.labels]
 		with open(tensors_path, 'wb') as f:
 			pickle.dump(tensors, f)
+			f.close()
 
 
 	def load_tensors(self, tensors_path):
 		with open(tensors_path, 'rb') as f:
 			tensors = pickle.load(f)
+			f.close()
 		self.features = tensors[0]
 		self.labels = tensors[1]
 
