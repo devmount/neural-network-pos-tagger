@@ -42,6 +42,7 @@ class Tagger:
 		@param evaluate_every: Show evaluation result after this number of trainings steps
 		@param checkpoint_every: Save model state after this number of trainings steps
 		"""
+
 		# initialize given parameters
 		self.training_file_path = training_file_path
 		self.vocab_size = vocab_size
@@ -63,6 +64,7 @@ class Tagger:
 		"""
 		Trains and evaluates a language model on a given training file
 		"""
+
 		# start tensorflow session
 		print('Training starts ...')
 		sess = tf.Session()
@@ -108,6 +110,7 @@ class Tagger:
 		@param sentence: a string of space separated words, like "word1 word2 wore3"
 		@return a string of space separated word-tag tuples, like "word1|TAG word2|TAG wird3|TAG"
 		"""
+		
 		data = loader.TextLoader(sentence, self.vocab_size, self.n_past_words, self.vocab_path)
 
 		# start tensorflow session
@@ -151,6 +154,7 @@ class Tagger:
 		@return test_data: data to test the trained model
 		@return n_pos_tags: total number of existing POS tags
 		"""
+
 		# read tagged data from training file
 		print('Loading training data from "' + self.training_file_path + '" ...')
 		with open(self.training_file_path, 'r') as f:
@@ -178,6 +182,7 @@ class Tagger:
 		"""
 		Generates a batch iterator for a dataset
 		"""
+
 		data = np.array(data)
 		data_size = len(np.atleast_1d(data))
 		num_batches_per_epoch = int((data_size-1)/self.batch_size) + 1
@@ -198,6 +203,7 @@ class Tagger:
 		"""
 		Initializes a Feed-Forward Neural Network model
 		"""
+
 		fnn_model = model.FnnModel(vocab_size, n_past_words, embedding_size, self.h_size, n_pos_tags)
 		global_step = tf.Variable(initial_value=0, name="global_step", trainable=False)
 		optimizer = tf.train.AdamOptimizer()
@@ -210,6 +216,7 @@ class Tagger:
 		"""
 		Set up logging that the progress can be visualised in TensorBoard
 		"""
+
 		# Add ops to record summaries for loss and accuracy...
 		train_loss = tf.summary.scalar("train_loss", fnn_model.loss)
 		train_accuracy = tf.summary.scalar("train_accuracy", fnn_model.accuracy)
@@ -233,6 +240,7 @@ class Tagger:
 		"""
 		Initialize the Saver class to save and restore variables
 		"""
+
 		saver = tf.train.Saver(tf.global_variables(), max_to_keep=5)
 		return saver
 
@@ -241,6 +249,7 @@ class Tagger:
 		"""
 		Execute one training step
 		"""
+
 		feed_dict = {model.input_x: x, model.input_y: y}
 
 		if train:
@@ -257,6 +266,7 @@ class Tagger:
 		"""
 		Get script arguments
 		"""
+		
 		parser = argparse.ArgumentParser()
 		parser.add_argument("--train", action='store_true', help="Activate training")
 		parser.add_argument("--tag", type=str, help="A sentence to be tagged")

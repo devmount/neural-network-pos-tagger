@@ -26,6 +26,7 @@ class FnnModel:
 		@param h_size: Dimension of the hidden layer
 		@param n_pos_tags: Number of existing POS tags
         """
+		
 		# initialize input word vectors. None: "variable size"
 		self.input_x = tf.placeholder(tf.int32, [None, n_past_words + 1], name="input_x")
 		# initialize input lables (tags)
