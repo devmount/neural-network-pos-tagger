@@ -68,7 +68,7 @@ class Tagger:
 		"""
 
 		# start tensorflow session
-		print('Training starts ...')
+		print('Training starts...')
 		sess = tf.Session()
 
 		# check if training file exists
@@ -81,7 +81,7 @@ class Tagger:
 		x_test = test_data['x']
 		y_test = test_data['y']
 
-		print('Initializing model ...')
+		print('Initializing model...')
 		# initialize the model by specifying initial values for the tensorflow variables
 		fnn_model, train_op, global_step = self.__model_init(self.vocab_size, self.embedding_size, self.n_past_words, n_pos_tags)
 		train_summary_ops, test_summary_ops, summary_writer = self.__logging_init(fnn_model, sess.graph)
@@ -158,8 +158,8 @@ class Tagger:
 		Executes a reset by deleting all training and logging data
 		"""
 
-		answer = input('Really delete all training data and log files? [yes/no] ')
-		if answer.lower() == 'yes':
+		answer = input('Really delete all training data and log files? [Yes/no] ')
+		if answer.lower() == 'yes' or answer == '':
 			# delete storage files
 			self.__empty_directories(self.storage_dir)
 			# delete log files
@@ -196,7 +196,7 @@ class Tagger:
 		"""
 
 		# read tagged data from training file
-		print('Loading training data from "%s" ...' % self.training_file_path)
+		print('Loading training data from "%s"...' % self.training_file_path)
 		with open(self.training_file_path, 'r') as f:
 			tagged_sentences = f.read()
 			f.close()
@@ -316,8 +316,8 @@ class Tagger:
 
 # The default tagger
 t = Tagger(
-	training_file_path='data/hmm.corpus',
-	vocab_size=50000,
+	training_file_path='data/test.corpus',
+	vocab_size=15000,
 	n_past_words=3,
 	embedding_size=50,
 	h_size=100,
