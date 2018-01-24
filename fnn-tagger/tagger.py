@@ -11,7 +11,7 @@ The code is based on the TensorFlow Part-of-Speech Tagger from Matthew Rahtz
 
 import tensorflow as tf
 import numpy as np
-import os
+import os, shutil
 import time
 import argparse
 
@@ -56,8 +56,10 @@ class Tagger:
 		self.checkpoint_every = checkpoint_every
 
 		# set vocabulary and tensor files for saving and loading
-		self.vocab_path = 'saved/vocabulary'
-		self.tensor_path = 'saved/tensors'
+		self.log_dir = 'logs'
+		self.storage_dir = 'saved'
+		self.vocab_path = os.path.join(self.storage_dir, 'vocabulary')
+		self.tensor_path = os.path.join(self.storage_dir, 'tensors')
 
 
 	def train(self):
@@ -149,6 +151,39 @@ class Tagger:
 			annotated_words.append(annotated_word)
 
 		return ' '.join(annotated_words)
+
+
+	def reset(self):
+		"""
+		Executes a reset by deleting all training and logging data
+		"""
+
+		answer = input('Really delete all training data and log files? [yes/no] ')
+		if answer.lower() == 'yes':
+			# delete storage files
+			self.__empty_directories(self.storage_dir)
+			# delete log files
+			self.__empty_directories(self.log_dir)
+			print('Reset was executed. All files successfully deleted.')
+		else:
+			print('Reset was not executed.')
+
+
+	def __empty_directories(self, directory):
+		"""
+		Delete all files and folders in given directory
+
+		@param directory: directory to delete all files and subdirectories from
+		"""
+		
+		for f in os.listdir(directory):
+			if f == '.gitignore':
+				continue
+			p = os.path.join(directory, f)
+			if os.path.isfile(p):
+				os.unlink(p)
+			elif os.path.isdir(p):
+				shutil.rmtree(p)
 
 
 	def __load_data(self):
@@ -275,6 +310,7 @@ class Tagger:
 		parser = argparse.ArgumentParser()
 		parser.add_argument("--train", action='store_true', help="Activate training")
 		parser.add_argument("--tag", type=str, help="A sentence to be tagged")
+		parser.add_argument("--reset", action='store_true', help="Reset all stored training and log data")
 
 		return parser.parse_args()
 
@@ -287,14 +323,19 @@ t = Tagger(
 	h_size=100,
 	test_ratio=0.1,
 	batch_size=64,
-	n_epochs=50,
-	evaluate_every=50,
-	checkpoint_every=50)
+	n_epochs=100,
+	evaluate_every=100,
+	checkpoint_every=100)
 
 # only execute training when file is invoked as a script and not just imported
 if __name__ == "__main__":
 	args = t.parse_args()
+	# invoke training
 	if args.train:
 		t.train()
+	# invoke tagging of a given sentence
 	if args.tag is not None:
 		print(t.tag(args.tag))
+	# invoke reset of training data
+	if args.reset:
+		t.reset()
