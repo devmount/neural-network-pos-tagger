@@ -31,7 +31,7 @@ class Tagger:
 		"""
 		Takes in the file path to a training file and returns a Tagger object that is able to train and tag sentences
 
-		@param training_file_path: Path to a file with tagged sentences of this form: word1|TAG word2|TAG ...
+		@param training_file_path: Path to a file with tagged sentences of this form: word1/TAG word2/TAG ...
 		@param vocab_size: Dimension of the vocabulary (number of distinct words)
 		@param n_past_words: Number of preceding words to take into account for the POS tag training of the current word
 		@param embedding_size: Dimension of the word embeddings
@@ -68,6 +68,11 @@ class Tagger:
 		# start tensorflow session
 		print('Training starts ...')
 		sess = tf.Session()
+
+		# check if training file exists
+		if not os.path.isfile(self.training_file_path):
+			print('Error: training file "%s" doesn\'t exist' % self.training_file_path)
+			return
 
 		# get training and test data and the number of existing POS tags
 		train_batches, test_data, n_pos_tags = self.__load_data()
@@ -108,7 +113,7 @@ class Tagger:
 		Tags a given sentence with the help of a previously trained model
 
 		@param sentence: a string of space separated words, like "word1 word2 wore3"
-		@return a string of space separated word-tag tuples, like "word1|TAG word2|TAG wird3|TAG"
+		@return a string of space separated word-tag tuples, like "word1/TAG word2/TAG wird3/TAG"
 		"""
 		
 		data = loader.TextLoader(sentence, self.vocab_size, self.n_past_words, self.vocab_path)
@@ -275,16 +280,16 @@ class Tagger:
 
 # The default tagger
 t = Tagger(
-	training_file_path='data/test.corpus',
+	training_file_path='data/hmm.corpus',
 	vocab_size=50000,
 	n_past_words=3,
 	embedding_size=50,
 	h_size=100,
 	test_ratio=0.1,
 	batch_size=64,
-	n_epochs=100,
-	evaluate_every=100,
-	checkpoint_every=100)
+	n_epochs=50,
+	evaluate_every=50,
+	checkpoint_every=50)
 
 # only execute training when file is invoked as a script and not just imported
 if __name__ == "__main__":

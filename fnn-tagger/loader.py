@@ -135,7 +135,7 @@ class TextLoader:
 
 	def split_sentence(self, tagged_sentence, drop_untagged):
 		tagged_words = tagged_sentence.split()
-		word_tag_tuples = [x.split("|") for x in tagged_words]
+		word_tag_tuples = [x.split("/") for x in tagged_words]
 
 		words = []
 		pos_tags = []
