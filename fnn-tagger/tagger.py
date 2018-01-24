@@ -156,7 +156,7 @@ class Tagger:
 		"""
 
 		# read tagged data from training file
-		print('Loading training data from "' + self.training_file_path + '" ...')
+		print('Loading training data from "%s" ...' % self.training_file_path)
 		with open(self.training_file_path, 'r') as f:
 			tagged_sentences = f.read()
 			f.close()
