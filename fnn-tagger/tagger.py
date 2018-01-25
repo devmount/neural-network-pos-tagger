@@ -15,10 +15,9 @@ import os, shutil
 import time
 import argparse
 
+import settings
 import loader
 import model
-
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 class Tagger:
 	"""
@@ -316,16 +315,16 @@ class Tagger:
 
 # The default tagger
 t = Tagger(
-	training_file_path='data/test.corpus',
-	vocab_size=15000,
-	n_past_words=3,
-	embedding_size=50,
-	h_size=100,
-	test_ratio=0.1,
-	batch_size=64,
-	n_epochs=100,
-	evaluate_every=100,
-	checkpoint_every=100)
+	training_file_path	= settings.TRAINING_FILE_PATH,
+	vocab_size			= settings.VOCAB_SIZE,
+	n_past_words		= settings.N_PAST_WORDS,
+	embedding_size		= settings.EMBEDDING_SIZE,
+	h_size				= settings.HIDDEN_LAYER_SIZE,
+	test_ratio			= settings.TEST_RATIO,
+	batch_size			= settings.BATCH_SIZE,
+	n_epochs			= settings.N_EPOCHS,
+	evaluate_every		= settings.EVALUATE_EVERY,
+	checkpoint_every	= settings.CHECKPOINT_EVERY)
 
 # only execute training when file is invoked as a script and not just imported
 if __name__ == "__main__":
