@@ -3,7 +3,7 @@
 
 This master thesis aims to improve the natural language understanding of an artificial conversational agent, that uses a Hidden Markov Model to calculate Part-of-Speech tags for input words. In order to achieve better results especially for uncommon word combinations and sentence structures, two new classification models are implemented and evaluated: a Feed-forward Neural Network and a Recurrent Neural Network.
 
-## TOC (presumably)
+# TOC (presumably)
 - Introduction
 	- Scope of this Thesis
 	- Related Work
@@ -28,7 +28,7 @@ This master thesis aims to improve the natural language understanding of an arti
 	- Discussion
 	- Future Work
 
-## Setup
+# Setup
 Check if Python 3 is installed:
 
     $ python --version
@@ -42,11 +42,24 @@ If the installation was successful, change to the directory of the Tagger you wa
 
 	$ cd fnn-tagger/
 
-## Usage
-### Configuration
-TODO
+# Usage
+## Configuration
+The `settings.py` script contains the following configuration options:
 
-### Training
+| option | description |
+| ------ | ----------- |
+| `TRAINING_FILE_PATH` | Path to a file with tagged sentences of this form: word1/TAG word2/TAG ... |
+| `VOCAB_SIZE` | Presumable dimension of the vocabulary (number of distinct words) |
+| `N_PAST_WORDS` | Number of preceding words to take into account for the POS tag training of the current word |
+| `EMBEDDING_SIZE` | Dimension of the word embeddings |
+| `H_SIZE` | Dimension of the hidden layer |
+| `TEST_RATIO` | Ratio of test data extracted from the training data |
+| `BATCH_SIZE` | Size of the training batches |
+| `N_EPOCHS` | Number of training epochs |
+| `EVALUATE_EVERY` | Show evaluation result after this number of trainings steps |
+| `CHECKPOINT_EVERY` | Save model state after this number of trainings steps |
+
+## Training
 To train the Tagger call the `tagger.py` script with the `--train` flag:
 
 	$ python tagger.py --train
@@ -65,23 +78,23 @@ According to your configuration, the batch training will start. Once you reached
 	Step 300: loss 0.0, accuracy 100%
 	Saved model checkpoint to 'saved/model-300'
 
-### Tagging
+## Tagging
 To tag a sentence with a pretrained model call the `tagger.py` script with the `--tag` parameter with a sentence to be tagged:
 
 	$ python tagger.py --tag "Show all modules of Bachelor Informatics"
 
-Now all words are looked up in the model and get a tag, e.g.:
+Now a tag is attached to every word, e.g.:
 
 	Show/R_LIST all/X modules/M_MTSModule of/X Bachelor/C_Program:degree Informatics/C_Program:name
 
-## Links
-### Alex
+# Links
+## Alex
 - https://gitlab.tubit.tu-berlin.de/thilo.michael/aaca-alex/wikis/home
 - https://gitlab.tubit.tu-berlin.de/thilo.michael/aaca-alex/wikis/documentation-tagging
 
-### TensorFlow
+## TensorFlow
 - https://www.tensorflow.org/get_started/mnist/pros
 - https://www.tensorflow.org/versions/master/api_docs/python/tf/nn
 
-### Similar Tagger
+## Similar Tagger
 - https://github.com/mrahtz/tensorflow-pos-tagger

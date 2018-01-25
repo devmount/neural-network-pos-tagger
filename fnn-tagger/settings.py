@@ -11,7 +11,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 # Path to a file with tagged sentences of this form: word1/TAG word2/TAG ...
 TRAINING_FILE_PATH = 'data/test.corpus'
 
-# Presumably dimension of the vocabulary (number of distinct words)
+# Presumable dimension of the vocabulary (number of distinct words)
 VOCAB_SIZE = 15000
 
 # Number of preceding words to take into account for the POS tag training of the current word
