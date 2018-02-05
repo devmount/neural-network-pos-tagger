@@ -26,7 +26,7 @@ class Tagger:
 	"""
 
 
-	def __init__(self, training_file_path, vocab_size, n_past_words, embedding_size, h_size, test_ratio, batch_size, n_epochs, evaluate_every, checkpoint_every):
+	def __init__(self, training_file_path, vocab_size, n_past_words, embedding_size, h_size, test_ratio, batch_size, n_epochs, checkpoint_every):
 		"""
 		Takes in the file path to a training file and returns a Tagger object that is able to train and tag sentences
 
@@ -38,8 +38,7 @@ class Tagger:
 		@param test_ratio: Ratio of test data extracted from the training data
 		@param batch_size: Size of the training batches
 		@param n_epochs: Number of training epochs
-		@param evaluate_every: Show evaluation result after this number of trainings steps
-		@param checkpoint_every: Save model state after this number of trainings steps
+		@param checkpoint_every: Show evaluation result and save model state after this number of trainings steps
 		"""
 
 		# initialize given parameters
@@ -51,7 +50,6 @@ class Tagger:
 		self.test_ratio = test_ratio
 		self.batch_size = batch_size
 		self.n_epochs = n_epochs
-		self.evaluate_every = evaluate_every
 		self.checkpoint_every = checkpoint_every
 
 		# set vocabulary and tensor files for saving and loading
@@ -101,12 +99,10 @@ class Tagger:
 			self.__step(sess, fnn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
 			current_step = tf.train.global_step(sess, global_step)
 
-			if current_step % self.evaluate_every == 0:
-				self.__step(sess, fnn_model, standard_ops, train_ops, test_ops, x_test, y_test, summary_writer, train=False)
-
 			if current_step % self.checkpoint_every == 0:
-				path = saver.save(sess, 'saved/model', global_step=current_step)
-				print("Saved model checkpoint to '%s'" % path)
+				self.__step(sess, fnn_model, standard_ops, train_ops, test_ops, x_test, y_test, summary_writer, train=False)
+				path = saver.save(sess, os.path.join(self.storage_dir, 'model'), global_step=current_step)
+				print(" - saved model checkpoint to '%s'" % path)
 
 
 	def tag(self, sentence):
@@ -116,14 +112,14 @@ class Tagger:
 		@param sentence: a string of space separated words, like "word1 word2 wore3"
 		@return a string of space separated word-tag tuples, like "word1/TAG word2/TAG wird3/TAG"
 		"""
-		
-		data = loader.TextLoader(sentence, self.vocab_size, self.n_past_words, self.vocab_path)
+
+		data = loader.TextLoader(sentence.lower(), self.vocab_size, self.n_past_words, self.vocab_path)
 
 		# start tensorflow session
 		sess = tf.Session()
 
 		# load saved session
-		checkpoint_file = tf.train.latest_checkpoint('saved/')
+		checkpoint_file = tf.train.latest_checkpoint(self.storage_dir + '/')
 		saver = tf.train.import_meta_graph(checkpoint_file + '.meta')
 		saver.restore(sess, checkpoint_file)
 
@@ -174,7 +170,7 @@ class Tagger:
 
 		@param directory: directory to delete all files and subdirectories from
 		"""
-		
+
 		for f in os.listdir(directory):
 			if f == '.gitignore':
 				continue
@@ -293,11 +289,11 @@ class Tagger:
 
 		if train:
 			step, loss, accuracy, _, summaries = sess.run(standard_ops + train_ops, feed_dict)
+			print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="\r", flush=True)
 		else:
-			print('')
 			step, loss, accuracy, summaries = sess.run(standard_ops + test_ops, feed_dict)
+			print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="", flush=True)
 
-		print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="\r", flush=True)
 		summary_writer.add_summary(summaries, step)
 
 
@@ -305,7 +301,7 @@ class Tagger:
 		"""
 		Get script arguments
 		"""
-		
+
 		parser = argparse.ArgumentParser()
 		parser.add_argument("--train", action='store_true', help="Activate training")
 		parser.add_argument("--tag", type=str, help="A sentence to be tagged")
@@ -323,7 +319,6 @@ t = Tagger(
 	test_ratio			= settings.TEST_RATIO,
 	batch_size			= settings.BATCH_SIZE,
 	n_epochs			= settings.N_EPOCHS,
-	evaluate_every		= settings.EVALUATE_EVERY,
 	checkpoint_every	= settings.CHECKPOINT_EVERY)
 
 # only execute training when file is invoked as a script and not just imported
