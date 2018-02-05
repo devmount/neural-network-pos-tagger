@@ -21,19 +21,16 @@ N_PAST_WORDS = 3
 EMBEDDING_SIZE = 50
 
 # Dimension of the hidden layer
-HIDDEN_LAYER_SIZE = 100
+HIDDEN_LAYER_SIZE = 50
 
 # Ratio of test data extracted from the training data
 TEST_RATIO = 0.1
 
 # Size of the training batches
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 
 # Number of training epochs
-N_EPOCHS = 100
+N_EPOCHS = 50
 
-# Show evaluation result after this number of trainings steps
-EVALUATE_EVERY = 100
-
-# Save model state after this number of trainings steps
+# Show evaluation result and save model state after this number of trainings steps
 CHECKPOINT_EVERY = 100
