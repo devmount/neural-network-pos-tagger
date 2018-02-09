@@ -27,3 +27,4 @@
 .vscode
 Thumbs.db
 __pycache__
+.pylintrc

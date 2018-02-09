@@ -15,9 +15,9 @@ import os, shutil
 import time
 import argparse
 
-import settings
-import loader
-import model
+import settings as conf
+from loader import TextLoader
+from model import FnnModel
 
 class Tagger:
 	"""
@@ -113,7 +113,7 @@ class Tagger:
 		@return a string of space separated word-tag tuples, like "word1/TAG word2/TAG wird3/TAG"
 		"""
 
-		data = loader.TextLoader(sentence.lower(), self.vocab_size, self.n_past_words, self.vocab_path)
+		data = TextLoader(sentence.lower(), self.vocab_size, self.n_past_words, self.vocab_path)
 
 		# start tensorflow session
 		sess = tf.Session()
@@ -196,7 +196,7 @@ class Tagger:
 			tagged_sentences = f.read()
 			f.close()
 
-		data = loader.TextLoader(tagged_sentences, self.vocab_size, self.n_past_words, self.vocab_path, self.tensor_path)
+		data = TextLoader(tagged_sentences, self.vocab_size, self.n_past_words, self.vocab_path, self.tensor_path)
 		x = data.features
 		y = data.labels
 		n_pos_tags = len(data.pos_to_id)
@@ -221,7 +221,7 @@ class Tagger:
 		data = np.array(data)
 		data_size = len(np.atleast_1d(data))
 		num_batches_per_epoch = int((data_size-1)/self.batch_size) + 1
-		for epoch in range(num_epochs):
+		for _ in range(num_epochs):
 			# shuffle the data at each epoch
 			if shuffle:
 				shuffle_indices = np.random.permutation(np.arange(data_size))
@@ -239,7 +239,7 @@ class Tagger:
 		Initializes a Feed-Forward Neural Network model
 		"""
 
-		fnn_model = model.FnnModel(vocab_size, n_past_words, embedding_size, self.h_size, n_pos_tags)
+		fnn_model = FnnModel(vocab_size, n_past_words, embedding_size, self.h_size, n_pos_tags)
 		global_step = tf.Variable(initial_value=0, name="global_step", trainable=False)
 		optimizer = tf.train.AdamOptimizer()
 		train_op = optimizer.minimize(fnn_model.loss, global_step=global_step)
@@ -311,15 +311,15 @@ class Tagger:
 
 # The default tagger
 t = Tagger(
-	training_file_path	= settings.TRAINING_FILE_PATH,
-	vocab_size			= settings.VOCAB_SIZE,
-	n_past_words		= settings.N_PAST_WORDS,
-	embedding_size		= settings.EMBEDDING_SIZE,
-	h_size				= settings.HIDDEN_LAYER_SIZE,
-	test_ratio			= settings.TEST_RATIO,
-	batch_size			= settings.BATCH_SIZE,
-	n_epochs			= settings.N_EPOCHS,
-	checkpoint_every	= settings.CHECKPOINT_EVERY)
+	training_file_path	= conf.TRAINING_FILE_PATH,
+	vocab_size			= conf.VOCAB_SIZE,
+	n_past_words		= conf.N_PAST_WORDS,
+	embedding_size		= conf.EMBEDDING_SIZE,
+	h_size				= conf.HIDDEN_LAYER_SIZE,
+	test_ratio			= conf.TEST_RATIO,
+	batch_size			= conf.BATCH_SIZE,
+	n_epochs			= conf.N_EPOCHS,
+	checkpoint_every	= conf.CHECKPOINT_EVERY)
 
 # only execute training when file is invoked as a script and not just imported
 if __name__ == "__main__":
