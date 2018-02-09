@@ -98,3 +98,4 @@ Now a tag is attached to every word, e.g.:
 
 ## Similar Tagger
 - https://github.com/mrahtz/tensorflow-pos-tagger
+- https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/3_NeuralNetworks/recurrent_network.ipynb
