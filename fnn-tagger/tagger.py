@@ -301,9 +301,9 @@ class Tagger:
         """
 
         parser = argparse.ArgumentParser()
-        parser.add_argument("--train", action='store_true', help="Activate training")
-        parser.add_argument("--tag", type=str, help="A sentence to be tagged")
-        parser.add_argument("--reset", action='store_true', help="Reset all stored training and log data")
+        parser.add_argument("--train", action='store_true', help="Invokes training of a language model")
+        parser.add_argument("--tag", type=str, help="Tags a given sentence with the pretraine language model")
+        parser.add_argument("--reset", action='store_true', help="Removes all stored training and log data")
 
         return parser.parse_args()
 
