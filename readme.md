@@ -107,7 +107,7 @@ To reset the tagger and delete all previously created files call the `tagger.py`
 - <https://www.tensorflow.org/get_started/mnist/pros>
 - <https://www.tensorflow.org/versions/master/api_docs/python/tf/nn>
 
-### Similar Tagger
+### Example Tagger
 
-- https://github.com/mrahtz/tensorflow-pos-tagger
-- https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/3_NeuralNetworks/recurrent_network.ipynb
+- <https://github.com/mrahtz/tensorflow-pos-tagger>
+- <https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/3_NeuralNetworks/recurrent_network.ipynb>
