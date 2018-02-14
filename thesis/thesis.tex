@@ -119,7 +119,7 @@ Unterschrift
 ...
 
 \section{Tagging Interface}\label{c.alex.tagging}
-The modular structure of \Alex allows for easier separation of various functions and therefore easier replaceability of certain functionalities. One of these modules is the tagger, which is used to train a language model on the one hand and to assign tags to the words of a given input sentence on the other hand.
+The modular structure of \Alex allows for easier separation of various functions and therefore easier replaceability of certain functionalities. Besides a web crawler for current data retrieval for the database and a frontend interface module is the tagger, which is used to train a language model on the one hand and to assign tags to the words of a given input sentence on the other hand.
 
 The implementation of this tagger utilizes a Hidden Markov Model (HMM), which is a statistical model that is particularly used for pattern recognition, speech recognition and part-of-speech tagging. \Alex uses an already existing implementation of the HMM Tagger from the Natural Language Toolkit (NLTK)\footnote{The Natural Language Toolkit is a collection of \i{Python} programming libraries for natural language processing, see \link{http://nltk.org}}, called \tt{HiddenMarkovModelTagger}.
 
@@ -139,11 +139,55 @@ The output is a corresponding list of tuples containing a word and its assigned 
 
 
 % ===================================================================================
+\chapter{Part-of-Speech Tagging}\label{c.postagging}
+...
+
+\section{Feed-forward Neural Network Model}\label{c.postagging.fnn}
+...
+
+\subsection{Architecture}\label{c.postagging.fnn.architecture}
+...
+
+\subsection{Implementation}\label{c.postagging.fnn.implementation}
+...
+
+\section{Recurrent Neural Network Model}\label{c.postagging.rnn}
+...
+
+\subsection{Architecture}\label{c.postagging.rnn.architecture}
+...
+
+\subsection{Implementation}\label{c.postagging.rnn.implementation}
+...
+
+% ===================================================================================
+\chapter{Training}\label{c.training}
+...
+
+\section{Data Retrieval}\label{c.training.data}
+...
+
+\section{Parameter Tuning}\label{c.training.tuning}
+...
+
+% ===================================================================================
 \chapter{Evaluation and Comparison}\label{c.evaluation}
+...
+
+\section{Test Design}\label{c.evaluation.test}
 ...
 
 % ===================================================================================
 \chapter{Discussion and Conclusion}\label{c.conclusion}
+...
+
+\section{Summary}\label{c.conclusion.summary}
+...
+
+\section{Discussion}\label{c.conclusion.discussion}
+...
+
+\section{Future work}\label{c.conclusion.future}
 ...
 
 % ===================================================================================
