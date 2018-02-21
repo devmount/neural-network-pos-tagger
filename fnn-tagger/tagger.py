@@ -166,17 +166,22 @@ class Tagger:
         # get pre-tagged data
         text = open(evaluation_file).read()
         tagged_sentences = text.splitlines()
+        n_sentences = len(tagged_sentences)
         # tag data based on trained language model
         computed_words = self.tag(self.__untag_text(text)).split()
         computed_sentences = []
         sentence_lengths = [len(x.split()) for x in tagged_sentences]
+        n_words = sum(sentence_lengths)
         for i, l in enumerate(sentence_lengths):
             computed_sentences.append(' '.join(computed_words[sum(sentence_lengths[:i]):sum(sentence_lengths[:i])+l]))
-        # compute correct sentences
+        # compute correct sentences and words
         for t, c in zip(tagged_sentences, computed_sentences):
             n_sentences_correct += 1 if t.strip() == c.strip() else 0
-        # print ratio of correctly tagged sentences
-        print('%i/%i (%.1f%%) sentences correct' % (n_sentences_correct, len(tagged_sentences), n_sentences_correct/len(tagged_sentences)*100))
+            for tw, cw in zip (t.split(), c.split()):
+                n_words_correct += 1 if tw.strip() == cw.strip() else 0
+        # print ratio of correctly tagged sentences and words
+        print('%i/%i (%.1f%%) sentences correct' % (n_sentences_correct, n_sentences, n_sentences_correct/n_sentences*100))
+        print('%i/%i (%.1f%%) words correct' % (n_words_correct, n_words, n_words_correct/n_words*100))
 
 
     def reset(self):
