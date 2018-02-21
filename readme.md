@@ -61,8 +61,7 @@ The `settings.py` script contains the following configuration options:
 | `TEST_RATIO` | Ratio of test data extracted from the training data |
 | `BATCH_SIZE` | Size of the training batches |
 | `N_EPOCHS` | Number of training epochs |
-| `EVALUATE_EVERY` | Show evaluation result after this number of trainings steps |
-| `CHECKPOINT_EVERY` | Save model state after this number of trainings steps |
+| `CHECKPOINT_EVERY` | Evaluate and save model state after this number of trainings steps |
 
 ### Training
 
@@ -86,6 +85,17 @@ To tag a sentence with a pretrained model call the `tagger.py` script with the `
     Loading saved vocabulary...
     Generating tensors...
     Show/R_LIST all/X modules/M_MTSModule of/X Bachelor/C_Program:degree Informatics/C_Program:name
+
+### Evaluation
+
+To evaluate a pretrained model on an external test set call the `tagger.py` script with the `--evaluate` parameter with the path to the file which contains the evaluation data.
+
+    $ python tagger.py --evaluate "data/evaluation.txt"
+    Evaluation starts...
+    Loading saved vocabulary...
+    Generating tensors...
+    18/28 (64.3%) sentences correct
+    172/198 (86.9%) words correct
 
 ### Reset
 
