@@ -55,8 +55,7 @@ class TextLoader:
         unique_pos_tags = set(pos_tags)
 
         # most_common() returns (word, count) tuples
-        # Why the '- 1'? To account for the extra word we add for words
-        # not in the vocabulary, UNKNOWN_WORD.
+        # Why the '- 1'? To account for the extra word we add for words not in the vocabulary, UNKNOWN_WORD.
         words_to_keep = [t[0] for t in word_counts.most_common(self.vocab_size - 1)]
 
         self.word_to_id = {word: i for i, word in enumerate(words_to_keep, start=1)}
@@ -110,8 +109,7 @@ class TextLoader:
 
         for sentence in tagged_sentences.split('\n'):
             # Why drop_untagged=False here?
-            # Because we might have received an untagged sentence
-            # which we now want to tag.
+            # Because we might have received an untagged sentence which we now want to tag.
             words, pos_tags = self.split_sentence(sentence, drop_untagged=False)
 
             for j in range(len(words)):

@@ -161,13 +161,22 @@ class Tagger:
         print('Evaluation starts...')
         sess = tf.Session()
 
+        # initialize counter variables
         n_words_correct, n_sentences_correct = 0, 0
-        lines = open(evaluation_file).readlines()
-        for line in lines:
-            tagged = self.tag(self.__untag(line), True)
-            n_sentences_correct += 1 if line.strip() == tagged.strip() else 0
-        
-        print('%i/%i (%.1f%%) sentences correct' % (n_sentences_correct, len(lines), n_sentences_correct/len(lines)*100))
+        # get pre-tagged data
+        text = open(evaluation_file).read()
+        tagged_sentences = text.splitlines()
+        # tag data based on trained language model
+        computed_words = self.tag(self.__untag_text(text)).split()
+        computed_sentences = []
+        sentence_lengths = [len(x.split()) for x in tagged_sentences]
+        for i, l in enumerate(sentence_lengths):
+            computed_sentences.append(' '.join(computed_words[sum(sentence_lengths[:i]):sum(sentence_lengths[:i])+l]))
+        # compute correct sentences
+        for t, c in zip(tagged_sentences, computed_sentences):
+            n_sentences_correct += 1 if t.strip() == c.strip() else 0
+        # print ratio of correctly tagged sentences
+        print('%i/%i (%.1f%%) sentences correct' % (n_sentences_correct, len(tagged_sentences), n_sentences_correct/len(tagged_sentences)*100))
 
 
     def reset(self):
@@ -319,7 +328,7 @@ class Tagger:
         summary_writer.add_summary(summaries, step)
 
 
-    def __untag(self, sentence):
+    def __untag_sentence(self, sentence):
         """
         Removes tags from a tagged sentence
         """
@@ -328,6 +337,17 @@ class Tagger:
         for word in sentence.split():
             words.append(word[:(word.index('/'))])
         return ' '.join(words)
+
+
+    def __untag_text(self, text):
+        """
+        Removes tags from a tagged text (one sentence per line)
+        """
+
+        sentences = []
+        for sentence in text.splitlines():
+            sentences.append(self.__untag_sentence(sentence))
+        return '\n'.join(sentences)
 
 
     def parse_args(self):
