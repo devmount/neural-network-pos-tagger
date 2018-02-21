@@ -9,7 +9,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 
 # Path to a file with tagged sentences of this form: word1/TAG word2/TAG ...
-TRAINING_FILE_PATH = 'data/test.corpus'
+TRAINING_FILE_PATH = 'data/hmm.random.corpus'
 
 # Presumable dimension of the vocabulary (number of distinct words)
 VOCAB_SIZE = 15000
@@ -30,7 +30,7 @@ TEST_RATIO = 0.1
 BATCH_SIZE = 32
 
 # Number of training epochs
-N_EPOCHS = 50
+N_EPOCHS = 10
 
 # Show evaluation result and save model state after this number of trainings steps
-CHECKPOINT_EVERY = 100
+CHECKPOINT_EVERY = 500

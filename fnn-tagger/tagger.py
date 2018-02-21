@@ -62,14 +62,14 @@ class Tagger:
         Trains and evaluates a language model on a given training file
         """
 
-        # start tensorflow session
-        print('Training starts...')
-        sess = tf.Session()
-
         # check if training file exists
         if not os.path.isfile(self.training_file_path):
             print('Error: training file "%s" doesn\'t exist' % self.training_file_path)
             return
+
+        # start tensorflow session
+        print('Training starts...')
+        sess = tf.Session()
 
         # get training and test data and the number of existing POS tags
         train_batches, test_data, n_pos_tags = self.__load_data()
@@ -103,15 +103,16 @@ class Tagger:
                 print(" - saved model checkpoint to '%s'" % path)
 
 
-    def tag(self, sentence):
+    def tag(self, sentence, silent=False):
         """
         Tags a given sentence with the help of a previously trained model
 
         @param sentence: a string of space separated words, like "word1 word2 wore3"
+        @param silent: no print output
         @return a string of space separated word-tag tuples, like "word1/TAG word2/TAG wird3/TAG"
         """
 
-        data = TextLoader(sentence.lower(), self.vocab_size, self.n_past_words, self.vocab_path)
+        data = TextLoader(sentence.lower(), self.vocab_size, self.n_past_words, self.vocab_path, None, silent)
 
         # start tensorflow session
         sess = tf.Session()
@@ -144,6 +145,29 @@ class Tagger:
             annotated_words.append(annotated_word)
 
         return ' '.join(annotated_words)
+
+
+    def evaluate(self, evaluation_file):
+        """
+        Evaluates a previously trained model with a given evaluation file
+        """
+
+        # check if evaluation file exists
+        if not os.path.isfile(evaluation_file):
+            print('Error: evaluation file "%s" doesn\'t exist' % evaluation_file)
+            return
+
+        # start tensorflow session
+        print('Evaluation starts...')
+        sess = tf.Session()
+
+        n_words_correct, n_sentences_correct = 0, 0
+        lines = open(evaluation_file).readlines()
+        for line in lines:
+            tagged = self.tag(self.__untag(line), True)
+            n_sentences_correct += 1 if line.strip() == tagged.strip() else 0
+        
+        print('%i/%i (%.1f%%) sentences correct' % (n_sentences_correct, len(lines), n_sentences_correct/len(lines)*100))
 
 
     def reset(self):
@@ -295,6 +319,17 @@ class Tagger:
         summary_writer.add_summary(summaries, step)
 
 
+    def __untag(self, sentence):
+        """
+        Removes tags from a tagged sentence
+        """
+
+        words = []
+        for word in sentence.split():
+            words.append(word[:(word.index('/'))])
+        return ' '.join(words)
+
+
     def parse_args(self):
         """
         Get script arguments
@@ -302,7 +337,8 @@ class Tagger:
 
         parser = argparse.ArgumentParser()
         parser.add_argument("--train", action='store_true', help="Invokes training of a language model")
-        parser.add_argument("--tag", type=str, help="Tags a given sentence with the pretraine language model")
+        parser.add_argument("--tag", type=str, help="Tags a given sentence with the pretrained language model")
+        parser.add_argument("--evaluate", type=str, help="Evaluates pretrained language model with a given evaluation file")
         parser.add_argument("--reset", action='store_true', help="Removes all stored training and log data")
 
         return parser.parse_args()
@@ -327,7 +363,11 @@ if __name__ == "__main__":
         t.train()
     # invoke tagging of a given sentence
     if args.tag is not None:
-        print(t.tag(args.tag))
+        print('The tagged sentence is:')
+        print(t.tag(args.tag, True))
+    # invoke evaluation
+    if args.evaluate is not None:
+        t.evaluate(args.evaluate)
     # invoke reset of training data
     if args.reset:
         t.reset()

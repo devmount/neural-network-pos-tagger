@@ -26,23 +26,23 @@ class TextLoader:
     """
 
 
-    def __init__(self, sentences, vocab_size, n_past_words, vocab_path, tensor_path=None):
+    def __init__(self, sentences, vocab_size, n_past_words, vocab_path, tensor_path=None, silent=False):
         self.vocab_size = vocab_size
         self.n_past_words = n_past_words
 
         if os.path.exists(vocab_path):
-            print("Loading saved vocabulary...")
+            if not silent: print("Loading saved vocabulary...")
             self.load_vocab(vocab_path)
         else:
-            print("Generating vocabulary...")
+            if not silent: print("Generating vocabulary...")
             self.gen_vocab(sentences)
             self.save_vocab(vocab_path)
 
         if tensor_path is not None and os.path.exists(tensor_path):
-            print("Loading saved tensors...")
+            if not silent: print("Loading saved tensors...")
             self.load_tensors(tensor_path)
         else:
-            print("Generating tensors...")
+            if not silent: print("Generating tensors...")
             self.gen_features_and_labels(sentences)
             if tensor_path is not None:
                 self.save_tensors(tensor_path)
