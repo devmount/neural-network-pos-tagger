@@ -24,11 +24,10 @@ class Tagger:
     """
 
 
-    def __init__(self, training_file_path, vocab_size, n_past_words, embedding_size, h_size, test_ratio, batch_size, n_epochs, checkpoint_every):
+    def __init__(self, vocab_size, n_past_words, embedding_size, h_size, test_ratio, batch_size, n_epochs, checkpoint_every):
         """
         Takes in the file path to a training file and returns a Tagger object that is able to train and tag sentences
 
-        @param training_file_path: Path to a file with tagged sentences of this form: word1/TAG word2/TAG ...
         @param vocab_size: Dimension of the vocabulary (number of distinct words)
         @param n_past_words: Number of preceding words to take into account for the POS tag training of the current word
         @param embedding_size: Dimension of the word embeddings
@@ -40,7 +39,6 @@ class Tagger:
         """
 
         # initialize given parameters
-        self.training_file_path = training_file_path
         self.vocab_size = vocab_size
         self.n_past_words = n_past_words
         self.embedding_size = embedding_size
@@ -57,14 +55,16 @@ class Tagger:
         self.tensor_path = os.path.join(self.storage_dir, 'tensors')
 
 
-    def train(self):
+    def train(self, training_file_path):
         """
         Trains and evaluates a language model on a given training file
+
+        @param training_file_path: Path to a corpus file with tagged sentences of format: word1/TAG word2/TAG with one sentence per line
         """
 
         # check if training file exists
-        if not os.path.isfile(self.training_file_path):
-            print('Error: training file "%s" doesn\'t exist' % self.training_file_path)
+        if not os.path.isfile(training_file_path):
+            print('Error: training file "%s" doesn\'t exist' % training_file_path)
             return
 
         # start tensorflow session
@@ -72,7 +72,7 @@ class Tagger:
         sess = tf.Session()
 
         # get training and test data and the number of existing POS tags
-        train_batches, test_data, n_pos_tags = self.__load_data()
+        train_batches, test_data, n_pos_tags = self.__load_data(training_file_path)
         x_test = test_data['x']
         y_test = test_data['y']
 
@@ -217,9 +217,11 @@ class Tagger:
                 shutil.rmtree(p)
 
 
-    def __load_data(self):
+    def __load_data(self, training_file_path):
         """
         Loads and processes training data from a given training file
+
+        @param training_file_path: Path to a corpus file with tagged sentences of format: word1/TAG word2/TAG with one sentence per line
 
         @return train_batches: training data splitted into iterable batches
         @return test_data: data to test the trained model
@@ -227,8 +229,8 @@ class Tagger:
         """
 
         # read tagged data from training file
-        print('Loading training data from "%s"...' % self.training_file_path)
-        with open(self.training_file_path, 'r') as f:
+        print('Loading training data from "%s"...' % training_file_path)
+        with open(training_file_path, 'r') as f:
             tagged_sentences = f.read()
             f.close()
 
@@ -361,7 +363,7 @@ class Tagger:
         """
 
         parser = argparse.ArgumentParser()
-        parser.add_argument("--train", action='store_true', help="Invokes training of a language model")
+        parser.add_argument("--train", type=str, help="Invokes training of a language model on given corpus")
         parser.add_argument("--tag", type=str, help="Tags a given sentence with the pretrained language model")
         parser.add_argument("--evaluate", type=str, help="Evaluates pretrained language model with a given evaluation file")
         parser.add_argument("--reset", action='store_true', help="Removes all stored training and log data")
@@ -370,7 +372,6 @@ class Tagger:
 
 # The default tagger
 t = Tagger(
-    training_file_path  = conf.TRAINING_FILE_PATH,
     vocab_size          = conf.VOCAB_SIZE,
     n_past_words        = conf.N_PAST_WORDS,
     embedding_size      = conf.EMBEDDING_SIZE,
@@ -384,8 +385,8 @@ t = Tagger(
 if __name__ == "__main__":
     args = t.parse_args()
     # invoke training
-    if args.train:
-        t.train()
+    if args.train is not None:
+        t.train(args.train)
     # invoke tagging of a given sentence
     if args.tag is not None:
         print('The tagged sentence is:')
