@@ -157,9 +157,8 @@ class Tagger:
             print('Error: evaluation file "%s" doesn\'t exist' % evaluation_file)
             return
 
-        # start tensorflow session
+        # start evaluation
         print('Evaluation starts...')
-        sess = tf.Session()
 
         # initialize counter variables
         n_words_correct, n_sentences_correct = 0, 0
