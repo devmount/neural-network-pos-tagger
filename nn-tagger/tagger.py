@@ -15,7 +15,7 @@ import os, shutil, time, argparse
 
 import settings as conf
 from loader import TextLoader
-from model import FnnModel
+import model
 
 class Tagger:
     """
@@ -78,8 +78,8 @@ class Tagger:
 
         print('Initializing model...')
         # initialize the model by specifying initial values for the tensorflow variables
-        fnn_model, train_op, global_step = self.__model_init(self.vocab_size, self.embedding_size, self.n_past_words, n_pos_tags)
-        train_summary_ops, test_summary_ops, summary_writer = self.__logging_init(fnn_model, sess.graph)
+        nn_model, train_op, global_step = self.__model_init(self.vocab_size, self.embedding_size, self.n_past_words, n_pos_tags)
+        train_summary_ops, test_summary_ops, summary_writer = self.__logging_init(nn_model, sess.graph)
         saver = self.__checkpointing_init()
 
         # take the initial values that have already been specified, and assign them to each Variable
@@ -87,18 +87,18 @@ class Tagger:
         # make the graph read-only to ensure that no operations are added to it when shared between multiple threads
         sess.graph.finalize()
 
-        standard_ops = [global_step, fnn_model.loss, fnn_model.accuracy]
+        standard_ops = [global_step, nn_model.loss, nn_model.accuracy]
         train_ops = [train_op, train_summary_ops]
         test_ops = [test_summary_ops]
 
         # start training with taking one training batch each step
         for batch in train_batches:
             x_batch, y_batch = zip(*batch)
-            self.__step(sess, fnn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
+            self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
             current_step = tf.train.global_step(sess, global_step)
 
             if current_step % self.checkpoint_every == 0:
-                self.__step(sess, fnn_model, standard_ops, train_ops, test_ops, x_test, y_test, summary_writer, train=False)
+                self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_test, y_test, summary_writer, train=False)
                 path = saver.save(sess, os.path.join(self.storage_dir, 'model'), global_step=current_step)
                 print(" - saved model checkpoint to '%s'" % path)
 
@@ -276,27 +276,27 @@ class Tagger:
         Initializes a Feed-Forward Neural Network model
         """
 
-        fnn_model = FnnModel(vocab_size, n_past_words, embedding_size, self.h_size, n_pos_tags)
+        nn_model = model.FNN(vocab_size, n_past_words, embedding_size, self.h_size, n_pos_tags)
         global_step = tf.Variable(initial_value=0, name="global_step", trainable=False)
-        optimizer = fnn_model.optimizer
-        train_op = optimizer.minimize(fnn_model.loss, global_step=global_step)
+        optimizer = nn_model.optimizer
+        train_op = optimizer.minimize(nn_model.loss, global_step=global_step)
 
-        return fnn_model, train_op, global_step
+        return nn_model, train_op, global_step
 
 
-    def __logging_init(self, fnn_model, graph):
+    def __logging_init(self, nn_model, graph):
         """
         Set up logging that the progress can be visualised in TensorBoard
         """
 
         # Add ops to record summaries for loss and accuracy...
-        train_loss = tf.summary.scalar("train_loss", fnn_model.loss)
-        train_accuracy = tf.summary.scalar("train_accuracy", fnn_model.accuracy)
+        train_loss = tf.summary.scalar("train_loss", nn_model.loss)
+        train_accuracy = tf.summary.scalar("train_accuracy", nn_model.accuracy)
         # ...then merge these ops into one single op so that they easily be run together
         train_summary_ops = tf.summary.merge([train_loss, train_accuracy])
         # Same ops, but with different names, so that train/test results show up separately in TensorBoard
-        test_loss = tf.summary.scalar("test_loss", fnn_model.loss)
-        test_accuracy = tf.summary.scalar("test_accuracy", fnn_model.accuracy)
+        test_loss = tf.summary.scalar("test_loss", nn_model.loss)
+        test_accuracy = tf.summary.scalar("test_accuracy", nn_model.accuracy)
         test_summary_ops = tf.summary.merge([test_loss, test_accuracy])
 
         timestamp = int(time.time())

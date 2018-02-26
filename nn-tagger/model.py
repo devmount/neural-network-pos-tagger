@@ -10,7 +10,7 @@ The code is based on the TensorFlow Part-of-Speech Tagger from Matthew Rahtz
 
 import tensorflow as tf
 
-class FnnModel:
+class FNN:
     """
     A class that initializes the structure of a Feed-forward Neural Network when instantiated
     """

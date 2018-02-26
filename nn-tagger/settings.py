@@ -7,6 +7,8 @@ import os
 # ingore tensorflow compilation warnings
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
+# architecture: FNN|RNN
+ARCHITECTURE = 'FNN'
 
 # Presumable dimension of the vocabulary (number of distinct words)
 VOCAB_SIZE = 15000
@@ -27,7 +29,7 @@ TEST_RATIO = 0.1
 BATCH_SIZE = 32
 
 # Number of training epochs
-N_EPOCHS = 10
+N_EPOCHS = 50
 
 # Show evaluation result and save model state after this number of trainings steps
-CHECKPOINT_EVERY = 500
+CHECKPOINT_EVERY = 50
