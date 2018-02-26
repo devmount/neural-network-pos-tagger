@@ -229,7 +229,7 @@ class Tagger:
 
         # read tagged data from training file
         print('Loading training data from "%s"...' % training_file_path)
-        with open(training_file_path, 'r') as f:
+        with open(training_file_path, 'r', encoding="utf8") as f:
             tagged_sentences = f.read()
             f.close()
 
@@ -278,7 +278,7 @@ class Tagger:
 
         fnn_model = FnnModel(vocab_size, n_past_words, embedding_size, self.h_size, n_pos_tags)
         global_step = tf.Variable(initial_value=0, name="global_step", trainable=False)
-        optimizer = tf.train.AdamOptimizer()
+        optimizer = fnn_model.optimizer
         train_op = optimizer.minimize(fnn_model.loss, global_step=global_step)
 
         return fnn_model, train_op, global_step

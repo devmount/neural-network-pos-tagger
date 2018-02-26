@@ -58,3 +58,6 @@ class FnnModel:
         correct_prediction = tf.equal(self.predictions, self.input_y)
         # compute the overall accuracy
         self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+        
+        # apply an optimizer
+        self.optimizer = tf.train.AdamOptimizer()
