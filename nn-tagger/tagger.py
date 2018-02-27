@@ -68,7 +68,7 @@ class Tagger:
             return
 
         # start tensorflow session
-        print('Training starts...')
+        print('Training starts (can be finished earlier with CTRL+C)...')
         sess = tf.Session()
 
         # get training and test data and the number of existing POS tags
@@ -276,7 +276,11 @@ class Tagger:
         Initializes a Feed-Forward Neural Network model
         """
 
-        nn_model = model.FNN(vocab_size, n_past_words, embedding_size, self.h_size, n_pos_tags)
+        # load model architecture based on settings, default is FNN (Feed-forward Neural Network)
+        if conf.ARCHITECTURE == 'RNN':
+            nn_model = model.RNN(vocab_size, n_past_words, embedding_size, self.h_size, n_pos_tags)
+        else:
+            nn_model = model.FNN(vocab_size, n_past_words, embedding_size, self.h_size, n_pos_tags)
         global_step = tf.Variable(initial_value=0, name="global_step", trainable=False)
         optimizer = nn_model.optimizer
         train_op = optimizer.minimize(nn_model.loss, global_step=global_step)
@@ -385,7 +389,10 @@ if __name__ == "__main__":
     args = t.parse_args()
     # invoke training
     if args.train is not None:
-        t.train(args.train)
+        try:
+            t.train(args.train)
+        except KeyboardInterrupt:
+            print('\nFinished training earlier.', flush=True)
     # invoke tagging of a given sentence
     if args.tag is not None:
         print('The tagged sentence is:')
