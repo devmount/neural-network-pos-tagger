@@ -8,7 +8,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # architecture: FNN|RNN
-ARCHITECTURE = 'FNN'
+ARCHITECTURE = 'RNN'
 
 # Presumable dimension of the vocabulary (number of distinct words)
 VOCAB_SIZE = 15000
@@ -17,7 +17,7 @@ VOCAB_SIZE = 15000
 N_PAST_WORDS = 3
 
 # Dimension of the word embeddings
-EMBEDDING_SIZE = 50
+EMBEDDING_SIZE = 100
 
 # Dimension of the hidden layer
 HIDDEN_LAYER_SIZE = 50
@@ -29,7 +29,7 @@ TEST_RATIO = 0.1
 BATCH_SIZE = 32
 
 # Number of training epochs
-N_EPOCHS = 50
+N_EPOCHS = 20
 
 # Show evaluation result and save model state after this number of trainings steps
-CHECKPOINT_EVERY = 50
+CHECKPOINT_EVERY = 10000

@@ -40,7 +40,7 @@ class Tagger:
 
         # initialize given parameters
         self.vocab_size = vocab_size
-        self.n_past_words = n_past_words
+        self.n_past_words = n_past_words if conf.ARCHITECTURE == 'FNN' else 0
         self.embedding_size = embedding_size
         self.h_size = h_size
         self.test_ratio = test_ratio
@@ -278,7 +278,7 @@ class Tagger:
 
         # load model architecture based on settings, default is FNN (Feed-forward Neural Network)
         if conf.ARCHITECTURE == 'RNN':
-            nn_model = model.RNN(vocab_size, n_past_words, embedding_size, self.h_size, n_pos_tags)
+            nn_model = model.RNN(vocab_size, embedding_size, self.h_size, n_pos_tags)
         else:
             nn_model = model.FNN(vocab_size, n_past_words, embedding_size, self.h_size, n_pos_tags)
         global_step = tf.Variable(initial_value=0, name="global_step", trainable=False)

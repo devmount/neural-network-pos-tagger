@@ -1,5 +1,5 @@
 """
-This module provides the structure and initialization of a Feed-forward Neural Network model
+This module provides the structure and initialization of different Neural Network models
 
 @see https://www.tensorflow.org/get_started/mnist/pros
 @see https://www.tensorflow.org/versions/master/api_docs/python/tf/nn
@@ -9,6 +9,7 @@ The code is based on the TensorFlow Part-of-Speech Tagger from Matthew Rahtz
 """
 
 import tensorflow as tf
+
 
 class FNN:
     """
@@ -31,9 +32,9 @@ class FNN:
         self.input_x = tf.placeholder(tf.int32, [None, n_past_words + 1], name="input_x")
         # initialize input lables (tags)
         self.input_y = tf.placeholder(tf.int64, [None], name="input_y")
+
         # initialize an embedding matrix with random truncated normal values
         self.embedding_matrix = tf.Variable(tf.truncated_normal([vocab_size, embedding_size], stddev=0.1))
-
         # build word matrix out of a lookup in the embedding matrix for the input words
         self.word_matrix = tf.nn.embedding_lookup(self.embedding_matrix, self.input_x)
         # stack the rows to create one vector. -1: "figure out the right size" (accounts for variable batch size)
@@ -61,3 +62,56 @@ class FNN:
         
         # apply an optimizer
         self.optimizer = tf.train.AdamOptimizer()
+
+
+class RNN:
+    """
+    A class that initializes the structure of a Recurrent Neural Network when instantiated
+    """
+
+
+    def __init__(self, vocab_size, embedding_size, h_size, n_pos_tags):
+        """
+        Initializes the Recurrent Neural Network model
+
+        @param vocab_size: Dimension of the vocabulary (number of distinct words)
+        @param embedding_size: Dimension of the word embeddings
+        @param h_size: Dimension of the hidden layer
+        @param n_pos_tags: Number of existing POS tags
+        """
+
+        timesteps = 3
+        
+        # initialize input word vectors. None: "variable size"
+        self.input_x = tf.placeholder(tf.int32, [None, 1], name="input_x")
+        # initialize input lables (tags)
+        self.input_y = tf.placeholder(tf.int64, [None], name="input_y")
+
+        # initialize an embedding matrix with random truncated normal values
+        self.embedding_matrix = tf.Variable(tf.truncated_normal([vocab_size, embedding_size], stddev=0.1))
+        # build word matrix out of a lookup in the embedding matrix for the input words
+        self.word_matrix = tf.nn.embedding_lookup(self.embedding_matrix, self.input_x)
+        # stack the rows to create one vector. -1: "figure out the right size" (accounts for variable batch size)
+        self.feature_vector = tf.reshape(self.word_matrix, [-1, embedding_size])
+
+        # initialize weights between input layer and hidden layer
+        w1 = tf.Variable(tf.truncated_normal([embedding_size, h_size], stddev=0.1))
+        # compute rectified linear activation function on hidden layer
+        self.h = tf.nn.relu(tf.matmul(self.feature_vector, w1))
+        # initialize weights between hidden layer and output layer
+        self.w2 = tf.Variable(tf.truncated_normal([h_size, n_pos_tags], stddev=0.1))
+
+        # compute the logits for the output layer with shape [?, n_pos_tags]
+        self.logits = tf.matmul(self.h, self.w2)
+        # compute the loss
+        self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(labels=self.input_y, logits=self.logits))
+
+        # reduce the logits output with the largest value to the output layer size = predictions 
+        self.predictions = tf.argmax(self.logits, axis=1, name='predictions')
+        # get the correct predictions by comparing to the given labels
+        correct_prediction = tf.equal(self.predictions, self.input_y)
+        # compute the overall accuracy
+        self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+        
+        # apply an optimizer
+        self.optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
