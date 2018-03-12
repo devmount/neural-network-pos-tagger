@@ -70,7 +70,7 @@ class RNN:
     """
 
 
-    def __init__(self, vocab_size, embedding_size, h_size, n_pos_tags):
+    def __init__(self, vocab_size, embedding_size, h_size, n_pos_tags, n_timesteps, learning_rate):
         """
         Initializes the Recurrent Neural Network model
 
@@ -80,8 +80,6 @@ class RNN:
         @param n_pos_tags: Number of existing POS tags
         """
 
-        timesteps = 3
-        
         # initialize input word vectors. None: "variable size"
         self.input_x = tf.placeholder(tf.int32, [None, 1], name="input_x")
         # initialize input lables (tags)
@@ -114,4 +112,4 @@ class RNN:
         self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
         
         # apply an optimizer
-        self.optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
+        self.optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)

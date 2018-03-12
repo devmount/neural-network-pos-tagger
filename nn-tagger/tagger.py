@@ -24,29 +24,22 @@ class Tagger:
     """
 
 
-    def __init__(self, vocab_size, n_past_words, embedding_size, h_size, test_ratio, batch_size, n_epochs, checkpoint_every):
+    def __init__(self):
         """
         Takes in the file path to a training file and returns a Tagger object that is able to train and tag sentences
-
-        @param vocab_size: Dimension of the vocabulary (number of distinct words)
-        @param n_past_words: Number of preceding words to take into account for the POS tag training of the current word
-        @param embedding_size: Dimension of the word embeddings
-        @param h_size: Dimension of the hidden layer
-        @param test_ratio: Ratio of test data extracted from the training data
-        @param batch_size: Size of the training batches
-        @param n_epochs: Number of training epochs
-        @param checkpoint_every: Show evaluation result and save model state after this number of trainings steps
         """
 
         # initialize given parameters
-        self.vocab_size = vocab_size
-        self.n_past_words = n_past_words if conf.ARCHITECTURE == 'FNN' else 0
-        self.embedding_size = embedding_size
-        self.h_size = h_size
-        self.test_ratio = test_ratio
-        self.batch_size = batch_size
-        self.n_epochs = n_epochs
-        self.checkpoint_every = checkpoint_every
+        self.vocab_size = conf.VOCAB_SIZE
+        self.n_past_words = conf.N_PAST_WORDS if conf.ARCHITECTURE == 'FNN' else 0
+        self.n_timesteps = conf.N_TIMESTEPS
+        self.learning_rate = conf.LEARNING_RATE
+        self.embedding_size = conf.EMBEDDING_SIZE
+        self.h_size = conf.HIDDEN_LAYER_SIZE
+        self.test_ratio = conf.TEST_RATIO
+        self.batch_size = conf.BATCH_SIZE
+        self.n_epochs = conf.N_EPOCHS
+        self.checkpoint_every = conf.CHECKPOINT_EVERY
 
         # set vocabulary and tensor files for saving and loading
         self.log_dir = 'logs'
@@ -78,7 +71,7 @@ class Tagger:
 
         print('Initializing model...')
         # initialize the model by specifying initial values for the tensorflow variables
-        nn_model, train_op, global_step = self.__model_init(self.vocab_size, self.embedding_size, self.n_past_words, n_pos_tags)
+        nn_model, train_op, global_step = self.__model_init(n_pos_tags)
         train_summary_ops, test_summary_ops, summary_writer = self.__logging_init(nn_model, sess.graph)
         saver = self.__checkpointing_init()
 
@@ -271,16 +264,16 @@ class Tagger:
                 yield shuffled_data[start_index:end_index]
 
 
-    def __model_init(self, vocab_size, embedding_size, n_past_words, n_pos_tags):
+    def __model_init(self, n_pos_tags):
         """
         Initializes a Feed-Forward Neural Network model
         """
 
         # load model architecture based on settings, default is FNN (Feed-forward Neural Network)
         if conf.ARCHITECTURE == 'RNN':
-            nn_model = model.RNN(vocab_size, embedding_size, self.h_size, n_pos_tags)
+            nn_model = model.RNN(self.vocab_size, self.embedding_size, self.h_size, n_pos_tags, self.n_timesteps, self.learning_rate)
         else:
-            nn_model = model.FNN(vocab_size, n_past_words, embedding_size, self.h_size, n_pos_tags)
+            nn_model = model.FNN(self.vocab_size, self.n_past_words, self.embedding_size, self.h_size, n_pos_tags)
         global_step = tf.Variable(initial_value=0, name="global_step", trainable=False)
         optimizer = nn_model.optimizer
         train_op = optimizer.minimize(nn_model.loss, global_step=global_step)
@@ -373,19 +366,12 @@ class Tagger:
 
         return parser.parse_args()
 
-# The default tagger
-t = Tagger(
-    vocab_size          = conf.VOCAB_SIZE,
-    n_past_words        = conf.N_PAST_WORDS,
-    embedding_size      = conf.EMBEDDING_SIZE,
-    h_size              = conf.HIDDEN_LAYER_SIZE,
-    test_ratio          = conf.TEST_RATIO,
-    batch_size          = conf.BATCH_SIZE,
-    n_epochs            = conf.N_EPOCHS,
-    checkpoint_every    = conf.CHECKPOINT_EVERY)
 
 # only execute training when file is invoked as a script and not just imported
 if __name__ == "__main__":
+    # create tagger instance
+    t = Tagger()
+    
     args = t.parse_args()
     # invoke training
     if args.train is not None:

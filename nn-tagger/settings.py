@@ -13,8 +13,14 @@ ARCHITECTURE = 'RNN'
 # Presumable dimension of the vocabulary (number of distinct words)
 VOCAB_SIZE = 15000
 
-# Number of preceding words to take into account for the POS tag training of the current word
+# Number of preceding words to take into account for the POS tag training of the current word [FNN only]
 N_PAST_WORDS = 3
+
+# Number of previous training steps to take into account [RNN only]
+N_TIMESTEPS = 3
+
+# Learning rate of an optimizer [RNN only]
+LEARNING_RATE = 0.01
 
 # Dimension of the word embeddings
 EMBEDDING_SIZE = 100
