@@ -94,9 +94,13 @@ Unterschrift
 % ===================================================================================
 \chapter{Introduction}\label{c.introduction}
 \pagenumbering{arabic} % now normal arabic numeration
-% A part-of-speech tagger is a system which automatically assigns the part of speech to words using contextual information. Potential applications for part-of-speech taggers exist in many areas including speech recognition, speech synthesis, machine translation and information retrieval.
+% Turing: Artificial Intelligence
+% Brown: NLP
+% POS Tagging
 
-% Part-of-speech tagging for natural language processing is also used in an advisory artificial conversational agent called Alex. Alex was developed to answer questions about modules and courses at the TU Berlin [2]. The system takes the written natural language requests from the user and tries to model SQL-queries out of that. To understand the natural language queries, the system uses a Hidden Markov Model (HMM) to assign tags to each word of the query (part-of-speech tagging). This HMM tagger is trained with manually created training templates that are filled with the data in the database to be queried. The few manually created sentence-templates and the slot-filling result in training data that has largely the same structure. This often leads to unwanted result when the HMM tagger is presented with a sentence, that doesn’t fit into the structure of the training templates.
+A part-of-speech tagger is a system which automatically assigns the part of speech to words using contextual information. Potential applications for part-of-speech taggers exist in many areas including speech recognition, speech synthesis, machine translation and information retrieval in general.
+
+% Part-of-speech tagging for natural language processing is also used in the advisory artificial conversational agent called Alex. Alex was developed to answer questions about modules and courses at the TU Berlin [2]. The system takes the written natural language requests from the user and tries to model SQL-queries out of that. To understand the natural language queries, the system uses a Hidden Markov Model (HMM) to assign tags to each word of the query (part-of-speech tagging). This HMM tagger is trained with manually created training templates that are filled with the data in the database to be queried. The few manually created sentence-templates and the slot-filling result in training data that has largely the same structure. This often leads to unwanted result when the HMM tagger is presented with a sentence, that doesn’t fit into the structure of the training templates.
 
 \section{Scope of this Thesis}\label{c.introduction.scope}
 % It was shown before, that the neural network approach outperforms part-of-speech tagger that are based on statistical models (like the HMM) [3]. To address the lack of flexibility of the HMM that is currently in use, two new types of classification-models should be implemented and evaluated: Feedforward Neural Networks [1] and Recurrent Neural Networks [4].
@@ -107,6 +111,19 @@ Unterschrift
 
 \section{Related Work}\label{c.introduction.related}
 ...
+
+\section{Structure of this Thesis}\label{c.introduction.structure}
+As introduction, this first chapter gave a short overview about the subject of natural language processing and part-of-speech tagging in general.
+
+The second chapter describes structure and functionality of the already existing Artificial Conversational Agent (ACA) \Alex with the main focus on its language model and tagging interface.
+
+Chapter \ref{c.postagging} explains the implementation of a part-of-speech tagging system with two different neural network approaches.
+
+The training of the language models including the retrieval of the training data and tuning of the training parameter is described in Chapter \ref{c.training}.
+
+Chapter \ref{c.evaluation} shows the evaluation of each language model with a generated test set and their comparison.
+
+In conclusion the final Chapter \ref{c.conclusion} discusses and summarizes the evaluation results and gives an outlook on future work.
 
 % ===================================================================================
 \chapter{\Alex: Artificial Conversational Agent}\label{c.alex}
