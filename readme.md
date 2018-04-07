@@ -9,6 +9,7 @@ This master thesis aims to improve the natural language understanding of an arti
 - Introduction
   - Scope of this Thesis
   - Related Work
+  - Structure of this Thesis
 - Alex: Artificial Conversational Agent
   - System Overview
   - Hidden Markov Model
