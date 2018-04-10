@@ -1,7 +1,7 @@
 \input{thesis_preamble.tex} % import preamble config
 % start document
 \begin{document}
-\pagenumbering{Roman} % große Römische Seitenummerierung
+\pagenumbering{arabic} % große Römische Seitenummerierung
 \pagestyle{empty}
 
 % title page
@@ -34,7 +34,7 @@
 
 \end{center}
 \clearpage
-\pagestyle{useheadings} % normale Kopf- und Fußzeilen für den Rest
+\pagestyle{scrheadings} % normale Kopf- und Fußzeilen für den Rest
 
 % ===================================================================================
 \BlankPage
@@ -57,14 +57,22 @@ Unterschrift
 
 % ===================================================================================
 \chapter*{Abstract}
-...
+A part-of-speech tagger is a system which automatically assigns the part of speech to words using contextual information. Potential applications for part-of-speech taggers exist in many areas of computational linguistics including speech recognition, speech synthesis, machine translation or information retrieval in general.
+
+The part-of-speech tagging task of natural language processing is also used in the advisory artificial conversational agent called \Alex. \Alex\ was developed to answer questions about modules and courses at the Technische Universität Berlin. The system takes the written natural language requests from the user and tries to transform them into SQL-queries. To understand the natural language queries, the system uses a Hidden Markov Model (HMM) to assign tags to each word of the query (part-of-speech tagging). This HMM tagger is trained with manually created training templates that are filled with the data in the database to be queried. The manually created sentence-templates and the slot-filling resulted in many training data sentences with the same structure. This often led to wrong tagging results when the HMM tagger was presented with an input sentence, having a structure that doesn't occur in the training templates.
+
+This thesis shows two different Neural Network approaches for the language modeling of the input sentences and evaluates and compares both Neural Network based tagger as well as the HMM based tagger.
 
 % ===================================================================================
 \BlankPage
 
 % ===================================================================================
 \chapter*{Zusammenfassung}
-...
+Ein Part-of-speech Tagger ist ein System, welches Wortarten anhand von Kontextinformationen automatisch den gegebenen Wörtern zuordnet. Potentielle Anwendungen solcher Tagger gibt es in vielen Bereichen der Computerlinguistik wie Spracherkennung, Sprachsynthese, maschinelle Übersetzung oder Information Retrieval im Allgemeinen.
+
+Part-of-speech Tagging wird auch in \Alex\ verwendet, einem Artificial Conversational Agent. \Alex\ wurde entwickelt, um Fragen zu Modulen und Lehrveranstaltungen an der Technischen Universität Berlin zu beantworten. Das System nimmt die in natürlicher Sprache geschriebenen Anfragen des Benutzers und versucht diese in SQL-Abfragen umzuwandeln. Um die natürliche Sprache zu verstehen, verwendet das System ein Hidden-Markov-Model (HMM), um jedem Wort der Eingabe Wortarten zuzuweisen (Part-of-speech Tagging). Dieser HMM-Tagger wird mit manuell erstellten Trainingsvorlagen trainiert, die mit den Daten der abzufragenden Datenbank gefüllt werden. Die manuell erstellten Satzvorlagen führten zu vielen Trainingsdatensätzen mit gleicher Struktur und damit oft zu falschen Tagging-Ergebnissen, wenn der HMM-Tagger einen Eingabesatz mit einer Struktur verarbeiten sollte, die in den Trainingsvorlagen nicht vorkommt.
+
+Diese Arbeit zeigt zwei verschiedene Ansätze für die Sprachmodellierung der Eingabesätze basierend auf neuronalen Netzwerken und bewertet und vergleicht sowohl die Neuronalen Netzwerk-basierten Tagger als auch den HMM-basierten Tagger.
 
 % ===================================================================================
 \BlankPage
@@ -93,14 +101,9 @@ Unterschrift
 
 % ===================================================================================
 \chapter{Introduction}\label{c.introduction}
-\pagenumbering{arabic} % now normal arabic numeration
 % Turing: Artificial Intelligence
 % Brown: NLP
 % POS Tagging
-
-A part-of-speech tagger is a system which automatically assigns the part of speech to words using contextual information. Potential applications for part-of-speech taggers exist in many areas including speech recognition, speech synthesis, machine translation and information retrieval in general.
-
-% Part-of-speech tagging for natural language processing is also used in the advisory artificial conversational agent called Alex. Alex was developed to answer questions about modules and courses at the TU Berlin [2]. The system takes the written natural language requests from the user and tries to model SQL-queries out of that. To understand the natural language queries, the system uses a Hidden Markov Model (HMM) to assign tags to each word of the query (part-of-speech tagging). This HMM tagger is trained with manually created training templates that are filled with the data in the database to be queried. The few manually created sentence-templates and the slot-filling result in training data that has largely the same structure. This often leads to unwanted result when the HMM tagger is presented with a sentence, that doesn’t fit into the structure of the training templates.
 
 \section{Scope of this Thesis}\label{c.introduction.scope}
 The scope of this thesis is the development of a Neural Network based part-of-speech tagger for the advisory Artificial Conversational Agent (ACA) \Alex, the training of different language models and their evaluation with corresponding test sets.
@@ -110,8 +113,6 @@ In order to accomplish the new language models, two different Neural Network arc
 To evaluate the language models, a data set of known data\footnote{Data, that was already used for the training of the model} and unknown data\footnote{Data, that includes words and sentence structures, that didn't occur in the training data sets} is created. On the basis of this evaluation, both Neural Network models and the HMM are compared to each other.
 
 In accordance to the evaluation results, the former HMM based part-of-speech tagger is then replaced by this new tagger. To guarantee a seamless integration, the new tagger is implemented as a separate module with the same program interface the old tagger already utilizes. This way no other components of the conversational agent have to be changed and the effort of the replacement is kept minimal.
-
-
 
 \section{Related Work}\label{c.introduction.related}
 ...
@@ -141,7 +142,7 @@ In conclusion the final Chapter \ref{c.conclusion} discusses and summarizes the 
 % It was shown before, that the Neural Network approach outperforms part-of-speech tagger that are based on statistical models (like the HMM) [3]. To address the lack of flexibility of the HMM that is currently in use, two new types of classification-models should be implemented and evaluated: Feedforward Neural Networks [1] and Recurrent Neural Networks [4].
 
 \section{Tagging Interface}\label{c.alex.tagging}
-The modular structure of \Alex\ allows for easier separation of various functions and therefore easier replaceability of certain functionalities. Besides a web crawler for current data retrieval for the database and a frontend interface module is the tagger, which is used to train a language model on the one hand and to assign tags to the words of a given input sentence on the other hand.
+The modular structure of \Alex\ allows the separation of different functions and therefore easier replaceability of certain functionalities. Besides a web crawler for current data retrieval for the database and a frontend interface module, \Alex\ provides a tagging module. This module provides the training of a language model as well as the assignment of tags to the words of a given input sentence.
 
 The implementation of this tagger utilizes a Hidden Markov Model (HMM), which is a statistical model that is particularly used for pattern recognition, speech recognition and part-of-speech tagging. \Alex\ uses an already existing implementation of the HMM Tagger from the Natural Language Toolkit (NLTK)\footnote{The Natural Language Toolkit is a collection of \i{Python} programming libraries for natural language processing, see \link{http://nltk.org}}, called \tt{HiddenMarkovModelTagger}.
 
