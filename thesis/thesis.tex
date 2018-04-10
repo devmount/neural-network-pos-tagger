@@ -139,12 +139,12 @@ In conclusion the final Chapter \ref{c.conclusion} discusses and summarizes the 
 
 \section{Hidden Markov Model}\label{c.alex.hmm}
 ...
-% It was shown before, that the Neural Network approach outperforms part-of-speech tagger that are based on statistical models (like the HMM) [3]. To address the lack of flexibility of the HMM that is currently in use, two new types of classification-models should be implemented and evaluated: Feedforward Neural Networks [1] and Recurrent Neural Networks [4].
+% It was shown before, that the Neural Network approach outperforms part-of-speech tagger that are based on statistical models (like the HMM) \cite{ma2000}. To address the lack of flexibility of the HMM that is currently in use, two new types of classification-models should be implemented and evaluated: Feedforward Neural Networks [1] and Recurrent Neural Networks [4].
 
 \section{Tagging Interface}\label{c.alex.tagging}
-The modular structure of \Alex\ allows the separation of different functions and therefore easier replaceability of certain functionalities. Besides a web crawler for current data retrieval for the database and a frontend interface module, \Alex\ provides a tagging module. This module provides the training of a language model as well as the assignment of tags to the words of a given input sentence.
+The modular structure of \Alex\ allows the separation of different functions and therefore easier replaceability of certain functionalities. Besides a web crawler for current data retrieval for the database and a frontend interface module, \Alex\ offers a tagging module. This module provides the training of a language model as well as the assignment of tags to the words of a given input sentence.
 
-The implementation of this tagger utilizes a Hidden Markov Model (HMM), which is a statistical model that is particularly used for pattern recognition, speech recognition and part-of-speech tagging. \Alex\ uses an already existing implementation of the HMM Tagger from the Natural Language Toolkit (NLTK)\footnote{The Natural Language Toolkit is a collection of \i{Python} programming libraries for natural language processing, see \link{http://nltk.org}}, called \tt{HiddenMarkovModelTagger}.
+The implementation of this tagger utilizes a Hidden Markov Model, which is a statistical model that is particularly used for pattern recognition, speech recognition and part-of-speech tagging (see the previous section \ref{c.alex.hmm}). \Alex\ uses an already existing implementation of the HMM Tagger from the Natural Language Toolkit (NLTK)\footnote{The Natural Language Toolkit is a collection of \i{Python} programming libraries for natural language processing, see \link{http://nltk.org}}, called \tt{HiddenMarkovModelTagger}.
 
 To replace the existing tagger, a new tagger has to provide a class with two methods: \tt{train} and \tt{tag}. These methods are used to create the language model and apply it to unknown data.
 
@@ -170,6 +170,11 @@ The output is a corresponding list of tuples containing a word and its assigned 
 
 \subsection{Architecture}\label{c.postagging.fnn.architecture}
 ...
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{images/fnn_structure}
+	\caption{The structure of a Feed-forward Neural Network. The feature vector is built by the initial vectors of the corresponding input word and its predecessors.}\label{fnn_structure}
+\end{figure}
 
 \subsection{Implementation}\label{c.postagging.fnn.implementation}
 ...
