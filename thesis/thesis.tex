@@ -136,6 +136,10 @@ In conclusion the final Chapter \ref{c.conclusion} discusses and summarizes the 
 
 \section{System Overview}\label{c.alex.overview}
 ...
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{images/alex_components}
+	\caption{Overview of all components of \Alex. The red colored parts are components that lie within the scope of this thesis and are adapted or replaced. Original figure by Thilo Michael \cite{michael2016}}\label{f.alex_components}
+\end{figure}
 
 \section{Hidden Markov Model}\label{c.alex.hmm}
 ...
@@ -171,9 +175,9 @@ The output is a corresponding list of tuples containing a word and its assigned 
 \subsection{Architecture}\label{c.postagging.fnn.architecture}
 ...
 
-\begin{figure}[ht]
+\begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/fnn_structure}
-	\caption{The structure of a Feed-forward Neural Network. The feature vector is built by the initial vectors of the corresponding input word and its predecessors.}\label{fnn_structure}
+	\caption{The structure of a Feed-forward Neural Network. The feature vector is built by the initial vectors of the corresponding input word on position \tt{p} and by its three predecessors (here as an example).}\label{f.fnn_structure}
 \end{figure}
 
 \subsection{Implementation}\label{c.postagging.fnn.implementation}
@@ -184,6 +188,10 @@ The output is a corresponding list of tuples containing a word and its assigned 
 
 \subsection{Architecture}\label{c.postagging.rnn.architecture}
 ...
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{images/rnn_structure}
+	\caption{The structure of a Recurrent Neural Network. The feature vector is the initial vector of the corresponding input word at time \tt{t}. The output of the hidden layer from previously trained words (here as an example at time \tt{x}) is fed back into the same hidden layer for the current word.}\label{f.rnn_structure}
+\end{figure}
 
 \subsection{Implementation}\label{c.postagging.rnn.implementation}
 ...
