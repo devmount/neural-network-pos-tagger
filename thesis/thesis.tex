@@ -61,7 +61,7 @@ A part-of-speech tagger is a system which automatically assigns the part of spee
 
 The part-of-speech tagging task of natural language processing is also used in the advisory artificial conversational agent called \Alex. \Alex\ was developed to answer questions about modules and courses at the Technische Universität Berlin. The system takes the written natural language requests from the user and tries to transform them into SQL-queries. To understand the natural language queries, the system uses a Hidden Markov Model (HMM) to assign tags to each word of the query (part-of-speech tagging). This HMM tagger is trained with manually created training templates that are filled with the data in the database to be queried. The manually created sentence-templates and the slot-filling resulted in many training data sentences with the same structure. This often led to wrong tagging results when the HMM tagger was presented with an input sentence, having a structure that doesn't occur in the training templates.
 
-This thesis shows two different Neural Network approaches for the language modeling of the input sentences and evaluates and compares both Neural Network based tagger as well as the HMM based tagger.
+This thesis shows two different neural network approaches for the language modeling of the input sentences and evaluates and compares both neural network based tagger as well as the HMM based tagger.
 
 % ===================================================================================
 \BlankPage
@@ -106,11 +106,11 @@ Diese Arbeit zeigt zwei verschiedene Ansätze für die Sprachmodellierung der Ei
 % POS Tagging
 
 \section{Scope of this Thesis}\label{c.introduction.scope}
-The scope of this thesis is the development of a Neural Network based part-of-speech tagger for the advisory Artificial Conversational Agent (ACA) \Alex, the training of different language models and their evaluation with corresponding test sets.
+The scope of this thesis is the development of a neural network based part-of-speech tagger for the advisory Artificial Conversational Agent (ACA) \Alex, the training of different language models and their evaluation with corresponding test sets.
 
-In order to accomplish the new language models, two different Neural Network architectures are implemented: A Feed-forward Neural Network and Recurrent Neural Network. For the training of both Neural Network implementations, a corpus of tagged language data is generated with the help various input templates, which are created on the basis of logged user input data.
+In order to accomplish the new language models, two different neural network architectures are implemented: A feed-forward neural network and a recurrent neural network. For the training of both neural network implementations, a corpus of tagged language data is generated with the help various input templates, which are created on the basis of logged user input data.
 
-To evaluate the language models, a data set of known data\footnote{Data, that was already used for the training of the model} and unknown data\footnote{Data, that includes words and sentence structures, that didn't occur in the training data sets} is created. On the basis of this evaluation, both Neural Network models and the HMM are compared to each other.
+To evaluate the language models, a data set of known data\footnote{Data, that was already used for the training of the model} and unknown data\footnote{Data, that includes words and sentence structures, that didn't occur in the training data sets} is created. On the basis of this evaluation, both neural network models and the HMM are compared to each other.
 
 In accordance to the evaluation results, the former HMM based part-of-speech tagger is then replaced by this new tagger. To guarantee a seamless integration, the new tagger is implemented as a separate module with the same program interface the old tagger already utilizes. This way no other components of the conversational agent have to be changed and the effort of the replacement is kept minimal.
 
@@ -122,7 +122,7 @@ As introduction, this first chapter gave a short overview about the subject of n
 
 The second chapter describes structure and functionality of the already existing ACA \Alex\ with the main focus on its language model and tagging interface.
 
-Chapter \ref{c.postagging} explains the implementation of a part-of-speech tagging system with two different Neural Network approaches.
+Chapter \ref{c.postagging} explains the implementation of a part-of-speech tagging system with two different neural network approaches.
 
 The training of the language models including the retrieval of the training data and tuning of the training parameter is described in Chapter \ref{c.training}.
 
@@ -142,8 +142,9 @@ In conclusion the final Chapter \ref{c.conclusion} discusses and summarizes the 
 \end{figure}
 
 \section{Hidden Markov Model}\label{c.alex.hmm}
-...
-% It was shown before, that the Neural Network approach outperforms part-of-speech tagger that are based on statistical models (like the HMM) \cite{ma2000}. To address the lack of flexibility of the HMM that is currently in use, two new types of classification-models should be implemented and evaluated: Feedforward Neural Networks [1] and Recurrent Neural Networks [4].
+The Hidden Markov Model (HMM) is a statistical tool, which uses the observable output data of a system to derive hidden information from it. Among other applications, HMMs are used especially for speech recognition tasks.
+
+The preliminary work for HMMs was done by R. L. Stratonovich. He first described the conditional Markov processes in 1960 \cite{stratonovich1960} that were used in the following years to describe simple Markov Models and later Hidden Markov Models (see Baum et. al. \cite{baum1966}\cite{baum1967}). The latter became popular for solving the task of automatic recognition of continuous speech \cite{baker1975} along with other applications like the analysis of biological sequences (e.g. DNA) \cite{bishop1986} and part-of-speech tagging.
 
 \section{Tagging Interface}\label{c.alex.tagging}
 The modular structure of \Alex\ allows the separation of different functions and therefore easier replaceability of certain functionalities. Besides a web crawler for current data retrieval for the database and a frontend interface module, \Alex\ offers a tagging module. This module provides the training of a language model as well as the assignment of tags to the words of a given input sentence.
@@ -168,6 +169,7 @@ The output is a corresponding list of tuples containing a word and its assigned 
 % ===================================================================================
 \chapter{Part-of-Speech Tagging}\label{c.postagging}
 ...
+Ma et. al. have shown before, that the neural network approach outperforms part-of-speech tagger that are based on statistical models (like the HMM) \cite{ma2000}.
 
 \section{Feed-forward Neural Network Model}\label{c.postagging.fnn}
 ...
@@ -177,7 +179,7 @@ The output is a corresponding list of tuples containing a word and its assigned 
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/fnn_structure}
-	\caption{The structure of a Feed-forward Neural Network. The feature vector is built by the initial vectors of the corresponding input word on position \tt{p} and by its three predecessors (here as an example).}\label{f.fnn_structure}
+	\caption{The structure of a feed-forward neural network. The feature vector is built by the initial vectors of the corresponding input word on position \tt{p} and by its three predecessors (here as an example).}\label{f.fnn_structure}
 \end{figure}
 
 \subsection{Implementation}\label{c.postagging.fnn.implementation}
@@ -190,7 +192,7 @@ The output is a corresponding list of tuples containing a word and its assigned 
 ...
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/rnn_structure}
-	\caption{The structure of a Recurrent Neural Network. The feature vector is the initial vector of the corresponding input word at time \tt{t}. The output of the hidden layer from previously trained words (here as an example at time \tt{x}) is fed back into the same hidden layer for the current word.}\label{f.rnn_structure}
+	\caption{The structure of a recurrent neural network. The feature vector is the initial vector of the corresponding input word at time \tt{t}. The output of the hidden layer from previously trained words (here as an example at time \tt{x}) is fed back into the same hidden layer for the current word.}\label{f.rnn_structure}
 \end{figure}
 
 \subsection{Implementation}\label{c.postagging.rnn.implementation}
@@ -225,6 +227,10 @@ The output is a corresponding list of tuples containing a word and its assigned 
 
 \section{Future work}\label{c.conclusion.future}
 ...
+\cite{michael2016}
+\cite{mueller2015}
+\cite{ma2000}
+\cite{schmid1994}
 
 % ===================================================================================
 % \bibliographystyle{apalike}
