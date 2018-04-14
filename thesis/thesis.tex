@@ -135,21 +135,44 @@ In conclusion the final Chapter \ref{c.conclusion} discusses and summarizes the 
 ...
 
 \section{System Overview}\label{c.alex.overview}
-...
+The modular structure of \Alex\ allows the separation of different functions and therefore easier replaceability of certain functionalities. Besides a web crawler for current data retrieval for the database and a frontend interface module, \Alex\ offers a tagging module. This module provides the training of a language model as well as the assignment of tags to the words of a given input sentence.
+
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/alex_components}
-	\caption{Overview of all components of \Alex. The red colored parts are components that lie within the scope of this thesis and are adapted or replaced. Original figure by Thilo Michael \cite{michael2016}}\label{f.alex_components}
+	\caption[Component Overview of \Alex]{Overview of all components of \Alex. The red colored parts are components that lie within the scope of this thesis and are adapted or replaced. Original figure by T. Michael \cite{michael2016}}
+	\label{f.alex_components}
 \end{figure}
 
 \section{Hidden Markov Model}\label{c.alex.hmm}
-The Hidden Markov Model (HMM) is a statistical tool, which uses the observable output data of a system to derive hidden information from it. Among other applications, HMMs are used especially for speech recognition tasks.
+The Hidden Markov Model (HMM) is a statistical tool that solves classification problems in general. It uses the observable output data of a system to derive hidden information from it. Among other applications, HMMs are used especially for speech recognition tasks.
 
-The preliminary work for HMMs was done by R. L. Stratonovich. He first described the conditional Markov processes in 1960 \cite{stratonovich1960} that were used in the following years to describe simple Markov Models and later Hidden Markov Models (see Baum et. al. \cite{baum1966}\cite{baum1967}). The latter became popular for solving the task of automatic recognition of continuous speech \cite{baker1975} along with other applications like the analysis of biological sequences (e.g. DNA) \cite{bishop1986} and part-of-speech tagging.
+The preliminary work for HMMs was done by R. L. Stratonovich. He first described the conditional Markov processes in 1960 \cite{stratonovich1960} that were used in the following years to describe simple Markov Models and later Hidden Markov Models (see Baum et. al. \cite{baum1966}\cite{baum1967}). The latter became popular for solving the task of automatic recognition of continuous speech \cite{baker1975} along with other applications like pattern recognition in general, the analysis of biological sequences (e.g. DNA) \cite{bishop1986} and part-of-speech tagging.
+
+In case of POS tagging, the observable states of the HMM would be simply the given sequence of words whereas the hidden states represent the parts of speech. The HMM calculates the joint probability of the whole sequence of hidden states, finds a maximum of all possible state sequences and decides as a result, which parts of speech are most likely applied to the words of the input sequence.
+
+For this purpose, an HMM is included in \Alex. According to T. Michael \cite{michael2016}, a tagging scheme was developed to extract exactly the information from a user input that is needed to create a successful database query and return the information the user asked for. This tagging scheme was intentionally built domain independent to make \Alex\ an ACA for any topic providing a corresponding database and training data.
+
+To maintain this property, nothing is changed about the tagging scheme of \Alex. For a better understanding of the evaluation results in Chapter \ref{c.evaluation}, table \ref{t.tagging_scheme} gives an overview of the 6 different classes of tags that are used by \Alex.
+
+\begin{table}[H]
+	\vspace{1ex}\small\centering\def\arraystretch{1.1}\begin{tabular}{|c|>{\raggedright}p{50mm}|p{35mm}|p{40mm}|}
+	\hline
+	Class & Formats & Description & Example \\
+	\hline\hline
+	\tt{R} & \i{Return-tags}, describing data that is expected to be returned & \tt{R\_LIST} \newline \tt{R\_SINGLE} \newline \tt{R\_COUNT} & \i{"\b{Which} modules \dots"} \newline \i{"\b{Which} module \dots"} \newline \i{"\b{How many} modules \dots"} \\ \hline
+	\tt{M} & \i{Model-tags}, describing the database model, e.g. \tt{M\_MTSModule} or \tt{M\_Course} & \tt{M\_[MODEL]} & \i{"Which \b{modules} \dots"} \newline \i{"Which \b{courses} \dots"} \\ \hline
+	\tt{C} & \i{Constraint-tags}, filtering the result set, given a database model and corresponding field, e.g. \tt{C\_MTSModule:ects} & \tt{C\_[MODEL]:[FIELD]} & \i{"Modules with \b{6} ects \dots"} \\ \hline
+	\tt{P} & \i{Property-tags}, indicating to include fields in the result set, e.g. \tt{P\_MTSModule:ects} & \tt{P\_[MODEL]:[FIELD]} & \i{"Modules with 6 \b{ects} \dots"} \\ \hline
+	\tt{Q} & \i{Comparison-tags}, describing an equal, greater than or less than constraint & \tt{Q\_EQ} \newline \tt{Q\_LT} \newline \tt{Q\_GT} &  \i{"\dots\ with \b{exactly} 6 ects \dots"} \newline \i{"\dots\ \b{less than} 6 ects \dots"} \newline \i{"\dots\ \b{more than} 6 ects \dots"} \\ \hline
+	\tt{X} & \i{Extra-tags}, describing words that are not relevant for the database query\tablefootnote{This can be either words with no special meaning at all (tagged with \tt{X}), or words that have no meaning for the database query but for the system itself (e.g. the tag \tt{X\_HELP} for the word \i{"help"}) or words that lead to a particular constraint (like the tag \tt{X\_Person:fullname} for the word \i{"Professor"}, that leads to a name).} & \tt{X} \newline \tt{X\_[WORD]} \newline \tt{X\_[MODEL]:[FIELD]} & \i{"\b{and}"}, \i{"\b{of}"}, \i{"\b{is}"} \newline \i{"I need \b{help}"} \newline \i{"\b{Professor} John Doe"} \\ \hline
+	\end{tabular}
+	\caption[Tagging Scheme Overview]{Overview of the tagging scheme used in \Alex, consisting of 6 different classes of tags with a total of 12 different formats. The examples contain \b{emphasized} words that belong to the corresponding tag format. Detailed explanation of the tagging classes and its formats is given by T. Michael \cite{michael2016}.}
+	\label{t.tagging_scheme}
+	\vspace{1ex}
+\end{table}
 
 \section{Tagging Interface}\label{c.alex.tagging}
-The modular structure of \Alex\ allows the separation of different functions and therefore easier replaceability of certain functionalities. Besides a web crawler for current data retrieval for the database and a frontend interface module, \Alex\ offers a tagging module. This module provides the training of a language model as well as the assignment of tags to the words of a given input sentence.
-
-The implementation of this tagger utilizes a Hidden Markov Model, which is a statistical model that is particularly used for pattern recognition, speech recognition and part-of-speech tagging (see the previous section \ref{c.alex.hmm}). \Alex\ uses an already existing implementation of the HMM Tagger from the Natural Language Toolkit (NLTK)\footnote{The Natural Language Toolkit is a collection of \i{Python} programming libraries for natural language processing, see \link{http://nltk.org}}, called \tt{HiddenMarkovModelTagger}.
+As described in the previous chapter, the implementation of the tagging module of \Alex\ utilizes a Hidden Markov Model for the part-of-speech tagging. \Alex\ uses an already existing implementation of the HMM Tagger from the Natural Language Toolkit (NLTK)\footnote{The Natural Language Toolkit is a collection of \i{Python} programming libraries for natural language processing, see \link{http://nltk.org}}, called \tt{HiddenMarkovModelTagger}.
 
 To replace the existing tagger, a new tagger has to provide a class with two methods: \tt{train} and \tt{tag}. These methods are used to create the language model and apply it to unknown data.
 
@@ -179,7 +202,8 @@ Ma et. al. have shown before, that the neural network approach outperforms part-
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/fnn_structure}
-	\caption{The structure of a feed-forward neural network. The feature vector is built by the initial vectors of the corresponding input word on position \tt{p} and by its three predecessors (here as an example).}\label{f.fnn_structure}
+	\caption[Structure of a Feed-forward Neural Network]{The structure of a feed-forward neural network. The feature vector is built by the initial vectors of the corresponding input word on position \tt{p} and by its three predecessors (here as an example).}
+	\label{f.fnn_structure}
 \end{figure}
 
 \subsection{Implementation}\label{c.postagging.fnn.implementation}
@@ -192,7 +216,8 @@ Ma et. al. have shown before, that the neural network approach outperforms part-
 ...
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/rnn_structure}
-	\caption{The structure of a recurrent neural network. The feature vector is the initial vector of the corresponding input word at time \tt{t}. The output of the hidden layer from previously trained words (here as an example at time \tt{x}) is fed back into the same hidden layer for the current word.}\label{f.rnn_structure}
+	\caption[Structure of a Recurrent Neural Network]{The structure of a recurrent neural network. The feature vector is the initial vector of the corresponding input word at time \tt{t}. The output of the hidden layer from previously trained words (here as an example at time \tt{x}) is fed back into the same hidden layer for the current word.}
+	\label{f.rnn_structure}
 \end{figure}
 
 \subsection{Implementation}\label{c.postagging.rnn.implementation}
