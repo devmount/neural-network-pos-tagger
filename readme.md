@@ -92,12 +92,26 @@ To tag a sentence with a pretrained model call the `tagger.py` script with the `
 
 To evaluate a pretrained model on an external test set call the `tagger.py` script with the `--evaluate` parameter with the path to the file which contains the evaluation data.
 
-    $ python tagger.py --evaluate "data/evaluation.txt"
-    Evaluation starts...
+    $ python tagger.py --evaluate data/evaluation.txt
     Loading saved vocabulary...
     Generating tensors...
-    18/28 (64.3%) sentences correct
-    172/198 (86.9%) words correct
+    Evaluation starts...
+
+    # RESULTS:
+
+    20 / 29   0.690   sentences correct
+    207 / 208   0.995   words recognized
+    197 / 208   0.947   tags correct
+
+    # ERRORS:
+
+    count           expected                    computed
+    ------------------------------------------------------------
+    4     bachelor/C_Program:degree   bachelor/C_Program:name
+    4     master/C_Program:degree     master/C_Program:name
+    1     institute/X_Chair:name      institute/C_Program:name
+    1     quality/C_Chair:name        quality/C_Program:name
+    1     and/C_Chair:name            <UNKNOWN_WORD>/X
 
  Make sure that the `settings.py` is configured with the same values that were used to train the model, otherwise the evaluation cannot load the pretrained model.
 
