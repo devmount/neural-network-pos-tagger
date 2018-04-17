@@ -84,9 +84,9 @@ To train the Tagger call the `tagger.py` script with the `--train` flag. Accordi
 To tag a sentence with a pretrained model call the `tagger.py` script with the `--tag` parameter with a sentence to be tagged. Now a tag is attached to every word.
 
     $ python tagger.py --tag "Show all modules of Bachelor Informatics"
-    Loading saved vocabulary...
-    Generating tensors...
-    Show/R_LIST all/X modules/M_MTSModule of/X Bachelor/C_Program:degree Informatics/C_Program:name
+    The tagged sentence is:
+     Show     all       modules     of       Bachelor         Informatics
+    R_LIST   R_LIST   M_MTSModule    X    C_Program:degree   C_Program:name
 
 ### Evaluation
 
@@ -99,7 +99,7 @@ To evaluate a pretrained model on an external test set call the `tagger.py` scri
 
     # RESULTS:
 
-    20 / 29   0.690   sentences correct
+      20 / 29   0.690   sentences correct
     207 / 208   0.995   words recognized
     197 / 208   0.947   tags correct
 

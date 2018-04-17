@@ -102,12 +102,13 @@ class Tagger:
                 print(" - saved model checkpoint to '%s'" % path)
 
 
-    def tag(self, sentence, silent=False):
+    def tag(self, sentence, pretty_print=False, silent=False):
         """
         Tags a given sentence with the help of a previously trained model
 
         @param sentence: a string of space separated words, like "word1 word2 wore3"
-        @param silent: no print output
+        @param pretty_print: print tagged sentence
+        @param silent: no print output messages
         @return a string of space separated word-tag tuples, like "word1/TAG word2/TAG wird3/TAG"
         """
 
@@ -135,6 +136,15 @@ class Tagger:
         predicted_pos = []
         for pred_id in predicted_pos_ids:
             predicted_pos.append(data.id_to_pos[pred_id])
+
+        # pretty print tagged sentence if enabled
+        if pretty_print:
+            table = Texttable(200)
+            table.set_deco(Texttable.HEADER)
+            table.set_cols_dtype(['t' for i in range(len(words))])
+            table.set_cols_align(['c' for i in range(len(words))])
+            table.add_rows([sentence.split(), predicted_pos], header=False)
+            print(table.draw())
 
         # merge word and tag lists
         word_pos_tuples = zip(words, predicted_pos)
@@ -424,7 +434,7 @@ if __name__ == "__main__":
     # invoke tagging of a given sentence
     if args.tag is not None:
         print('The tagged sentence is:')
-        print(t.tag(args.tag, True))
+        t.tag(args.tag, True, True)
     # invoke evaluation
     if args.evaluate is not None:
         t.evaluate(args.evaluate)
