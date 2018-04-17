@@ -12,6 +12,7 @@ The code is based on the TensorFlow Part-of-Speech Tagger from Matthew Rahtz
 import tensorflow as tf
 import numpy as np
 import os, shutil, time, argparse
+from texttable import Texttable
 
 import settings as conf
 from loader import TextLoader
@@ -155,12 +156,10 @@ class Tagger:
             print('Error: evaluation file "%s" doesn\'t exist' % evaluation_file)
             return
 
-        # start evaluation
-        print('Evaluation starts...')
-
         # initialize counter variables
-        n_words_correct, n_sentences_correct = 0, 0
-        # get pre-tagged data
+        n_sentences_correct = n_words_correct = n_tags_correct = 0
+        tags_wrong = {}
+        # get pre-tagged evaluation data
         text = open(evaluation_file).read()
         tagged_sentences = text.splitlines()
         n_sentences = len(tagged_sentences)
@@ -171,15 +170,49 @@ class Tagger:
         n_words = sum(sentence_lengths)
         for i, l in enumerate(sentence_lengths):
             computed_sentences.append(' '.join(computed_words[sum(sentence_lengths[:i]):sum(sentence_lengths[:i])+l]))
+
+        # start evaluation
+        print('Evaluation starts...')
+
         # compute correct sentences and words
         for t, c in zip(tagged_sentences, computed_sentences):
-            n_sentences_correct += 1 if t.strip() == c.strip() else 0
-            for tw, cw in zip (t.split(), c.split()):
-                n_words_correct += 1 if tw.strip() == cw.strip() else 0
-        # print ratio of correctly tagged sentences and words
-        print('%i/%i (%.1f%%) sentences correct' % (n_sentences_correct, n_sentences, n_sentences_correct/n_sentences*100))
-        print('%i/%i (%.1f%%) words correct' % (n_words_correct, n_words, n_words_correct/n_words*100))
-
+            t, c = t.strip(), c.strip()
+            # check sentences
+            if t == c:
+                n_sentences_correct += 1
+                n_words_correct += len(t.split())
+                n_tags_correct += len(t.split())
+            else:
+                # check words and tags
+                for tw, cw in zip (t.split(), c.split()):
+                    if tw != cw:
+                        # build a custom key: correct_word/tag|wrong_word/tag to count its occurence
+                        key = tw + '|' + cw
+                        tags_wrong[key] = tags_wrong[key] + 1 if key in tags_wrong and tags_wrong[key] > 0 else 1
+                    # increment counter for matching words and tags
+                    n_words_correct += 1 if tw[:tw.index('/')] == cw[:cw.index('/')] else 0
+                    n_tags_correct += 1 if tw[tw.index('/')+1:] == cw[cw.index('/')+1:] else 0
+        # print ratio of correct sentences, words and tags
+        print('\n# RESULTS:\n')
+        table = Texttable()
+        table.set_deco(Texttable.HEADER)
+        table.set_cols_dtype(['t', 'f', 't'])
+        table.set_cols_align(['r', 'c', 'l'])
+        table.add_row([str(n_sentences_correct) + ' / ' + str(n_sentences), n_sentences_correct/n_sentences, 'sentences correct'])
+        table.add_row([str(n_words_correct) + ' / ' + str(n_words), n_words_correct/n_words, 'words recognized'])
+        table.add_row([str(n_tags_correct) + ' / ' + str(n_words), n_tags_correct/n_words, 'tags correct'])
+        print(table.draw())
+        # show wrong tags
+        print('\n# ERRORS:\n')
+        table = Texttable()
+        table.set_deco(Texttable.HEADER)
+        table.set_cols_dtype(['i', 't', 't'])
+        table.set_cols_align(['c', 'l', 'l'])
+        table.set_chars(['-', '|', '+', '-'])
+        table.add_rows([["count", "expected", "computed"]])
+        for key, count in sorted(tags_wrong.items(), key=lambda x: x[1], reverse=True):
+            table.add_row([count, key[:key.index('|')], key[key.index('|')+1:]])
+        print(table.draw())
 
     def reset(self):
         """
@@ -356,6 +389,10 @@ class Tagger:
         for sentence in text.splitlines():
             sentences.append(self.__untag_sentence(sentence))
         return '\n'.join(sentences)
+
+
+    def print_divider(self):
+        print('----------------------------')
 
 
     def parse_args(self):

@@ -38,9 +38,10 @@ Check if Python 3 is installed:
     $ python --version
     Python 3.6.3
 
-Install Tensorflow:
+Install dependencies:
 
     pip install tensorflow
+    pip install texttable
 
 If the installation was successful, change to the directory of the Tagger you want to use and everything should be ready to run properly; e.g. the Feed-forward Neural Network Tagger:
 
@@ -66,7 +67,7 @@ The `settings.py` script contains the following configuration options:
 
 ### Training
 
-To train the Tagger call the `tagger.py` script with the `--train` flag. According to your configuration, the batch training will start. Once you reached a sufficient accuracy, you can interrupt the training or wait till the training process finishes.
+To train the Tagger call the `tagger.py` script with the `--train` flag. According to your configuration, the batch training will start. Once you reached a sufficient accuracy, you can interrupt the training with <kbd>CTRL</kbd>+<kbd>C</kbd> or wait till the training process finishes.
 
     $ python tagger.py --train
     Training starts...
@@ -98,9 +99,11 @@ To evaluate a pretrained model on an external test set call the `tagger.py` scri
     18/28 (64.3%) sentences correct
     172/198 (86.9%) words correct
 
+ Make sure that the `settings.py` is configured with the same values that were used to train the model, otherwise the evaluation cannot load the pretrained model.
+
 ### Reset
 
-To reset the tagger and delete all previously created files call the `tagger.py` script with the `--reset` flag and confirm with 'Yes':
+To reset the tagger and delete all previously created files call the `tagger.py` script with the `--reset` flag and confirm with 'Yes' (or <kbd>Enter</kbd>):
 
     $ python tagger.py --reset
     Really delete all training data and log files? [Yes/no]
