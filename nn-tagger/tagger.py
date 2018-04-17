@@ -60,17 +60,18 @@ class Tagger:
             print('Error: training file "%s" doesn\'t exist' % training_file_path)
             return
 
-        # start tensorflow session
-        print('Training starts (can be finished earlier with CTRL+C)...')
-        sess = tf.Session()
-
         # get training and test data and the number of existing POS tags
         train_batches, test_data, n_pos_tags = self.__load_data(training_file_path)
         x_test = test_data['x']
         y_test = test_data['y']
 
+        # initialize the model by starting session and specifying initial values for the tensorflow variables
         print('Initializing model...')
-        # initialize the model by specifying initial values for the tensorflow variables
+
+        # start tensorflow session
+        print('Training starts (can be finished earlier with CTRL+C)...')
+        sess = tf.Session()
+
         nn_model, train_op, global_step = self.__model_init(n_pos_tags)
         train_summary_ops, test_summary_ops, summary_writer = self.__logging_init(nn_model, sess.graph)
         saver = self.__checkpointing_init()
@@ -78,7 +79,7 @@ class Tagger:
         # take the initial values that have already been specified, and assign them to each Variable
         sess.run(tf.global_variables_initializer())
         # make the graph read-only to ensure that no operations are added to it when shared between multiple threads
-        sess.graph.finalize()
+        # sess.graph.finalize()
 
         standard_ops = [global_step, nn_model.loss, nn_model.accuracy]
         train_ops = [train_op, train_summary_ops]
@@ -87,6 +88,10 @@ class Tagger:
         # start training with taking one training batch each step
         for batch in train_batches:
             x_batch, y_batch = zip(*batch)
+            if conf.ARCHITECTURE == 'RNN':
+                # print(np.array(y_batch).shape)
+                x_batch = tf.reshape(x_batch, [-1, self.n_timesteps, self.embedding_size]).eval(session=sess)
+                # y_batch = tf.reshape(y_batch, [-1, n_pos_tags]).eval(session=sess)
             self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
             current_step = tf.train.global_step(sess, global_step)
 

@@ -81,33 +81,27 @@ class RNN:
         """
 
         # initialize input word vectors. None: "variable size"
-        self.input_x = tf.placeholder(tf.int32, [None, 1], name="input_x")
+        self.input_x = tf.placeholder(tf.float32, [None, n_timesteps, embedding_size], name="input_x")
         # initialize input lables (tags)
         self.input_y = tf.placeholder(tf.int64, [None], name="input_y")
 
-        # initialize an embedding matrix with random truncated normal values
-        self.embedding_matrix = tf.Variable(tf.truncated_normal([vocab_size, embedding_size], stddev=0.1))
-        # build word matrix out of a lookup in the embedding matrix for the input words
-        self.word_matrix = tf.nn.embedding_lookup(self.embedding_matrix, self.input_x)
-        # stack the rows to create one vector. -1: "figure out the right size" (accounts for variable batch size)
-        self.feature_vector = tf.reshape(self.word_matrix, [-1, embedding_size])
-
-        # initialize weights between input layer and hidden layer
-        w1 = tf.Variable(tf.truncated_normal([embedding_size, h_size], stddev=0.1))
-        # compute rectified linear activation function on hidden layer
-        self.h = tf.nn.relu(tf.matmul(self.feature_vector, w1))
         # initialize weights between hidden layer and output layer
-        self.w2 = tf.Variable(tf.truncated_normal([h_size, n_pos_tags], stddev=0.1))
+        self.w = tf.Variable(tf.truncated_normal([h_size, n_pos_tags], stddev=0.1))
+        # x = tf.unstack(self.input_x, n_timesteps, 1)
+        cell = tf.nn.rnn_cell.LSTMCell(h_size, forget_bias=1.0)
+        outputs, states = tf.nn.dynamic_rnn(cell, self.input_x, dtype=tf.float32, time_major=False)
 
         # compute the logits for the output layer with shape [?, n_pos_tags]
-        self.logits = tf.matmul(self.h, self.w2)
+        self.logits = tf.matmul(tf.reshape(outputs, [-1, h_size]), self.w)
+        logits = tf.reshape(self.logits, [-1, n_pos_tags])
+        self.labels = tf.reshape(self.input_y, [-1])
         # compute the loss
-        self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(labels=self.input_y, logits=self.logits))
+        self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=self.labels))
 
         # reduce the logits output with the largest value to the output layer size = predictions 
-        self.predictions = tf.argmax(self.logits, axis=1, name='predictions')
+        self.predictions = tf.argmax(logits, axis=1, name='predictions')
         # get the correct predictions by comparing to the given labels
-        correct_prediction = tf.equal(self.predictions, self.input_y)
+        correct_prediction = tf.equal(self.predictions, self.labels)
         # compute the overall accuracy
         self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
         

@@ -31,11 +31,11 @@ HIDDEN_LAYER_SIZE = 50
 # Ratio of test data extracted from the training data
 TEST_RATIO = 0.1
 
-# Size of the training batches
-BATCH_SIZE = 32
+# Size of the training batches, set 300 for RNN
+BATCH_SIZE = 300
 
 # Number of training epochs
-N_EPOCHS = 20
+N_EPOCHS = 2
 
 # Show evaluation result and save model state after this number of trainings steps
-CHECKPOINT_EVERY = 10000
+CHECKPOINT_EVERY = 100
