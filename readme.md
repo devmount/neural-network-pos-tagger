@@ -90,7 +90,7 @@ To tag a sentence with a pretrained model call the `tagger.py` script with the `
 
 ### Evaluation
 
-To evaluate a pretrained model on an external test set call the `tagger.py` script with the `--evaluate` parameter with the path to the file which contains the evaluation data.
+To evaluate a pretrained model on an external test set call the `tagger.py` script with the `--evaluate` parameter with the path to the file which contains the evaluation data. The evaluation data file must contain one sentence per line, containing space separated word/tag tuples.
 
     $ python tagger.py --evaluate data/evaluation.txt
     Loading saved vocabulary...

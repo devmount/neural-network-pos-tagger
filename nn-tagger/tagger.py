@@ -171,6 +171,7 @@ class Tagger:
         tags_wrong = {}
         # get pre-tagged evaluation data
         text = open(evaluation_file).read()
+        text = '\n'.join([s for s in text.splitlines() if s and s[0] != '#'])
         tagged_sentences = text.splitlines()
         n_sentences = len(tagged_sentences)
         # tag data based on trained language model
@@ -204,7 +205,7 @@ class Tagger:
                     n_tags_correct += 1 if tw[tw.index('/')+1:] == cw[cw.index('/')+1:] else 0
         # print ratio of correct sentences, words and tags
         print('\n# RESULTS:\n')
-        table = Texttable()
+        table = Texttable(120)
         table.set_deco(Texttable.HEADER)
         table.set_cols_dtype(['t', 'f', 't'])
         table.set_cols_align(['r', 'c', 'l'])
@@ -214,7 +215,7 @@ class Tagger:
         print(table.draw())
         # show wrong tags
         print('\n# ERRORS:\n')
-        table = Texttable()
+        table = Texttable(120)
         table.set_deco(Texttable.HEADER)
         table.set_cols_dtype(['i', 't', 't'])
         table.set_cols_align(['c', 'l', 'l'])
