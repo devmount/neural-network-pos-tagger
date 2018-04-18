@@ -402,10 +402,6 @@ class Tagger:
         return '\n'.join(sentences)
 
 
-    def print_divider(self):
-        print('----------------------------')
-
-
     def parse_args(self):
         """
         Get script arguments
