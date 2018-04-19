@@ -50,4 +50,4 @@ class CorpusPreprocessor:
             open(corpus_file_path, 'w').writelines(lines)
             
 
-CorpusPreprocessor('fnn-tagger/data/hmm.random.corpus', 'welche/R_LIST module/M_MTSModule werden/X von/X prof/X_Person', True)
+CorpusPreprocessor('nn-tagger/data/hmm.random.corpus', 'welche/R_LIST module/M_MTSModule werden/X von/X prof/X_Person', True)
