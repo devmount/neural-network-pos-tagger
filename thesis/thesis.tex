@@ -29,7 +29,7 @@
    & \\
   \b{Date} & 18th May 2018 \\
   \b{1st supervisor} & Prof. Dr.-Ing. Sebastian Möller \\
-  \b{2nd supervisor} & Prof. Dr. ??? \\
+  \b{2nd supervisor} & Dr. Axel Küpper \\
 \end{tabular}
 
 \end{center}
@@ -101,6 +101,10 @@ Diese Arbeit zeigt zwei verschiedene Ansätze für die Sprachmodellierung der Ei
 
 % ===================================================================================
 \chapter{Introduction}\label{c.introduction}
+% Learning is a fundamental part of the human life, from the beginning to the end
+% learning means progress, additional value, not to repeat failures
+% Learning is biological possible with Neurons, combined to a huge neural Network.
+
 % Turing: Artificial Intelligence
 % Brown: NLP
 % POS Tagging
@@ -115,7 +119,46 @@ To evaluate the language models, a data set of known data\footnote{Data, that wa
 In accordance to the evaluation results, the former HMM based part-of-speech tagger is then replaced by this new tagger. To guarantee a seamless integration, the new tagger is implemented as a separate module with the same program interface the old tagger already utilizes. This way no other components of the conversational agent have to be changed and the effort of the replacement is kept minimal.
 
 \section{Related Work}\label{c.introduction.related}
-...
+This thesis is build upon the work of T. Michael \cite{michael2016}, who describes the design and implementation of \Alex\ in detail. The conversational agent was implemented for the purpose of helping students of the TU Berlin to organize their studies by providing a simple way to gain information about modules and courses. It utilizes two separate already existing baseline systems by merging their data into one relational database. This database is  used as the central access point for the information that users want to retrieve.
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{images/alex_screencapture}
+	\caption[User Interface of \Alex]{The user interface of \Alex. The left section contains the conversation with the Agent and a field where the user can type. The right section shows the result of the generated database query in tabular form.\\The user asked for all courses of the subject \i{computer science} that provide 9 ECTS and are scheduled on a Monday. The agent answered accordingly.\\This image was captured at the 21st April 2018.}
+	\label{f.alex_ui}
+\end{figure}
+
+\Alex\ consists of several processing modules:
+
+\begin{itemize}
+	\item The \b{tagging module} uses a Hidden Markov Model to calculate the parts of speech for the user input, later described in chapter \ref{c.alex.hmm}
+	\item The \b{query generation module} composes actual SQL queries from the tagging output data by recognizing the requested model and the return type
+	\item The \b{filter extraction module} provides refinement and constraint handling for the query generator
+	\item The \b{response generation module} formulates answers for the user input in natural language by processing the generated query, the recognized model and the conversation state.
+\end{itemize}
+
+Moreover \Alex\ provides a user interface which utilizes web technologies and can be accessed in a web browser. Figure \ref{f.alex_ui} shows the user interface where the user asked one question and the agent returned the result in tabular form and answered accordingly.
+
+The focus of this thesis lies on the tagging module, as the main objective is to replace the Hidden Markov Model by Artificial Neural Networks.
+
+\subsection{The Hidden Markov Model}\label{c.introduction.related.hmm}
+The Hidden Markov Model (HMM) is a probabilistic finite state machine that solves classification problems in general. It uses the observable output data of a system to derive hidden information from it. Among other applications, HMMs are used especially for speech recognition tasks.
+
+The preliminary work for HMMs was done by R. L. Stratonovich. He first described the conditional Markov processes in 1960 \cite{stratonovich1960} that were used in the following years to describe simple Markov Models and later Hidden Markov Models (see Baum et. al. \cite{baum1966}\cite{baum1967}). The latter became popular for solving the task of automatic recognition of continuous speech \cite{baker1975} along with other applications like pattern recognition in general, the analysis of biological sequences (e.g. DNA) \cite{bishop1986} and part-of-speech tagging.
+
+% TODO: first HMM POS tagger
+
+\subsection{The Artificial Neural Network Model}\label{c.introduction.related.nn}
+Artificial Neural Networks are networks that process information inspired by biological nervous system. They consist of connected computational units typically arranged in different layers. Such a unit (also called \i{artificial neuron}) can make calculations based on its inputs and pass the result to the next connected units. These connections are weighted, so that the weight can be adjusted depending on the activity of the unit. Thus a model of the features of the input data can be created.
+
+After preceding research by W. McCulloch, W. Pitts \cite{mcculloch1943} and D. Hebb \cite{shaw1986} about arithmetical learning methods inspired by the connections of neurons in the 1940s, M. Minsky built the first neural network learning machine called SNARC (\i{Stochastic Neural Analog Reinforcement Computer)}\cite{crevier1993} in 1951.
+
+In the late 1950s, F. Rosenblatt developed the \i{Mark I Perceptron} computer and published a theorem of convergence of the perceptron\cite{rosenblatt1958} in 1958. He coined the term \i{perceptron} for an algorithm that was able to learn the assignment of input data to different classes. The perceptron represents a simple artificial neural network containing one single neuron at first\footnote{Chapters \ref{c.postagging.fnn} and \ref{c.postagging.rnn} explain the architecture of different neural network structures in detail}. F. Rosenblatt stated, that every function that is representable by the model can be learned with the proposed learning method. In 1960, B. Widrow presented the ADALINE\footnote{ADALINE is an acronym for Adaptive Linear Neuron} model of a neural network, where the input weights could already be adjusted by the learning algorithm \cite{widrow1960}.
+
+A publication of M. Minsky and S. Papert \cite{minsky1969} in 1969 analyzed and exposed some significant limitations of the basic perceptron. They pointed out, that it is not possible to learn functions without linear separability (e.g. the exclusive-or problem). Due to these limitations and the fact, that the processing power of computers at that time was not sufficient for larger neural networks, the research interest in artificial neural networks decreased in the following years.
+
+In 1982, J. Hopfield presented a previously described Neural Network with feedback (known as \i{Hopfield network}), that was able to solve optimization problems like the \i{Travelling Salesman Problem}\footnote{The problem of the travelling salesman or round trip problem: The order of places to be visited once should be chosen in such a way that the distance covered is minimal, whereby the last place is again the starting point (round trip).}.
+
+% TODO: first NN POS Tagger
 
 \section{Structure of this Thesis}\label{c.introduction.structure}
 As introduction, this first chapter gave a short overview about the subject of natural language processing and part-of-speech tagging in general.
@@ -136,7 +179,6 @@ In conclusion the final Chapter \ref{c.conclusion} discusses and summarizes the 
 
 \section{System Overview}\label{c.alex.overview}
 
-
 The modular structure of \Alex\ allows the separation of different functions and therefore easier replaceability of certain functionalities. Besides a web crawler for current data retrieval for the database and a frontend interface module, \Alex\ offers a tagging module. This module provides the training of a language model as well as the assignment of tags to the words of a given input sentence.
 
 \begin{figure}[H]
@@ -145,16 +187,27 @@ The modular structure of \Alex\ allows the separation of different functions and
 	\label{f.alex_components}
 \end{figure}
 
-\section{Hidden Markov Model}\label{c.alex.hmm}
-The Hidden Markov Model (HMM) is a statistical tool that solves classification problems in general. It uses the observable output data of a system to derive hidden information from it. Among other applications, HMMs are used especially for speech recognition tasks.
+\section{The Hidden Markov Model Tagger}\label{c.alex.hmm}
+As described in section \ref{c.introduction.related.hmm} \ of the introduction, the Hidden Markov Model (HMM) is a statistical tool that uses observable output data of a system to derive hidden information from it. Applications are image processing, gesture recognition and natural language processing tasks like speech recognition and part-of-speech tagging in particular.
 
-The preliminary work for HMMs was done by R. L. Stratonovich. He first described the conditional Markov processes in 1960 \cite{stratonovich1960} that were used in the following years to describe simple Markov Models and later Hidden Markov Models (see Baum et. al. \cite{baum1966}\cite{baum1967}). The latter became popular for solving the task of automatic recognition of continuous speech \cite{baker1975} along with other applications like pattern recognition in general, the analysis of biological sequences (e.g. DNA) \cite{bishop1986} and part-of-speech tagging.
+In case of POS tagging, the observable states of the HMM represent the given sequence of words whereas the hidden states represent the corresponding parts of speech. The HMM calculates the joint probability of the whole sequence of hidden states with the help of transmission and output probabilities. Subsequently it finds the maximum probability of all possible state sequences and decides as a result, which parts of speech are most likely applied to the words of the input sequence.
 
-In case of POS tagging, the observable states of the HMM would be simply the given sequence of words whereas the hidden states represent the parts of speech. The HMM calculates the joint probability of the whole sequence of hidden states, finds a maximum of all possible state sequences and decides as a result, which parts of speech are most likely applied to the words of the input sequence.
+Figure \ref{f.hmm_structure} illustrates an example of a state sequence with three hidden states (part of speech tags) and the observed word sequence in an HMM. The calculation of the joint probability $P$ of the word sequence in this case is shown in equation \ref{e.hmm_joint_probability} as the product of transmission and output probabilities.
 
-For this purpose, an HMM is included in \Alex. According to T. Michael \cite{michael2016}, a tagging scheme was developed to extract exactly the information from a user input that is needed to create a successful database query and return the information the user asked for. This tagging scheme was intentionally built domain independent to make \Alex\ an ACA for any topic providing a corresponding database and training data.
+\begin{equation}
+    P = p_{start}\cdot p_{out,1}\cdot p_{trans,1}\cdot p_{out,2}\cdot p_{trans,2}\cdot p_{out,3} \label{e.hmm_joint_probability}
+\end{equation}
 
-To maintain this property, nothing is changed about the tagging scheme of \Alex. For a better understanding of the evaluation results in Chapter \ref{c.evaluation}, table \ref{t.tagging_scheme} gives an overview of the 6 different classes of tags that are used by \Alex.
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{images/hmm_structure}
+	\caption[Structure of a Hidden Markov Model]{An example of a state sequence of three hidden states (tag1 -- tag3) and an observed sequence of three words (word1 -- word3) in an Hidden Markov Model. $p_{start}$ denotes the start probability, $p_{trans}$ the transmission probabilities between hidden states and $p_{out}$ the output probabilities between a hidden state and an output.}
+	\label{f.hmm_structure}
+\end{figure}
+
+For this purpose, an HMM is included in \Alex. According to T. Michael \cite{michael2016}, a tagging scheme was developed to extract exactly the information from a user input that is needed to successfully create a database query and return the information the user asked for. This tagging scheme was intentionally built domain independent, giving the opportunity to make \Alex\ an ACA for any topic providing a corresponding database and training data.
+
+To maintain this universal applicability as well as the compatibility to other modules of \Alex, the Neural Network approaches presented in this thesis use the same tagging scheme \Alex\ already utilizes. For a better understanding of the evaluation results in Chapter \ref{c.evaluation}, table \ref{t.tagging_scheme} gives an overview of the 6 different classes of tags that are used by \Alex.
 
 \begin{table}[H]
 	\vspace{1ex}\small\centering\def\arraystretch{1.1}\begin{tabular}{|c|>{\raggedright}p{50mm}|p{35mm}|p{40mm}|}
