@@ -1,4 +1,4 @@
-\documentclass[fontsize=12pt, paper=a4, headinclude, twoside=false, parskip=half+, pagesize=auto, numbers=noenddot, open=right, toc=listof, toc=bibliography]{scrreprt}
+\documentclass[fontsize=12pt, paper=a4, headinclude, twoside=false, parskip=half+, pagesize, paper=a4, numbers=noenddot, open=right, toc=listof, toc=bibliography]{scrreprt}
 % PDF-Kompression
 \pdfminorversion=5
 \pdfobjcompresslevel=1
@@ -7,6 +7,7 @@
 \usepackage{amsmath,marvosym} % Mathesachen
 \usepackage[T1]{fontenc} % Ligaturen, richtige Umlaute im PDF
 \usepackage[utf8]{inputenc}% UTF8-Kodierung für Umlaute usw
+\hoffset = 35pt
 % Schriften
 \usepackage{mathpazo} % Palatino für Mathemodus
 \usepackage{setspace} % Zeilenabstand
@@ -25,11 +26,6 @@
 \usepackage{csquotes} % quotes
 % PDF
 \usepackage[english]{hyperref}
-% \addto\extrasngerman{% Umbenennung der Kapitel Referenzen
-%   \def\subsectionautorefname{Abschnitt}%
-%   \def\subsubsectionautorefname{Abschnitt}%
-% }
-% \usepackage{bookmark}
 \usepackage[final]{microtype} % mikrotypographische Optimierungen
 \clubpenalty = 10000
 \widowpenalty = 10000
@@ -59,7 +55,7 @@
 \usepackage[all]{hypcap} % Beim Klicken auf Links zum Bild und nicht zu Caption gehen
 % Bildunterschrift
 \setcapindent{0em} % kein Einrücken der Caption von Figures und Tabellen
-\setcapwidth{0.9\textwidth} % Breite der Caption nur 90% der Textbreite, damit sie sich vom restlichen Text abhebt
+\setcapwidth{0.8\textwidth} % Breite der Caption nur 90% der Textbreite, damit sie sich vom restlichen Text abhebt
 \setlength{\abovecaptionskip}{0.2cm} % Abstand der zwischen Bild- und Bildunterschrift
 % Quellcode
 \usepackage{listings} % für Formatierung in Quelltexten
@@ -153,7 +149,7 @@
 \deffootnote{1.5em}{1em}{\makebox[1.5em][l]{\thefootnotemark}}
 
 \typearea{14} % typearea berechnet einen sinnvollen Satzspiegel (das heißt die Seitenränder) siehe auch http://www.ctan.org/pkg/typearea. Diese Berechnung befindet sich am Schluss, damit die Einstellungen oben berücksichtigt werden
-\textwidth=440pt % text width
+\textwidth=400pt % text width
 
 \usepackage{scrhack} % Vermeidung einer Warnung
 \usepackage{acronym} % Abkürzungsverzeichnis

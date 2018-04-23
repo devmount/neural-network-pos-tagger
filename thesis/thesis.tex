@@ -92,6 +92,7 @@ Diese Arbeit zeigt zwei verschiedene Ansätze für die Sprachmodellierung der Ei
 \markboth{Abbreviations}{Abbreviations}
 \begin{acronym}[----------------]
  \acro{ACA}{\i{Artificial Conversational Agent}}
+ \acro{ANN}{\i{Artificial Neural Network}}
  \acro{FNN}{\i{Feed-forward Neural Network}}
  \acro{HMM}{\i{Hidden Markov Model}}
  \acro{NLP}{\i{Natural Language Processing}}
@@ -101,16 +102,21 @@ Diese Arbeit zeigt zwei verschiedene Ansätze für die Sprachmodellierung der Ei
 
 % ===================================================================================
 \chapter{Introduction}\label{c.introduction}
-% Learning is a fundamental part of the human life, from the beginning to the end
-% learning means progress, additional value, not to repeat failures
-% Learning is biological possible with Neurons, combined to a huge neural Network.
-
 % Turing: Artificial Intelligence
 % Brown: NLP
 % POS Tagging
 
+\i{Learning} is one of the most essential parts of human life. From the beginning to the end human beings acquire knowledge and skills. Learning means progress, additional value, failing and repeating. It enables growth and improvement.
+
+In biology, learning is based on a specific strengthening of the connection of certain nerve cells in the central nervous system by facilitating signal transmission at the synapses through appropriate modifications. Being a huge amendable network of connected neurons the nervous system served as a role model for a research field called \i{Machine Learning}. This term was coined by A. Samuel\footnote{Arthur Lee Samuel was an early researcher in machine learning and artificial intelligence. He developed the first successful self-learning program: the Samuel-Checkers game \cite{samuel1959}.} \cite{samuel1959} in 1959, who distinguished two general approaches to the problem of machine learning: a general-purpose randomly connected Neural Network approach and a special-purpose highly organized network. Following a publication of  W. McCulloch about the comparison of a computer with the nervous system of a flatworm in 1949 \cite{mcculloch1949}, he stated:
+
+\i{``A comparison between the size of the switching nets\\that can be reasonably constructed or simulated at the present time\\and the size of the neural nets used by animals,\\suggests that we have a long way to go before we obtain practical devices.''}\\
+\parbox{\textwidth}{\hfill \hfill -- Arthur Lee Samuel (1959)}
+
+Less than 60 years later, today we have a lot of practical devices using machine learning and artificial intelligence technologies in our everyday life. Especially the processing and understanding of spoken or written natural language has a wide range of applications. One of those applications are advisory artificial conversational agents (ACA), chat-bots in short. They are designed to give natural language answers to natural language questions, making it as easy as possible for users to interact with a special system. \Alex\ is an example of an ACA that is able answer questions about courses and modules of the TU Berlin. This thesis aims to improve the understanding and learning of natural language of \Alex\ with artificial neural networks.
+
 \section{Scope of this Thesis}\label{c.introduction.scope}
-The scope of this thesis is the development of a neural network based part-of-speech tagger for the advisory Artificial Conversational Agent (ACA) \Alex, the training of different language models and their evaluation with corresponding test sets.
+The scope of this thesis is the development of a neural network based part-of-speech tagger for the advisory Artificial Conversational Agent \Alex, the training of different language models and their evaluation with corresponding test sets.
 
 In order to accomplish the new language models, two different neural network architectures are implemented: A feed-forward neural network and a recurrent neural network. For the training of both neural network implementations, a corpus of tagged language data is generated with the help various input templates, which are created on the basis of logged user input data.
 
@@ -245,7 +251,7 @@ The output is a corresponding list of tuples containing a word and its assigned 
 
 
 % ===================================================================================
-\chapter{Part-of-Speech Tagging}\label{c.postagging}
+\chapter{Part-of-Speech Tagging with Neural Networks}\label{c.postagging}
 ...
 Ma et. al. have shown before, that the neural network approach outperforms part-of-speech tagger that are based on statistical models (like the HMM) \cite{ma2000}.
 
