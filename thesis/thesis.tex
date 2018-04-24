@@ -149,9 +149,7 @@ The focus of this thesis lies on the tagging module, as the main objective is to
 \subsection{The Hidden Markov Model}\label{c.introduction.related.hmm}
 The Hidden Markov Model (HMM) is a probabilistic finite state machine that solves classification problems in general. It uses the observable output data of a system to derive hidden information from it. Among other applications, HMMs are used especially for speech recognition tasks.
 
-The preliminary work for HMMs was done by R. L. Stratonovich. He first described the conditional Markov processes in 1960 \cite{stratonovich1960} that were used in the following years to describe simple Markov Models and later Hidden Markov Models (see Baum et. al. \cite{baum1966}\cite{baum1967}). The latter became popular for solving the task of automatic recognition of continuous speech \cite{baker1975} along with other applications like pattern recognition in general, the analysis of biological sequences (e.g. DNA) \cite{bishop1986} and part-of-speech tagging.
-
-% TODO: first HMM POS tagger
+The preliminary work for HMMs was done by R. L. Stratonovich. He first described the conditional Markov processes in 1960 \cite{stratonovich1960} that were used in the following years to describe simple Markov Models and later Hidden Markov Models (see Baum et. al. \cite{baum1966}\cite{baum1967}). The latter became popular for solving the task of automatic recognition of continuous speech \cite{baker1975} along with other applications like pattern recognition in general, the analysis of biological sequences (e.g. DNA) \cite{bishop1986} and part-of-speech tagging \cite{kupiec1992}.
 
 \subsection{The Artificial Neural Network Model}\label{c.introduction.related.nn}
 Artificial Neural Networks are networks that process information inspired by biological nervous system. They consist of connected computational units typically arranged in different layers. Such a unit (also called \i{artificial neuron}) can make calculations based on its inputs and pass the result to the next connected units. These connections are weighted, so that the weight can be adjusted depending on the activity of the unit. Thus a model of the features of the input data can be created.
@@ -162,9 +160,9 @@ In the late 1950s, F. Rosenblatt developed the \i{Mark I Perceptron} computer an
 
 A publication of M. Minsky and S. Papert \cite{minsky1969} in 1969 analyzed and exposed some significant limitations of the basic perceptron. They pointed out, that it is not possible to learn functions without linear separability (e.g. the exclusive-or problem). Due to these limitations and the fact, that the processing power of computers at that time was not sufficient for larger neural networks, the research interest in artificial neural networks decreased in the following years.
 
-In 1982, J. Hopfield presented a previously described Neural Network with feedback (known as \i{Hopfield network}), that was able to solve optimization problems like the \i{Travelling Salesman Problem}\footnote{The problem of the travelling salesman or round trip problem: The order of places to be visited once should be chosen in such a way that the distance covered is minimal, whereby the last place is again the starting point (round trip).}.
+In 1982, J. Hopfield presented a previously described Neural Network with feedback (known as \i{Hopfield network}), that was able to solve optimization problems like the \i{Traveling Salesman Problem}\footnote{The problem of the traveling salesman or round trip problem: The order of places to be visited once should be chosen in such a way that the distance covered is minimal, whereby the last place is again the starting point (round trip).}. Neural Network approaches got more attention again, also because the first processors based on transistor technology (microprocessors) came onto the market in the early 1970s and replaced the previously used tube technology in the following years, which made computers smaller and cheaper and increased their processing capacity.
 
-% TODO: first NN POS Tagger
+For the task of POS tagging, Neural Network models were now able to outperform HMM based tagger. H. Schmid created and trained a multilayer Feed-forward Neural Network in 1994 an showed, that it performed better than an HMM tagger \cite{schmid1994}.
 
 \section{Structure of this Thesis}\label{c.introduction.structure}
 As introduction, this first chapter gave a short overview about the subject of natural language processing and part-of-speech tagging in general.
