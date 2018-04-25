@@ -80,30 +80,31 @@ class RNN:
         @param n_pos_tags: Number of existing POS tags
         """
 
-        # initialize input word vectors. None: "variable size"
+        # initialize input word vectors of shape [batch_size, n_timesteps, embedding_size]
         self.input_x = tf.placeholder(tf.float32, [None, n_timesteps, embedding_size], name="input_x")
-        # initialize input lables (tags)
+        # initialize input labels of shape [batch_size]
         self.input_y = tf.placeholder(tf.int64, [None], name="input_y")
 
-        # initialize weights between hidden layer and output layer
+        # initialize hidden layer with shape [h_size, n_pos_tags]
         self.w = tf.Variable(tf.truncated_normal([h_size, n_pos_tags], stddev=0.1))
-        # x = tf.unstack(self.input_x, n_timesteps, 1)
+        x = tf.unstack(self.input_x, n_timesteps, 1)
         cell = tf.nn.rnn_cell.LSTMCell(h_size, forget_bias=1.0)
-        outputs, states = tf.nn.dynamic_rnn(cell, self.input_x, dtype=tf.float32, time_major=False)
-
-        # compute the logits for the output layer with shape [?, n_pos_tags]
+        # calculate outputs with shape [batch_size*n_timesteps, h_size]
+        outputs, states = tf.nn.dynamic_rnn(cell, self.input_x, dtype=tf.float32)
+        # compute the logits for the output layer with shape [batch_size*n_timesteps, n_pos_tags]
         self.logits = tf.matmul(tf.reshape(outputs, [-1, h_size]), self.w)
-        logits = tf.reshape(self.logits, [-1, n_pos_tags])
-        self.labels = tf.reshape(self.input_y, [-1])
+        logits = tf.reshape(self.logits, [-1, n_timesteps])
+        # get labels with shape [batch_size*n_timesteps]
+        labels = tf.reshape(self.input_y, [-1])
         # compute the loss
-        self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=self.labels))
+        self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=labels))
 
         # reduce the logits output with the largest value to the output layer size = predictions 
         self.predictions = tf.argmax(logits, axis=1, name='predictions')
         # get the correct predictions by comparing to the given labels
-        correct_prediction = tf.equal(self.predictions, self.labels)
+        correct_prediction = tf.equal(self.predictions, labels)
         # compute the overall accuracy
         self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
-        
+
         # apply an optimizer
         self.optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)

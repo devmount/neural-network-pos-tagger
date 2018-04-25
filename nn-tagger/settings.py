@@ -8,13 +8,13 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # architecture: FNN|RNN
-ARCHITECTURE = 'FNN'
+ARCHITECTURE = 'RNN'
 
 # Presumable dimension of the vocabulary (number of distinct words)
-VOCAB_SIZE = 15000
+VOCAB_SIZE = 11000
 
 # Number of preceding words to take into account for the POS tag training of the current word [FNN only]
-N_PAST_WORDS = 6
+N_PAST_WORDS = 5
 
 # Number of previous training steps to take into account [RNN only]
 N_TIMESTEPS = 3
@@ -32,7 +32,7 @@ HIDDEN_LAYER_SIZE = 300
 TEST_RATIO = 0.1
 
 # Size of the training batches, set 300 for RNN
-BATCH_SIZE = 128
+BATCH_SIZE = 32
 
 # Number of training epochs
 N_EPOCHS = 5

@@ -88,9 +88,11 @@ class Tagger:
 
         # start training with taking one training batch each step
         for batch in train_batches:
+            print('.')
             x_batch, y_batch = zip(*batch)
             if conf.ARCHITECTURE == 'RNN':
                 # print(np.array(y_batch).shape)
+                # x_batch = tf.reshape(x_batch, [conf.BATCH_SIZE, self.n_timesteps, self.embedding_size]).eval(session=sess)
                 x_batch = tf.reshape(x_batch, [-1, self.n_timesteps, self.embedding_size]).eval(session=sess)
                 # y_batch = tf.reshape(y_batch, [-1, n_pos_tags]).eval(session=sess)
             self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
