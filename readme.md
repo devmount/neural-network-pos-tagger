@@ -43,7 +43,7 @@ Install dependencies:
     pip install tensorflow
     pip install texttable
 
-If the installation was successful, change to the directory of the Tagger you want to use and everything should be ready to run properly; e.g. the Feed-forward Neural Network Tagger:
+If the installation was successful, change to the directory of the Tagger and everything should be ready to run properly:
 
     cd fnn-tagger/
 
@@ -69,7 +69,7 @@ The `settings.py` script contains the following configuration options:
 
 To train the Tagger call the `tagger.py` script with the `--train` flag. According to your configuration, the batch training will start. Once you reached a sufficient accuracy, you can interrupt the training with <kbd>CTRL</kbd>+<kbd>C</kbd> or wait till the training process finishes.
 
-    $ python tagger.py --train
+    $ python tagger.py --train data/test.corpus
     Training starts...
     Loading training data from "data/test.corpus"...
     Generating vocabulary...
