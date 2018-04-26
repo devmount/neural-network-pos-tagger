@@ -179,17 +179,21 @@ In conclusion the final Chapter \ref{c.conclusion} discusses and summarizes the 
 
 % ===================================================================================
 \chapter{\Alex: Artificial Conversational Agent}\label{c.alex}
-...
+\i{Design and Implementation of an Advisory Artificial Conversational Agent} by T. Michael \cite{michael2016} provides a detailed and comprehensive description of \Alex\ as a compilation of different modules. This chapter concentrates on the modules that are relevant for the language processing and therefore adapted during this thesis.
 
 \section{System Overview}\label{c.alex.overview}
-
 The modular structure of \Alex\ allows the separation of different functions and therefore easier replaceability of certain functionalities. Besides a web crawler for current data retrieval for the database and a frontend interface module, \Alex\ offers a tagging module. This module provides the training of a language model as well as the assignment of tags to the words of a given input sentence.
+
+Figure \ref{f.alex_components} shows the original architecture of \Alex.
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/alex_components}
 	\caption[Component Overview of \Alex]{Overview of all components of \Alex. The red colored parts are components that lie within the scope of this thesis and are adapted or replaced. Original figure by T. Michael \cite{michael2016}}
 	\label{f.alex_components}
 \end{figure}
+
+\section{Training Data}\label{c.alex.data}
+...
 
 \section{The Hidden Markov Model Tagger}\label{c.alex.hmm}
 As described in section \ref{c.introduction.related.hmm} \ of the introduction, the Hidden Markov Model (HMM) is a statistical tool that uses observable output data of a system to derive hidden information from it. Applications are image processing, gesture recognition and natural language processing tasks like speech recognition and part-of-speech tagging in particular.

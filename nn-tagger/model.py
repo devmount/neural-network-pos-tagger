@@ -87,7 +87,7 @@ class RNN:
 
         # initialize hidden layer with shape [h_size, n_pos_tags]
         self.w = tf.Variable(tf.truncated_normal([h_size, n_pos_tags], stddev=0.1))
-        x = tf.unstack(self.input_x, n_timesteps, 1)
+        # x = tf.unstack(self.input_x, n_timesteps, 1)
         cell = tf.nn.rnn_cell.LSTMCell(h_size, forget_bias=1.0)
         # calculate outputs with shape [batch_size*n_timesteps, h_size]
         outputs, states = tf.nn.dynamic_rnn(cell, self.input_x, dtype=tf.float32)
