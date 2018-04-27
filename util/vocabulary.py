@@ -2,22 +2,20 @@
 The vocabulary module provides information about the vocabulary of a language model
 """
 
-import os, random
+import os, random, argparse
 from texttable import Texttable
 
 class CorpusVocabulary:
     """
-    This class contains all methods for corpus vocabulary retrieval
+    This class contains all methods for corpus vocabulary retrieval and information
     """
 
 
-    def __init__(self, corpus_file_path):
+    def inform(self, corpus_file_path):
         """
-        ...
+        Processes corpus and prints information
 
-        @param corpus_file_path:        Path to a file with tagged sentences of this form: word1/TAG word2/TAG ...
-        @param delete_lines_containing: All lines containing the given string should be deleted.
-        @param randomize:               Shuffle lines of the corpus.
+        @param corpus_file_path: Path to a file with tagged sentences of this form: word1/TAG word2/TAG ...
         """
 
         # check if corpus file exists
@@ -64,4 +62,23 @@ class CorpusVocabulary:
         print(table.draw())
             
 
-CorpusVocabulary('../nn-tagger/data/hmm.random.corpus')
+    def parse_args(self):
+        """
+        Get script arguments
+        """
+
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--corpus", type=str, help="Corpus file to process and inform about")
+
+        return parser.parse_args()
+
+
+# only execute training when file is invoked as a script and not just imported
+if __name__ == "__main__":
+    # create tagger instance
+    v = CorpusVocabulary()
+    
+    args = v.parse_args()
+    # invoke training
+    if args.corpus is not None:
+        v.inform(args.corpus)
