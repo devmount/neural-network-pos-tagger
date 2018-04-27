@@ -88,12 +88,12 @@ class Tagger:
 
         # start training with taking one training batch each step
         for batch in train_batches:
-            print('.')
+            # print('.')
             x_batch, y_batch = zip(*batch)
-            if conf.ARCHITECTURE == 'RNN':
+            # if conf.ARCHITECTURE == 'RNN':
                 # print(np.array(y_batch).shape)
                 # x_batch = tf.reshape(x_batch, [conf.BATCH_SIZE, self.n_timesteps, self.embedding_size]).eval(session=sess)
-                x_batch = tf.reshape(x_batch, [-1, self.n_timesteps, self.embedding_size]).eval(session=sess)
+                # x_batch = tf.reshape(x_batch, [-1, self.n_timesteps, self.vocab_size]).eval(session=sess)
                 # y_batch = tf.reshape(y_batch, [-1, n_pos_tags]).eval(session=sess)
             self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
             current_step = tf.train.global_step(sess, global_step)
@@ -108,10 +108,10 @@ class Tagger:
         """
         Tags a given sentence with the help of a previously trained model
 
-        @param sentence: a string of space separated words, like "word1 word2 wore3"
+        @param sentence: a string of space separated words, like "word1 word2 word3"
         @param pretty_print: print tagged sentence
         @param silent: no print output messages
-        @return a string of space separated word-tag tuples, like "word1/TAG word2/TAG wird3/TAG"
+        @return a string of space separated word-tag tuples, like "word1/TAG word2/TAG word3/TAG"
         """
 
         data = TextLoader(sentence.lower(), self.vocab_size, self.n_past_words, self.vocab_path, None, silent)
@@ -288,7 +288,10 @@ class Tagger:
         y_test, y_train = y[:idx], y[idx:]
 
         # create iterable training batches
-        train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs)
+        if conf.ARCHITECTURE == 'RNN':
+            train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs, shuffle=False)
+        else:
+            train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs, shuffle=True)
         test_data = {'x': x_test, 'y': y_test}
 
         return (train_batches, test_data, n_pos_tags)

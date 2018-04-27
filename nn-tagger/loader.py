@@ -139,7 +139,7 @@ class TextLoader:
         pos_tags = []
         for word_tag_tuple in word_tag_tuples:
             if len(word_tag_tuple) > 2:
-                # We've got something like AC/DC/NNP
+                # We've got something like TAG1/TAG2/TAG3
                 continue
 
             if drop_untagged and len(word_tag_tuple) == 1:

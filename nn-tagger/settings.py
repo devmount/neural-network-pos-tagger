@@ -8,10 +8,10 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # architecture: FNN|RNN
-ARCHITECTURE = 'RNN'
+ARCHITECTURE = 'FNN'
 
 # Presumable dimension of the vocabulary (number of distinct words)
-VOCAB_SIZE = 11000
+VOCAB_SIZE = 10000
 
 # Number of preceding words to take into account for the POS tag training of the current word [FNN only]
 N_PAST_WORDS = 5
