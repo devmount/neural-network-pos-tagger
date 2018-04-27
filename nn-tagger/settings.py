@@ -14,7 +14,7 @@ ARCHITECTURE = 'FNN'
 VOCAB_SIZE = 10000
 
 # Number of preceding words to take into account for the POS tag training of the current word [FNN only]
-N_PAST_WORDS = 5
+N_PAST_WORDS = 3
 
 # Number of previous training steps to take into account [RNN only]
 N_TIMESTEPS = 3
@@ -38,4 +38,4 @@ BATCH_SIZE = 32
 N_EPOCHS = 5
 
 # Show evaluation result and save model state after this number of trainings steps
-CHECKPOINT_EVERY = 100
+CHECKPOINT_EVERY = 1000

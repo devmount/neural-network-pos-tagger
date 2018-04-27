@@ -70,18 +70,17 @@ class RNN:
     """
 
 
-    def __init__(self, vocab_size, embedding_size, h_size, n_pos_tags, n_timesteps, learning_rate):
+    def __init__(self, h_size, n_pos_tags, n_timesteps, learning_rate):
         """
         Initializes the Recurrent Neural Network model
 
-        @param vocab_size: Dimension of the vocabulary (number of distinct words)
-        @param embedding_size: Dimension of the word embeddings
         @param h_size: Dimension of the hidden layer
         @param n_pos_tags: Number of existing POS tags
+        @param learning_rate: for gradient descent optimizer
         """
 
-        # initialize input word vectors of shape [batch_size, n_timesteps, vocab_size]
-        self.input_x = tf.placeholder(tf.float32, [None, n_timesteps, vocab_size], name="input_x")
+        # initialize input word vectors of shape [batch_size, n_timesteps, word]
+        self.input_x = tf.placeholder(tf.float32, [None, n_timesteps, 1], name="input_x")
         # initialize input labels of shape [batch_size]
         self.input_y = tf.placeholder(tf.int64, [None], name="input_y")
 
@@ -93,9 +92,11 @@ class RNN:
         outputs, states = tf.nn.dynamic_rnn(cell, self.input_x, dtype=tf.float32)
         # compute the logits for the output layer with shape [batch_size*n_timesteps, n_pos_tags]
         self.logits = tf.matmul(tf.reshape(outputs, [-1, h_size]), self.w)
-        logits = tf.reshape(self.logits, [-1, n_timesteps])
+        logits = tf.reshape(self.logits, [-1, n_timesteps*n_pos_tags])
+        # logits = self.logits
         # get labels with shape [batch_size*n_timesteps]
-        labels = tf.reshape(self.input_y, [-1])
+        # labels = tf.reshape(self.input_y, [-1])
+        labels = self.input_y
         # compute the loss
         self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=labels))
 

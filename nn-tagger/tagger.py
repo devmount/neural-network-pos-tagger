@@ -63,6 +63,8 @@ class Tagger:
 
         # get training and test data and the number of existing POS tags
         train_batches, test_data, n_pos_tags = self.__load_data(training_file_path)
+        # n_steps = sum(1 for _ in train_batches)
+        n_steps = 65
         x_test = test_data['x']
         y_test = test_data['y']
 
@@ -88,18 +90,17 @@ class Tagger:
 
         # start training with taking one training batch each step
         for batch in train_batches:
-            # print('.')
             x_batch, y_batch = zip(*batch)
-            # if conf.ARCHITECTURE == 'RNN':
-                # print(np.array(y_batch).shape)
-                # x_batch = tf.reshape(x_batch, [conf.BATCH_SIZE, self.n_timesteps, self.embedding_size]).eval(session=sess)
-                # x_batch = tf.reshape(x_batch, [-1, self.n_timesteps, self.vocab_size]).eval(session=sess)
-                # y_batch = tf.reshape(y_batch, [-1, n_pos_tags]).eval(session=sess)
+            if conf.ARCHITECTURE == 'RNN':
+                x_batch = self.__rnn_reshape(x_batch)
+                # print(np.array(x_batch).shape)
+                # print(x_batch)
             self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
             current_step = tf.train.global_step(sess, global_step)
 
-            if current_step % self.checkpoint_every == 0:
-                self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_test, y_test, summary_writer, train=False)
+            if current_step % self.checkpoint_every == 0 or current_step == n_steps:
+                if conf.ARCHITECTURE != 'RNN':
+                    self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_test, y_test, summary_writer, train=False)
                 path = saver.save(sess, os.path.join(self.storage_dir, 'model'), global_step=current_step)
                 print(" - saved model checkpoint to '%s'" % path)
 
@@ -325,7 +326,7 @@ class Tagger:
 
         # load model architecture based on settings, default is FNN (Feed-forward Neural Network)
         if conf.ARCHITECTURE == 'RNN':
-            nn_model = model.RNN(self.vocab_size, self.embedding_size, self.h_size, n_pos_tags, self.n_timesteps, self.learning_rate)
+            nn_model = model.RNN(self.h_size, n_pos_tags, self.n_timesteps, self.learning_rate)
         else:
             nn_model = model.FNN(self.vocab_size, self.n_past_words, self.embedding_size, self.h_size, n_pos_tags)
         global_step = tf.Variable(initial_value=0, name="global_step", trainable=False)
@@ -405,6 +406,24 @@ class Tagger:
         for sentence in text.splitlines():
             sentences.append(self.__untag_sentence(sentence))
         return '\n'.join(sentences)
+
+
+    def __rnn_reshape(self, flat_batches):
+        """
+        reshapes flat batch list of shape [batch_size, 1] to shape [batch_size, n_timesteps, 1]
+        """
+
+        batches = []
+        for i, flat_batch in enumerate(flat_batches):
+            batch = []
+            for t in range(self.n_timesteps):
+                # if no predecessors are available (at the beginning of the list), add the firsts element
+                if t <= i:
+                    batch.append(flat_batches[i-t])
+                else:
+                    batch.append(flat_batches[0])
+            batches.append(batch)
+        return batches
 
 
     def parse_args(self):
