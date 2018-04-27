@@ -29,9 +29,9 @@ class FNN:
         """
         
         # initialize input word vectors. None: "variable size"
-        self.input_x = tf.placeholder(tf.int32, [None, n_past_words + 1])
+        self.input_x = tf.placeholder(tf.int32, [None, n_past_words + 1], name="input_x")
         # initialize input lables (tags)
-        self.input_y = tf.placeholder(tf.int64, [None])
+        self.input_y = tf.placeholder(tf.int64, [None], name="input_y")
 
         # initialize an embedding matrix with random truncated normal values
         self.embedding_matrix = tf.Variable(tf.truncated_normal([vocab_size, embedding_size], stddev=0.1))
@@ -54,7 +54,7 @@ class FNN:
         self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(labels=self.input_y, logits=self.logits))
 
         # reduce the logits output with the largest value to the output layer size = predictions 
-        self.predictions = tf.argmax(self.logits, axis=1)
+        self.predictions = tf.argmax(self.logits, axis=1, name="predictions")
         # get the correct predictions by comparing to the given labels
         correct_prediction = tf.equal(self.predictions, self.input_y)
         # compute the overall accuracy
@@ -81,9 +81,9 @@ class RNN:
         """
 
         # initialize input word vectors of shape [batch_size, n_timesteps, vocab_size]
-        self.input_x = tf.placeholder(tf.float32, [None, n_timesteps, vocab_size])
+        self.input_x = tf.placeholder(tf.float32, [None, n_timesteps, vocab_size], name="input_x")
         # initialize input labels of shape [batch_size]
-        self.input_y = tf.placeholder(tf.int64, [None])
+        self.input_y = tf.placeholder(tf.int64, [None], name="input_y")
 
         # initialize hidden layer with shape [h_size, n_pos_tags]
         self.w = tf.Variable(tf.truncated_normal([h_size, n_pos_tags], stddev=0.1))
@@ -100,7 +100,7 @@ class RNN:
         self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=labels))
 
         # reduce the logits output with the largest value to the output layer size = predictions 
-        self.predictions = tf.argmax(logits, axis=1)
+        self.predictions = tf.argmax(logits, axis=1, name="predictions")
         # get the correct predictions by comparing to the given labels
         correct_prediction = tf.equal(self.predictions, labels)
         # compute the overall accuracy

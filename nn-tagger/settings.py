@@ -38,4 +38,4 @@ BATCH_SIZE = 32
 N_EPOCHS = 5
 
 # Show evaluation result and save model state after this number of trainings steps
-CHECKPOINT_EVERY = 5000
+CHECKPOINT_EVERY = 100
