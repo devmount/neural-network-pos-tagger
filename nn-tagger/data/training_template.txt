@@ -86,7 +86,7 @@ Welche Veranstaltungen sind (Mo|Di|Mi|Do|Fr|Sa)
 R_LIST M_Course X C_CourseDate:day
 
 Welche Veranstaltungen sind am (Mo|Di|Mi|Do|Fr|Sa)
-R_LIST M_Course X X C_CourseDate:day X
+R_LIST M_Course X X C_CourseDate:day
 
 Welche Veranstaltungen sind am (Mo|Di|Mi|Do|Fr|Sa) nach (7|8|9|10|11|12|13|14|15|16|17|18|19|20) Uhr
 R_LIST M_Course X X C_CourseDate:day Q_GT C_CourseDate:startTime C_CourseDate:startTime
