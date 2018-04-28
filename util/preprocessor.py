@@ -89,16 +89,20 @@ class Corpus:
         parser = argparse.ArgumentParser()
         parser.add_argument("--source", type=str, help="Path to a training_set file from hmm")
         parser.add_argument("--target", type=str, help="File to store the created corpus in")
+        parser.add_argument("--shuffle", type=str, help="Shuffles all lines in given corpus file")
 
         return parser.parse_args()
 
 
-# only execute training when file is invoked as a script and not just imported
+# only execute corpus processing when file is invoked as a script and not just imported
 if __name__ == "__main__":
-    # create tagger instance
+    # create corpus instance
     c = Corpus()
     
     args = c.parse_args()
-    # invoke training
+    # invoke corpus creation
     if args.source is not None and args.target is not None:
         c.create_from_training_set(args.source, args.target)
+    # shuffle corpus
+    if args.shuffle is not None:
+        c.line_processing(args.shuffle, randomize=True)
