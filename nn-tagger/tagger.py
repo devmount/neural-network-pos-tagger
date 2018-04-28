@@ -112,7 +112,7 @@ class Tagger:
         @return a string of space separated word-tag tuples, like "word1/TAG word2/TAG word3/TAG"
         """
 
-        data = TextLoader(sentence.lower(), self.vocab_size, self.n_past_words, self.vocab_path, None, silent)
+        data = TextLoader(self.__replace(sentence.lower()), self.vocab_size, self.n_past_words, self.vocab_path, None, silent)
 
         # start tensorflow session
         sess = tf.Session()
@@ -132,6 +132,7 @@ class Tagger:
         predicted_pos_ids = sess.run(predictions, feed_dict={input_x: features})
 
         if conf.ARCHITECTURE == 'RNN':
+            # get every N_TIMESTEPSth pos tag
             predicted_pos_ids = predicted_pos_ids[0::conf.N_TIMESTEPS]
 
         # create lists of the sentence words and their corresponding predicted POS tags
@@ -387,6 +388,39 @@ class Tagger:
             print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="", flush=True)
 
         summary_writer.add_summary(summaries, step)
+
+
+    def __replace(self, sentence, replacement_file=conf.REPLACEMENT_FILE, is_tagged=False):
+        """
+        Replaces synonyms with uniform description
+        """
+
+        # check if replacement file exists
+        if not os.path.isfile(replacement_file):
+            print('Error: replacement file "%s" doesn\'t exist' % replacement_file)
+            return
+
+        # create replacement mappings
+        replacements = []
+        with open(replacement_file, 'r') as f:
+            for line in f.readlines():
+                assignments = line.strip().split('=')
+                synonyms, key = assignments[0], assignments[1]
+                for synonym in synonyms.split(','):
+                    replacements.append([synonym, key])
+        # replace occurences in sentence
+        replaced_sentence = []
+        for word in sentence.split():
+            found = False
+            for synonym, key in replacements:
+                if word == synonym:
+                    replaced_sentence.append(key)
+                    found = True
+                    break
+            if not found:
+                replaced_sentence.append(word)
+        
+        return ' '.join(replaced_sentence)
 
 
     def __untag_sentence(self, sentence):

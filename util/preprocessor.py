@@ -76,9 +76,11 @@ class Corpus:
 
         # randomize lines
         if randomize:
+            print('Shuffling lines...')
             lines = open(corpus_file_path).readlines()
             random.shuffle(lines)
             open(corpus_file_path, 'w').writelines(lines)
+            print('Done.')
             
 
     def parse_args(self):

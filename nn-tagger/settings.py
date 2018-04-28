@@ -8,7 +8,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # architecture: FNN|RNN
-ARCHITECTURE = 'RNN'
+ARCHITECTURE = 'FNN'
 
 # Presumable dimension of the vocabulary (number of distinct words)
 VOCAB_SIZE = 10000
@@ -26,16 +26,19 @@ LEARNING_RATE = 0.1
 EMBEDDING_SIZE = 100
 
 # Dimension of the hidden layer
-HIDDEN_LAYER_SIZE = 300
+HIDDEN_LAYER_SIZE = 100
 
 # Ratio of test data extracted from the training data
 TEST_RATIO = 0.1
 
 # Size of the training batches, set 300 for RNN
-BATCH_SIZE = 32
+BATCH_SIZE = 128
 
 # Number of training epochs
 N_EPOCHS = 5
 
 # Show evaluation result and save model state after this number of trainings steps
 CHECKPOINT_EVERY = 1000
+
+# replacement file path
+REPLACEMENT_FILE = 'data/replacement.txt'
