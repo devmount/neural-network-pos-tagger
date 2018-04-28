@@ -60,7 +60,7 @@ class CorpusVocabulary:
         for tag, count in sorted(tags.items(), key=lambda x: x[1], reverse=True):
             table.add_row([count, tag])
         print(table.draw())
-            
+
 
     def parse_args(self):
         """

@@ -8,7 +8,7 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 # architecture: FNN|RNN
-ARCHITECTURE = 'FNN'
+ARCHITECTURE = 'RNN'
 
 # Presumable dimension of the vocabulary (number of distinct words)
 VOCAB_SIZE = 10000
@@ -20,7 +20,7 @@ N_PAST_WORDS = 3
 N_TIMESTEPS = 3
 
 # Learning rate of an optimizer [RNN only]
-LEARNING_RATE = 0.01
+LEARNING_RATE = 0.1
 
 # Dimension of the word embeddings
 EMBEDDING_SIZE = 100

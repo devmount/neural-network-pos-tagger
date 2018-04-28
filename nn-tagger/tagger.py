@@ -63,8 +63,6 @@ class Tagger:
 
         # get training and test data and the number of existing POS tags
         train_batches, test_data, n_pos_tags = self.__load_data(training_file_path)
-        # n_steps = sum(1 for _ in train_batches)
-        n_steps = 65
         x_test = test_data['x']
         y_test = test_data['y']
 
@@ -82,7 +80,7 @@ class Tagger:
         # take the initial values that have already been specified, and assign them to each Variable
         sess.run(tf.global_variables_initializer())
         # make the graph read-only to ensure that no operations are added to it when shared between multiple threads
-        # sess.graph.finalize()
+        sess.graph.finalize()
 
         standard_ops = [global_step, nn_model.loss, nn_model.accuracy]
         train_ops = [train_op, train_summary_ops]
@@ -93,12 +91,11 @@ class Tagger:
             x_batch, y_batch = zip(*batch)
             if conf.ARCHITECTURE == 'RNN':
                 x_batch = self.__rnn_reshape(x_batch)
-                # print(np.array(x_batch).shape)
-                # print(x_batch)
+                y_batch = self.__rnn_reshape(y_batch)
             self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
             current_step = tf.train.global_step(sess, global_step)
 
-            if current_step % self.checkpoint_every == 0 or current_step == n_steps:
+            if current_step % self.checkpoint_every == 0:
                 if conf.ARCHITECTURE != 'RNN':
                     self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_test, y_test, summary_writer, train=False)
                 path = saver.save(sess, os.path.join(self.storage_dir, 'model'), global_step=current_step)
@@ -129,7 +126,13 @@ class Tagger:
         graph = tf.get_default_graph()
         input_x = graph.get_operation_by_name("input_x").outputs[0]
         predictions = graph.get_operation_by_name("predictions").outputs[0]
-        predicted_pos_ids = sess.run(predictions, feed_dict={input_x: data.features})
+        
+        # get features and predicted pos ids
+        features = self.__rnn_reshape(data.features) if conf.ARCHITECTURE == 'RNN' else data.features
+        predicted_pos_ids = sess.run(predictions, feed_dict={input_x: features})
+
+        if conf.ARCHITECTURE == 'RNN':
+            predicted_pos_ids = predicted_pos_ids[0::conf.N_TIMESTEPS]
 
         # create lists of the sentence words and their corresponding predicted POS tags
         words = []
