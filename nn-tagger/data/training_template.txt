@@ -103,8 +103,8 @@ R_LIST M_Course X C_Person:fullname X_CurseDate:day C_CourseDate:day
 Welche Module mit mehr als (0|1|2|3|4|5|6|7|8|9|10|11|12) ects kann (ich|man) im {CourseRegulation:group} belegen
 R_LIST M_MTSModule X Q_GT X C_MTSModule:ects C_MTSModule:ects X X X C_CourseRegulation:group X
 
-Welche Module werden von Professor {Person:firstname} {Person:lastname} (unterrichtet|angeboten|gehalten)
-R_LIST M_MTSModule X X X_Person C_Person:fullname C_Person:fullname X
+Welche Module werden von Professor {Person:lastname} (unterrichtet|angeboten|gehalten)
+R_LIST M_MTSModule X X X_Person C_Person:fullname X
 
 Wer ist der Moduleverantwortliche des Moduls {MTSModule:title}
 M_Person X X X_Person X X_MTSModule:title C_MTSModule:title
@@ -130,11 +130,11 @@ X_count R_MTSModule:ects X X C_MTSModule:title C_MTSModule:title
 (Informationen|Details|Mehr) (zu|zum) Modul {MTSModule:title}
 R_SINGLE X X_MTSModule:title C_MTSModule:title
 
-Welche Modulkataloge gibt es im {Program:degree} {Program:name}
+Welche Modulkataloge gibt es (im|in) {Program:degree} {Program:name}
 R_LIST M_CourseRegulation X X X C_Program:degree C_Program:name
 
-Welche Studiengänge von der Fakultät (1|2|3|4|5|6|7) gibt es
-R_LIST M_Program X X X_Institute:faculty C_Institute:faculty X X
+Zeige den Modulkatalog (im|in) {Program:degree} {Program:name}
+R_LIST X M_CourseRegulation X C_Program:degree C_Program:name
 
 Welche Module werden vom Fachgebiet {Chair:name} angeboten
 R_LIST M_MTSModule X X X_Chair:name C_Chair:name X
@@ -145,8 +145,32 @@ M_MTSModule X X_Chair:name C_Chair:name
 Alle Module vom Fachgebiet {Chair:name}
 R_LIST M_MTSModule X X_Chair:name C_Chair:name
 
+Zeige mir alle Module vom Fachgebiet {Chair:name}
+R_LIST X X M_MTSModule X X_Chair:name C_Chair:name
+
+Welche Studiengänge von der Fakultät (1|2|3|4|5|6|7) gibt es
+R_LIST M_Program X X X_Institute:faculty C_Institute:faculty X X
+
 Module von der Fakultät (1|2|3|4|5|6|7)
 M_MTSModule X X X_Institute:faculty C_Institute:faculty
+
+Alle Module von der Fakultät (1|2|3|4|5|6|7)
+R_LIST M_MTSModule X X X_Institute:faculty C_Institute:faculty
+
+Zeige mir alle Module von der Fakultät (1|2|3|4|5|6|7)
+R_LIST X X M_MTSModule X X X_Institute:faculty C_Institute:faculty
+
+Welche Studiengänge von Fakultät (1|2|3|4|5|6|7) gibt es
+R_LIST M_Program X X_Institute:faculty C_Institute:faculty X X
+
+Module von Fakultät (1|2|3|4|5|6|7)
+M_MTSModule X X_Institute:faculty C_Institute:faculty
+
+Alle Module von Fakultät (1|2|3|4|5|6|7)
+R_LIST M_MTSModule X X_Institute:faculty C_Institute:faculty
+
+Zeige mir alle Module von Fakultät (1|2|3|4|5|6|7)
+R_LIST X X M_MTSModule X X_Institute:faculty C_Institute:faculty
 
 Veranstaltungen mit {ExamElement:description} als Prüfung
 M_Course X C_ExamElement:description X X_ExamElement
@@ -172,20 +196,29 @@ R_LIST M_Course X X_Chair:name C_Chair:name X X
 Module mit dem Titel {MTSModule:title}
 M_MTSModule X X X_MTSModule:title C_MTSModule:title
 
-Welche Veranstaltungen finden im Raum {CourseDate:room} statt
+Welche Veranstaltungen finden (im|in) Raum {CourseDate:room} statt
 R_LIST M_CourseDate X X X_Room C_CourseDate:room X
 
-Welche Veranstatlungen werden {CourseDate:cycle} angeboten
-R_List M_Course X C_CourseDate:cycle X
+Alle Veranstaltungen (im|in) Raum {CourseDate:room}
+R_LIST M_CourseDate X X_Room C_CourseDate:room
+
+Zeige mir alle Veranstaltungen (im|in) Raum {CourseDate:room}
+X X R_LIST M_CourseDate X X_Room C_CourseDate:room
+
+Welche Veranstaltungen werden {CourseDate:cycle} angeboten
+R_LIST M_Course X C_CourseDate:cycle X
 
 Welche Module haben eine Platzbeschränkung von mehr als (1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|40|45|50|55|60|65|70|75|80|85|90|95|100|200|300) Teilnehmern
 R_LIST M_MTSModule X X X_ParticipantLimitation X Q_GT X C_MTSModule:participantLimitation X_ParticipantLimitation
 
-Welche Module haben eine Platzbeschränkung von weniger als (1|2|3|4) Teilnehmern
+Welche Module haben eine Platzbeschränkung von weniger als (1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|40|45|50|55|60|65|70|75|80|85|90|95|100|200|300) Teilnehmern
 R_LIST M_MTSModule X X X_ParticipantLimitation X Q_LT X C_MTSModule:participantLimitation X_ParticipantLimitation
 
-Welche Module haben eine Platzbeschränkung von genau (1|2|3|4|5|6|7|8|9|10|11) Teilnehmern
+Welche Module haben eine Platzbeschränkung von genau (1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|40|45|50|55|60|65|70|75|80|85|90|95|100|200|300) Teilnehmern
 R_LIST M_MTSModule X X X_ParticipantLimitation X Q_EQ C_MTSModule:participantLimitation X_ParticipantLimitation
+
+Welche Module sind (beschränkt|begrenzt) auf (1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|40|45|50|55|60|65|70|75|80|85|90|95|100|200|300) (Teilnehmer|Studenten|Personen)
+R_LIST M_MTSModule X X_ParticipantLimitation X C_MTSModule:participantLimitation X_ParticipantLimitation
 
 Welche Personen bieten Module mit mehr als (1|2|3|4|5|6|7|8|9|10|11|12|15|30) ects an
 R_LIST M_Person X R_MTSModule:title X Q_WT X C_MTSModule:ects C_MTSModule:ects X
