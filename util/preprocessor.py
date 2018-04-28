@@ -2,17 +2,48 @@
 The preprocessor module provides preprocessing and preparation to train a language model
 """
 
-import os, random
+import os, random, argparse
+import pickle
 
-class CorpusPreprocessor:
+class Corpus:
     """
     This class contains all methods for corpus preprocessing and preparation for training
     """
 
-
-    def __init__(self, corpus_file_path, delete_lines_containing='', randomize=False):
+    def create_from_training_set(self, training_file, target_file):
         """
-        ...
+        creates a corpus file from an already created hmm training set 
+        The new corpus contains one tagged sentence per line of format: word1/TAG word2/TAG ...
+
+        @param training_file:  Path to a training_set file from hmm
+        @param target_file:    File to store the corpus in
+        """
+
+        # check if training set file exists
+        if not os.path.isfile(training_file):
+            print('Error: corpus file "%s" doesn\'t exist' % training_file)
+            return
+
+        print('Loading training file...')
+        with open(training_file,'rb') as training_data:
+            training_set = pickle.load(training_data)
+            training_data.close()
+        
+        print('Processing training data...')
+        tagged_lines = []
+        for words, tags in training_set:
+            tagged_lines.append(' '.join([i+'/'+j for i,j in zip(words, tags)]))
+        
+        print('Saving corpus file...')
+        with open(target_file,'w') as target:
+            for line in tagged_lines:
+                target.write("%s\n" % line)
+        print('Done.')
+
+
+    def line_processing(self, corpus_file_path, delete_lines_containing='', randomize=False):
+        """
+        operations for the lines of an existing corpus like special line deletion and randomisation
 
         @param corpus_file_path:        Path to a file with tagged sentences of this form: word1/TAG word2/TAG ...
         @param delete_lines_containing: All lines containing the given string should be deleted.
@@ -50,4 +81,24 @@ class CorpusPreprocessor:
             open(corpus_file_path, 'w').writelines(lines)
             
 
-CorpusPreprocessor('nn-tagger/data/hmm.random.corpus', 'welche/R_LIST module/M_MTSModule werden/X von/X prof/X_Person', True)
+    def parse_args(self):
+        """
+        Get script arguments
+        """
+
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--source", type=str, help="Path to a training_set file from hmm")
+        parser.add_argument("--target", type=str, help="File to store the created corpus in")
+
+        return parser.parse_args()
+
+
+# only execute training when file is invoked as a script and not just imported
+if __name__ == "__main__":
+    # create tagger instance
+    c = Corpus()
+    
+    args = c.parse_args()
+    # invoke training
+    if args.source is not None and args.target is not None:
+        c.create_from_training_set(args.source, args.target)
