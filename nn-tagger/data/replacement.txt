@@ -1,5 +1,5 @@
 leistungspunkt,leistungspunkte,leistungspunten,lp,punkten,punkte,points=ects
-courses,lerveranstaltungen,kurse,veranstatlungen,kurs,lehrveranstaltung,veranstaltung=course
+courses,lerveranstaltungen,lehrveranstaltungen,kurse,veranstatlungen,kurs,lehrveranstaltung,veranstaltung,veranstaltungen=course
 null,zero=0
 I,eins,one=1
 II,zwei,zwo,two=2

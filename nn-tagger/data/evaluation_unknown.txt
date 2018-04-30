@@ -18,38 +18,38 @@ alle/R_LIST module/M_MTSModule mit/X genau/X 12/C_MTSModule:ects ects/C_MTSModul
 
 # time
 course/M_Course die/X mo/C_CourseDate:day stattfinden/X
-alle/R_LIST veranstaltungen/M_Course an/X einem/X mo/C_CourseDate:day
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mo/C_CourseDate:day
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mo/C_CourseDate:day
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mo/C_CourseDate:day nach/Q_GT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mo/C_CourseDate:day vor/Q_LT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mo/C_CourseDate:day um/X_CourseDate:startTime 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mo/C_CourseDate:day
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mo/C_CourseDate:day nach/Q_GT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mo/C_CourseDate:day vor/Q_LT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mo/C_CourseDate:day um/X_CourseDate:startTime 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
+alle/R_LIST course/M_Course an/X einem/X mo/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day nach/Q_GT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day vor/Q_LT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day um/X_CourseDate:startTime 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day nach/Q_GT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day vor/Q_LT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day um/X_CourseDate:startTime 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
 course/M_Course die/X mi/C_CourseDate:day stattfinden/X
-alle/R_LIST veranstaltungen/M_Course an/X einem/X mi/C_CourseDate:day
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mi/C_CourseDate:day
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mi/C_CourseDate:day
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mi/C_CourseDate:day nach/Q_GT 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mi/C_CourseDate:day vor/Q_LT 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mi/C_CourseDate:day um/X_CourseDate:startTime 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mi/C_CourseDate:day
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mi/C_CourseDate:day nach/Q_GT 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mi/C_CourseDate:day vor/Q_LT 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X mi/C_CourseDate:day um/X_CourseDate:startTime 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
+alle/R_LIST course/M_Course an/X einem/X mi/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day nach/Q_GT 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day vor/Q_LT 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day um/X_CourseDate:startTime 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day nach/Q_GT 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day vor/Q_LT 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day um/X_CourseDate:startTime 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
 course/M_Course die/X fr/C_CourseDate:day stattfinden/X
-alle/R_LIST veranstaltungen/M_Course an/X einem/X fr/C_CourseDate:day
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X fr/C_CourseDate:day
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X fr/C_CourseDate:day
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X fr/C_CourseDate:day nach/Q_GT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X fr/C_CourseDate:day vor/Q_LT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X fr/C_CourseDate:day um/X_CourseDate:startTime 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X fr/C_CourseDate:day
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X fr/C_CourseDate:day nach/Q_GT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X fr/C_CourseDate:day vor/Q_LT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X veranstaltungen/M_Course am/X fr/C_CourseDate:day um/X_CourseDate:startTime 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
+alle/R_LIST course/M_Course an/X einem/X fr/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day nach/Q_GT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day vor/Q_LT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day um/X_CourseDate:startTime 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day nach/Q_GT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day vor/Q_LT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day um/X_CourseDate:startTime 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
 
 # faculty
 alle/R_LIST existierenden/X studiengang/M_Program von/X der/X fakultät/X_Institute:faculty 2/C_Institute:faculty
@@ -107,7 +107,7 @@ zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 100/C_M
 zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 100/C_MTSModule:participantLimitation personen/X_ParticipantLimitation begrenzt/X sind/X
 
 # persons
-zeige/R_LIST alle/X personen/M_Person bdie/X module/R_MTSModule:title mit/X als/X 3/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
+zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X als/X 3/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X als/X 6/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X als/X 9/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 3/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
@@ -119,173 +119,133 @@ zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X mehr/
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 3/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 6/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 9/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
-wer/M_Person ist/X der/X moduleverantwortliche/X_Person des/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-wer/M_Person ist/X verantworliche/X für/X das/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-bei/X wem/M_Person findet/X das/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title statt/X
-welche/R_LIST course/M_Course hält/X martinelli/C_Person:fullname am/X_CurseDate:day mi/C_CourseDate:day
-welche/R_LIST module/M_MTSModule werden/X von/X prof/X_Person martinelli/C_Person:fullname unterrichtet/X
-welche/R_LIST module/M_MTSModule werden/X von/X prof/X_Person martinelli/C_Person:fullname angeboten/X
-welche/R_LIST module/M_MTSModule werden/X von/X prof/X_Person martinelli/C_Person:fullname gehalten/X
-welche/R_LIST course/M_Course werden/X von/X prof/X_Person martinelli/C_Person:fullname unterrichtet/X
-welche/R_LIST course/M_Course werden/X von/X prof/X_Person martinelli/C_Person:fullname angeboten/X
-welche/R_LIST course/M_Course werden/X von/X prof/X_Person martinelli/C_Person:fullname gehalten/X
-welche/R_LIST course/M_Course unterrichtet/X prof/X_Person martinelli/C_Person:fullname
-welche/R_LIST course/M_Course bietet/X prof/X_Person martinelli/C_Person:fullname
-welche/R_LIST course/M_Course hält/X prof/X_Person martinelli/C_Person:fullname
-welche/R_LIST course/M_Course hält/X krallmann/C_Person:fullname am/X_CurseDate:day mi/C_CourseDate:day
-welche/R_LIST module/M_MTSModule werden/X von/X prof/X_Person krallmann/C_Person:fullname unterrichtet/X
-welche/R_LIST module/M_MTSModule werden/X von/X prof/X_Person krallmann/C_Person:fullname angeboten/X
-welche/R_LIST module/M_MTSModule werden/X von/X prof/X_Person krallmann/C_Person:fullname gehalten/X
-welche/R_LIST course/M_Course werden/X von/X prof/X_Person krallmann/C_Person:fullname unterrichtet/X
-welche/R_LIST course/M_Course werden/X von/X prof/X_Person krallmann/C_Person:fullname angeboten/X
-welche/R_LIST course/M_Course werden/X von/X prof/X_Person krallmann/C_Person:fullname gehalten/X
-welche/R_LIST course/M_Course unterrichtet/X prof/X_Person krallmann/C_Person:fullname
-welche/R_LIST course/M_Course bietet/X prof/X_Person krallmann/C_Person:fullname
-welche/R_LIST course/M_Course hält/X prof/X_Person krallmann/C_Person:fullname
-welche/R_LIST course/M_Course hält/X nagel/C_Person:fullname am/X_CurseDate:day mi/C_CourseDate:day
-welche/R_LIST module/M_MTSModule werden/X von/X prof/X_Person nagel/C_Person:fullname unterrichtet/X
-welche/R_LIST module/M_MTSModule werden/X von/X prof/X_Person nagel/C_Person:fullname angeboten/X
-welche/R_LIST module/M_MTSModule werden/X von/X prof/X_Person nagel/C_Person:fullname gehalten/X
-welche/R_LIST course/M_Course werden/X von/X prof/X_Person nagel/C_Person:fullname unterrichtet/X
-welche/R_LIST course/M_Course werden/X von/X prof/X_Person nagel/C_Person:fullname angeboten/X
-welche/R_LIST course/M_Course werden/X von/X prof/X_Person nagel/C_Person:fullname gehalten/X
-welche/R_LIST course/M_Course unterrichtet/X prof/X_Person nagel/C_Person:fullname
-welche/R_LIST course/M_Course bietet/X prof/X_Person nagel/C_Person:fullname
-welche/R_LIST course/M_Course hält/X prof/X_Person nagel/C_Person:fullname
+zeige/R_LIST alle/X course/M_Course die/X martinelli/C_Person:fullname am/X_CurseDate:day mi/C_CourseDate:day hält/X
+zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person martinelli/C_Person:fullname unterrichtet/X werden/X
+zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person martinelli/C_Person:fullname angeboten/X werden/X
+zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person martinelli/C_Person:fullname gehalten/X werden/X
+zeige/R_LIST alle/X course/M_Course die/X von/X prof/X_Person martinelli/C_Person:fullname unterrichtet/X werden/X
+zeige/R_LIST alle/X course/M_Course die/X von/X prof/X_Person martinelli/C_Person:fullname angeboten/X werden/X
+zeige/R_LIST alle/X course/M_Course die/X von/X prof/X_Person martinelli/C_Person:fullname gehalten/X werden/X
+zeige/R_LIST alle/X course/M_Course die/X prof/X_Person martinelli/C_Person:fullname unterrichtet/X
+zeige/R_LIST alle/X course/M_Course die/X prof/X_Person martinelli/C_Person:fullname bietet/X
+zeige/R_LIST alle/X course/M_Course die/X prof/X_Person martinelli/C_Person:fullname hält/X
+zeige/R_LIST alle/X course/M_Course die/X krallmann/C_Person:fullname am/X_CurseDate:day mi/C_CourseDate:day hält/X
+zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person krallmann/C_Person:fullname unterrichtet/X werden/X
+zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person krallmann/C_Person:fullname angeboten/X werden/X
+zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person krallmann/C_Person:fullname gehalten/X werden/X
+zeige/R_LIST alle/X course/M_Course die/X von/X prof/X_Person krallmann/C_Person:fullname unterrichtet/X werden/X
+zeige/R_LIST alle/X course/M_Course die/X von/X prof/X_Person krallmann/C_Person:fullname angeboten/X werden/X
+zeige/R_LIST alle/X course/M_Course die/X von/X prof/X_Person krallmann/C_Person:fullname gehalten/X werden/X
+zeige/R_LIST alle/X course/M_Course die/X prof/X_Person krallmann/C_Person:fullname unterrichtet/X
+zeige/R_LIST alle/X course/M_Course die/X prof/X_Person krallmann/C_Person:fullname bietet/X
+zeige/R_LIST alle/X course/M_Course die/X prof/X_Person krallmann/C_Person:fullname hält/X
+zeige/R_LIST alle/X course/M_Course die/X nagel/C_Person:fullname am/X_CurseDate:day mi/C_CourseDate:day hält/X
+zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person nagel/C_Person:fullname unterrichtet/X werden/X
+zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person nagel/C_Person:fullname angeboten/X werden/X
+zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person nagel/C_Person:fullname gehalten/X werden/X
+zeige/R_LIST alle/X course/M_Course die/X von/X prof/X_Person nagel/C_Person:fullname unterrichtet/X werden/X
+zeige/R_LIST alle/X course/M_Course die/X von/X prof/X_Person nagel/C_Person:fullname angeboten/X werden/X
+zeige/R_LIST alle/X course/M_Course die/X von/X prof/X_Person nagel/C_Person:fullname gehalten/X werden/X
+zeige/R_LIST alle/X course/M_Course die/X prof/X_Person nagel/C_Person:fullname unterrichtet/X
+zeige/R_LIST alle/X course/M_Course die/X prof/X_Person nagel/C_Person:fullname bietet/X
+zeige/R_LIST alle/X course/M_Course die/X prof/X_Person nagel/C_Person:fullname hält/X
 
 # program
-welche/R_LIST module/M_MTSModule gibt/X es/X im/X wirtschaftsingenieurwesen/C_Program:name
-welche/R_LIST module/M_MTSModule gibt/X es/X im/X studiengang/X_Program:name wirtschaftsingenieurwesen/C_Program:name
-alle/R_LIST module/M_MTSModule von/X wirtschaftsingenieurwesen/C_Program:name
-ich/X suche/X alle/R_LIST module/M_MTSModule von/X wirtschaftsingenieurwesen/C_Program:name
-bitte/X_PLEASE nur/X_ONLY welche/X die/X ich/X im/X studiengang/X_Program:name wirtschaftsingenieurwesen/C_Program:name studieren/X kann/X
-bitte/X_PLEASE nur/X_ONLY welche/X die/X man/X im/X studiengang/X_Program:name wirtschaftsingenieurwesen/C_Program:name studieren/X kann/X
-welche/R_LIST module/M_MTSModule gibt/X es/X im/X informatik/C_Program:name
-welche/R_LIST module/M_MTSModule gibt/X es/X im/X studiengang/X_Program:name informatik/C_Program:name
-alle/R_LIST module/M_MTSModule von/X informatik/C_Program:name
-ich/X suche/X alle/R_LIST module/M_MTSModule von/X informatik/C_Program:name
-bitte/X_PLEASE nur/X_ONLY welche/X die/X ich/X im/X studiengang/X_Program:name informatik/C_Program:name studieren/X kann/X
-bitte/X_PLEASE nur/X_ONLY welche/X die/X man/X im/X studiengang/X_Program:name informatik/C_Program:name studieren/X kann/X
-welche/R_LIST module/M_MTSModule gibt/X es/X im/X elektrotechnik/C_Program:name
-welche/R_LIST module/M_MTSModule gibt/X es/X im/X studiengang/X_Program:name elektrotechnik/C_Program:name
-alle/R_LIST module/M_MTSModule von/X elektrotechnik/C_Program:name
-ich/X suche/X alle/R_LIST module/M_MTSModule von/X elektrotechnik/C_Program:name
-bitte/X_PLEASE nur/X_ONLY welche/X die/X ich/X im/X studiengang/X_Program:name elektrotechnik/C_Program:name studieren/X kann/X
-bitte/X_PLEASE nur/X_ONLY welche/X die/X man/X im/X studiengang/X_Program:name elektrotechnik/C_Program:name studieren/X kann/X
-welche/R_LIST module/M_MTSModule gibt/X es/X im/X wirtschaftsinformatik/C_Program:name
-welche/R_LIST module/M_MTSModule gibt/X es/X im/X studiengang/X_Program:name wirtschaftsinformatik/C_Program:name
-alle/R_LIST module/M_MTSModule von/X wirtschaftsinformatik/C_Program:name
-ich/X suche/X alle/R_LIST module/M_MTSModule von/X wirtschaftsinformatik/C_Program:name
-bitte/X_PLEASE nur/X_ONLY welche/X die/X ich/X im/X studiengang/X_Program:name wirtschaftsinformatik/C_Program:name studieren/X kann/X
-bitte/X_PLEASE nur/X_ONLY welche/X die/X man/X im/X studiengang/X_Program:name wirtschaftsinformatik/C_Program:name studieren/X kann/X
+zeige/R_LIST alle/X module/M_MTSModule von/X wirtschaftsingenieurwesen/C_Program:name
+zeige/R_LIST alle/X module/M_MTSModule von/X informatik/C_Program:name
+zeige/R_LIST alle/X module/M_MTSModule von/X elektrotechnik/C_Program:name
+zeige/R_LIST alle/X module/M_MTSModule von/X wirtschaftsinformatik/C_Program:name
 
 # modules
-module/M_MTSModule mit/X dem/X namen/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-wie/R_SINGLE viele/X_count ects/R_MTSModule:ects hat/X das/X module/C_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-wie/R_SINGLE viele/X_count ects/R_MTSModule:ects bringt/X das/X module/C_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-wieviele/X_count ects/R_MTSModule:ects hat/X das/X module/C_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-wieviele/X_count ects/R_MTSModule:ects bringt/X das/X module/C_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-wieviel/X_count ects/R_MTSModule:ects hat/X das/X module/C_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-wieviel/X_count ects/R_MTSModule:ects bringt/X das/X module/C_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-informationen/R_SINGLE zu/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-informationen/R_SINGLE zum/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-details/R_SINGLE zu/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-details/R_SINGLE zum/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-mehr/R_SINGLE zu/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-mehr/R_SINGLE zum/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-in/X welche/R_LIST studiengang/M_Program gibt/X es/X das/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-module/M_MTSModule mit/X dem/X titel/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
-anwendungssystemprojekt/C_MTSModule:title
-module/M_MTSModule mit/X dem/X namen/X_MTSModule:title organisationstheorie/C_MTSModule:title
-wie/R_SINGLE viele/X_count ects/R_MTSModule:ects hat/X das/X module/C_MTSModule:title organisationstheorie/C_MTSModule:title
-wie/R_SINGLE viele/X_count ects/R_MTSModule:ects bringt/X das/X module/C_MTSModule:title organisationstheorie/C_MTSModule:title
-wieviele/X_count ects/R_MTSModule:ects hat/X das/X module/C_MTSModule:title organisationstheorie/C_MTSModule:title
-wieviele/X_count ects/R_MTSModule:ects bringt/X das/X module/C_MTSModule:title organisationstheorie/C_MTSModule:title
-wieviel/X_count ects/R_MTSModule:ects hat/X das/X module/C_MTSModule:title organisationstheorie/C_MTSModule:title
-wieviel/X_count ects/R_MTSModule:ects bringt/X das/X module/C_MTSModule:title organisationstheorie/C_MTSModule:title
-informationen/R_SINGLE zu/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
-informationen/R_SINGLE zum/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
-details/R_SINGLE zu/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
-details/R_SINGLE zum/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
-mehr/R_SINGLE zu/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
-mehr/R_SINGLE zum/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
-in/X welche/R_LIST studiengang/M_Program gibt/X es/X das/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
-module/M_MTSModule mit/X dem/X titel/X_MTSModule:title organisationstheorie/C_MTSModule:title
-organisationstheorie/C_MTSModule:title
+zeige/R_LIST alle/X module/M_MTSModule mit/X dem/X titel/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
+anzahl/X_count ects/R_MTSModule:ects des/X module/C_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
+gib/X mir/X informationen/R_SINGLE zu/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
+gib/X mir/X informationen/R_SINGLE zum/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
+gib/X mir/X details/R_SINGLE zu/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
+gib/X mir/X details/R_SINGLE zum/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
+zeige/X mir/X mehr/R_SINGLE zu/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
+zeige/X mir/X mehr/R_SINGLE zum/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
+studiengang/M_Program mit/X dem/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
+zeige/R_LIST alle/X module/M_MTSModule mit/X dem/X titel/X_MTSModule:title organisationstheorie/C_MTSModule:title
+anzahl/X_count ects/R_MTSModule:ects des/X module/C_MTSModule:title organisationstheorie/C_MTSModule:title
+gib/X mir/X informationen/R_SINGLE zu/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
+gib/X mir/X informationen/R_SINGLE zum/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
+gib/X mir/X details/R_SINGLE zu/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
+gib/X mir/X details/R_SINGLE zum/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
+zeige/X mir/X mehr/R_SINGLE zu/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
+zeige/X mir/X mehr/R_SINGLE zum/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
+studiengang/M_Program mit/X dem/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
+nähere/X informationen/R_SINGLE zu/X modul/X_MTSModule:title energiespeichertechnologien/C_MTSModule:title
+nähere/X informationen/R_SINGLE zu/X modul/X_MTSModule:title brandschutz/C_MTSModule:title
+nähere/X informationen/R_SINGLE zu/X modul/X_MTSModule:title diskrete/C_MTSModule:title geometrie/C_MTSModule:title ii/C_MTSModule:title
 
 # chair
-welche/R_LIST module/M_MTSModule werden/X vom/X institute/X_Chair:name lebensmittelverfahrenstechnik/C_Chair:name angeboten/X
-module/M_MTSModule vom/X institute/X_Chair:name lebensmittelverfahrenstechnik/C_Chair:name
-alle/R_LIST module/M_MTSModule vom/X institute/X_Chair:name lebensmittelverfahrenstechnik/C_Chair:name
-zeige/R_LIST mir/X alle/X module/M_MTSModule vom/X institute/X_Chair:name lebensmittelverfahrenstechnik/C_Chair:name
-welche/R_LIST veranstaltungen/M_Course des/X institute/X_Chair:name lebensmittelverfahrenstechnik/C_Chair:name gibt/X es/X
-welche/R_LIST module/M_MTSModule werden/X vom/X institute/X_Chair:name halbleiterbauelemente/C_Chair:name angeboten/X
-module/M_MTSModule vom/X institute/X_Chair:name halbleiterbauelemente/C_Chair:name
-alle/R_LIST module/M_MTSModule vom/X institute/X_Chair:name halbleiterbauelemente/C_Chair:name
-zeige/R_LIST mir/X alle/X module/M_MTSModule vom/X institute/X_Chair:name halbleiterbauelemente/C_Chair:name
-welche/R_LIST veranstaltungen/M_Course des/X institute/X_Chair:name halbleiterbauelemente/C_Chair:name gibt/X es/X
-welche/R_LIST module/M_MTSModule werden/X vom/X institute/X_Chair:name ingenieurgeologie/C_Chair:name angeboten/X
-module/M_MTSModule vom/X institute/X_Chair:name ingenieurgeologie/C_Chair:name
-alle/R_LIST module/M_MTSModule vom/X institute/X_Chair:name ingenieurgeologie/C_Chair:name
-zeige/R_LIST mir/X alle/X module/M_MTSModule vom/X institute/X_Chair:name ingenieurgeologie/C_Chair:name
-welche/R_LIST veranstaltungen/M_Course des/X institute/X_Chair:name ingenieurgeologie/C_Chair:name gibt/X es/X
+alle/R_LIST module/M_MTSModule die/X das/X institute/X_Chair:name lebensmittelverfahrenstechnik/C_Chair:name anbietet/X
+alle/R_LIST module/M_MTSModule die/X das/X institute/X_Chair:name halbleiterbauelemente/C_Chair:name anbietet/X
+alle/R_LIST module/M_MTSModule die/X das/X institute/X_Chair:name ingenieurgeologie/C_Chair:name anbietet/X
+zeige/R_LIST mir/X die/X module/M_MTSModule die/X das/X institute/X_Chair:name lebensmittelverfahrenstechnik/C_Chair:name anbietet/X
+zeige/R_LIST mir/X die/X module/M_MTSModule die/X das/X institute/X_Chair:name halbleiterbauelemente/C_Chair:name anbietet/X
+zeige/R_LIST mir/X die/X module/M_MTSModule die/X das/X institute/X_Chair:name ingenieurgeologie/C_Chair:name anbietet/X
 
 # exam
-veranstaltungen/M_Course mit/X portfolio/C_ExamElement:description als/X prüfung/X_ExamElement
-welche/R_LIST veranstaltungen/M_Course haben/X die/X prüfung/X_ExamElement portfolio/C_ExamElement:description
-veranstaltungen/M_Course mit/X projektdokumentation/C_ExamElement:description als/X prüfung/X_ExamElement
-welche/R_LIST veranstaltungen/M_Course haben/X die/X prüfung/X_ExamElement projektdokumentation/C_ExamElement:description
-veranstaltungen/M_Course mit/X seminar/C_ExamElement:description paper/C_ExamElement:description als/X prüfung/X_ExamElement
-welche/R_LIST veranstaltungen/M_Course haben/X die/X prüfung/X_ExamElement seminar/C_ExamElement:description paper/C_ExamElement:description
+zeige/R_LIST mir/X alle/X course/M_Course mit/X portfolio/C_ExamElement:description als/X prüfung/X_ExamElement
+zeige/R_LIST mir/X alle/X course/M_Course die/X portfolio/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course mit/X projektdokumentation/C_ExamElement:description als/X prüfung/X_ExamElement
+zeige/R_LIST mir/X alle/X course/M_Course die/X projektdokumentation/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course mit/X seminar/C_ExamElement:description paper/C_ExamElement:description als/X prüfung/X_ExamElement
+zeige/R_LIST mir/X alle/X course/M_Course die/X seminar/C_ExamElement:description paper/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+module/M_MTSModule mit/X einem/X praktikum/C_ExamElement:description
+module/M_MTSModule mit/X einem/X seminar/C_ExamElement:description
+module/M_MTSModule mit/X einem/X projekt/C_ExamElement:description
 
 # courses
-wann/M_CourseDate ist/X das/X erste/R_FIRST treffen/X von/X kreativitätstechniken/C_Course:title
-wann/M_CourseDate ist/X die/X erste/R_FIRST course/X von/X kreativitätstechniken/C_Course:title
-wann/M_CourseDate ist/X das/X erste/R_FIRST treffen/X von/X schiffsdynamik/C_Course:title
-wann/M_CourseDate ist/X die/X erste/R_FIRST course/X von/X schiffsdynamik/C_Course:title
-wann/M_CourseDate ist/X das/X erste/R_FIRST treffen/X von/X vergaberecht/C_Course:title
-wann/M_CourseDate ist/X die/X erste/R_FIRST course/X von/X vergaberecht/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X kreativitätstechniken/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X kreativitätstechniken/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X schiffsdynamik/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X schiffsdynamik/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X vergaberecht/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X vergaberecht/C_Course:title
 
 # locations
-welche/R_LIST veranstaltungen/M_CourseDate finden/X im/X raum/X_Room gebäudeteile/C_CourseDate:room hochfrequenz-/C_CourseDate:room fernmeldetechnik/C_CourseDate:room technische/C_CourseDate:room akustik/C_CourseDate:room -/C_CourseDate:room hft-ta/C_CourseDate:room 101/C_CourseDate:room statt/X
-welche/R_LIST veranstaltungen/M_CourseDate finden/X im/X raum/X_Room ernst-ruska-gebäude/C_CourseDate:room (ehem./C_CourseDate:room physikgebäude)/C_CourseDate:room -/C_CourseDate:room er/C_CourseDate:room 101/C_CourseDate:room statt/X
-welche/R_LIST veranstaltungen/M_CourseDate finden/X im/X raum/X_Room ehem./C_CourseDate:room telefunken-hochhaus/C_CourseDate:room -/C_CourseDate:room tel/C_CourseDate:room 1011/C_CourseDate:room statt/X
-welche/R_LIST veranstaltungen/M_CourseDate finden/X im/X raum/X_Room hörsaalgebäude/C_CourseDate:room elektrotechnik/C_CourseDate:room -/C_CourseDate:room he/C_CourseDate:room 101/C_CourseDate:room statt/X
-welche/R_LIST veranstaltungen/M_CourseDate finden/X im/X raum/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 1012/C_CourseDate:room statt/X
-welche/R_LIST veranstaltungen/M_CourseDate finden/X im/X raum/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 6101/C_CourseDate:room geod.stand/C_CourseDate:room statt/X
-welche/R_LIST veranstaltungen/M_CourseDate finden/X im/X raum/X_Room kerntechnikgebäude/C_CourseDate:room -/C_CourseDate:room kt/C_CourseDate:room 101/C_CourseDate:room statt/X
-welche/R_LIST veranstaltungen/M_CourseDate finden/X in/X raum/X_Room gebäudeteile/C_CourseDate:room hochfrequenz-/C_CourseDate:room fernmeldetechnik/C_CourseDate:room technische/C_CourseDate:room akustik/C_CourseDate:room -/C_CourseDate:room hft-ta/C_CourseDate:room 101/C_CourseDate:room statt/X
-welche/R_LIST veranstaltungen/M_CourseDate finden/X in/X raum/X_Room ernst-ruska-gebäude/C_CourseDate:room (ehem./C_CourseDate:room physikgebäude)/C_CourseDate:room -/C_CourseDate:room er/C_CourseDate:room 101/C_CourseDate:room statt/X
-welche/R_LIST veranstaltungen/M_CourseDate finden/X in/X raum/X_Room ehem./C_CourseDate:room telefunken-hochhaus/C_CourseDate:room -/C_CourseDate:room tel/C_CourseDate:room 1011/C_CourseDate:room statt/X
-welche/R_LIST veranstaltungen/M_CourseDate finden/X in/X raum/X_Room hörsaalgebäude/C_CourseDate:room elektrotechnik/C_CourseDate:room -/C_CourseDate:room he/C_CourseDate:room 101/C_CourseDate:room statt/X
-welche/R_LIST veranstaltungen/M_CourseDate finden/X in/X raum/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 1012/C_CourseDate:room statt/X
-welche/R_LIST veranstaltungen/M_CourseDate finden/X in/X raum/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 6101/C_CourseDate:room geod.stand/C_CourseDate:room statt/X
-welche/R_LIST veranstaltungen/M_CourseDate finden/X in/X raum/X_Room kerntechnikgebäude/C_CourseDate:room -/C_CourseDate:room kt/C_CourseDate:room 101/C_CourseDate:room statt/X
-alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room gebäudeteile/C_CourseDate:room hochfrequenz-/C_CourseDate:room fernmeldetechnik/C_CourseDate:room technische/C_CourseDate:room akustik/C_CourseDate:room -/C_CourseDate:room hft-ta/C_CourseDate:room 101/C_CourseDate:room
-alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room ernst-ruska-gebäude/C_CourseDate:room (ehem./C_CourseDate:room physikgebäude)/C_CourseDate:room -/C_CourseDate:room er/C_CourseDate:room 101/C_CourseDate:room
-alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room ehem./C_CourseDate:room telefunken-hochhaus/C_CourseDate:room -/C_CourseDate:room tel/C_CourseDate:room 1011/C_CourseDate:room
-alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room hörsaalgebäude/C_CourseDate:room elektrotechnik/C_CourseDate:room -/C_CourseDate:room he/C_CourseDate:room 101/C_CourseDate:room
-alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 1012/C_CourseDate:room
-alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 6101/C_CourseDate:room geod.stand/C_CourseDate:room
-alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room kerntechnikgebäude/C_CourseDate:room -/C_CourseDate:room kt/C_CourseDate:room 101/C_CourseDate:room
-alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room gebäudeteile/C_CourseDate:room hochfrequenz-/C_CourseDate:room fernmeldetechnik/C_CourseDate:room technische/C_CourseDate:room akustik/C_CourseDate:room -/C_CourseDate:room hft-ta/C_CourseDate:room 101/C_CourseDate:room
-alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room ernst-ruska-gebäude/C_CourseDate:room (ehem./C_CourseDate:room physikgebäude)/C_CourseDate:room -/C_CourseDate:room er/C_CourseDate:room 101/C_CourseDate:room
-alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room ehem./C_CourseDate:room telefunken-hochhaus/C_CourseDate:room -/C_CourseDate:room tel/C_CourseDate:room 1011/C_CourseDate:room
-alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room hörsaalgebäude/C_CourseDate:room elektrotechnik/C_CourseDate:room -/C_CourseDate:room he/C_CourseDate:room 101/C_CourseDate:room
-alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 1012/C_CourseDate:room
-alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 6101/C_CourseDate:room geod.stand/C_CourseDate:room
-alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room kerntechnikgebäude/C_CourseDate:room -/C_CourseDate:room kt/C_CourseDate:room 101/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room gebäudeteile/C_CourseDate:room hochfrequenz-/C_CourseDate:room fernmeldetechnik/C_CourseDate:room technische/C_CourseDate:room akustik/C_CourseDate:room -/C_CourseDate:room hft-ta/C_CourseDate:room 101/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room ernst-ruska-gebäude/C_CourseDate:room (ehem./C_CourseDate:room physikgebäude)/C_CourseDate:room -/C_CourseDate:room er/C_CourseDate:room 101/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room ehem./C_CourseDate:room telefunken-hochhaus/C_CourseDate:room -/C_CourseDate:room tel/C_CourseDate:room 1011/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room hörsaalgebäude/C_CourseDate:room elektrotechnik/C_CourseDate:room -/C_CourseDate:room he/C_CourseDate:room 101/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 1012/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 6101/C_CourseDate:room geod.stand/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate im/X raum/X_Room kerntechnikgebäude/C_CourseDate:room -/C_CourseDate:room kt/C_CourseDate:room 101/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room gebäudeteile/C_CourseDate:room hochfrequenz-/C_CourseDate:room fernmeldetechnik/C_CourseDate:room technische/C_CourseDate:room akustik/C_CourseDate:room -/C_CourseDate:room hft-ta/C_CourseDate:room 101/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room ernst-ruska-gebäude/C_CourseDate:room (ehem./C_CourseDate:room physikgebäude)/C_CourseDate:room -/C_CourseDate:room er/C_CourseDate:room 101/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room ehem./C_CourseDate:room telefunken-hochhaus/C_CourseDate:room -/C_CourseDate:room tel/C_CourseDate:room 1011/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room hörsaalgebäude/C_CourseDate:room elektrotechnik/C_CourseDate:room -/C_CourseDate:room he/C_CourseDate:room 101/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 1012/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 6101/C_CourseDate:room geod.stand/C_CourseDate:room
-zeige/X mir/X alle/R_LIST veranstaltungen/M_CourseDate in/X raum/X_Room kerntechnikgebäude/C_CourseDate:room -/C_CourseDate:room kt/C_CourseDate:room 101/C_CourseDate:room
+welche/R_LIST course/M_CourseDate finden/X im/X hörsaal/X_Room gebäudeteile/C_CourseDate:room hochfrequenz-/C_CourseDate:room fernmeldetechnik/C_CourseDate:room technische/C_CourseDate:room akustik/C_CourseDate:room -/C_CourseDate:room hft-ta/C_CourseDate:room 101/C_CourseDate:room statt/X
+welche/R_LIST course/M_CourseDate finden/X im/X hörsaal/X_Room ernst-ruska-gebäude/C_CourseDate:room (ehem./C_CourseDate:room physikgebäude)/C_CourseDate:room -/C_CourseDate:room er/C_CourseDate:room 101/C_CourseDate:room statt/X
+welche/R_LIST course/M_CourseDate finden/X im/X hörsaal/X_Room ehem./C_CourseDate:room telefunken-hochhaus/C_CourseDate:room -/C_CourseDate:room tel/C_CourseDate:room 1011/C_CourseDate:room statt/X
+welche/R_LIST course/M_CourseDate finden/X im/X hörsaal/X_Room hörsaalgebäude/C_CourseDate:room elektrotechnik/C_CourseDate:room -/C_CourseDate:room he/C_CourseDate:room 101/C_CourseDate:room statt/X
+welche/R_LIST course/M_CourseDate finden/X im/X hörsaal/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 1012/C_CourseDate:room statt/X
+welche/R_LIST course/M_CourseDate finden/X im/X hörsaal/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 6101/C_CourseDate:room geod.stand/C_CourseDate:room statt/X
+welche/R_LIST course/M_CourseDate finden/X im/X hörsaal/X_Room kerntechnikgebäude/C_CourseDate:room -/C_CourseDate:room kt/C_CourseDate:room 101/C_CourseDate:room statt/X
+welche/R_LIST course/M_CourseDate finden/X in/X hörsaal/X_Room gebäudeteile/C_CourseDate:room hochfrequenz-/C_CourseDate:room fernmeldetechnik/C_CourseDate:room technische/C_CourseDate:room akustik/C_CourseDate:room -/C_CourseDate:room hft-ta/C_CourseDate:room 101/C_CourseDate:room statt/X
+welche/R_LIST course/M_CourseDate finden/X in/X hörsaal/X_Room ernst-ruska-gebäude/C_CourseDate:room (ehem./C_CourseDate:room physikgebäude)/C_CourseDate:room -/C_CourseDate:room er/C_CourseDate:room 101/C_CourseDate:room statt/X
+welche/R_LIST course/M_CourseDate finden/X in/X hörsaal/X_Room ehem./C_CourseDate:room telefunken-hochhaus/C_CourseDate:room -/C_CourseDate:room tel/C_CourseDate:room 1011/C_CourseDate:room statt/X
+welche/R_LIST course/M_CourseDate finden/X in/X hörsaal/X_Room hörsaalgebäude/C_CourseDate:room elektrotechnik/C_CourseDate:room -/C_CourseDate:room he/C_CourseDate:room 101/C_CourseDate:room statt/X
+welche/R_LIST course/M_CourseDate finden/X in/X hörsaal/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 1012/C_CourseDate:room statt/X
+welche/R_LIST course/M_CourseDate finden/X in/X hörsaal/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 6101/C_CourseDate:room geod.stand/C_CourseDate:room statt/X
+welche/R_LIST course/M_CourseDate finden/X in/X hörsaal/X_Room kerntechnikgebäude/C_CourseDate:room -/C_CourseDate:room kt/C_CourseDate:room 101/C_CourseDate:room statt/X
+alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room gebäudeteile/C_CourseDate:room hochfrequenz-/C_CourseDate:room fernmeldetechnik/C_CourseDate:room technische/C_CourseDate:room akustik/C_CourseDate:room -/C_CourseDate:room hft-ta/C_CourseDate:room 101/C_CourseDate:room
+alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room ernst-ruska-gebäude/C_CourseDate:room (ehem./C_CourseDate:room physikgebäude)/C_CourseDate:room -/C_CourseDate:room er/C_CourseDate:room 101/C_CourseDate:room
+alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room ehem./C_CourseDate:room telefunken-hochhaus/C_CourseDate:room -/C_CourseDate:room tel/C_CourseDate:room 1011/C_CourseDate:room
+alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room hörsaalgebäude/C_CourseDate:room elektrotechnik/C_CourseDate:room -/C_CourseDate:room he/C_CourseDate:room 101/C_CourseDate:room
+alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 1012/C_CourseDate:room
+alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 6101/C_CourseDate:room geod.stand/C_CourseDate:room
+alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room kerntechnikgebäude/C_CourseDate:room -/C_CourseDate:room kt/C_CourseDate:room 101/C_CourseDate:room
+alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room gebäudeteile/C_CourseDate:room hochfrequenz-/C_CourseDate:room fernmeldetechnik/C_CourseDate:room technische/C_CourseDate:room akustik/C_CourseDate:room -/C_CourseDate:room hft-ta/C_CourseDate:room 101/C_CourseDate:room
+alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room ernst-ruska-gebäude/C_CourseDate:room (ehem./C_CourseDate:room physikgebäude)/C_CourseDate:room -/C_CourseDate:room er/C_CourseDate:room 101/C_CourseDate:room
+alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room ehem./C_CourseDate:room telefunken-hochhaus/C_CourseDate:room -/C_CourseDate:room tel/C_CourseDate:room 1011/C_CourseDate:room
+alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room hörsaalgebäude/C_CourseDate:room elektrotechnik/C_CourseDate:room -/C_CourseDate:room he/C_CourseDate:room 101/C_CourseDate:room
+alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 1012/C_CourseDate:room
+alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 6101/C_CourseDate:room geod.stand/C_CourseDate:room
+alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room kerntechnikgebäude/C_CourseDate:room -/C_CourseDate:room kt/C_CourseDate:room 101/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room gebäudeteile/C_CourseDate:room hochfrequenz-/C_CourseDate:room fernmeldetechnik/C_CourseDate:room technische/C_CourseDate:room akustik/C_CourseDate:room -/C_CourseDate:room hft-ta/C_CourseDate:room 101/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room ernst-ruska-gebäude/C_CourseDate:room (ehem./C_CourseDate:room physikgebäude)/C_CourseDate:room -/C_CourseDate:room er/C_CourseDate:room 101/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room ehem./C_CourseDate:room telefunken-hochhaus/C_CourseDate:room -/C_CourseDate:room tel/C_CourseDate:room 1011/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room hörsaalgebäude/C_CourseDate:room elektrotechnik/C_CourseDate:room -/C_CourseDate:room he/C_CourseDate:room 101/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 1012/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 6101/C_CourseDate:room geod.stand/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate im/X hörsaal/X_Room kerntechnikgebäude/C_CourseDate:room -/C_CourseDate:room kt/C_CourseDate:room 101/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room gebäudeteile/C_CourseDate:room hochfrequenz-/C_CourseDate:room fernmeldetechnik/C_CourseDate:room technische/C_CourseDate:room akustik/C_CourseDate:room -/C_CourseDate:room hft-ta/C_CourseDate:room 101/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room ernst-ruska-gebäude/C_CourseDate:room (ehem./C_CourseDate:room physikgebäude)/C_CourseDate:room -/C_CourseDate:room er/C_CourseDate:room 101/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room ehem./C_CourseDate:room telefunken-hochhaus/C_CourseDate:room -/C_CourseDate:room tel/C_CourseDate:room 1011/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room hörsaalgebäude/C_CourseDate:room elektrotechnik/C_CourseDate:room -/C_CourseDate:room he/C_CourseDate:room 101/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 1012/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room hauptgebäude/C_CourseDate:room -/C_CourseDate:room h/C_CourseDate:room 6101/C_CourseDate:room geod.stand/C_CourseDate:room
+zeige/X mir/X alle/R_LIST course/M_CourseDate in/X hörsaal/X_Room kerntechnikgebäude/C_CourseDate:room -/C_CourseDate:room kt/C_CourseDate:room 101/C_CourseDate:room

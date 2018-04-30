@@ -1,25 +1,31 @@
-Welche Module kann (ich|man) im {Program:degree} {Program:name} belegen
+Welche Module kann (ich|man) (im|in) (bachelor|master|diplom) {Program:name} belegen
 R_LIST M_MTSModule X X X C_Program:degree C_Program:name X
 
-Welche Module kann (ich|man) im {Program:name} {Program:degree} belegen
+Welche Module kann (ich|man) (im|in) {Program:name} (bachelor|master|diplom) belegen
 R_LIST M_MTSModule X X X C_Program:name C_Program:degree X
 
-Alle Module im {Program:degree} {Program:name}
+Alle Module (im|in) (bachelor|master|diplom) {Program:name}
 R_LIST M_MTSModule X C_Program:degree C_Program:name
 
-Alle Module im {Program:name} {Program:degree}
+Alle Module (im|in) {Program:name} (bachelor|master|diplom)
 R_LIST M_MTSModule X C_Program:name C_Program:degree
 
-Welche Module gehören zum {Program:degree} {Program:name}
+Alle Module (vom|von|in) {Program:name}
+R_LIST M_MTSModule X C_Program:name
+
+Alle Module (vom|von|in|im) {Program:degree} {Program:name}
+R_LIST M_MTSModule X C_Program:degree C_Program:name
+
+Welche Module gehören zum (bachelor|master|diplom) {Program:name}
 R_LIST M_MTSModule X X C_Program:degree C_Program:name
 
-Welche Module gehören zum {Program:name} {Program:degree}
+Welche Module gehören zum {Program:name} (bachelor|master|diplom)
 R_LIST M_MTSModule X X C_Program:name C_Program:degree
 
-Zeige mir alle Module im Wahlpflichtbereich {Program:name} {Program:degree}
+Zeige mir alle Module im Wahlpflichtbereich {Program:name} (bachelor|master|diplom)
 R_LIST X X M_MTSModule X C_CourseRegulation:group C_Program:name C_Program:degree
 
-Zeige mir alle Module im Wahlpflichtbereich {Program:degree} {Program:name}
+Zeige mir alle Module im Wahlpflichtbereich (bachelor|master|diplom) {Program:name}
 R_LIST X X M_MTSModule X C_CourseRegulation:group C_Program:name C_Program:degree
 
 Welche Module gibt es (im|in) {Program:name}
@@ -31,23 +37,14 @@ R_LIST M_MTSModule X X X X_Program:name C_Program:name
 Welche Module mit dem Abschluss {Program:degree} gibt es
 R_LIST M_MTSModule X X X_Program:degree C_Program:degree X X
 
-Alle Module (vom|von) {Program:name}
-R_LIST M_MTSModule X C_Program:name
-
-Alle Module (vom|von) {Program:degree} {Program:name}
-R_LIST M_MTSModule X C_Program:degree C_Program:name
-
 Ich suche alle Module (vom|von) {Program:name}
 X X R_LIST M_MTSModule X C_Program:name
 
-Ich suche alle Module (vom|von) {Program:degree} {Program:name}
+Ich suche alle Module (vom|von|im) {Program:degree} {Program:name}
 X X R_LIST M_MTSModule X C_Program:degree C_Program:name
 
 Module mit dem Namen {MTSModule:title}
 M_MTSModule X X X_MTSModule:title C_MTSModule:title
-
-Welche Module kann (ich|man) im {Program:name} {Program:degree} belegen
-R_LIST M_MTSModule X X X C_Program:name C_Program:degree X
 
 Welche Module kann (ich|man) im {Program:name} {CourseRegulation:group} belegen
 R_LIST M_MTSModule X X X C_Program:name C_CourseRegulation:group X
@@ -106,7 +103,7 @@ R_LIST M_MTSModule X Q_GT X C_MTSModule:ects C_MTSModule:ects X X X C_CourseRegu
 Welche Module werden von Professor {Person:lastname} (unterrichtet|angeboten|gehalten)
 R_LIST M_MTSModule X X X_Person C_Person:fullname X
 
-Wer ist der Moduleverantwortliche des Moduls {MTSModule:title}
+Wer ist der Modulverantwortliche des Moduls {MTSModule:title}
 M_Person X X X_Person X X_MTSModule:title C_MTSModule:title
 
 Wer ist verantwortlich für das Moduls {MTSModule:title}
@@ -184,8 +181,14 @@ M_Course X X C_CourseDate:day X X
 Welche Veranstaltungen werden an einem (Mo|Di|Mi|Do|Fr|Sa) angeboten
 R_LIST M_Course X X X C_CourseDate:day X
 
-Wann ist das erste (Treffen|Veranstaltung) von {Course:title}
+Wann ist das erste Treffen von {Course:title}
 M_CourseDate X X R_FIRST X X C_Course:title
+
+Wann ist die erste Veranstaltung von {Course:title}
+M_CourseDate X X R_FIRST X X C_Course:title
+
+Wann findet {Course:title} statt
+M_CourseDate X C_Course:title X
 
 In welchen Studiengängen gibt es das Modul {MTSModule:title}
 X R_LIST M_Program X X X X_MTSModule:title C_MTSModule:title
@@ -221,7 +224,7 @@ Welche Module sind (beschränkt|begrenzt) auf (1|2|3|4|5|6|7|8|9|10|11|12|13|14|
 R_LIST M_MTSModule X X_ParticipantLimitation X C_MTSModule:participantLimitation X_ParticipantLimitation
 
 Welche Personen bieten Module mit mehr als (1|2|3|4|5|6|7|8|9|10|11|12|15|30) ects an
-R_LIST M_Person X R_MTSModule:title X Q_WT X C_MTSModule:ects C_MTSModule:ects X
+R_LIST M_Person X R_MTSModule:title X Q_GT X C_MTSModule:ects C_MTSModule:ects X
 
 Bitte nur welche die (ich|man) im Studiengang {Program:name} studieren kann
 X_PLEASE X_ONLY X X X X X_Program:name C_Program:name X X
@@ -236,10 +239,10 @@ R_LIST M_Course X X_MTSModule:title C_MTSModule:title X X C_CourseDate:day X
 {MTSModule:title}
 C_MTSModule:title
 
-im master [20]
+im master [100]
 X C_Program:degree
 
-im bachelor [20]
+im bachelor [100]
 X C_Program:degree
 
 nur [30]
