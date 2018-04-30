@@ -8,7 +8,7 @@ from texttable import Texttable
 n_sentences_correct = n_words_correct = n_tags_correct = 0
 tags_wrong = {}
 # get pre-tagged evaluation data
-text = open('evaluation.txt').read()
+text = open('evaluation_known.txt').read()
 text = '\n'.join([s for s in text.splitlines() if s and s[0] != '#'])
 tagged_sentences = text.splitlines()
 n_sentences = len(tagged_sentences)
@@ -29,7 +29,6 @@ computed_words = []
 for s in computed_words_list:
     for a,b in s:
         computed_words.append(a + '/' + b)
-print(computed_words)
 computed_sentences = []
 sentence_lengths = [len(x.split()) for x in tagged_sentences]
 n_words = sum(sentence_lengths)
