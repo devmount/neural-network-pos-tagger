@@ -232,12 +232,12 @@ class Tagger:
             table.add_row([count, key[:key.index('|')], key[key.index('|')+1:]])
         print(table.draw())
 
-    def reset(self):
+    def reset(self, force=False):
         """
         Executes a reset by deleting all training and logging data
         """
 
-        answer = input('Really delete all training data and log files? [Yes/no] ')
+        answer = 'yes' if force else input('Really delete all training data and log files? [Yes/no] ')
         if answer.lower() == 'yes' or answer == '':
             # delete storage files
             self.__empty_directories(self.storage_dir)
@@ -369,7 +369,7 @@ class Tagger:
         Initialize the Saver class to save and restore variables
         """
 
-        saver = tf.train.Saver(tf.global_variables(), max_to_keep=5)
+        saver = tf.train.Saver(tf.global_variables(), max_to_keep=2)
         return saver
 
 
@@ -476,6 +476,8 @@ if __name__ == "__main__":
     parser.add_argument("-e", "--embeddingsize", type=int, help="Dimension of the word embeddings")
     parser.add_argument("-s", "--hiddensize", type=int, help=" Dimension of the hidden layer")
     parser.add_argument("-n", "--nepochs", type=int, help="Number of training epochs")
+
+    parser.add_argument("-f", "--force", action='store_true', help="Force reset")
     
     args = parser.parse_args()
 
@@ -511,4 +513,7 @@ if __name__ == "__main__":
     if args.reset:
         # create tagger instance
         t = Tagger()
-        t.reset()
+        if args.force:
+            t.reset(True)
+        else:
+            t.reset()
