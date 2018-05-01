@@ -232,7 +232,7 @@ class Tagger:
             table.add_row([count, key[:key.index('|')], key[key.index('|')+1:]])
         print(table.draw())
 
-    def reset(self, force=False):
+    def reset(self, force=False, quiet=False):
         """
         Executes a reset by deleting all training and logging data
         """
@@ -243,9 +243,11 @@ class Tagger:
             self.__empty_directories(self.storage_dir)
             # delete log files
             self.__empty_directories(self.log_dir)
-            print('Reset was executed. All files successfully deleted.')
+            if not quiet:
+                print('Reset was executed. All files successfully deleted.')
         else:
-            print('Reset was not executed.')
+            if not quiet:
+                print('Reset was not executed.')
 
 
     def __empty_directories(self, directory):
@@ -477,7 +479,8 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--hiddensize", type=int, help=" Dimension of the hidden layer")
     parser.add_argument("-n", "--nepochs", type=int, help="Number of training epochs")
 
-    parser.add_argument("-f", "--force", action='store_true', help="Force reset")
+    parser.add_argument("-f", "--force", action='store_true', help="Force operation without confirmation")
+    parser.add_argument("-q", "--quiet", action='store_true', help="No output messages")
     
     args = parser.parse_args()
 
@@ -513,7 +516,4 @@ if __name__ == "__main__":
     if args.reset:
         # create tagger instance
         t = Tagger()
-        if args.force:
-            t.reset(True)
-        else:
-            t.reset()
+        t.reset(force=args.force, quiet=args.quiet)
