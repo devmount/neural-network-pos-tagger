@@ -25,21 +25,21 @@ class Tagger:
     """
 
 
-    def __init__(self):
+    def __init__(self, n_past_words=conf.N_PAST_WORDS, embedding_size=conf.EMBEDDING_SIZE, h_size=conf.HIDDEN_LAYER_SIZE, n_epochs=conf.N_EPOCHS):
         """
         Takes in the file path to a training file and returns a Tagger object that is able to train and tag sentences
         """
 
         # initialize given parameters
         self.vocab_size = conf.VOCAB_SIZE
-        self.n_past_words = conf.N_PAST_WORDS if conf.ARCHITECTURE == 'FNN' else 0
+        self.n_past_words = n_past_words
         self.n_timesteps = conf.N_TIMESTEPS
         self.learning_rate = conf.LEARNING_RATE
-        self.embedding_size = conf.EMBEDDING_SIZE
-        self.h_size = conf.HIDDEN_LAYER_SIZE
+        self.embedding_size = embedding_size
+        self.h_size = h_size
         self.test_ratio = conf.TEST_RATIO
         self.batch_size = conf.BATCH_SIZE
-        self.n_epochs = conf.N_EPOCHS
+        self.n_epochs = n_epochs
         self.checkpoint_every = conf.CHECKPOINT_EVERY
 
         # set vocabulary and tensor files for saving and loading
@@ -463,39 +463,52 @@ class Tagger:
         return batches
 
 
-    def parse_args(self):
-        """
-        Get script arguments
-        """
-
-        parser = argparse.ArgumentParser()
-        parser.add_argument("--train", type=str, help="Invokes training of a language model on given corpus")
-        parser.add_argument("--tag", type=str, help="Tags a given sentence with the pretrained language model")
-        parser.add_argument("--evaluate", type=str, help="Evaluates pretrained language model with a given evaluation file")
-        parser.add_argument("--reset", action='store_true', help="Removes all stored training and log data")
-
-        return parser.parse_args()
-
-
 # only execute training when file is invoked as a script and not just imported
 if __name__ == "__main__":
-    # create tagger instance
-    t = Tagger()
+    # get script arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--train", type=str, help="Invokes training of a language model on given corpus")
+    parser.add_argument("--tag", type=str, help="Tags a given sentence with the pretrained language model")
+    parser.add_argument("--evaluate", type=str, help="Evaluates pretrained language model with a given evaluation file")
+    parser.add_argument("--reset", action='store_true', help="Removes all stored training and log data")
+
+    parser.add_argument("-p", "--pastwords", type=int, help="Number of preceding words to take into account")
+    parser.add_argument("-e", "--embeddingsize", type=int, help="Dimension of the word embeddings")
+    parser.add_argument("-s", "--hiddensize", type=int, help=" Dimension of the hidden layer")
+    parser.add_argument("-n", "--nepochs", type=int, help="Number of training epochs")
     
-    args = t.parse_args()
+    args = parser.parse_args()
+
     # invoke training
     if args.train is not None:
+        # create tagger instance
+        if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
+            t = Tagger(args.pastwords, args.embeddingsize, args.hiddensize, args.nepochs)
+        else:
+            t = Tagger()
         try:
             t.train(args.train)
         except KeyboardInterrupt:
             print('\nFinished training earlier.', flush=True)
     # invoke tagging of a given sentence
     if args.tag is not None:
+        # create tagger instance
+        if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
+            t = Tagger(args.pastwords, args.embeddingsize, args.hiddensize, args.nepochs)
+        else:
+            t = Tagger()
         print('The tagged sentence is:')
         t.tag(args.tag, True, True)
     # invoke evaluation
     if args.evaluate is not None:
+        # create tagger instance
+        if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
+            t = Tagger(args.pastwords, args.embeddingsize, args.hiddensize, args.nepochs)
+        else:
+            t = Tagger()
         t.evaluate(args.evaluate)
     # invoke reset of training data
     if args.reset:
+        # create tagger instance
+        t = Tagger()
         t.reset()
