@@ -106,7 +106,7 @@ Diese Arbeit zeigt zwei verschiedene Ansätze für die Sprachmodellierung der Ei
 % Brown: NLP
 % POS Tagging
 
-\i{Learning} is one of the most essential parts of human life. From the beginning to the end human beings acquire knowledge and skills. Learning means progress, additional value, failing and repeating. It enables growth and improvement.
+\i{Learning} is one of the most essential parts of human life. From the beginning to the end, human beings acquire knowledge and skills. Learning means progress, additional value, failing and repeating. It enables growth and improvement.
 
 In biology, learning is based on a specific strengthening of the connection of certain nerve cells in the central nervous system by facilitating signal transmission at the synapses through appropriate modifications. Being a huge amendable network of connected neurons the nervous system served as a role model for a research field called \i{Machine Learning}. This term was coined by A. Samuel\footnote{Arthur Lee Samuel was an early researcher in machine learning and artificial intelligence. He developed the first successful self-learning program: the Samuel-Checkers game \cite{samuel1959}.} \cite{samuel1959} in 1959, who distinguished two general approaches to the problem of machine learning: a general-purpose randomly connected Neural Network approach and a special-purpose highly organized network. Following a publication of  W. McCulloch about the comparison of a computer with the nervous system of a flatworm in 1949 \cite{mcculloch1949}, he stated:
 
@@ -129,7 +129,7 @@ This thesis is build upon the work of T. Michael \cite{michael2016}, who describ
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/alex_screencapture}
-	\caption[User Interface of \Alex]{The user interface of \Alex. The left section contains the conversation with the Agent and a field where the user can type. The right section shows the result of the generated database query in tabular form.\\The user asked for all courses of the subject \i{computer science} that provide 9 ECTS and are scheduled on a Monday. The agent answered accordingly.\\This image was captured at the 21st April 2018.}
+	\caption[User Interface of \Alex]{The user interface of \Alex. The left section contains the conversation with the Agent and a field where the user can type. The right section shows the result of the generated database query in tabular form.\\In this example, the user asked for all courses of the subject \i{computer science} that provide 9 ECTS and are scheduled on a Monday. The agent answered accordingly and provided a list of 9 courses that fulfill the conditions.\\This image was captured at the 21st April 2018.}
 	\label{f.alex_ui}
 \end{figure}
 
@@ -179,21 +179,25 @@ In conclusion the final Chapter \ref{c.conclusion} discusses and summarizes the 
 
 % ===================================================================================
 \chapter{\Alex: Artificial Conversational Agent}\label{c.alex}
-\i{Design and Implementation of an Advisory Artificial Conversational Agent} by T. Michael \cite{michael2016} provides a detailed and comprehensive description of \Alex\ as a compilation of different modules. This chapter focuses on the modules that are relevant for the language processing and therefore adapted during this thesis.
+\i{Design and Implementation of an Advisory Artificial Conversational Agent} by T. Michael \cite{michael2016} provides a detailed and comprehensive description of \Alex\ as a compilation of different modules. This chapter focuses on the modules that are relevant for the language processing and therefore adapted during this thesis: The retrieval and processing of training data (section \ref{c.alex.data}), the Hidden Markov Model tagger (section \ref{c.alex.hmm}) and the tagging interface (section \ref{c.alex.tagging}).
 
 \section{System Overview}\label{c.alex.overview}
-The modular structure of \Alex\ allows the separation of different functions and therefore easier replaceability of certain functionalities. Besides a web crawler for current data retrieval for the database and a frontend interface module, \Alex\ offers a tagging module. This module provides the training of a language model as well as the assignment of tags to the words of a given input sentence.
+The modular structure of \Alex\ allows the separation of different functions and therefore easier replaceability of certain functionalities. Besides a module crawler for current data retrieval of web content for the database and a frontend interface module, \Alex\ offers a tagging module. This module provides the training of a language model as well as the assignment of tags to the words of a given input sentence.
 
-Figure \ref{f.alex_components} shows the original architecture of \Alex.
+Figure \ref{f.alex_components} shows the original architecture of \Alex. Modules that are adapted or replaced by another approach are emphasized with an orange border.
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/alex_components}
-	\caption[Component Overview of \Alex]{Overview of all components of \Alex. The red colored parts are components that lie within the scope of this thesis and are adapted or replaced. Original figure by T. Michael \cite{michael2016}}
+	\caption[Component Overview of \Alex]{Overview of all components of \Alex. The orange bordered parts are components that lie within the scope of this thesis and are adapted or replaced. Original figure by T. Michael \cite{michael2016}}
 	\label{f.alex_components}
 \end{figure}
 
 \section{Training Data}\label{c.alex.data}
-...
+In order to teach \Alex\ to correctly assign tags to words depending on their context, appropriate training data is required. The training data for \Alex\ proposed by T. Michael consists of \tt{556,111} tagged sentences generated with \tt{72} manually created sentence templates.
+
+A sentence template is a sentence that provides the structure of a possible tagged training sentence with a proper syntax for slot filling. It consists of either special placeholders for specific data from the database (e.g. module titles), inline choices (e.g. the same sentence with every day of the week) or a marker to simply duplicate the sentence. The different slot filling forms can be combined or used multiple times in one sentence\footnote{T. Michael describes the training data structure in detail in chapter 3.4.2 of \i{Design and Implementation of an Advisory Artificial Conversational Agent} \cite{michael2016}.}.
+
+For the training of the Neural Network Models in this thesis, this slot filling mechanism is adopted and improved for the training with Artificial Neural Networks (see chapter \ref{c.training}).
 
 \section{The Hidden Markov Model Tagger}\label{c.alex.hmm}
 As described in section \ref{c.introduction.related.hmm} \ of the introduction, the Hidden Markov Model (HMM) is a statistical tool that uses observable output data of a system to derive hidden information from it. Applications are image processing, gesture recognition and natural language processing tasks like speech recognition and part-of-speech tagging in particular.
