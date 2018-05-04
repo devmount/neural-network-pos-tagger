@@ -5,16 +5,15 @@
 \pagestyle{empty}
 
 % title page
-\clearscrheadings\clearscrplain
 \begin{center}
 \includegraphics[width=0.28\textwidth]{images/logo_tu_berlin}
 \vspace{8mm}
 
 {\huge Technische Universität Berlin}\\
 \vspace{2mm}
-{\large Quality and Usability Lab}\\
+% {\large Quality and Usability Lab}\\
 % \vspace{1mm}
-% {\large Institute of Software Engineering\\and Theoretical Computer Science}\\
+{\large Institute of Software Engineering\\and Theoretical Computer Science}\\
 \vspace{11mm}
 
 {\Huge Part-of-Speech Tagging\\[-2mm] with Neural Networks\\[-2mm] for a Conversational Agent\\}
@@ -342,12 +341,12 @@ Also the wording occurring in the logs referring to linking words and actions wa
 	\b{Wieviele} LP \b{hat} das Modul \{MTSModule:title\} & \b{(Wieviele|Wieviel)} LP \b{(hat|bringt)} das Modul \{MTSModule:title\} & \i{\b{How many} ects does the module \{MTSModule:title\} \b{(have|bring)} } & \\ \hline
 	\b{Informationen} \b{zu} Modul {MTSModule:title} & \b{(Informationen|Details| Mehr)} \b{(zu|zum)} Modul \{MTSModule:title\} & \i{\b{(Information|details| more)} \b{of} the module \{MTSModule:title\} } & \\ \hline
 	\end{tabular}
-	\caption[Sentence Template Improvements]{An excerpt of the extension and improvement of the sentence templates by using inline choices. The last column provides an English translation for the new sentence template.}
+	\caption[Sentence Template Improvements]{An excerpt of the extension and improvement of the sentence templates by using inline choices. The last column provides the corresponding English translation for the new sentence template.}
 	\label{t.improved_sentence_templates}
 	\vspace{1ex}
 \end{table}
 
-At last some new sentence templates were added, that provide a sentence structure that was found in the logs. The new set contains \tt{100} sentence or single word templates and can be found in the appendix \ref{c.appendix.sentencetemplates}.
+At last \tt{28} new sentence templates were added, that provide a sentence structure that was found in the logs. The new set contains \tt{100} sentence or single word templates in total and can be found in the appendix \ref{c.appendix.sentencetemplates}.
 
 \section{Parameter Tuning}\label{c.training.tuning}
 ...
@@ -385,6 +384,6 @@ At last some new sentence templates were added, that provide a sentence structur
 \chapter{Appendix}\label{c.appendix}
 
 \section{Set of sentence templates}\label{c.appendix.sentencetemplates}
-...
+\lstinputlisting[language=plain, label={l.trainingtemplate}]{listings/training_template.txt}
 
 \end{document}

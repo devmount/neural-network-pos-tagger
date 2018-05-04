@@ -1,0 +1,307 @@
+Welche Module kann (ich|man) (im|in) (bachelor|master|diplom) {Program:name} belegen
+R_LIST M_MTSModule X X X C_Program:degree C_Program:name X
+
+Welche Module kann (ich|man) (im|in) {Program:name} (bachelor|master|diplom) belegen
+R_LIST M_MTSModule X X X C_Program:name C_Program:degree X
+
+Alle Module (im|in) (bachelor|master|diplom) {Program:name}
+R_LIST M_MTSModule X C_Program:degree C_Program:name
+
+Alle Module (im|in) {Program:name} (bachelor|master|diplom)
+R_LIST M_MTSModule X C_Program:name C_Program:degree
+
+Alle Module (vom|von|in) {Program:name}
+R_LIST M_MTSModule X C_Program:name
+
+Alle Module (vom|von|in|im) {Program:degree} {Program:name}
+R_LIST M_MTSModule X C_Program:degree C_Program:name
+
+Welche Module gehören zum (bachelor|master|diplom) {Program:name}
+R_LIST M_MTSModule X X C_Program:degree C_Program:name
+
+Welche Module gehören zum {Program:name} (bachelor|master|diplom)
+R_LIST M_MTSModule X X C_Program:name C_Program:degree
+
+Zeige mir alle Module im Wahlpflichtbereich {Program:name} (bachelor|master|diplom)
+R_LIST X X M_MTSModule X C_CourseRegulation:group C_Program:name C_Program:degree
+
+Zeige mir alle Module im Wahlpflichtbereich (bachelor|master|diplom) {Program:name}
+R_LIST X X M_MTSModule X C_CourseRegulation:group C_Program:name C_Program:degree
+
+Welche Module gibt es (im|in) {Program:name}
+R_LIST M_MTSModule X X X C_Program:name
+
+Welche Module gibt es im Studiengang {Program:name}
+R_LIST M_MTSModule X X X X_Program:name C_Program:name
+
+Welche Module mit dem Abschluss {Program:degree} gibt es
+R_LIST M_MTSModule X X X_Program:degree C_Program:degree X X
+
+Ich suche alle Module (vom|von) {Program:name}
+X X R_LIST M_MTSModule X C_Program:name
+
+Ich suche alle Module (vom|von|im) {Program:degree} {Program:name}
+X X R_LIST M_MTSModule X C_Program:degree C_Program:name
+
+Module mit dem Namen {MTSModule:title}
+M_MTSModule X X X_MTSModule:title C_MTSModule:title
+
+Welche Module kann (ich|man) im {Program:name} {CourseRegulation:group} belegen
+R_LIST M_MTSModule X X X C_Program:name C_CourseRegulation:group X
+
+Welche Veranstaltungen im {Program:degree} {CourseRegulation:group} gibt es
+R_LIST M_Course X C_Program:degree C_CourseRegulation:group X X
+
+Welche Module haben (0|1|2|3|4|5|6|7|8|9|10|11|12) ects
+R_LIST M_MTSModule X C_MTSModule:ects C_MTSModule:ects
+
+Welche Module haben mehr als (0|1|2|3|4|5|6|7|8|9|10|11|12) ects
+R_LIST M_MTSModule X Q_GT X C_MTSModule:ects C_MTSModule:ects
+
+Welche Module haben weniger als (2|3|4|5|6|7|8|9|10|11|12) ects
+R_LIST M_MTSModule X Q_LT X C_MTSModule:ects C_MTSModule:ects
+
+Welche Module haben genau (0|1|2|3|4|5|6|7|8|9|10|11|12) ects
+R_LIST M_MTSModule X X C_MTSModule:ects C_MTSModule:ects
+
+Welche Veranstaltungen finden (Mo|Di|Mi|Do|Fr|Sa) statt
+R_LIST M_Course X C_CourseDate:day X
+
+Welche Veranstaltungen finden am (Mo|Di|Mi|Do|Fr|Sa) statt
+R_LIST M_Course X X C_CourseDate:day X
+
+Welche Veranstaltungen finden am (Mo|Di|Mi|Do|Fr|Sa) nach (7|8|9|10|11|12|13|14|15|16|17|18|19|20) Uhr statt
+R_LIST M_Course X X C_CourseDate:day Q_GT C_CourseDate:startTime C_CourseDate:startTime X
+
+Welche Veranstaltungen finden am (Mo|Di|Mi|Do|Fr|Sa) vor (8|9|10|11|12|13|14|15|16|17|18|19) Uhr statt
+R_LIST M_Course X X C_CourseDate:day Q_LT C_CourseDate:startTime C_CourseDate:startTime X
+
+Welche Veranstaltungen finden am (Mo|Di|Mi|Do|Fr|Sa) um (8|9|10|11|12|13|14|15|16|17|18|19) Uhr statt
+R_LIST M_Course X X C_CourseDate:day X_CourseDate:startTime C_CourseDate:startTime C_CourseDate:startTime X
+
+Welche Veranstaltungen sind (Mo|Di|Mi|Do|Fr|Sa)
+R_LIST M_Course X C_CourseDate:day
+
+Welche Veranstaltungen sind am (Mo|Di|Mi|Do|Fr|Sa)
+R_LIST M_Course X X C_CourseDate:day
+
+Welche Veranstaltungen sind am (Mo|Di|Mi|Do|Fr|Sa) nach (7|8|9|10|11|12|13|14|15|16|17|18|19|20) Uhr
+R_LIST M_Course X X C_CourseDate:day Q_GT C_CourseDate:startTime C_CourseDate:startTime
+
+Welche Veranstaltungen sind am (Mo|Di|Mi|Do|Fr|Sa) vor (8|9|10|11|12|13|14|15|16|17|18|19) Uhr
+R_LIST M_Course X X C_CourseDate:day Q_LT C_CourseDate:startTime C_CourseDate:startTime
+
+Welche Veranstaltungen sind am (Mo|Di|Mi|Do|Fr|Sa) um (8|9|10|11|12|13|14|15|16|17|18|19) Uhr
+R_LIST M_Course X X C_CourseDate:day X_CourseDate:startTime C_CourseDate:startTime C_CourseDate:startTime
+
+Welche Veranstaltung hält {Person:lastname} am (Mo|Di|Mi|Do|Fr|Sa)
+R_LIST M_Course X C_Person:fullname X_CurseDate:day C_CourseDate:day
+
+Welche Module mit mehr als (0|1|2|3|4|5|6|7|8|9|10|11|12) ects kann (ich|man) im {CourseRegulation:group} belegen
+R_LIST M_MTSModule X Q_GT X C_MTSModule:ects C_MTSModule:ects X X X C_CourseRegulation:group X
+
+Welche Module werden von Professor {Person:lastname} (unterrichtet|angeboten|gehalten)
+R_LIST M_MTSModule X X X_Person C_Person:fullname X
+
+Wer ist der Modulverantwortliche des Moduls {MTSModule:title}
+M_Person X X X_Person X X_MTSModule:title C_MTSModule:title
+
+Wer ist verantwortlich für das Moduls {MTSModule:title}
+M_Person X X X X X_MTSModule:title C_MTSModule:title
+
+Bei wem findet das Moduls {MTSModule:title} statt
+X M_Person X X X_MTSModule:title C_MTSModule:title X
+
+Welche Kurse werden von Professor {Person:lastname} (unterrichtet|angeboten|gehalten)
+R_LIST M_Course X X X_Person C_Person:fullname X
+
+Welche Kurse (unterrichtet|bietet|hält) Professor {Person:lastname}
+R_LIST M_Course X X_Person C_Person:fullname
+
+Wie viele ects (hat|bringt) das Modul {MTSModule:title}
+R_SINGLE X_count R_MTSModule:ects X X C_MTSModule:title C_MTSModule:title
+
+(Wieviele|Wieviel) ects (hat|bringt) das Modul {MTSModule:title}
+X_count R_MTSModule:ects X X C_MTSModule:title C_MTSModule:title
+
+(Informationen|Details|Mehr) (zu|zum) Modul {MTSModule:title}
+R_SINGLE X X_MTSModule:title C_MTSModule:title
+
+Welche Modulkataloge gibt es (im|in) {Program:degree} {Program:name}
+R_LIST M_CourseRegulation X X X C_Program:degree C_Program:name
+
+Zeige den Modulkatalog (im|in) {Program:degree} {Program:name}
+R_LIST X M_CourseRegulation X C_Program:degree C_Program:name
+
+Welche Module werden vom Fachgebiet {Chair:name} angeboten
+R_LIST M_MTSModule X X X_Chair:name C_Chair:name X
+
+Module vom Fachgebiet {Chair:name}
+M_MTSModule X X_Chair:name C_Chair:name
+
+Alle Module vom Fachgebiet {Chair:name}
+R_LIST M_MTSModule X X_Chair:name C_Chair:name
+
+Zeige mir alle Module vom Fachgebiet {Chair:name}
+R_LIST X X M_MTSModule X X_Chair:name C_Chair:name
+
+Welche Studiengänge von der Fakultät (1|2|3|4|5|6|7) gibt es
+R_LIST M_Program X X X_Institute:faculty C_Institute:faculty X X
+
+Module von der Fakultät (1|2|3|4|5|6|7)
+M_MTSModule X X X_Institute:faculty C_Institute:faculty
+
+Alle Module von der Fakultät (1|2|3|4|5|6|7)
+R_LIST M_MTSModule X X X_Institute:faculty C_Institute:faculty
+
+Zeige mir alle Module von der Fakultät (1|2|3|4|5|6|7)
+R_LIST X X M_MTSModule X X X_Institute:faculty C_Institute:faculty
+
+Welche Studiengänge von Fakultät (1|2|3|4|5|6|7) gibt es
+R_LIST M_Program X X_Institute:faculty C_Institute:faculty X X
+
+Module von Fakultät (1|2|3|4|5|6|7)
+M_MTSModule X X_Institute:faculty C_Institute:faculty
+
+Alle Module von Fakultät (1|2|3|4|5|6|7)
+R_LIST M_MTSModule X X_Institute:faculty C_Institute:faculty
+
+Zeige mir alle Module von Fakultät (1|2|3|4|5|6|7)
+R_LIST X X M_MTSModule X X_Institute:faculty C_Institute:faculty
+
+Veranstaltungen mit {ExamElement:description} als Prüfung
+M_Course X C_ExamElement:description X X_ExamElement
+
+Welche Veranstaltungen haben die Prüfung {ExamElement:description}
+R_LIST M_Course X X X_ExamElement C_ExamElement:description
+
+Kurse die am (Mo|Di|Mi|Do|Fr|Sa) angeboten werden
+M_Course X X C_CourseDate:day X X
+
+Welche Veranstaltungen werden an einem (Mo|Di|Mi|Do|Fr|Sa) angeboten
+R_LIST M_Course X X X C_CourseDate:day X
+
+Wann ist das erste Treffen von {Course:title}
+M_CourseDate X X R_FIRST X X C_Course:title
+
+Wann ist die erste Veranstaltung von {Course:title}
+M_CourseDate X X R_FIRST X X C_Course:title
+
+Wann findet {Course:title} statt
+M_CourseDate X C_Course:title X
+
+In welchen Studiengängen gibt es das Modul {MTSModule:title}
+X R_LIST M_Program X X X X_MTSModule:title C_MTSModule:title
+
+Welche Veranstaltungen des Fachgebiets {Chair:name} gibt es
+R_LIST M_Course X X_Chair:name C_Chair:name X X
+
+Module mit dem Titel {MTSModule:title}
+M_MTSModule X X X_MTSModule:title C_MTSModule:title
+
+Welche Veranstaltungen finden (im|in) Raum {CourseDate:room} statt
+R_LIST M_CourseDate X X X_Room C_CourseDate:room X
+
+Alle Veranstaltungen (im|in) Raum {CourseDate:room}
+R_LIST M_CourseDate X X_Room C_CourseDate:room
+
+Zeige mir alle Veranstaltungen (im|in) Raum {CourseDate:room}
+X X R_LIST M_CourseDate X X_Room C_CourseDate:room
+
+Welche Veranstaltungen werden {CourseDate:cycle} angeboten
+R_LIST M_Course X C_CourseDate:cycle X
+
+Welche Module haben eine Platzbeschränkung von mehr als (1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|40|45|50|55|60|65|70|75|80|85|90|95|100|200|300) Teilnehmern
+R_LIST M_MTSModule X X X_ParticipantLimitation X Q_GT X C_MTSModule:participantLimitation X_ParticipantLimitation
+
+Welche Module haben eine Platzbeschränkung von weniger als (1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|40|45|50|55|60|65|70|75|80|85|90|95|100|200|300) Teilnehmern
+R_LIST M_MTSModule X X X_ParticipantLimitation X Q_LT X C_MTSModule:participantLimitation X_ParticipantLimitation
+
+Welche Module haben eine Platzbeschränkung von genau (1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|40|45|50|55|60|65|70|75|80|85|90|95|100|200|300) Teilnehmern
+R_LIST M_MTSModule X X X_ParticipantLimitation X Q_EQ C_MTSModule:participantLimitation X_ParticipantLimitation
+
+Welche Module sind (beschränkt|begrenzt) auf (1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31|32|33|34|35|40|45|50|55|60|65|70|75|80|85|90|95|100|200|300) (Teilnehmer|Studenten|Personen)
+R_LIST M_MTSModule X X_ParticipantLimitation X C_MTSModule:participantLimitation X_ParticipantLimitation
+
+Welche Personen bieten Module mit mehr als (1|2|3|4|5|6|7|8|9|10|11|12|15|30) ects an
+R_LIST M_Person X R_MTSModule:title X Q_GT X C_MTSModule:ects C_MTSModule:ects X
+
+Bitte nur welche die (ich|man) im Studiengang {Program:name} studieren kann
+X_PLEASE X_ONLY X X X X X_Program:name C_Program:name X X
+
+Welche Kurse des Moduls {MTSModule:title} kann (ich|man) (Mo|Di|Mi|Do|Fr|Sa) belegen
+R_LIST M_Course X X_MTSModule:title C_MTSModule:title X X C_CourseDate:day X
+
+################################################################################
+#                              Wörter ohne Kontext                             #
+################################################################################
+
+{MTSModule:title}
+C_MTSModule:title
+
+im master [100]
+X C_Program:degree
+
+im bachelor [100]
+X C_Program:degree
+
+nur [30]
+X_ONLY
+
+bitte [30]
+X_PLEASE
+
+hilfe [30]
+X_HELP
+
+hallo [30]
+X_GREETING
+
+Guten (Tag|Morgen|Abend|Nacht|Nachmittag) [5]
+X_GOOD X_GREETING
+
+Ich brauche hilfe [10]
+X X X_HELP
+
+scheiße [30]
+X_CURSE
+
+ja [30]
+X_YES
+
+nein [30]
+X_NO
+
+zurück [30]
+X_BACK
+
+Leben
+X_HITCH_LIFE
+
+Universum
+X_HITCH_UNIVERSE
+
+Rest
+X_HITCH_EVERYTHING
+
+################################################################################
+#                              Personal stuff                                  #
+################################################################################
+
+(Was|Wie) ist dein Alter
+X X X_PERSONAL X_AGE
+
+(Was|Wie) ist dein Name
+X X X_PERSONAL X_NAME
+
+Wie heißt du
+X X_NAME X_PERSONAL
+
+Was bist du von Beruf
+X X X_PERSONAL X X_PROFESSION
+
+Was ist dein (Beruf|Job)
+X X X_PERSONAL X_PROFESSION
+
+Was ist dein Auftrag
+X X X_PERSONAL X_MISSION
