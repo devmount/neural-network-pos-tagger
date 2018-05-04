@@ -38,7 +38,8 @@
 \usepackage{tabularx} % Für Tabellen mit vorgegeben Größen
 \usepackage{longtable} % Tabellen über mehrere Seiten
 \usepackage{tablefootnote} % use footnotes in tables
-\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright}p{#1}}
+\usepackage{array,booktabs}
 \usepackage{float}
 %  Bibliographie
 \usepackage{bibgerm} % Umlaute in BibTeX
