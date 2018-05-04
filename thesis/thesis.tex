@@ -332,7 +332,7 @@ R_LIST M_MTSModule  X    X   X   C_Program:degree  C_Program:name    X
 To address this issue, the following adjustments for the new template set were made:
 
 \begin{itemize}
-	\item Because of the very low occurrence in the log database, the slot \tt{\{Person:firstname\}} was removed completely from that sentence template, which limits the user input to last names only\footnote{This might seem like a degradation but is justified by the fact, that only \tt{3} of \tt{1293} log entries even contained a first name, always followed by the last name. In this specific use case, where all Persons are Professors and Lecturers, only using the last name appears legit.}
+	\item Because of the very low occurrence in the log database, the slot \tt{\{Person:firstname\}} was removed completely from that sentence template, which limits the user input to last names only\footnote{This might seem like a degradation but is justified by the fact, that only \tt{3} of \tt{1293} log entries (\tt{0.2\%}) even contained a first name, always followed by the last name. In this specific use case, where all Persons are Professors and Lecturers, only using the last name appears legit.}
 	\item the slot \tt{\{Program:degree\}} was partly replaced by the inline choice \tt{(bachelor|master|diplom)}, which were the main terms asked for in the logs.
 \end{itemize}
 
@@ -357,7 +357,7 @@ Also the wording occurring in the logs referring to linking words and actions wa
 	\label{t.improved_sentence_templates}
 \end{table}
 
-At last \tt{28} new sentence templates were added, that provide a sentence structure that was found in the logs but not in the former template set. The new set contains \tt{100} sentence or single word templates and can be found in the appendix \ref{c.appendix.sentencetemplates}.
+At last \tt{28} new sentence templates were added, that provide a sentence structure that was found in the logs but not in the former template set. The new set contains \tt{100} sentence templates (including single word templates) and can be found in the appendix \ref{c.appendix.sentencetemplates}.
 
 \section{Parameter Tuning}\label{c.training.tuning}
 ...
@@ -371,53 +371,76 @@ Two evaluate the trained language models, two test sets were designed: A test se
 
 The sentences are divided into different topics, to cover a wide range of possible input data. Attention was paid to a balanced number of sentences in the different areas, to ensure, that the evaluation result doesn't depend on only one or two topics.
 
-The following tables shows the different topics, their respective number of evaluation sentences and one sentence as an illustration for each topic.
+The tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} show the different topics, their respective number of evaluation sentences and one sentence as an illustration for each topic. Both test sets combined offer a total number of \tt{1058} tagged test sentences.
 
 \begin{table}[H]
-	\centering\small\def\arraystretch{1.2}\begin{tabular}{ p{20mm} c L{35mm} }
+	\centering\small\def\arraystretch{1.2}\begin{tabular}{ p{18mm} c L{95mm} }
 	\toprule
-	\textsc{Topic} & \textsc{Count} & \multicolumn{1}{L{43mm}}{\textsc{Example}} \\
+	\textsc{Topic} & \textsc{Sentences} & \multicolumn{1}{L{95mm}}{\textsc{Example}} \\
 	\midrule
 	\midrule
-	ECTS & \tt{0} & \multicolumn{1}{L{43mm}}{\i{test}} \\
+	ECTS & \tt{44} & \multicolumn{1}{L{95mm}}{\i{Which modules have 6 ECTS}} \\
 	\midrule
-	Time & \tt{0} & \multicolumn{1}{L{43mm}}{\i{test}} \\
+	Time & \tt{60} & \multicolumn{1}{L{95mm}}{\i{Which courses are on Tuesday}} \\
 	\midrule
-	Faculty & \tt{0} & \multicolumn{1}{L{43mm}}{\i{test}} \\
+	Faculty & \tt{56} & \multicolumn{1}{L{95mm}}{\i{All modules of faculty 4}} \\
 	\midrule
-	Participants & \tt{0} & \multicolumn{1}{L{43mm}}{\i{test}} \\
+	Participants & \tt{54} & \multicolumn{1}{L{95mm}}{\i{Which courses are limited to 30 participants}} \\
 	\midrule
-	Persons & \tt{0} & \multicolumn{1}{L{43mm}}{\i{test}} \\
+	Persons & \tt{61} & \multicolumn{1}{L{95mm}}{\i{Which courses are taught by Professor Martinelli}} \\
 	\midrule
-	Program & \tt{0} & \multicolumn{1}{L{43mm}}{\i{test}} \\
+	Program & \tt{60} & \multicolumn{1}{L{95mm}}{\i{I'm searching for all modules of the computer science program }} \\
 	\midrule
-	Modules & \tt{0} & \multicolumn{1}{L{43mm}}{\i{test}} \\
+	Modules & \tt{80} & \multicolumn{1}{L{95mm}}{\i{Modules with the title Cognitive Algorithms}} \\
 	\midrule
-	Chair & \tt{0} & \multicolumn{1}{L{43mm}}{\i{test}} \\
+	Chair & \tt{50} & \multicolumn{1}{L{95mm}}{\i{All modules of institute Media Science}} \\
 	\midrule
-	Exam & \tt{0} & \multicolumn{1}{L{43mm}}{\i{test}} \\
+	Exam & \tt{32} & \multicolumn{1}{L{95mm}}{\i{Courses with Group Lecture as examination}} \\
 	\midrule
-	Courses & \tt{0} & \multicolumn{1}{L{43mm}}{\i{test}} \\
+	Courses & \tt{45} & \multicolumn{1}{L{95mm}}{\i{When does Internet Security take place}} \\
 	\midrule
-	Locations & \tt{0} & \multicolumn{1}{L{43mm}}{\i{test}} \\
+	Locations & \tt{42} & \multicolumn{1}{L{95mm}}{\i{All courses in room Mainbuilding H 1012}} \\
 	\bottomrule
 	\end{tabular}
 	\vspace{3mm}
-	\caption[Evaluation Topics using the Known Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic.}
+	\caption[Evaluation Topics using the Known Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the known test set. It contains a total of \tt{584} tagged sentences.}
 	\label{t.evaluation_topics_known}
 \end{table}
 
-ects
-time
-faculty
-participants
-persons
-program
-modules
-chair
-exam
-courses
-locations
+\begin{table}[H]
+	\centering\small\def\arraystretch{1.2}\begin{tabular}{ p{18mm} c L{95mm} }
+	\toprule
+	\textsc{Topic} & \textsc{Sentences} & \multicolumn{1}{L{95mm}}{\textsc{Example}} \\
+	\midrule
+	\midrule
+	ECTS & \tt{44} & \multicolumn{1}{L{95mm}}{\i{All modules with 6 ECTS}} \\
+	\midrule
+	Time & \tt{55} & \multicolumn{1}{L{95mm}}{\i{Courses that take place on Tuesday}} \\
+	\midrule
+	Faculty & \tt{56} & \multicolumn{1}{L{95mm}}{\i{Show all modules of faculty 4 to me}} \\
+	\midrule
+	Participants & \tt{54} & \multicolumn{1}{L{95mm}}{\i{List all courses that have a limitation of 30 participants}} \\
+	\midrule
+	Persons & \tt{58} & \multicolumn{1}{L{95mm}}{\i{Show all courses that are taught by Professor Martinelli}} \\
+	\midrule
+	Program & \tt{10} & \multicolumn{1}{L{95mm}}{\i{Show all modules of computer science }} \\
+	\midrule
+	Modules & \tt{60} & \multicolumn{1}{L{95mm}}{\i{Show information about the module Cognitive Algorithms}} \\
+	\midrule
+	Chair & \tt{20} & \multicolumn{1}{L{95mm}}{\i{All modules that the institute Media Science offers}} \\
+	\midrule
+	Exam & \tt{45} & \multicolumn{1}{L{95mm}}{\i{Show me all courses that have Group Lecture as examination}} \\
+	\midrule
+	Courses & \tt{30} & \multicolumn{1}{L{95mm}}{\i{The date of the first meeting of Internet Security }} \\
+	\midrule
+	Locations & \tt{42} & \multicolumn{1}{L{95mm}}{\i{All courses in auditorium Mainbuilding H 1012}} \\
+	\bottomrule
+	\end{tabular}
+	\vspace{3mm}
+	\caption[Evaluation Topics using the Unknown Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the unknown test set. It contains a total of \tt{474} tagged sentences.}
+	\label{t.evaluation_topics_unknown}
+\end{table}
+
 
 % ===================================================================================
 \chapter{Discussion and Conclusion}\label{c.conclusion}
