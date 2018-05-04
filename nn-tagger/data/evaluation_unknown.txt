@@ -1,16 +1,44 @@
 # ects
+alle/R_LIST module/M_MTSModule mit/X 2/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X mehr/Q_GT als/X 2/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X weniger/Q_LT als/X 2/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X genau/X 2/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X 3/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X mehr/Q_GT als/X 3/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X weniger/Q_LT als/X 3/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X genau/X 3/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X 4/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X mehr/Q_GT als/X 4/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X weniger/Q_LT als/X 4/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X genau/X 4/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X 5/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X mehr/Q_GT als/X 5/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X weniger/Q_LT als/X 5/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X genau/X 5/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X 6/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X mehr/Q_GT als/X 6/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X weniger/Q_LT als/X 6/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X genau/X 6/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X 7/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X mehr/Q_GT als/X 7/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X weniger/Q_LT als/X 7/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X genau/X 7/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X 8/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X mehr/Q_GT als/X 8/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X weniger/Q_LT als/X 8/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X genau/X 8/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X 9/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X mehr/Q_GT als/X 9/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X weniger/Q_LT als/X 9/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X genau/X 9/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X 10/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X mehr/Q_GT als/X 10/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X weniger/Q_LT als/X 10/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X genau/X 10/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X 11/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X mehr/Q_GT als/X 11/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X weniger/Q_LT als/X 11/C_MTSModule:ects ects/C_MTSModule:ects
+alle/R_LIST module/M_MTSModule mit/X genau/X 11/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X 12/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X mehr/Q_GT als/X 12/C_MTSModule:ects ects/C_MTSModule:ects
 alle/R_LIST module/M_MTSModule mit/X weniger/Q_LT als/X 12/C_MTSModule:ects ects/C_MTSModule:ects
@@ -21,13 +49,24 @@ course/M_Course die/X mo/C_CourseDate:day stattfinden/X
 alle/R_LIST course/M_Course an/X einem/X mo/C_CourseDate:day
 zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day
 zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day
-zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day nach/Q_GT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day vor/Q_LT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day um/X_CourseDate:startTime 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day nach/Q_GT 8/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day vor/Q_LT 8/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day um/X_CourseDate:startTime 8/C_CourseDate:startTime uhr/C_CourseDate:startTime
 zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day
-zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day nach/Q_GT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day vor/Q_LT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day um/X_CourseDate:startTime 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day nach/Q_GT 8/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day vor/Q_LT 8/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X mo/C_CourseDate:day um/X_CourseDate:startTime 8/C_CourseDate:startTime uhr/C_CourseDate:startTime
+course/M_Course die/X di/C_CourseDate:day stattfinden/X
+alle/R_LIST course/M_Course an/X einem/X di/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X di/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X di/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X di/C_CourseDate:day nach/Q_GT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X di/C_CourseDate:day vor/Q_LT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X di/C_CourseDate:day um/X_CourseDate:startTime 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X di/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X di/C_CourseDate:day nach/Q_GT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X di/C_CourseDate:day vor/Q_LT 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X di/C_CourseDate:day um/X_CourseDate:startTime 10/C_CourseDate:startTime uhr/C_CourseDate:startTime
 course/M_Course die/X mi/C_CourseDate:day stattfinden/X
 alle/R_LIST course/M_Course an/X einem/X mi/C_CourseDate:day
 zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day
@@ -39,19 +78,38 @@ zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day
 zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day nach/Q_GT 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
 zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day vor/Q_LT 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
 zeige/R_LIST alle/X course/M_Course am/X mi/C_CourseDate:day um/X_CourseDate:startTime 12/C_CourseDate:startTime uhr/C_CourseDate:startTime
+course/M_Course die/X do/C_CourseDate:day stattfinden/X
+alle/R_LIST course/M_Course an/X einem/X do/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X do/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X do/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X do/C_CourseDate:day nach/Q_GT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X do/C_CourseDate:day vor/Q_LT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X do/C_CourseDate:day um/X_CourseDate:startTime 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X do/C_CourseDate:day
+zeige/R_LIST alle/X course/M_Course am/X do/C_CourseDate:day nach/Q_GT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X do/C_CourseDate:day vor/Q_LT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X do/C_CourseDate:day um/X_CourseDate:startTime 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
 course/M_Course die/X fr/C_CourseDate:day stattfinden/X
 alle/R_LIST course/M_Course an/X einem/X fr/C_CourseDate:day
 zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day
 zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day
-zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day nach/Q_GT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day vor/Q_LT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day um/X_CourseDate:startTime 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day nach/Q_GT 16/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day vor/Q_LT 16/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day um/X_CourseDate:startTime 16/C_CourseDate:startTime uhr/C_CourseDate:startTime
 zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day
-zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day nach/Q_GT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day vor/Q_LT 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
-zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day um/X_CourseDate:startTime 14/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day nach/Q_GT 16/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day vor/Q_LT 16/C_CourseDate:startTime uhr/C_CourseDate:startTime
+zeige/R_LIST alle/X course/M_Course am/X fr/C_CourseDate:day um/X_CourseDate:startTime 16/C_CourseDate:startTime uhr/C_CourseDate:startTime
 
 # faculty
+alle/R_LIST existierenden/X studiengang/M_Program von/X der/X fakultät/X_Institute:faculty 1/C_Institute:faculty
+liste/R_LIST module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 1/C_Institute:faculty auf/X
+liste/R_LIST alle/X module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 1/C_Institute:faculty auf/X
+liste/R_LIST mir/X alle/X module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 1/C_Institute:faculty auf/X
+alle/R_LIST existierenden/X studiengang/M_Program von/X fakultät/X_Institute:faculty 1/C_Institute:faculty
+liste/R_LIST module/M_MTSModule von/X fakultät/X_Institute:faculty 1/C_Institute:faculty auf/X
+liste/R_LIST alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 1/C_Institute:faculty auf/X
+liste/R_LIST mir/X alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 1/C_Institute:faculty auf/X
 alle/R_LIST existierenden/X studiengang/M_Program von/X der/X fakultät/X_Institute:faculty 2/C_Institute:faculty
 liste/R_LIST module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 2/C_Institute:faculty auf/X
 liste/R_LIST alle/X module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 2/C_Institute:faculty auf/X
@@ -60,6 +118,14 @@ alle/R_LIST existierenden/X studiengang/M_Program von/X fakultät/X_Institute:fa
 liste/R_LIST module/M_MTSModule von/X fakultät/X_Institute:faculty 2/C_Institute:faculty auf/X
 liste/R_LIST alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 2/C_Institute:faculty auf/X
 liste/R_LIST mir/X alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 2/C_Institute:faculty auf/X
+alle/R_LIST existierenden/X studiengang/M_Program von/X der/X fakultät/X_Institute:faculty 3/C_Institute:faculty
+liste/R_LIST module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 3/C_Institute:faculty auf/X
+liste/R_LIST alle/X module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 3/C_Institute:faculty auf/X
+liste/R_LIST mir/X alle/X module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 3/C_Institute:faculty auf/X
+alle/R_LIST existierenden/X studiengang/M_Program von/X fakultät/X_Institute:faculty 3/C_Institute:faculty
+liste/R_LIST module/M_MTSModule von/X fakultät/X_Institute:faculty 3/C_Institute:faculty auf/X
+liste/R_LIST alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 3/C_Institute:faculty auf/X
+liste/R_LIST mir/X alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 3/C_Institute:faculty auf/X
 alle/R_LIST existierenden/X studiengang/M_Program von/X der/X fakultät/X_Institute:faculty 4/C_Institute:faculty
 liste/R_LIST module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 4/C_Institute:faculty auf/X
 liste/R_LIST alle/X module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 4/C_Institute:faculty auf/X
@@ -68,6 +134,14 @@ alle/R_LIST existierenden/X studiengang/M_Program von/X fakultät/X_Institute:fa
 liste/R_LIST module/M_MTSModule von/X fakultät/X_Institute:faculty 4/C_Institute:faculty auf/X
 liste/R_LIST alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 4/C_Institute:faculty auf/X
 liste/R_LIST mir/X alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 4/C_Institute:faculty auf/X
+alle/R_LIST existierenden/X studiengang/M_Program von/X der/X fakultät/X_Institute:faculty 5/C_Institute:faculty
+liste/R_LIST module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 5/C_Institute:faculty auf/X
+liste/R_LIST alle/X module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 5/C_Institute:faculty auf/X
+liste/R_LIST mir/X alle/X module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 5/C_Institute:faculty auf/X
+alle/R_LIST existierenden/X studiengang/M_Program von/X fakultät/X_Institute:faculty 5/C_Institute:faculty
+liste/R_LIST module/M_MTSModule von/X fakultät/X_Institute:faculty 5/C_Institute:faculty auf/X
+liste/R_LIST alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 5/C_Institute:faculty auf/X
+liste/R_LIST mir/X alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 5/C_Institute:faculty auf/X
 alle/R_LIST existierenden/X studiengang/M_Program von/X der/X fakultät/X_Institute:faculty 6/C_Institute:faculty
 liste/R_LIST module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 6/C_Institute:faculty auf/X
 liste/R_LIST alle/X module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 6/C_Institute:faculty auf/X
@@ -76,8 +150,25 @@ alle/R_LIST existierenden/X studiengang/M_Program von/X fakultät/X_Institute:fa
 liste/R_LIST module/M_MTSModule von/X fakultät/X_Institute:faculty 6/C_Institute:faculty auf/X
 liste/R_LIST alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 6/C_Institute:faculty auf/X
 liste/R_LIST mir/X alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 6/C_Institute:faculty auf/X
+alle/R_LIST existierenden/X studiengang/M_Program von/X der/X fakultät/X_Institute:faculty 7/C_Institute:faculty
+liste/R_LIST module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 7/C_Institute:faculty auf/X
+liste/R_LIST alle/X module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 7/C_Institute:faculty auf/X
+liste/R_LIST mir/X alle/X module/M_MTSModule von/X der/X fakultät/X_Institute:faculty 7/C_Institute:faculty auf/X
+alle/R_LIST existierenden/X studiengang/M_Program von/X fakultät/X_Institute:faculty 7/C_Institute:faculty
+liste/R_LIST module/M_MTSModule von/X fakultät/X_Institute:faculty 7/C_Institute:faculty auf/X
+liste/R_LIST alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 7/C_Institute:faculty auf/X
+liste/R_LIST mir/X alle/X module/M_MTSModule von/X fakultät/X_Institute:faculty 7/C_Institute:faculty auf/X
 
 # participants
+zeige/R_LIST alle/X module/M_MTSModule die/X eine/X begrenzung/X_ParticipantLimitation von/X mehr/Q_GT als/X 10/C_MTSModule:participantLimitation teilnehmern/X_ParticipantLimitation haben/X
+zeige/R_LIST alle/X module/M_MTSModule die/X eine/X begrenzung/X_ParticipantLimitation von/X weniger/Q_LT als/X 10/C_MTSModule:participantLimitation teilnehmern/X_ParticipantLimitation haben/X
+zeige/R_LIST alle/X module/M_MTSModule die/X eine/X begrenzung/X_ParticipantLimitation von/X genau/Q_EQ 10/C_MTSModule:participantLimitation teilnehmern/X_ParticipantLimitation haben/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 10/C_MTSModule:participantLimitation teilnehmer/X_ParticipantLimitation beschränkt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 10/C_MTSModule:participantLimitation studenten/X_ParticipantLimitation beschränkt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 10/C_MTSModule:participantLimitation personen/X_ParticipantLimitation beschränkt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 10/C_MTSModule:participantLimitation teilnehmer/X_ParticipantLimitation begrenzt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 10/C_MTSModule:participantLimitation studenten/X_ParticipantLimitation begrenzt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 10/C_MTSModule:participantLimitation personen/X_ParticipantLimitation begrenzt/X sind/X
 zeige/R_LIST alle/X module/M_MTSModule die/X eine/X begrenzung/X_ParticipantLimitation von/X mehr/Q_GT als/X 20/C_MTSModule:participantLimitation teilnehmern/X_ParticipantLimitation haben/X
 zeige/R_LIST alle/X module/M_MTSModule die/X eine/X begrenzung/X_ParticipantLimitation von/X weniger/Q_LT als/X 20/C_MTSModule:participantLimitation teilnehmern/X_ParticipantLimitation haben/X
 zeige/R_LIST alle/X module/M_MTSModule die/X eine/X begrenzung/X_ParticipantLimitation von/X genau/Q_EQ 20/C_MTSModule:participantLimitation teilnehmern/X_ParticipantLimitation haben/X
@@ -105,21 +196,47 @@ zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 100/C_M
 zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 100/C_MTSModule:participantLimitation teilnehmer/X_ParticipantLimitation begrenzt/X sind/X
 zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 100/C_MTSModule:participantLimitation studenten/X_ParticipantLimitation begrenzt/X sind/X
 zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 100/C_MTSModule:participantLimitation personen/X_ParticipantLimitation begrenzt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X eine/X begrenzung/X_ParticipantLimitation von/X mehr/Q_GT als/X 200/C_MTSModule:participantLimitation teilnehmern/X_ParticipantLimitation haben/X
+zeige/R_LIST alle/X module/M_MTSModule die/X eine/X begrenzung/X_ParticipantLimitation von/X weniger/Q_LT als/X 200/C_MTSModule:participantLimitation teilnehmern/X_ParticipantLimitation haben/X
+zeige/R_LIST alle/X module/M_MTSModule die/X eine/X begrenzung/X_ParticipantLimitation von/X genau/Q_EQ 200/C_MTSModule:participantLimitation teilnehmern/X_ParticipantLimitation haben/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 200/C_MTSModule:participantLimitation teilnehmer/X_ParticipantLimitation beschränkt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 200/C_MTSModule:participantLimitation studenten/X_ParticipantLimitation beschränkt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 200/C_MTSModule:participantLimitation personen/X_ParticipantLimitation beschränkt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 200/C_MTSModule:participantLimitation teilnehmer/X_ParticipantLimitation begrenzt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 200/C_MTSModule:participantLimitation studenten/X_ParticipantLimitation begrenzt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 200/C_MTSModule:participantLimitation personen/X_ParticipantLimitation begrenzt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X eine/X begrenzung/X_ParticipantLimitation von/X mehr/Q_GT als/X 300/C_MTSModule:participantLimitation teilnehmern/X_ParticipantLimitation haben/X
+zeige/R_LIST alle/X module/M_MTSModule die/X eine/X begrenzung/X_ParticipantLimitation von/X weniger/Q_LT als/X 300/C_MTSModule:participantLimitation teilnehmern/X_ParticipantLimitation haben/X
+zeige/R_LIST alle/X module/M_MTSModule die/X eine/X begrenzung/X_ParticipantLimitation von/X genau/Q_EQ 300/C_MTSModule:participantLimitation teilnehmern/X_ParticipantLimitation haben/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 300/C_MTSModule:participantLimitation teilnehmer/X_ParticipantLimitation beschränkt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 300/C_MTSModule:participantLimitation studenten/X_ParticipantLimitation beschränkt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 300/C_MTSModule:participantLimitation personen/X_ParticipantLimitation beschränkt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 300/C_MTSModule:participantLimitation teilnehmer/X_ParticipantLimitation begrenzt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 300/C_MTSModule:participantLimitation studenten/X_ParticipantLimitation begrenzt/X sind/X
+zeige/R_LIST alle/X module/M_MTSModule die/X auf/X_ParticipantLimitation 300/C_MTSModule:participantLimitation personen/X_ParticipantLimitation begrenzt/X sind/X
 
 # persons
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X als/X 3/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X als/X 6/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X als/X 9/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
+zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X als/X 12/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 3/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 6/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 9/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
+zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 12/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 3/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 6/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 9/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
+zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 12/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 3/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 6/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
 zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 9/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
+zeige/R_LIST alle/X personen/M_Person die/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 12/C_MTSModule:ects ects/C_MTSModule:ects anbieten/X
+zeige/R_LIST alle/X course/M_Course die/X martinelli/C_Person:fullname am/X_CurseDate:day mo/C_CourseDate:day hält/X
+zeige/R_LIST alle/X course/M_Course die/X martinelli/C_Person:fullname am/X_CurseDate:day di/C_CourseDate:day hält/X
 zeige/R_LIST alle/X course/M_Course die/X martinelli/C_Person:fullname am/X_CurseDate:day mi/C_CourseDate:day hält/X
+zeige/R_LIST alle/X course/M_Course die/X martinelli/C_Person:fullname am/X_CurseDate:day do/C_CourseDate:day hält/X
+zeige/R_LIST alle/X course/M_Course die/X martinelli/C_Person:fullname am/X_CurseDate:day fr/C_CourseDate:day hält/X
 zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person martinelli/C_Person:fullname unterrichtet/X werden/X
 zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person martinelli/C_Person:fullname angeboten/X werden/X
 zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person martinelli/C_Person:fullname gehalten/X werden/X
@@ -129,7 +246,11 @@ zeige/R_LIST alle/X course/M_Course die/X von/X prof/X_Person martinelli/C_Perso
 zeige/R_LIST alle/X course/M_Course die/X prof/X_Person martinelli/C_Person:fullname unterrichtet/X
 zeige/R_LIST alle/X course/M_Course die/X prof/X_Person martinelli/C_Person:fullname bietet/X
 zeige/R_LIST alle/X course/M_Course die/X prof/X_Person martinelli/C_Person:fullname hält/X
+zeige/R_LIST alle/X course/M_Course die/X krallmann/C_Person:fullname am/X_CurseDate:day mo/C_CourseDate:day hält/X
+zeige/R_LIST alle/X course/M_Course die/X krallmann/C_Person:fullname am/X_CurseDate:day di/C_CourseDate:day hält/X
 zeige/R_LIST alle/X course/M_Course die/X krallmann/C_Person:fullname am/X_CurseDate:day mi/C_CourseDate:day hält/X
+zeige/R_LIST alle/X course/M_Course die/X krallmann/C_Person:fullname am/X_CurseDate:day do/C_CourseDate:day hält/X
+zeige/R_LIST alle/X course/M_Course die/X krallmann/C_Person:fullname am/X_CurseDate:day fr/C_CourseDate:day hält/X
 zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person krallmann/C_Person:fullname unterrichtet/X werden/X
 zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person krallmann/C_Person:fullname angeboten/X werden/X
 zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person krallmann/C_Person:fullname gehalten/X werden/X
@@ -139,7 +260,11 @@ zeige/R_LIST alle/X course/M_Course die/X von/X prof/X_Person krallmann/C_Person
 zeige/R_LIST alle/X course/M_Course die/X prof/X_Person krallmann/C_Person:fullname unterrichtet/X
 zeige/R_LIST alle/X course/M_Course die/X prof/X_Person krallmann/C_Person:fullname bietet/X
 zeige/R_LIST alle/X course/M_Course die/X prof/X_Person krallmann/C_Person:fullname hält/X
+zeige/R_LIST alle/X course/M_Course die/X nagel/C_Person:fullname am/X_CurseDate:day mo/C_CourseDate:day hält/X
+zeige/R_LIST alle/X course/M_Course die/X nagel/C_Person:fullname am/X_CurseDate:day di/C_CourseDate:day hält/X
 zeige/R_LIST alle/X course/M_Course die/X nagel/C_Person:fullname am/X_CurseDate:day mi/C_CourseDate:day hält/X
+zeige/R_LIST alle/X course/M_Course die/X nagel/C_Person:fullname am/X_CurseDate:day do/C_CourseDate:day hält/X
+zeige/R_LIST alle/X course/M_Course die/X nagel/C_Person:fullname am/X_CurseDate:day fr/C_CourseDate:day hält/X
 zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person nagel/C_Person:fullname unterrichtet/X werden/X
 zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person nagel/C_Person:fullname angeboten/X werden/X
 zeige/R_LIST alle/X module/M_MTSModule die/X von/X prof/X_Person nagel/C_Person:fullname gehalten/X werden/X
@@ -152,9 +277,15 @@ zeige/R_LIST alle/X course/M_Course die/X prof/X_Person nagel/C_Person:fullname 
 
 # program
 zeige/R_LIST alle/X module/M_MTSModule von/X wirtschaftsingenieurwesen/C_Program:name
+zeige/R_LIST alle/X module/M_MTSModule von/X landschaftsarchitektur/C_Program:name
 zeige/R_LIST alle/X module/M_MTSModule von/X informatik/C_Program:name
+zeige/R_LIST alle/X module/M_MTSModule von/X bauingenieurwesen/C_Program:name
 zeige/R_LIST alle/X module/M_MTSModule von/X elektrotechnik/C_Program:name
+zeige/R_LIST alle/X module/M_MTSModule von/X chemieingenieurwesen/C_Program:name
 zeige/R_LIST alle/X module/M_MTSModule von/X wirtschaftsinformatik/C_Program:name
+zeige/R_LIST alle/X module/M_MTSModule von/X wirtschaftsmathematik/C_Program:name
+zeige/R_LIST alle/X module/M_MTSModule von/X geotechnologie/C_Program:name
+zeige/R_LIST alle/X module/M_MTSModule von/X fahrzeugtechnik/C_Program:name
 
 # modules
 zeige/R_LIST alle/X module/M_MTSModule mit/X dem/X titel/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
@@ -166,6 +297,17 @@ gib/X mir/X details/R_SINGLE zum/X module/X_MTSModule:title anwendungssystemproj
 zeige/X mir/X mehr/R_SINGLE zu/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
 zeige/X mir/X mehr/R_SINGLE zum/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
 studiengang/M_Program mit/X dem/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
+nähere/X informationen/R_SINGLE zu/X modul/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
+zeige/R_LIST alle/X module/M_MTSModule mit/X dem/X titel/X_MTSModule:title umweltrecht/C_MTSModule:title
+anzahl/X_count ects/R_MTSModule:ects des/X module/C_MTSModule:title umweltrecht/C_MTSModule:title
+gib/X mir/X informationen/R_SINGLE zu/X module/X_MTSModule:title umweltrecht/C_MTSModule:title
+gib/X mir/X informationen/R_SINGLE zum/X module/X_MTSModule:title umweltrecht/C_MTSModule:title
+gib/X mir/X details/R_SINGLE zu/X module/X_MTSModule:title umweltrecht/C_MTSModule:title
+gib/X mir/X details/R_SINGLE zum/X module/X_MTSModule:title umweltrecht/C_MTSModule:title
+zeige/X mir/X mehr/R_SINGLE zu/X module/X_MTSModule:title umweltrecht/C_MTSModule:title
+zeige/X mir/X mehr/R_SINGLE zum/X module/X_MTSModule:title umweltrecht/C_MTSModule:title
+studiengang/M_Program mit/X dem/X module/X_MTSModule:title umweltrecht/C_MTSModule:title
+nähere/X informationen/R_SINGLE zu/X modul/X_MTSModule:title umweltrecht/C_MTSModule:title
 zeige/R_LIST alle/X module/M_MTSModule mit/X dem/X titel/X_MTSModule:title organisationstheorie/C_MTSModule:title
 anzahl/X_count ects/R_MTSModule:ects des/X module/C_MTSModule:title organisationstheorie/C_MTSModule:title
 gib/X mir/X informationen/R_SINGLE zu/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
@@ -175,36 +317,138 @@ gib/X mir/X details/R_SINGLE zum/X module/X_MTSModule:title organisationstheorie
 zeige/X mir/X mehr/R_SINGLE zu/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
 zeige/X mir/X mehr/R_SINGLE zum/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
 studiengang/M_Program mit/X dem/X module/X_MTSModule:title organisationstheorie/C_MTSModule:title
+nähere/X informationen/R_SINGLE zu/X modul/X_MTSModule:title organisationstheorie/C_MTSModule:title
+zeige/R_LIST alle/X module/M_MTSModule mit/X dem/X titel/X_MTSModule:title kognitive/C_MTSModule:title algorithmen/C_MTSModule:title
+anzahl/X_count ects/R_MTSModule:ects des/X module/C_MTSModule:title kognitive/C_MTSModule:title algorithmen/C_MTSModule:title
+gib/X mir/X informationen/R_SINGLE zu/X module/X_MTSModule:title kognitive/C_MTSModule:title algorithmen/C_MTSModule:title
+gib/X mir/X informationen/R_SINGLE zum/X module/X_MTSModule:title kognitive/C_MTSModule:title algorithmen/C_MTSModule:title
+gib/X mir/X details/R_SINGLE zu/X module/X_MTSModule:title kognitive/C_MTSModule:title algorithmen/C_MTSModule:title
+gib/X mir/X details/R_SINGLE zum/X module/X_MTSModule:title kognitive/C_MTSModule:title algorithmen/C_MTSModule:title
+zeige/X mir/X mehr/R_SINGLE zu/X module/X_MTSModule:title kognitive/C_MTSModule:title algorithmen/C_MTSModule:title
+zeige/X mir/X mehr/R_SINGLE zum/X module/X_MTSModule:title kognitive/C_MTSModule:title algorithmen/C_MTSModule:title
+studiengang/M_Program mit/X dem/X module/X_MTSModule:title kognitive/C_MTSModule:title algorithmen/C_MTSModule:title
+nähere/X informationen/R_SINGLE zu/X modul/X_MTSModule:title kognitive/C_MTSModule:title algorithmen/C_MTSModule:title
+zeige/R_LIST alle/X module/M_MTSModule mit/X dem/X titel/X_MTSModule:title software/C_MTSModule:title security/C_MTSModule:title
+anzahl/X_count ects/R_MTSModule:ects des/X module/C_MTSModule:title software/C_MTSModule:title security/C_MTSModule:title
+gib/X mir/X informationen/R_SINGLE zu/X module/X_MTSModule:title software/C_MTSModule:title security/C_MTSModule:title
+gib/X mir/X informationen/R_SINGLE zum/X module/X_MTSModule:title software/C_MTSModule:title security/C_MTSModule:title
+gib/X mir/X details/R_SINGLE zu/X module/X_MTSModule:title software/C_MTSModule:title security/C_MTSModule:title
+gib/X mir/X details/R_SINGLE zum/X module/X_MTSModule:title software/C_MTSModule:title security/C_MTSModule:title
+zeige/X mir/X mehr/R_SINGLE zu/X module/X_MTSModule:title software/C_MTSModule:title security/C_MTSModule:title
+zeige/X mir/X mehr/R_SINGLE zum/X module/X_MTSModule:title software/C_MTSModule:title security/C_MTSModule:title
+studiengang/M_Program mit/X dem/X module/X_MTSModule:title software/C_MTSModule:title security/C_MTSModule:title
+nähere/X informationen/R_SINGLE zu/X modul/X_MTSModule:title software/C_MTSModule:title security/C_MTSModule:title
+zeige/R_LIST alle/X module/M_MTSModule mit/X dem/X titel/X_MTSModule:title energiespeichertechnologien/C_MTSModule:title
+anzahl/X_count ects/R_MTSModule:ects des/X module/C_MTSModule:title energiespeichertechnologien/C_MTSModule:title
+gib/X mir/X informationen/R_SINGLE zu/X module/X_MTSModule:title energiespeichertechnologien/C_MTSModule:title
+gib/X mir/X informationen/R_SINGLE zum/X module/X_MTSModule:title energiespeichertechnologien/C_MTSModule:title
+gib/X mir/X details/R_SINGLE zu/X module/X_MTSModule:title energiespeichertechnologien/C_MTSModule:title
+gib/X mir/X details/R_SINGLE zum/X module/X_MTSModule:title energiespeichertechnologien/C_MTSModule:title
+zeige/X mir/X mehr/R_SINGLE zu/X module/X_MTSModule:title energiespeichertechnologien/C_MTSModule:title
+zeige/X mir/X mehr/R_SINGLE zum/X module/X_MTSModule:title energiespeichertechnologien/C_MTSModule:title
+studiengang/M_Program mit/X dem/X module/X_MTSModule:title energiespeichertechnologien/C_MTSModule:title
 nähere/X informationen/R_SINGLE zu/X modul/X_MTSModule:title energiespeichertechnologien/C_MTSModule:title
-nähere/X informationen/R_SINGLE zu/X modul/X_MTSModule:title brandschutz/C_MTSModule:title
-nähere/X informationen/R_SINGLE zu/X modul/X_MTSModule:title diskrete/C_MTSModule:title geometrie/C_MTSModule:title ii/C_MTSModule:title
 
 # chair
 alle/R_LIST module/M_MTSModule die/X das/X institute/X_Chair:name lebensmittelverfahrenstechnik/C_Chair:name anbietet/X
 alle/R_LIST module/M_MTSModule die/X das/X institute/X_Chair:name halbleiterbauelemente/C_Chair:name anbietet/X
 alle/R_LIST module/M_MTSModule die/X das/X institute/X_Chair:name ingenieurgeologie/C_Chair:name anbietet/X
+alle/R_LIST module/M_MTSModule die/X das/X institute/X_Chair:name telekommunikationsnetze/C_Chair:name anbietet/X
+alle/R_LIST module/M_MTSModule die/X das/X institute/X_Chair:name medienwissenschaft/C_Chair:name anbietet/X
+alle/R_LIST module/M_MTSModule die/X das/X institute/X_Chair:name verbrennungskraftmaschinen/C_Chair:name anbietet/X
+alle/R_LIST module/M_MTSModule die/X das/X institute/X_Chair:name lichttechnik/C_Chair:name anbietet/X
+alle/R_LIST module/M_MTSModule die/X das/X institute/X_Chair:name metallische/C_Chair:name werkstoffe/C_Chair:name anbietet/X
+alle/R_LIST module/M_MTSModule die/X das/X institute/X_Chair:name verkehrssystemplanung/C_Chair:name verkehrstelematik/C_Chair:name anbietet/X
+alle/R_LIST module/M_MTSModule die/X das/X institute/X_Chair:name verkehrssystemplanung/C_Chair:name verkehrstelematik/C_Chair:name anbietet/X
 zeige/R_LIST mir/X die/X module/M_MTSModule die/X das/X institute/X_Chair:name lebensmittelverfahrenstechnik/C_Chair:name anbietet/X
 zeige/R_LIST mir/X die/X module/M_MTSModule die/X das/X institute/X_Chair:name halbleiterbauelemente/C_Chair:name anbietet/X
 zeige/R_LIST mir/X die/X module/M_MTSModule die/X das/X institute/X_Chair:name ingenieurgeologie/C_Chair:name anbietet/X
+zeige/R_LIST mir/X die/X module/M_MTSModule die/X das/X institute/X_Chair:name telekommunikationsnetze/C_Chair:name anbietet/X
+zeige/R_LIST mir/X die/X module/M_MTSModule die/X das/X institute/X_Chair:name medienwissenschaft/C_Chair:name anbietet/X
+zeige/R_LIST mir/X die/X module/M_MTSModule die/X das/X institute/X_Chair:name verbrennungskraftmaschinen/C_Chair:name anbietet/X
+zeige/R_LIST mir/X die/X module/M_MTSModule die/X das/X institute/X_Chair:name lichttechnik/C_Chair:name anbietet/X
+zeige/R_LIST mir/X die/X module/M_MTSModule die/X das/X institute/X_Chair:name metallische/C_Chair:name werkstoffe/C_Chair:name anbietet/X
+zeige/R_LIST mir/X die/X module/M_MTSModule die/X das/X institute/X_Chair:name verkehrssystemplanung/C_Chair:name verkehrstelematik/C_Chair:name anbietet/X
+zeige/R_LIST mir/X die/X module/M_MTSModule die/X das/X institute/X_Chair:name verkehrssystemplanung/C_Chair:name verkehrstelematik/C_Chair:name anbietet/X
 
 # exam
+zeige/R_LIST mir/X alle/X course/M_Course mit/X klausur/C_ExamElement:description als/X prüfung/X_ExamElement
 zeige/R_LIST mir/X alle/X course/M_Course mit/X portfolio/C_ExamElement:description als/X prüfung/X_ExamElement
-zeige/R_LIST mir/X alle/X course/M_Course die/X portfolio/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course mit/X laborarbeit/C_ExamElement:description als/X prüfung/X_ExamElement
+zeige/R_LIST mir/X alle/X course/M_Course mit/X evaluation/C_ExamElement:description als/X prüfung/X_ExamElement
+zeige/R_LIST mir/X alle/X course/M_Course mit/X prüfungsgespräch/C_ExamElement:description als/X prüfung/X_ExamElement
+zeige/R_LIST mir/X alle/X course/M_Course mit/X projektbericht/C_ExamElement:description als/X prüfung/X_ExamElement
+zeige/R_LIST mir/X alle/X course/M_Course mit/X ausarbeitung/C_ExamElement:description als/X prüfung/X_ExamElement
 zeige/R_LIST mir/X alle/X course/M_Course mit/X projektdokumentation/C_ExamElement:description als/X prüfung/X_ExamElement
-zeige/R_LIST mir/X alle/X course/M_Course die/X projektdokumentation/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course mit/X gruppenarbeit/C_ExamElement:description als/X prüfung/X_ExamElement
+zeige/R_LIST mir/X alle/X course/M_Course mit/X mündliche/C_ExamElement:description prüfung/C_ExamElement:description als/X prüfung/X_ExamElement
+zeige/R_LIST mir/X alle/X course/M_Course mit/X gruppenvortrag/C_ExamElement:description als/X prüfung/X_ExamElement
 zeige/R_LIST mir/X alle/X course/M_Course mit/X seminar/C_ExamElement:description paper/C_ExamElement:description als/X prüfung/X_ExamElement
+zeige/R_LIST mir/X alle/X course/M_Course mit/X mitarbeit/C_ExamElement:description praktikum/C_ExamElement:description als/X prüfung/X_ExamElement
+zeige/R_LIST mir/X alle/X course/M_Course mit/X schriftliches/C_ExamElement:description testat/C_ExamElement:description als/X prüfung/X_ExamElement
+zeige/R_LIST mir/X alle/X course/M_Course mit/X latex/C_ExamElement:description test/C_ExamElement:description als/X prüfung/X_ExamElement
+zeige/R_LIST mir/X alle/X course/M_Course die/X klausur/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course die/X portfolio/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course die/X laborarbeit/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course die/X evaluation/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course die/X prüfungsgespräch/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course die/X projektbericht/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course die/X ausarbeitung/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course die/X projektdokumentation/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course die/X gruppenarbeit/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course die/X mündliche/C_ExamElement:description prüfung/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course die/X gruppenvortrag/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
 zeige/R_LIST mir/X alle/X course/M_Course die/X seminar/C_ExamElement:description paper/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course die/X mitarbeit/C_ExamElement:description praktikum/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course die/X schriftliches/C_ExamElement:description testat/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+zeige/R_LIST mir/X alle/X course/M_Course die/X latex/C_ExamElement:description test/C_ExamElement:description als/X prüfung/X_ExamElement haben/X
+module/M_MTSModule mit/X einer/X klausur/C_ExamElement:description
+module/M_MTSModule mit/X einem/X portfolio/C_ExamElement:description
+module/M_MTSModule mit/X einer/X laborarbeit/C_ExamElement:description
+module/M_MTSModule mit/X einer/X evaluation/C_ExamElement:description
+module/M_MTSModule mit/X einem/X prüfungsgespräch/C_ExamElement:description
+module/M_MTSModule mit/X einem/X projektbericht/C_ExamElement:description
+module/M_MTSModule mit/X einer/X ausarbeitung/C_ExamElement:description
+module/M_MTSModule mit/X einer/X projektdokumentation/C_ExamElement:description
+module/M_MTSModule mit/X einer/X gruppenarbeit/C_ExamElement:description
+module/M_MTSModule mit/X einer/X mündlichen/C_ExamElement:description prüfung/C_ExamElement:description
+module/M_MTSModule mit/X einem/X gruppenvortrag/C_ExamElement:description
+module/M_MTSModule mit/X einem/X seminar/C_ExamElement:description paper/C_ExamElement:description
 module/M_MTSModule mit/X einem/X praktikum/C_ExamElement:description
-module/M_MTSModule mit/X einem/X seminar/C_ExamElement:description
-module/M_MTSModule mit/X einem/X projekt/C_ExamElement:description
+module/M_MTSModule mit/X einem/X schriftlichen/C_ExamElement:description testat/C_ExamElement:description
+module/M_MTSModule mit/X einem/X latex/C_ExamElement:description test/C_ExamElement:description
 
 # courses
 das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X kreativitätstechniken/C_Course:title
-das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X kreativitätstechniken/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X projektmanagement/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X schwingungsmesstechnik/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X gesellschaftsanalyse/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X stadtplanung/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X bestandsentwicklung/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X lebensmittelhygiene/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X transkriptionsmethoden/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X systemökologie/C_Course:title
 das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X schiffsdynamik/C_Course:title
-das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X schiffsdynamik/C_Course:title
 das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X vergaberecht/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X algorithmen/C_Course:title datenstrukturen/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X physiologische/C_Course:title optik/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X internet/C_Course:title security/C_Course:title
+das/X datum/M_CourseDate des/X ersten/R_FIRST treffens/X von/X cloud/C_Course:title computing/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X kreativitätstechniken/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X projektmanagement/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X schwingungsmesstechnik/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X gesellschaftsanalyse/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X stadtplanung/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X bestandsentwicklung/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X lebensmittelhygiene/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X transkriptionsmethoden/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X systemökologie/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X schiffsdynamik/C_Course:title
 das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X vergaberecht/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X algorithmen/C_Course:title datenstrukturen/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X physiologische/C_Course:title optik/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X internet/C_Course:title security/C_Course:title
+das/X datum/M_CourseDate der/X erste/R_FIRST course/X von/X cloud/C_Course:title computing/C_Course:title
 
 # locations
 welche/R_LIST course/M_CourseDate finden/X im/X hörsaal/X_Room gebäudeteile/C_CourseDate:room hochfrequenz-/C_CourseDate:room fernmeldetechnik/C_CourseDate:room technische/C_CourseDate:room akustik/C_CourseDate:room -/C_CourseDate:room hft-ta/C_CourseDate:room 101/C_CourseDate:room statt/X
