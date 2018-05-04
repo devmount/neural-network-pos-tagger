@@ -1,3 +1,6 @@
+# directories
+nn-tagger/storage
+
 # -- latex files
 *.aux
 *.glo

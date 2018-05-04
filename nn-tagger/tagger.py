@@ -212,7 +212,7 @@ class Tagger:
                     n_words_correct += 1 if tw[:tw.index('/')] == cw[:cw.index('/')] else 0
                     n_tags_correct += 1 if tw[tw.index('/')+1:] == cw[cw.index('/')+1:] else 0
         if print_inline:
-            print('%i/%i (%.1f%%) tags correct' % (n_tags_correct, n_words, n_tags_correct/n_words*100))
+            print('%s: %i/%i (%.1f%%) tags correct' % (evaluation_file, n_tags_correct, n_words, n_tags_correct/n_words*100))
         else:
             # print ratio of correct sentences, words and tags
             print('\n# RESULTS:\n')
