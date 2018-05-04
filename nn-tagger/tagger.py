@@ -163,7 +163,7 @@ class Tagger:
         return ' '.join(annotated_words)
 
 
-    def evaluate(self, evaluation_file):
+    def evaluate(self, evaluation_file, print_inline=False):
         """
         Evaluates a previously trained model with a given evaluation file
         """
@@ -182,7 +182,7 @@ class Tagger:
         tagged_sentences = text.splitlines()
         n_sentences = len(tagged_sentences)
         # tag data based on trained language model
-        computed_words = self.tag(self.__untag_text(text)).split()
+        computed_words = self.tag(self.__untag_text(text), False, True).split()
         computed_sentences = []
         sentence_lengths = [len(x.split()) for x in tagged_sentences]
         n_words = sum(sentence_lengths)
@@ -190,7 +190,8 @@ class Tagger:
             computed_sentences.append(' '.join(computed_words[sum(sentence_lengths[:i]):sum(sentence_lengths[:i])+l]))
 
         # start evaluation
-        print('Evaluation starts...')
+        if not print_inline:
+            print('Evaluation starts...')
 
         # compute correct sentences and words
         for t, c in zip(tagged_sentences, computed_sentences):
@@ -210,27 +211,30 @@ class Tagger:
                     # increment counter for matching words and tags
                     n_words_correct += 1 if tw[:tw.index('/')] == cw[:cw.index('/')] else 0
                     n_tags_correct += 1 if tw[tw.index('/')+1:] == cw[cw.index('/')+1:] else 0
-        # print ratio of correct sentences, words and tags
-        print('\n# RESULTS:\n')
-        table = Texttable(120)
-        table.set_deco(Texttable.HEADER)
-        table.set_cols_dtype(['t', 'f', 't'])
-        table.set_cols_align(['r', 'c', 'l'])
-        table.add_row([str(n_sentences_correct) + ' / ' + str(n_sentences), n_sentences_correct/n_sentences, 'sentences correct'])
-        table.add_row([str(n_words_correct) + ' / ' + str(n_words), n_words_correct/n_words, 'words recognized'])
-        table.add_row([str(n_tags_correct) + ' / ' + str(n_words), n_tags_correct/n_words, 'tags correct'])
-        print(table.draw())
-        # show wrong tags
-        print('\n# ERRORS:\n')
-        table = Texttable(120)
-        table.set_deco(Texttable.HEADER)
-        table.set_cols_dtype(['i', 't', 't'])
-        table.set_cols_align(['c', 'l', 'l'])
-        table.set_chars(['-', '|', '+', '-'])
-        table.add_rows([["count", "expected", "computed"]])
-        for key, count in sorted(tags_wrong.items(), key=lambda x: x[1], reverse=True):
-            table.add_row([count, key[:key.index('|')], key[key.index('|')+1:]])
-        print(table.draw())
+        if print_inline:
+            print('%i/%i (%.1f%%) tags correct' % (n_tags_correct, n_words, n_tags_correct/n_words*100))
+        else:
+            # print ratio of correct sentences, words and tags
+            print('\n# RESULTS:\n')
+            table = Texttable(120)
+            table.set_deco(Texttable.HEADER)
+            table.set_cols_dtype(['t', 'f', 't'])
+            table.set_cols_align(['r', 'c', 'l'])
+            table.add_row([str(n_sentences_correct) + ' / ' + str(n_sentences), n_sentences_correct/n_sentences, 'sentences correct'])
+            table.add_row([str(n_words_correct) + ' / ' + str(n_words), n_words_correct/n_words, 'words recognized'])
+            table.add_row([str(n_tags_correct) + ' / ' + str(n_words), n_tags_correct/n_words, 'tags correct'])
+            print(table.draw())
+            # show wrong tags
+            print('\n# ERRORS:\n')
+            table = Texttable(120)
+            table.set_deco(Texttable.HEADER)
+            table.set_cols_dtype(['i', 't', 't'])
+            table.set_cols_align(['c', 'l', 'l'])
+            table.set_chars(['-', '|', '+', '-'])
+            table.add_rows([["count", "expected", "computed"]])
+            for key, count in sorted(tags_wrong.items(), key=lambda x: x[1], reverse=True):
+                table.add_row([count, key[:key.index('|')], key[key.index('|')+1:]])
+            print(table.draw())
 
     def reset(self, force=False, quiet=False):
         """
@@ -481,6 +485,7 @@ if __name__ == "__main__":
 
     parser.add_argument("-f", "--force", action='store_true', help="Force operation without confirmation")
     parser.add_argument("-q", "--quiet", action='store_true', help="No output messages")
+    parser.add_argument("-i", "--inline", action='store_true', help="Only one line output")
     
     args = parser.parse_args()
 
@@ -511,7 +516,10 @@ if __name__ == "__main__":
             t = Tagger(args.pastwords, args.embeddingsize, args.hiddensize, args.nepochs)
         else:
             t = Tagger()
-        t.evaluate(args.evaluate)
+        if args.inline:
+            t.evaluate(args.evaluate, True)
+        else:
+            t.evaluate(args.evaluate)
     # invoke reset of training data
     if args.reset:
         # create tagger instance
