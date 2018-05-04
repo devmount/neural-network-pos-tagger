@@ -1,4 +1,4 @@
-\documentclass[fontsize=12pt, paper=a4, headinclude, twoside=false, parskip=half+, pagesize, paper=a4, numbers=noenddot, open=right, toc=listof, toc=bibliography]{scrreprt}
+\documentclass[fontsize=12pt, paper=a4, headinclude, twoside=false, parskip=half+, pagesize=auto, numbers=noenddot, open=right, toc=listof, toc=bibliography]{scrreprt}
 % PDF-Kompression
 \pdfminorversion=5
 \pdfobjcompresslevel=1
@@ -60,8 +60,7 @@
 % Quellcode
 \usepackage{listings} % für Formatierung in Quelltexten
 \usepackage{DejaVuSansMono} % ttfamily font
-\usepackage{todonotes}% Todo Notes
-\presetkeys{todonotes}{inline}{}
+\usepackage{fancyvrb}
 % Bibliography multicoloumn
 \usepackage{etoolbox}
 \usepackage{relsize}

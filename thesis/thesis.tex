@@ -162,7 +162,7 @@ A publication of M. Minsky and S. Papert \cite{minsky1969} in 1969 analyzed and 
 
 In 1982, J. Hopfield presented a previously described Neural Network with feedback (known as \i{Hopfield network}), that was able to solve optimization problems like the \i{Traveling Salesman Problem}\footnote{The problem of the traveling salesman or round trip problem: The order of places to be visited once should be chosen in such a way that the distance covered is minimal, whereby the last place is again the starting point (round trip).}. Neural Network approaches got more attention again, also because the first processors based on transistor technology (microprocessors) came onto the market in the early 1970s and replaced the previously used tube technology in the following years, which made computers smaller and cheaper and increased their processing capacity.
 
-For the task of POS tagging, Neural Network models were now able to outperform HMM based tagger. H. Schmid created and trained a multilayer Feed-forward Neural Network in 1994 an showed, that it performed better than an HMM tagger \cite{schmid1994}.
+For the task of POS tagging, Neural Network models were now able to outperform HMM based tagger. H. Schmid created and trained a multilayer Feed-forward Neural Network in 1994 and was able to show, that it performed better than an HMM tagger \cite{schmid1994} at that time. In 2000, Ma et. al. run a series of comparative experiments that proved, that the results of a neural network tagger were superior to those of statistical models like the HMM \cite{ma2000}.
 
 \section{Structure of this Thesis}\label{c.introduction.structure}
 As introduction, this first chapter gave a short overview about the subject of natural language processing and part-of-speech tagging in general.
@@ -269,7 +269,7 @@ Ma et. al. have shown before, that the neural network approach outperforms part-
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/fnn_structure}
-	\caption[Structure of a Feed-forward Neural Network]{The structure of a feed-forward neural network. The feature vector is built by the initial vectors of the corresponding input word on position \tt{p} and by its three predecessors (here as an example).}
+	\caption[Structure of a Feed-forward Neural Network]{The structure of a feed-forward neural network. The feature vector is built by the initial vectors of the corresponding input word on position \tt{p} and by its \tt{3} preceding words (here as an example, the number of predecessors can of course vary).}
 	\label{f.fnn_structure}
 \end{figure}
 
@@ -291,11 +291,63 @@ Ma et. al. have shown before, that the neural network approach outperforms part-
 ...
 
 % ===================================================================================
-\chapter{Training}\label{c.training}
-...
+\chapter{Training of Language Models}\label{c.training}
+To obtain an optimal language model with the Neural Network approach proposed in this thesis, as much annotated training data as possible is required. The following sections describe the generation of correctly tagged training data and the training of different language models due to parameter variation based on this generated training corpus.
 
-\section{Data Retrieval}\label{c.training.data}
-...
+\section{Training Data Corpus}\label{c.training.data}
+To create a training corpus with tagged sentences, the already existing sentence template set from \Alex\ is used as the basis for an improved and extended template set. In addition, a log of user input data\footnote{The log data that was available for this thesis started on 30th of August, 2017 until 27th of April, 2018 and contained \tt{1293} entries of user input.} provides useful information about possible input sentences, that are not yet considered in the template set.
+
+As described in chapter \ref{c.alex.data}, the HMM tagger of \Alex\ uses \tt{72} sentence templates to generate annotated training data. However the distribution of the generated sentences is highly unbalanced. Due to the combination of placeholders for different database fields and models, that are semantically meaningless, a huge number of training sentences exist, that are only partially suitable for training.
+
+An analysis of the generated training corpus that was used to train the HMM tagger showed, that one single template out of the \tt{72} sentence templates created more than \tt{84\%} of the whole training corpus. This sentence template is the following\footnote{The corresponding English translation of this sentence template is: \i{Which modules are held by Professor <firstname> <lastname>}}:
+
+\vbox{\begin{Verbatim}[fontsize=\scriptsize]
+Welche   Module  werden von   Prof   {Person:firstname} {Person:lastname} angeboten
+\end{Verbatim}
+\vspace{-6mm}
+{\color{gray}\begin{Verbatim}[fontsize=\scriptsize]
+R_LIST M_MTSModule  X    X  X_Person C_Person:fullname  C_Person:fullname     X
+\end{Verbatim}
+}}
+
+It combines all first names and all last names of each existing person in the database, leading to a huge number of name combinations, that do not exist.
+
+Another example is the combination of study program degrees and program names. This combination exists in \tt{5} of the \tt{72} sentence templates, whereby all degrees are assigned to all study programs \tt{5} times, although not every combination exists in reality. The following is an example of one of this sentence templates\footnote{The corresponding English translation of this sentence template is: \i{Which modules can I attend to in <program-degree> <program-name>}}:
+
+\vbox{\begin{Verbatim}[fontsize=\scriptsize]
+Welche   Module    kann ich  im  {Program:degree}  {Program:name} belegen
+\end{Verbatim}
+\vspace{-6mm}
+{\color{gray}\begin{Verbatim}[fontsize=\scriptsize]
+R_LIST M_MTSModule  X    X   X   C_Program:degree  C_Program:name    X
+\end{Verbatim}
+}}
+
+To address this issue, the following adjustments for the new template set were made:
+
+\begin{itemize}
+	\item Because of the very low occurrence in the log database, the slot \tt{\{Person:firstname\}} was removed completely from that sentence template, which limits the user input to last names only\footnote{This might seem like a degradation but is justified by the fact, that only \tt{3} of \tt{1293} log entries even contained a first name, always followed by the last name. In this specific use case, where all Persons are Professors and Lecturers, only using the last name appears legit.}
+	\item the slot \tt{\{Program:degree\}} was partly replaced by the inline choice \tt{(bachelor|master|diplom)}, which were the main terms asked for in the logs.
+\end{itemize}
+
+Also the wording occurring in the logs referring to linking words and actions was improved with the help of inline choices. The following table shows those improvements as a comparison of the former and the new sentence template:
+
+\begin{table}[H]
+	\vspace{1ex}\small\centering\def\arraystretch{1.1}\begin{tabular}{|>{\raggedright}p{43mm}|>{\raggedright}p{43mm}|>{\raggedright}p{43mm}|c|}
+	\hline
+	Former Template & New Template & English Equivalent & \\
+	\hline\hline
+	Alle Module \b{vom} \{Program:degree\} \{Program:name\} & Alle Module \b{(vom|von|in|im)} \{Program:degree\} \{Program:name\} & \i{All modules \b{(of|in)} \{Program:degree\} \{Program:name\} } & \\ \hline
+	Welche Module werden von Prof \{Person:firstname\} \{Person:lastname\} \b{angeboten} & Welche Module werden von Professor \{Person:lastname\} \b{(unterrichtet| angeboten|gehalten)} & \i{Which modules are \b{(taught|offered|held)} by Professor \{Person:lastname\} } & \\ \hline
+	\b{Wieviele} LP \b{hat} das Modul \{MTSModule:title\} & \b{(Wieviele|Wieviel)} LP \b{(hat|bringt)} das Modul \{MTSModule:title\} & \i{\b{How many} ects does the module \{MTSModule:title\} \b{(have|bring)} } & \\ \hline
+	\b{Informationen} \b{zu} Modul {MTSModule:title} & \b{(Informationen|Details| Mehr)} \b{(zu|zum)} Modul \{MTSModule:title\} & \i{\b{(Information|details| more)} \b{of} the module \{MTSModule:title\} } & \\ \hline
+	\end{tabular}
+	\caption[Sentence Template Improvements]{An excerpt of the extension and improvement of the sentence templates by using inline choices. The last column provides an English translation for the new sentence template.}
+	\label{t.improved_sentence_templates}
+	\vspace{1ex}
+\end{table}
+
+At last some new sentence templates were added, that provide a sentence structure that was found in the logs. The new set contains \tt{100} sentence or single word templates and can be found in the appendix \ref{c.appendix.sentencetemplates}.
 
 \section{Parameter Tuning}\label{c.training.tuning}
 ...
@@ -319,25 +371,20 @@ Ma et. al. have shown before, that the neural network approach outperforms part-
 
 \section{Future work}\label{c.conclusion.future}
 ...
-\cite{michael2016}
+- additional module to check if generated trainings sentence returns a query result
+
+
 \cite{mueller2015}
-\cite{ma2000}
-\cite{schmid1994}
 
 % ===================================================================================
-% \bibliographystyle{apalike}
-% \bibliographystyle{plainnat}
-% \bibliographystyle{abbrvnat}
-% \bibliographystyle{unsrtnat}
-% \bibliographystyle{alphadin}
 \bibliographystyle{plain}
 \bibliography{bibliography}
 
 % ===================================================================================
 \appendix
-\chapter{First appendix}
+\chapter{Appendix}\label{c.appendix}
 
-\section{test}
+\section{Set of sentence templates}\label{c.appendix.sentencetemplates}
 ...
 
 \end{document}
