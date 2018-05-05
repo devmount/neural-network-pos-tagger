@@ -17,7 +17,7 @@ for p in {0..12}; do
 done
 
 printf "\n## Embedding Size:\n"
-for e in 1 25 50 100 150 200; do
+for e in 1 5 10 25 50 100 150 200; do
     if [ -d "storage/fnn-1-$e-100-20" ]; then
         printf "Model fnn-1-$e-100-20\n"
         python3.6 tagger.py --reset -fq
@@ -39,7 +39,7 @@ for s in 10 25 50 100 150 200 250 300 350 400 450 500 550 600; do
 done
 
 printf "\n## Training Epochs:\n"
-for n in 1 5 10 20 40 60 80 100; do
+for n in 1 5 10 20 40 60 80 100 120 140; do
     if [ -d "storage/fnn-1-50-100-$n" ]; then
         printf "Model fnn-1-50-100-$n\n"
         python3.6 tagger.py --reset -fq
