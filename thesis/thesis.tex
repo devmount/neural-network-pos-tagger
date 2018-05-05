@@ -183,12 +183,19 @@ In conclusion the final Chapter \ref{c.conclusion} discusses and summarizes the 
 \section{System Overview}\label{c.alex.overview}
 The modular structure of \Alex\ allows the separation of different functions and therefore easier replaceability of certain functionalities. Besides a module crawler for current data retrieval of web content for the database and a frontend interface module, \Alex\ offers a tagging module. This module provides the training of a language model as well as the assignment of tags to the words of a given input sentence.
 
-Figure \ref{f.alex_components} shows the original architecture of \Alex. Modules that are adapted or replaced by another approach are emphasized with an orange border.
+Figure \ref{f.alex.components} shows the original architecture of \Alex. The following components belong to the tagging module and are adapted or replaced (emphasized with an orange border in figure \ref{f.alex.components}) in this thesis:
+
+\begin{itemize}
+	\item The \b{HMM Training Data} is replaced by training data that was generated with improved training sentence templates (this will be explained in detail in chapter \ref{c.training.data})
+	\item \b{Training Data Loading and Slot Filling} are used to generate the new training data
+	\item The \b{HMM Tagger} is replaced by a Neural Network based tagger
+	\item \b{Part of Speech Tagging} of input sentences is realized by the tagging function of the new tagger
+\end{itemize}
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/alex_components}
 	\caption[Component Overview of \Alex]{Overview of all components of \Alex. The orange bordered parts are components that lie within the scope of this thesis and are adapted or replaced. Original figure by T. Michael \cite{michael2016}}
-	\label{f.alex_components}
+	\label{f.alex.components}
 \end{figure}
 
 \section{Training Data}\label{c.alex.data}
@@ -422,10 +429,6 @@ Based on these \tt{4} parameters, table \ref{t.training.tuning.rnn} shows the di
 	\label{t.training.tuning.rnn}
 \end{table}
 
-
-
-
-
 % ===================================================================================
 \chapter{Evaluation and Comparison}\label{c.evaluation}
 After giving a short description of how the evaluation tests were created, this chapter provides the evaluation results of all models that were trained according to the previously described variation of training parameters. Also for each training group the evaluation results are presented and a comparison between the three different architectures (FNN, RNN and HMM) is shown.
@@ -435,7 +438,7 @@ Two evaluate the trained language models, two test sets were designed: A test se
 
 The sentences are divided into different topics, to cover a wide range of possible input data. Attention was paid to a balanced number of sentences in the different areas, to ensure, that the evaluation result doesn't depend on only one or two topics.
 
-The tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} show the different topics, their respective number of evaluation sentences and one sentence as an illustration for each topic. Both test sets combined offer a total number of \tt{1058} tagged test sentences.
+The tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} show the different topics for the known and the unknown test set, their respective number of evaluation sentences and one sentence as an illustration for each topic. Both test sets combined offer a total number of \tt{1058} tagged test sentences, consisting of \tt{7678} word-tag tuples.
 
 \begin{table}[!ht]
 	\centering\small\def\arraystretch{1.2}\begin{tabular}{ p{18mm} c L{95mm} }
@@ -468,7 +471,7 @@ The tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown}
 	 & \tt{584} & \\
 	\end{tabular}
 	\vspace{3mm}
-	\caption[Evaluation Topics using the Known Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the known test set. It contains a total of \tt{584} tagged sentences.}
+	\caption[Evaluation Topics using the Known Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the known test set. It contains a total of \tt{584} tagged sentences, consisting of \tt{4009} word-tag tuples.}
 	\label{t.evaluation_topics_known}
 \end{table}
 
@@ -503,15 +506,32 @@ The tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown}
 	 & \tt{474} & \\
 	\end{tabular}
 	\vspace{3mm}
-	\caption[Evaluation Topics using the Unknown Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the unknown test set. It contains a total of \tt{474} tagged sentences.}
+	\caption[Evaluation Topics using the Unknown Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the unknown test set. It contains a total of \tt{474} tagged sentences, consisting of \tt{3669} word-tag tuples.}
 	\label{t.evaluation_topics_unknown}
 \end{table}
 
 \section{Evaluation Results}\label{c.evaluation.results}
-...
+After introducing the test sets, the different training groups were evaluated according to the parameter configuration presented in chapter \ref{c.training.tuning}. The following section show the evaluation results for the different architectures.
 
 \subsection{Feed-Forward Neural Network Models}\label{c.evaluation.results.fnn}
-...
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{images/evaluation_fnn_p}
+	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN for parameter \tt{p}: The number of preceding words.}
+	\label{f.evaluation.fnn.p}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{images/evaluation_fnn_s}
+	\caption[FNN Evaluation: Hidden Layer Size]{The evaluation results of the FNN for parameter \tt{s}: The size of the hidden layer.}
+	\label{f.evaluation.fnn.s}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{images/evaluation_fnn_n}
+	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN for parameter \tt{n}: The number of training epochs.}
+	\label{f.evaluation.fnn.n}
+\end{figure}
 
 \subsection{Recurrent Neural Network Models}\label{c.evaluation.results.rnn}
 ...
