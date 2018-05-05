@@ -25,16 +25,17 @@ class Tagger:
     """
 
 
-    def __init__(self, n_past_words=conf.N_PAST_WORDS, embedding_size=conf.EMBEDDING_SIZE, h_size=conf.HIDDEN_LAYER_SIZE, n_epochs=conf.N_EPOCHS):
+    def __init__(self, architecture=conf.ARCHITECTURE, n_past_words=conf.N_PAST_WORDS, embedding_size=conf.EMBEDDING_SIZE, h_size=conf.HIDDEN_LAYER_SIZE, n_epochs=conf.N_EPOCHS, n_timesteps=conf.N_TIMESTEPS, learning_rate=conf.LEARNING_RATE):
         """
         Takes in the file path to a training file and returns a Tagger object that is able to train and tag sentences
         """
 
         # initialize given parameters
+        self.architecture = architecture
         self.vocab_size = conf.VOCAB_SIZE
         self.n_past_words = n_past_words
-        self.n_timesteps = conf.N_TIMESTEPS
-        self.learning_rate = conf.LEARNING_RATE
+        self.n_timesteps = n_timesteps
+        self.learning_rate = learning_rate
         self.embedding_size = embedding_size
         self.h_size = h_size
         self.test_ratio = conf.TEST_RATIO
@@ -89,14 +90,14 @@ class Tagger:
         # start training with taking one training batch each step
         for batch in train_batches:
             x_batch, y_batch = zip(*batch)
-            if conf.ARCHITECTURE == 'RNN':
+            if self.architecture == 'RNN':
                 x_batch = self.__rnn_reshape(x_batch)
                 y_batch = self.__rnn_reshape(y_batch)
             self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
             current_step = tf.train.global_step(sess, global_step)
 
             if current_step % self.checkpoint_every == 0:
-                if conf.ARCHITECTURE != 'RNN':
+                if self.architecture != 'RNN':
                     self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_test, y_test, summary_writer, train=False)
                 path = saver.save(sess, os.path.join(self.storage_dir, 'model'), global_step=current_step)
                 print(" - saved model checkpoint to '%s'" % path)
@@ -128,10 +129,10 @@ class Tagger:
         predictions = graph.get_operation_by_name("predictions").outputs[0]
         
         # get features and predicted pos ids
-        features = self.__rnn_reshape(data.features) if conf.ARCHITECTURE == 'RNN' else data.features
+        features = self.__rnn_reshape(data.features) if self.architecture == 'RNN' else data.features
         predicted_pos_ids = sess.run(predictions, feed_dict={input_x: features})
 
-        if conf.ARCHITECTURE == 'RNN':
+        if self.architecture == 'RNN':
             # get every N_TIMESTEPSth pos tag
             predicted_pos_ids = predicted_pos_ids[0::conf.N_TIMESTEPS]
 
@@ -299,7 +300,7 @@ class Tagger:
         y_test, y_train = y[:idx], y[idx:]
 
         # create iterable training batches
-        if conf.ARCHITECTURE == 'RNN':
+        if self.architecture == 'RNN':
             train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs, shuffle=False)
         else:
             train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs, shuffle=True)
@@ -335,7 +336,7 @@ class Tagger:
         """
 
         # load model architecture based on settings, default is FNN (Feed-forward Neural Network)
-        if conf.ARCHITECTURE == 'RNN':
+        if self.architecture == 'RNN':
             nn_model = model.RNN(self.h_size, n_pos_tags, self.n_timesteps, self.learning_rate)
         else:
             nn_model = model.FNN(self.vocab_size, self.n_past_words, self.embedding_size, self.h_size, n_pos_tags)
@@ -482,6 +483,8 @@ if __name__ == "__main__":
     parser.add_argument("-e", "--embeddingsize", type=int, help="Dimension of the word embeddings")
     parser.add_argument("-s", "--hiddensize", type=int, help=" Dimension of the hidden layer")
     parser.add_argument("-n", "--nepochs", type=int, help="Number of training epochs")
+    parser.add_argument("-t", "--timesteps", type=int, help="Number of past trained words")
+    parser.add_argument("-r", "--learningrate", type=float, help="Learning rate for gradient descent optimizer")
 
     parser.add_argument("-f", "--force", action='store_true', help="Force operation without confirmation")
     parser.add_argument("-q", "--quiet", action='store_true', help="No output messages")
@@ -513,7 +516,9 @@ if __name__ == "__main__":
     if args.evaluate is not None:
         # create tagger instance
         if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
-            t = Tagger(args.pastwords, args.embeddingsize, args.hiddensize, args.nepochs)
+            t = Tagger('FNN', n_past_words=args.pastwords, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
+        elif args.timesteps is not None and args.learningrate is not None and args.hiddensize is not None and args.nepochs is not None:
+            t = Tagger('RNN', n_timesteps=args.timesteps, learning_rate=args.learningrate, h_size=args.hiddensize, n_epochs=args.nepochs)
         else:
             t = Tagger()
         if args.inline:
