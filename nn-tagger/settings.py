@@ -22,7 +22,7 @@ N_TIMESTEPS = 3
 # Learning rate of an optimizer [RNN only]
 LEARNING_RATE = 0.1
 
-# Dimension of the word embeddings
+# Dimension of the word embeddings [FNN only]
 EMBEDDING_SIZE = 100
 
 # Dimension of the hidden layer

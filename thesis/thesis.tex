@@ -221,23 +221,22 @@ For this purpose, an HMM is included in \Alex. According to T. Michael \cite{mic
 To maintain this universal applicability as well as the compatibility to other modules of \Alex, the Neural Network approaches presented in this thesis use the same tagging scheme \Alex\ already utilizes. For a better understanding of the evaluation results in Chapter \ref{c.evaluation}, table \ref{t.tagging_scheme} gives an overview of the 6 different classes of tags that are used by \Alex.
 
 \begin{table}[H]
-	\small\def\arraystretch{1.2}\begin{tabular}{ p{2mm} L{48mm} p{35mm} p{40mm} }
-	\toprule
+	\small\def\arraystretch{1.5}\begin{tabular}{ p{2mm} L{48mm} p{35mm} p{40mm} }
+	\trule
 	 & \textsc{Formats} & \textsc{Description} & \textsc{Example} \\
-	\midrule
-	\midrule
+	\drule
 	\tt{R} & \i{Return-tags}, describing data that is expected to be returned & \tt{R\_LIST} \newline \tt{R\_SINGLE} \newline \tt{R\_COUNT} & \i{"\b{Which} modules \dots"} \newline \i{"\b{Which} module \dots"} \newline \i{"\b{How many} modules \dots"} \\
-	\midrule
+	\mrule
 	\tt{M} & \i{Model-tags}, describing the database model, e.g. \tt{M\_MTSModule} or \tt{M\_Course} & \tt{M\_[MODEL]} & \i{"Which \b{modules} \dots"} \newline \i{"Which \b{courses} \dots"} \\
-	\midrule
+	\mrule
 	\tt{C} & \i{Constraint-tags}, filtering the result set, given a database model and corresponding field, e.g. \tt{C\_MTSModule:ects} & \tt{C\_[MODEL]:[FIELD]} & \i{"Modules with \b{6} ects \dots"} \\
-	\midrule
+	\mrule
 	\tt{P} & \i{Property-tags}, indicating to include fields in the result set, e.g. \tt{P\_MTSModule:ects} & \tt{P\_[MODEL]:[FIELD]} & \i{"Modules with 6 \b{ects} \dots"} \\
-	\midrule
+	\mrule
 	\tt{Q} & \i{Comparison-tags}, describing an equal, greater than or less than constraint & \tt{Q\_EQ} \newline \tt{Q\_LT} \newline \tt{Q\_GT} &  \i{"\dots\ with \b{exactly} 6 ects \dots"} \newline \i{"\dots\ \b{less than} 6 ects \dots"} \newline \i{"\dots\ \b{more than} 6 ects \dots"} \\
-	\midrule
+	\mrule
 	\tt{X} & \i{Extra-tags}, describing words that are not relevant for the database query\tablefootnote{This can be either words with no special meaning at all (tagged with \tt{X}), or words that have no meaning for the database query but for the system itself (e.g. the tag \tt{X\_HELP} for the word \i{"help"}) or words that lead to a particular constraint (like the tag \tt{X\_Person:fullname} for the word \i{"Professor"}, that leads to a name).} & \tt{X} \newline \tt{X\_[WORD]} \newline \tt{X\_[MODEL]:[FIELD]} & \i{"\b{and}"}, \i{"\b{of}"}, \i{"\b{is}"} \newline \i{"I need \b{help}"} \newline \i{"\b{Professor} John Doe"} \\
-	\bottomrule
+	\brule
 	\end{tabular}
 	\caption[Tagging Scheme Overview]{Overview of the tagging scheme used in \Alex, consisting of 6 different classes of tags with a total of 12 different formats. The examples contain \b{emphasized} words that belong to the corresponding tag format. Detailed explanation of the tagging classes and its formats is given by T. Michael \cite{michael2016}.}
 	\label{t.tagging_scheme}
@@ -298,7 +297,7 @@ Ma et. al. have shown before, that the neural network approach outperforms part-
 
 % ===================================================================================
 \chapter{Training of Language Models}\label{c.training}
-To obtain an optimal language model with the Neural Network approach proposed in this thesis, as much annotated training data as possible is required. The following sections describe the generation of correctly tagged training data and the training of different language models due to parameter variation based on this generated training corpus.
+To obtain an optimal language model with the Neural Network approach proposed in this thesis, as much annotated training data as possible is required. The following sections describe the generation of tagged training data and the training of different language models due to parameter variation based on this generated training corpus.
 
 \section{Training Data Corpus}\label{c.training.data}
 To create a training corpus with tagged sentences, the already existing sentence template set from \Alex\ is used as the basis for an improved and extended template set. In addition, a log of user input data\footnote{The log data that was available for this thesis started on 30th of August, 2017 until 27th of April, 2018 and contained \tt{1293} entries of user input.} provides useful information about possible input sentences, that are not yet considered in the template set.
@@ -339,32 +338,97 @@ To address this issue, the following adjustments for the new template set were m
 Also the wording occurring in the logs referring to linking words and actions was improved with the help of inline choices. The following table shows those improvements as a comparison of the former and the new sentence template:
 
 \begin{table}[H]
-	\small\def\arraystretch{1.2}\begin{tabular}{ L{43mm} L{43mm} p{43mm} }
-	\toprule
+	\small\def\arraystretch{1.5}\begin{tabular}{ L{43mm} L{43mm} p{43mm} }
+	\trule
 	\textsc{Former Template} & \textsc{New Template} & \multicolumn{1}{L{43mm}}{\textsc{English Equivalent}} \\
-	\midrule
-	\midrule
+	\drule
 	Alle Module \b{vom} \{Program:degree\} \{Program:name\} & Alle Module \b{(vom|von|in|im)} \{Program:degree\} \{Program:name\} & \multicolumn{1}{L{43mm}}{\i{All modules \b{(of|in)} \{Program:degree\} \{Program:name\} }} \\
-	\midrule
+	\mrule
 	Welche Module werden von Prof \{Person:firstname\} \{Person:lastname\} \b{angeboten} & Welche Module werden von Professor \{Person:lastname\} \b{(unterrichtet| angeboten|gehalten)} & \multicolumn{1}{L{43mm}}{\i{Which modules are \b{(taught|offered|held)} by Professor \{Person:lastname\} }} \\
-	\midrule
+	\mrule
 	\b{Wieviele} LP \b{hat} das Modul \{MTSModule:title\} & \b{(Wieviele|Wieviel)} LP \b{(hat|bringt)} das Modul \{MTSModule:title\} & \multicolumn{1}{L{43mm}}{\i{\b{How many} ects does the module \{MTSModule:title\} \b{(have|bring)} }} \\
-	\midrule
+	\mrule
 	\b{Informationen} \b{zu} Modul {MTSModule:title} & \b{(Informationen|Details| Mehr)} \b{(zu|zum)} Modul \{MTSModule:title\} & \multicolumn{1}{L{43mm}}{\i{\b{(Information|details| more)} \b{of} the module \{MTSModule:title\} }} \\
-	\bottomrule
+	\brule
 	\end{tabular}
 	\caption[Sentence Template Improvements]{An excerpt of the extension and improvement of the sentence templates by using inline choices. The last column provides the corresponding English translation for the new sentence template.}
 	\label{t.improved_sentence_templates}
 \end{table}
 
-At last \tt{28} new sentence templates were added, that provide a sentence structure that was found in the logs but not in the former template set. The new set contains \tt{100} sentence templates (including single word templates) and can be found in the appendix \ref{c.appendix.sentencetemplates}.
+At last \tt{28} new sentence templates were added, that provide a sentence structure that was found in the logs but not in the former template set. The new set contains a total of \tt{100} sentence templates (including single word templates) and can be found in the appendix \ref{c.appendix.sentencetemplates}.
+
+The resulting training data corpus now contains \tt{218.700} tagged sentences consisting of \tt{2.038.490} words. The size of the vocabulary is \tt{9141} words.
 
 \section{Parameter Tuning}\label{c.training.tuning}
-...
+In order to achieve better evaluation results and therefore more correctly tagged words, different training parameters are varied. To see the effect of one training parameter on the resulting language model, one parameter was altered while keeping all other parameters constant.
+
+For the training of the FNN models, the following \tt{4} parameters were considered:
+
+\begin{itemize}
+	\item \b{Number of past words} (\tt{\b{p}}) specifies, how many preceding words should be considered for the training of the current word
+	\item \b{Embedding size} (\tt{\b{e}}) describes the dimension of the word embeddings, that were created for each word of the vocabulary during the training
+	\item \b{Hidden layer size} (\tt{\b{s}}) characterizes the dimension of the hidden layer, meaning the number of neurons that the hidden layer consists of
+	\item \b{Number of training epochs} (\tt{\b{n}}) indicates, how often the whole training corpus is processed during training
+\end{itemize}
+
+Based on these \tt{4} parameters, table \ref{t.training.tuning.fnn} shows the different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is \tt{47}, however due to overlapping of configurations of the training groups, the total number of models to be trained with the FNN is \tt{44}.
+
+\begin{table}[ht]
+	\vspace{2em}
+	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c c c c }
+	\trule
+	\tt{p} & \tt{e} & \tt{s} & \tt{n} & \textsc{Models} \\
+	\drule
+	\cellcolor{orange}\color{white}\b{\tt{0}--\tt{12}} & \tt{50} & \tt{100} & \tt{20} & \tt{13} \\
+	\mrule
+	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{25}, \tt{50}--\tt{300}\tablefootnote{With a step size of \tt{50}\label{fifty}}} & \tt{100} & \tt{20} & \tt{10} \\
+	\mrule
+	\tt{1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{10}, \tt{25}, \tt{50}--\tt{600}\footref{fifty}} & \tt{20} & \tt{14} \\
+	\mrule
+	\tt{1} & \tt{50} & \tt{100} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{20}--\tt{140}\tablefootnote{With a step size of \tt{20}}} & \tt{10} \\
+	\brule
+	\end{tabular}
+	\caption[Parameter combinations of FNN Models]{The parameter configuration for the training of FNN models. The rows represent the \tt{4} training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\tt{\b{p}} (Number of past words), \tt{\b{e}} (Embedding size), \tt{\b{s}} (Hidden layer size), \tt{\b{n}} (Number of training epochs)). The last column shows the resulting number of models for each training group.}
+	\label{t.training.tuning.fnn}
+\end{table}
+
+For the training of the RNN models, the following \tt{4} parameters were considered:
+
+\begin{itemize}
+	\item \b{Number of time steps} (\tt{\b{t}}) specifies, how many past training steps should be considered for the training of the current word
+	\item \b{Learning rate} (\tt{\b{r}}) used by the gradient descent optimizer for the training
+	\item \b{Hidden layer size} (\tt{\b{s}}) characterizes the dimension of the hidden layer, meaning the number of neurons that the hidden layer consists of
+	\item \b{Number of training epochs} (\tt{\b{n}}) indicates, how often the whole training corpus is processed during training
+\end{itemize}
+
+Based on these \tt{4} parameters, table \ref{t.training.tuning.rnn} shows the different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is \tt{??}, however due to overlapping of configurations of the training groups, the total number of models to be trained with the FNN is \tt{??}.
+
+\begin{table}[ht]
+	\vspace{2em}
+	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c c c c }
+	\trule
+	\tt{t} & \tt{r} & \tt{s} & \tt{n} & \textsc{Models} \\
+	\drule
+	\cellcolor{orange}\color{white}\b{\tt{0}--\tt{6}} & \tt{.1} & \tt{50} & \tt{10} & \tt{6} \\
+	\mrule
+	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{.01}, \tt{.05}, \tt{.1}, \tt{.2}} & \tt{50} & \tt{10} & \tt{4} \\
+	\mrule
+	\tt{1} & \tt{.1} & \cellcolor{orange}\color{white}\b{\tt{10}, \tt{25}, \tt{50}, \tt{100}} & \tt{10} & \tt{4} \\
+	\mrule
+	\tt{1} & \tt{.1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{20}} & \tt{4} \\
+	\brule
+	\end{tabular}
+	\caption[Parameter combinations of RNN Models]{The parameter configuration for the training of RNN models. The rows represent the \tt{4} training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\tt{\b{t}} (number of time steps), \tt{\b{r}} (learning rate), \tt{\b{s}} (hidden layer size), \tt{\b{n}} (number of training epochs)). The last column shows the resulting number of models for each training group.}
+	\label{t.training.tuning.rnn}
+\end{table}
+
+
+
+
 
 % ===================================================================================
 \chapter{Evaluation and Comparison}\label{c.evaluation}
-...
+After giving a short description of how the evaluation tests were created, this chapter provides the evaluation results of all models that were trained according to the previously described variation of training parameters. Also for each training group the evaluation results are presented and a comparison between the three different architectures (FNN, RNN and HMM) is shown.
 
 \section{Test Design}\label{c.evaluation.test}
 Two evaluate the trained language models, two test sets were designed: A test set containing a selection of tagged sentences as they exist in the training corpus (here called the \i{known test}) and a test set, where the structure of the sentences from the known test was modified in a way, that it still remains semantically meaningful but does not occur in the training corpus (called the \i{unknown test}). The unknown test deliberately contains words, that do not exist in the vocabulary of the training corpus to evaluate, how the model handles completely unknown data.
@@ -373,7 +437,7 @@ The sentences are divided into different topics, to cover a wide range of possib
 
 The tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} show the different topics, their respective number of evaluation sentences and one sentence as an illustration for each topic. Both test sets combined offer a total number of \tt{1058} tagged test sentences.
 
-\begin{table}[H]
+\begin{table}[!ht]
 	\centering\small\def\arraystretch{1.2}\begin{tabular}{ p{18mm} c L{95mm} }
 	\toprule
 	\textsc{Topic} & \textsc{Sentences} & \multicolumn{1}{L{95mm}}{\textsc{Example}} \\
@@ -401,13 +465,14 @@ The tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown}
 	\midrule
 	Locations & \tt{42} & \multicolumn{1}{L{95mm}}{\i{All courses in room Mainbuilding H 1012}} \\
 	\bottomrule
+	 & \tt{584} & \\
 	\end{tabular}
 	\vspace{3mm}
 	\caption[Evaluation Topics using the Known Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the known test set. It contains a total of \tt{584} tagged sentences.}
 	\label{t.evaluation_topics_known}
 \end{table}
 
-\begin{table}[H]
+\begin{table}[!ht]
 	\centering\small\def\arraystretch{1.2}\begin{tabular}{ p{18mm} c L{95mm} }
 	\toprule
 	\textsc{Topic} & \textsc{Sentences} & \multicolumn{1}{L{95mm}}{\textsc{Example}} \\
@@ -435,12 +500,27 @@ The tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown}
 	\midrule
 	Locations & \tt{42} & \multicolumn{1}{L{95mm}}{\i{All courses in auditorium Mainbuilding H 1012}} \\
 	\bottomrule
+	 & \tt{474} & \\
 	\end{tabular}
 	\vspace{3mm}
 	\caption[Evaluation Topics using the Unknown Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the unknown test set. It contains a total of \tt{474} tagged sentences.}
 	\label{t.evaluation_topics_unknown}
 \end{table}
 
+\section{Evaluation Results}\label{c.evaluation.results}
+...
+
+\subsection{Feed-Forward Neural Network Models}\label{c.evaluation.results.fnn}
+...
+
+\subsection{Recurrent Neural Network Models}\label{c.evaluation.results.rnn}
+...
+
+\subsection{Hidden Markov Models}\label{c.evaluation.results.hmm}
+...
+
+\section{Overall Comparison}\label{c.evaluation.comparison}
+...
 
 % ===================================================================================
 \chapter{Discussion and Conclusion}\label{c.conclusion}
@@ -455,6 +535,7 @@ The tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown}
 \section{Future work}\label{c.conclusion.future}
 ...
 - additional module to check if generated trainings sentence returns a query result
+- additional parameters to tune: n future words, hidden layer count; rnn embedding size, choice of optimizer, exponential decay for the learning rate
 - evaluation based on semantical topics (like locations, persons, module titles, etc...)
 
 \cite{mueller2015}
