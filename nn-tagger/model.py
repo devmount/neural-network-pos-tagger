@@ -106,4 +106,4 @@ class RNN:
         self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
         # apply an optimizer
-        self.optimizer = tf.train.GradientDescentOptimizer(learning_rate=learning_rate)
+        self.optimizer = tf.train.AdamOptimizer()
