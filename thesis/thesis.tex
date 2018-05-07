@@ -94,9 +94,12 @@ Diese Arbeit zeigt zwei verschiedene Ansätze für die Sprachmodellierung der Ei
  \acro{ANN}{\i{Artificial Neural Network}}
  \acro{FNN}{\i{Feed-forward Neural Network}}
  \acro{HMM}{\i{Hidden Markov Model}}
+ \acro{LSTM}{\i{Long Short-Term Memory}}
  \acro{NLP}{\i{Natural Language Processing}}
  \acro{NLTK}{\i{Natural Language Toolkit}}
+ \acro{POS}{\i{Part-of-Speech}}
  \acro{RNN}{\i{Recurrent Neural Network}}
+ \acro{SGD}{\i{Stochastic Gradient Descent}}
 \end{acronym}
 
 % ===================================================================================
@@ -161,7 +164,7 @@ A publication of M. Minsky and S. Papert \cite{minsky1969} in 1969 analyzed and 
 
 In 1982, J. Hopfield presented a previously described Neural Network with feedback (known as \i{Hopfield network}), that was able to solve optimization problems like the \i{Traveling Salesman Problem}\footnote{The problem of the traveling salesman or round trip problem: The order of places to be visited once should be chosen in such a way that the distance covered is minimal, whereby the last place is again the starting point (round trip).}. Neural Network approaches got more attention again, also because the first processors based on transistor technology (microprocessors) came onto the market in the early 1970s and replaced the previously used tube technology in the following years, which made computers smaller and cheaper and increased their processing capacity.
 
-For the task of POS tagging, Neural Network models were now able to outperform HMM based tagger. H. Schmid created and trained a multilayer Feed-forward Neural Network in 1994 and was able to show, that it performed better than an HMM tagger \cite{schmid1994} at that time. In 2000, Ma et. al. run a series of comparative experiments that proved, that the results of a neural network tagger were superior to those of statistical models like the HMM \cite{ma2000}.
+For the task of POS tagging, Neural Network models were now able to outperform HMM based tagger. H. Schmid created and trained a multilayer Feed-forward Neural Network in 1994 and was able to show, that it performed better than an HMM tagger \cite{schmid1994} at that time. In 2000, Ma et. al. run a series of comparative experiments that proved, that the results of a neural network tagger can be superior to those of statistical models like the HMM \cite{ma2000}.
 
 \section{Structure of this Thesis}\label{c.introduction.structure}
 As introduction, this first chapter gave a short overview about the subject of natural language processing and part-of-speech tagging in general.
@@ -178,7 +181,7 @@ In conclusion the final Chapter \ref{c.conclusion} discusses and summarizes the 
 
 % ===================================================================================
 \chapter{\Alex: Artificial Conversational Agent}\label{c.alex}
-\i{Design and Implementation of an Advisory Artificial Conversational Agent} by T. Michael \cite{michael2016} provides a detailed and comprehensive description of \Alex\ as a compilation of different modules. This chapter focuses on the modules that are relevant for the language processing and therefore adapted during this thesis: The retrieval and processing of training data (section \ref{c.alex.data}), the Hidden Markov Model tagger (section \ref{c.alex.hmm}) and the tagging interface (section \ref{c.alex.tagging}).
+\i{Design and Implementation of an Advisory Artificial Conversational Agent} by T. Michael \cite{michael2016} provides a detailed and comprehensive description of \Alex\ as a compilation of different modules. This chapter focuses on components that are relevant for the language processing and therefore adapted during this thesis: The retrieval and processing of training data (section \ref{c.alex.data}), the Hidden Markov Model tagger (section \ref{c.alex.hmm}) and the tagging interface (section \ref{c.alex.tagging}).
 
 \section{System Overview}\label{c.alex.overview}
 The modular structure of \Alex\ allows the separation of different functions and therefore easier replaceability of certain functionalities. Besides a module crawler for current data retrieval of web content for the database and a frontend interface module, \Alex\ offers a tagging module. This module provides the training of a language model as well as the assignment of tags to the words of a given input sentence.
@@ -270,37 +273,65 @@ The output is a corresponding list of tuples containing a word and its assigned 
 
 % ===================================================================================
 \chapter{Part-of-Speech Tagging with Neural Networks}\label{c.postagging}
-...
-Ma et. al. have shown before, that the neural network approach outperforms part-of-speech tagger that are based on statistical models (like the HMM) \cite{ma2000}.
+Chapter\ref{c.introduction.related.nn} introduced Neural Networks as a possible approach for POS tagging. The current chapter presents two different Neural Network architectures and their implementation, that is later used to train and evaluate language models with the objective of comparing their POS tagging accuracy with the accuracy of the HMM tagger, \Alex\ uses.
+
+In general a Neural Network represents a mathematical function, that is able to assign specific output data to corresponding input data. This assignment is learned by processing input data whose output is known. Thus, it belongs to the category of supervised learning\footnote{\i{Supervised Learning} describes the process of gaining knowledge with the help of labeled data. Depending on the capability of the supervised learning algorithm to generalize from the given data, this knowledge can then be applied to unknown data.}.
+
+The network itself emerges from the interconnection of nodes (the artificial neurons), that are usually arranged in different layers. Each node represents a non-linear\footnote{The non-linearity is important because linear functions cannot describe some mutual exclusive feature combinations.} activation function, that calculates an output depending on the sum of its inputs. Possible activation functions are the sigmoid function, hyperbolic tangent or the maximum function.
+
+The training effect is achieved by weighting the connections of the nodes and adjust these weights during training. The weights of Neural Networks are typically represented as real numbers. The adjustments are defined by a learning algorithm that utilizes a particular learning method. Using the initial or current weights of the network, an error (also called \i{loss}) between the prediction and the given label can be computed on the last layer (the output layer) with the help of a corresponding loss function. The training objective is to find the minimum of the loss function of the current state of the network and adjust the weights accordingly. This can be achieved by using \i{backpropagation} with \i{stochastic gradient descent}.
+
+The POS tagging task demands the processing of words which are represented as character strings. For easier handling, each word is mapped to an integer value (the word id).
 
 \section{Feed-forward Neural Network Model}\label{c.postagging.fnn}
-...
+Feed-forward Neural Networks are a common type of ANNs, that consist of an input and an output layer with one or more hidden layers in between. An FNN propagates information through the network only in the forward direction, from the input to the output layer.
 
 \subsection{Architecture}\label{c.postagging.fnn.architecture}
-...
+The FNN architecture that is used in this thesis is shown in figure \ref{f.fnn.structure}. The current word and the configured number of preceding words are each converted into word embeddings. These embeddings are concatenated to one vector, called the feature vector, which serves as input layer for the neural network. The FNN contains one hidden layer, which is connected to the input layer with weight matrix \tt{V}. The output layer represents the set of existing POS tags and is connected to the hidden layer with weight matrix \tt{W}.
 
-\begin{figure}[H]
+For each word of every sentence of the training corpus, a feature vector is built and the data is sequentially propagated to the hidden and the output layer, predicting a POS tag for it and calculating the current loss and accuracy. After propagating the error back to adjust the weights and reduce the loss, the next training step is executed.
+
+\begin{figure}[ht]
 	\includegraphics[width=\textwidth]{images/fnn_structure}
-	\caption[Structure of a Feed-forward Neural Network]{The structure of a feed-forward neural network. The feature vector is built by the initial vectors of the corresponding input word on position \tt{p} and by its \tt{3} preceding words (here as an example, the number of predecessors can of course vary).}
-	\label{f.fnn_structure}
+	\caption[Structure of a Feed-forward Neural Network]{The structure of a feed-forward neural network. The feature vector is built by the embeddings of the corresponding input word on position \tt{p} and by its \tt{3} preceding words (here as an example, the number of predecessors is of course variable).}
+	\label{f.fnn.structure}
 \end{figure}
 
 \subsection{Implementation}\label{c.postagging.fnn.implementation}
-...
+To implement the presented FNN architecture, the open source machine learning framework \i{TensorFlow}\footnote{TensorFlow is a library written in Python, that is utilized for high performance numerical computations especially for the machine learning domain. In this thesis, TensorFlow version 1.8 is used.\\See the official TensorFlow website: \link{https://www.tensorflow.org}} is used. In the following descriptions, all functions starting with \tt{tf} are functions from the TensorFlow library.
+
+The nodes of the input layer are populated by the feature vector. To create the feature vector, an embedding matrix with the dimensions of vocabulary size $\times$ embedding size is created and initially filled with random normal distributed values\footnote{The generated values follow a normal distribution with mean of 0 and standard deviation of 0.1, except that values whose magnitude is more than 2 standard deviations from the mean are dropped (truncated) and re-picked. See the TensorFlow documentation.}, using the \tt{tf.truncated\_normal()} function. This matrix is used to retrieve the vectors for the current word and its predecessors via \tt{tf.nn.embedding\_lookup} and reshape them to one single vector, the feature vector.
+
+% TODO figure
+
+The hidden layer nodes are initialized with random normal distributed values as well. Their outputs are computed with the rectified linear activation function (the \i{rectifier}), utilizing the \tt{tf.nn.relu()} function. These nodes are therefore also called \i{rectified linear units} (RELUs).
+
+Finally the values for the output layer (the logits) are computed with a matrix multiplication of the outputs of the RELUs and the weight matrix \tt{W} using the \tt{tf.matmul()} function. Now the loss can be calculated by computing the sparse softmax cross entropy between input labels and logits, using the \tt{tf.nn.sparse\_softmax\_cross\_entropy\_with\_logits()} function.
+
+The predictions are calculated with the \tt{tf.argmax()} functions, that reduces the logits to the largest value, which represents the predicted POS tag. The function \tt{tf.train.AdamOptimizer()}\footnote{The Adam algorithm is an optimizer that was proposed by D. Kingma et. al. in 2014 \cite{kingma2014}.} enables backpropagation with stochastic gradient descent to optimize the computations and results during training.
+
 
 \section{Recurrent Neural Network Model}\label{c.postagging.rnn}
-...
+Similar to the FNNs, the recurrent Neural Networks also consist of input, hidden and output layer. The basic difference is, that the information are not only linearly propagated forward, but information from precious training steps are also taken into account.
 
 \subsection{Architecture}\label{c.postagging.rnn.architecture}
-...
-\begin{figure}[H]
+Figure \ref{f.rnn.structure} shows the architecture of an RNN, that was implemented for this thesis. Unlike the FNN, the RNN uses only the word ids as input features and doesn't utilize word embeddings. It contains one hidden layer, which is fed by the current input word on the one hand and by the output of the hidden layer of a previous training step on the other hand. This makes the RNN capable of memorizing information from the past. This capability can also be described as a long short-term memory (\i{LSTM}), emphasized in orange in figure \ref{f.rnn.structure}. The output layer represents the set of existing POS tags and is connected to the hidden layer with weight matrix
+\tt{W}.
+
+Each word of every sentence of the training corpus represents an input feature, which is together with information from previous training steps propagated to the hidden and the output layer. Similar to the FNN, the POS tag is predicted for the current word and the current loss and accuracy are calculated. After propagating the error back to adjust the weights and reduce the loss, the next training step is executed, taking the current training step into account.
+
+\begin{figure}[ht]
 	\includegraphics[width=\textwidth]{images/rnn_structure}
 	\caption[Structure of a Recurrent Neural Network]{The structure of a recurrent neural network. The feature vector is the initial vector of the corresponding input word at time \tt{t}. The output of the hidden layer from previously trained words (here as an example at time \tt{x}) is fed back into the same hidden layer for the current word.}
-	\label{f.rnn_structure}
+	\label{f.rnn.structure}
 \end{figure}
 
 \subsection{Implementation}\label{c.postagging.rnn.implementation}
-...
+The implementation of the proposed RNN architecture utilizes the TensorFlow library as well. Next to the word id of the current word, the input layer has an additional dimension describing the number of past training steps that are considered for the current training step.
+
+The hidden layer is build with \tt{tf.nn.rnn\_cell.LSTMCell()}\footnote{This function uses an implementation proposed by S. Hochreiter et. al. in 1997 \cite{hochreiter1997}.}, a function that creates a LSTM recurrent network cell which is then used in \tt{tf.nn.dynamic\_rnn()} to compute the logits for the output layer.
+
+Loss, predictions and accuracy are implemented similar to the FNN and the same optimizer is used.
 
 % ===================================================================================
 \chapter{Training of Language Models}\label{c.training}
@@ -378,7 +409,7 @@ For the training of the FNN models, the following \tt{4} parameters were conside
 	\item \b{Number of training epochs} (\tt{\b{n}}) indicates, how often the whole training corpus is processed during training
 \end{itemize}
 
-Based on these \tt{4} parameters, table \ref{t.training.tuning.fnn} shows the different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is \tt{47}, however due to overlapping of configurations of the training groups, the total number of models to be trained with the FNN is \tt{44}.
+Based on these \tt{4} parameters, table \ref{t.training.tuning.fnn} shows the different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is \tt{48}, however due to overlapping of configurations of the training groups, the total number of models to be trained with the FNN is \tt{45}.
 
 \begin{table}[ht]
 	\vspace{2em}
@@ -388,7 +419,7 @@ Based on these \tt{4} parameters, table \ref{t.training.tuning.fnn} shows the di
 	\drule
 	\cellcolor{orange}\color{white}\b{\tt{0}--\tt{12}} & \tt{50} & \tt{100} & \tt{20} & \tt{13} \\
 	\mrule
-	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{25}, \tt{50}--\tt{300}\tablefootnote{With a step size of \tt{50}\label{fifty}}} & \tt{100} & \tt{20} & \tt{10} \\
+	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{25}, \tt{50}--\tt{350}\tablefootnote{With a step size of \tt{50}\label{fifty}}} & \tt{100} & \tt{20} & \tt{11} \\
 	\mrule
 	\tt{1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{10}, \tt{25}, \tt{50}--\tt{600}\footref{fifty}} & \tt{20} & \tt{14} \\
 	\mrule
@@ -511,14 +542,21 @@ The tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown}
 \end{table}
 
 \section{Evaluation Results}\label{c.evaluation.results}
-After introducing the test sets, the different training groups were evaluated according to the parameter configuration presented in chapter \ref{c.training.tuning}. The following section show the evaluation results for the different architectures.
+After introducing the test sets, the different training groups were evaluated according to the parameter configuration presented in chapter \ref{c.training.tuning}. The following sections show the evaluation results for the different architectures.
 
 \subsection{Feed-Forward Neural Network Models}\label{c.evaluation.results.fnn}
+...
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/evaluation_fnn_p}
 	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN for parameter \tt{p}: The number of preceding words.}
 	\label{f.evaluation.fnn.p}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{images/evaluation_fnn_e}
+	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN for parameter \tt{e}: The embedding size.}
+	\label{f.evaluation.fnn.e}
 \end{figure}
 
 \begin{figure}[H]
@@ -537,7 +575,15 @@ After introducing the test sets, the different training groups were evaluated ac
 ...
 
 \subsection{Hidden Markov Models}\label{c.evaluation.results.hmm}
-...
+After evaluating the Neural Network based language models, now the HMM is evaluated. For this purpose the former HMM trained on the basis of the training data created by T. Michael \cite{michael2016} and a new HMM trained on the basis of the training data proposed in this thesis are compared. The evaluation results are shown in figure \ref{f.evaluation.hmm}.
+
+\begin{figure}[H]
+	\centering\includegraphics[width=.7\textwidth]{images/evaluation_hmm}
+	\caption[HMM Evaluation]{The evaluation results of the former HMM trained by T. Michael \cite{michael2016} and the new HMM based on the new training data proposed in this thesis.}
+	\label{f.evaluation.hmm}
+\end{figure}
+
+The former HMM correctly tagged \tt{82.5\%} of the words of the known test and \tt{63.0\%} of the unknown test, whereas the new HMM reached \tt{93.4\%} for the known and \tt{79.3\%} for the unknown test. Clearly the HMM based on the new training data performed significantly better than the former HMM. Especially the result for the unknown test is remarkable for the accuracy increases by more than \tt{16\%}.
 
 \section{Overall Comparison}\label{c.evaluation.comparison}
 ...
@@ -555,7 +601,7 @@ After introducing the test sets, the different training groups were evaluated ac
 \section{Future work}\label{c.conclusion.future}
 ...
 - additional module to check if generated trainings sentence returns a query result
-- additional parameters to tune: n future words, hidden layer count; rnn embedding size, choice of optimizer, exponential decay for the learning rate
+- additional parameters to tune: n future words, hidden layer count; rnn embedding size, choice of optimizer, exponential decay for the learning rate, choice of activation function
 - evaluation based on semantical topics (like locations, persons, module titles, etc...)
 
 \cite{mueller2015}
