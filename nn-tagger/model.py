@@ -76,6 +76,7 @@ class RNN:
 
         @param h_size: Dimension of the hidden layer
         @param n_pos_tags: Number of existing POS tags
+        @param n_timesteps: Number of previous training steps to include
         @param learning_rate: for gradient descent optimizer
         """
 

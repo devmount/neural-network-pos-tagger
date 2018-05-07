@@ -33,7 +33,7 @@ class Tagger:
         # initialize given parameters
         self.architecture = architecture
         self.vocab_size = conf.VOCAB_SIZE
-        self.n_past_words = n_past_words
+        self.n_past_words = n_past_words if architecture == 'FNN' else 0
         self.n_timesteps = n_timesteps
         self.learning_rate = learning_rate
         self.embedding_size = embedding_size
@@ -134,7 +134,7 @@ class Tagger:
 
         if self.architecture == 'RNN':
             # get every N_TIMESTEPSth pos tag
-            predicted_pos_ids = predicted_pos_ids[0::conf.N_TIMESTEPS]
+            predicted_pos_ids = predicted_pos_ids[0::self.n_timesteps]
 
         # create lists of the sentence words and their corresponding predicted POS tags
         words = []
@@ -496,7 +496,9 @@ if __name__ == "__main__":
     if args.train is not None:
         # create tagger instance
         if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
-            t = Tagger(args.pastwords, args.embeddingsize, args.hiddensize, args.nepochs)
+            t = Tagger('FNN', n_past_words=args.pastwords, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
+        elif args.timesteps is not None and args.learningrate is not None and args.hiddensize is not None and args.nepochs is not None:
+            t = Tagger('RNN', n_timesteps=args.timesteps, learning_rate=args.learningrate, h_size=args.hiddensize, n_epochs=args.nepochs)
         else:
             t = Tagger()
         try:
@@ -507,7 +509,9 @@ if __name__ == "__main__":
     if args.tag is not None:
         # create tagger instance
         if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
-            t = Tagger(args.pastwords, args.embeddingsize, args.hiddensize, args.nepochs)
+            t = Tagger('FNN', n_past_words=args.pastwords, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
+        elif args.timesteps is not None and args.learningrate is not None and args.hiddensize is not None and args.nepochs is not None:
+            t = Tagger('RNN', n_timesteps=args.timesteps, learning_rate=args.learningrate, h_size=args.hiddensize, n_epochs=args.nepochs)
         else:
             t = Tagger()
         print('The tagged sentence is:')
