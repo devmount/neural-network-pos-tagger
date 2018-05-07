@@ -17,7 +17,7 @@ for p in {0..12}; do
 done
 
 printf "\n## Embedding Size:\n"
-for e in 1 5 10 25 50 100 150 200; do
+for e in 1 5 10 25 50 100 150 200 250 300 350; do
     if [ -d "storage/fnn-1-$e-100-20" ]; then
         printf "Model fnn-1-$e-100-20\n"
         python3.6 tagger.py --reset -fq
