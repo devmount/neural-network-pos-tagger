@@ -302,9 +302,15 @@ For each word of every sentence of the training corpus, a feature vector is buil
 \subsection{Implementation}\label{c.postagging.fnn.implementation}
 To implement the presented FNN architecture, the open source machine learning framework \i{TensorFlow}\footnote{TensorFlow is a library written in Python, that is utilized for high performance numerical computations especially for the machine learning domain. In this thesis, TensorFlow version 1.8 is used.\\See the official TensorFlow website: \link{https://www.tensorflow.org}} is used. In the following descriptions, all functions starting with \tt{tf} are functions from the TensorFlow library.
 
-The nodes of the input layer are populated by the feature vector. To create the feature vector, an embedding matrix with the dimensions of vocabulary size $\times$ embedding size is created and initially filled with random normal distributed values\footnote{The generated values follow a normal distribution with mean of 0 and standard deviation of 0.1, except that values whose magnitude is more than 2 standard deviations from the mean are dropped (truncated) and re-picked. See the TensorFlow documentation.}, using the \tt{tf.truncated\_normal()} function. This matrix is used to retrieve the vectors for the current word and its predecessors via \tt{tf.nn.embedding\_lookup} and reshape them to one single vector, the feature vector.
+The nodes of the input layer are populated by the feature vector. To create the feature vector, an embedding matrix with the dimensions of vocabulary size $\times$ embedding size is created and initially filled with random normal distributed values\footnote{The generated values follow a normal distribution with mean of 0 and standard deviation of 0.1, except that values whose magnitude is more than 2 standard deviations from the mean are dropped (truncated) and re-picked. See the TensorFlow documentation.}, using the \tt{tf.truncated\_normal()} function. This matrix is used to retrieve the vectors for the current word and its predecessors via \tt{tf.nn.embedding\_lookup} and reshape them to one single vector, the feature vector. Figure \ref{f.fnn.feature} illustrates the creation of the feature vector.
 
-% TODO figure
+\begin{figure}[ht]
+	\vspace{1.5em}
+	\hspace{-1.5em}\includegraphics[width=1.1\textwidth]{images/feature_vector}
+	\caption[Creation of the feature vector]{An example of the creation of a feature vector for the FNN using \tt{3} past words and the current word.}
+	\label{f.fnn.feature}
+	\vspace{.5em}
+\end{figure}
 
 The hidden layer nodes are initialized with random normal distributed values as well. Their outputs are computed with the rectified linear activation function (the \i{rectifier}), utilizing the \tt{tf.nn.relu()} function. These nodes are therefore also called \i{rectified linear units} (RELUs).
 
