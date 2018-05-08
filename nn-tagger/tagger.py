@@ -301,7 +301,7 @@ class Tagger:
 
         # create iterable training batches
         if self.architecture == 'RNN':
-            train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs, shuffle=False)
+            train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs, shuffle=True)
         else:
             train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs, shuffle=True)
         test_data = {'x': x_test, 'y': y_test}
