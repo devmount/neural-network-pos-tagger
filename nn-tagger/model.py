@@ -79,14 +79,14 @@ class RNN:
         @param n_timesteps: Number of previous training steps to include
         """
 
-        # initialize input word vectors of shape [batch_size, n_timesteps, word]
+        # initialize input word vectors of shape [batch_size, n_timesteps, word_id]
         self.input_x = tf.placeholder(tf.float32, [None, n_timesteps, 1], name="input_x")
         # initialize input labels of shape [batch_size, n_timesteps]
         self.input_y = tf.placeholder(tf.int64, [None, n_timesteps], name="input_y")
 
         # initialize hidden layer with shape [h_size, n_pos_tags]
         self.w = tf.Variable(tf.truncated_normal([h_size, n_pos_tags], stddev=0.1))
-        # x = tf.unstack(self.input_x, n_timesteps, 1)
+        # create lstm cell
         cell = tf.nn.rnn_cell.LSTMCell(h_size, forget_bias=1.0)
         # calculate outputs with shape [batch_size*n_timesteps, h_size]
         outputs, states = tf.nn.dynamic_rnn(cell, self.input_x, dtype=tf.float32)

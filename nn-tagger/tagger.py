@@ -63,8 +63,8 @@ class Tagger:
 
         # get training and test data and the number of existing POS tags
         train_batches, test_data, n_pos_tags = self.__load_data(training_file_path)
-        x_test = test_data['x']
-        y_test = test_data['y']
+        x_test = self.__rnn_reshape(test_data['x']) if self.architecture == 'RNN' else test_data['x']
+        y_test = self.__rnn_reshape(test_data['y']) if self.architecture == 'RNN' else test_data['y']
 
         # initialize the model by starting session and specifying initial values for the tensorflow variables
         print('Initializing model...')
@@ -89,15 +89,16 @@ class Tagger:
         # start training with taking one training batch each step
         for batch in train_batches:
             x_batch, y_batch = zip(*batch)
+            # reshape data for RNN time steps
             if self.architecture == 'RNN':
                 x_batch = self.__rnn_reshape(x_batch)
                 y_batch = self.__rnn_reshape(y_batch)
             self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
             current_step = tf.train.global_step(sess, global_step)
 
+            # checkpoint: evaluate with no training data
             if current_step % self.checkpoint_every == 0:
-                if self.architecture != 'RNN':
-                    self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_test, y_test, summary_writer, train=False)
+                self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_test, y_test, summary_writer, train=False)
                 path = saver.save(sess, os.path.join(self.storage_dir, 'model'), global_step=current_step)
                 print(" - saved model checkpoint to '%s'" % path)
 
