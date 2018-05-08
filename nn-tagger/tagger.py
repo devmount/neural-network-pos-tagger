@@ -64,7 +64,7 @@ class Tagger:
         # get training and test data and the number of existing POS tags
         train_batches, test_data, n_pos_tags = self.__load_data(training_file_path)
         x_test = self.__rnn_reshape(test_data['x']) if self.architecture == 'RNN' else test_data['x']
-        y_test = self.__rnn_reshape(test_data['y']) if self.architecture == 'RNN' else test_data['y']
+        y_test = test_data['y']
 
         # initialize the model by starting session and specifying initial values for the tensorflow variables
         print('Initializing model...')
@@ -92,7 +92,7 @@ class Tagger:
             # reshape data for RNN time steps
             if self.architecture == 'RNN':
                 x_batch = self.__rnn_reshape(x_batch)
-                y_batch = self.__rnn_reshape(y_batch)
+                # y_batch = self.__rnn_reshape(y_batch)
             self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
             current_step = tf.train.global_step(sess, global_step)
 
@@ -131,10 +131,10 @@ class Tagger:
         # get features and predicted pos ids
         features = self.__rnn_reshape(data.features) if self.architecture == 'RNN' else data.features
         predicted_pos_ids = sess.run(predictions, feed_dict={input_x: features})
-
-        if self.architecture == 'RNN':
-            # get every N_TIMESTEPSth pos tag
-            predicted_pos_ids = predicted_pos_ids[0::self.n_timesteps]
+        print(predicted_pos_ids)
+        # if self.architecture == 'RNN':
+        #     # get every N_TIMESTEPSth pos tag
+        #     predicted_pos_ids = predicted_pos_ids[0::self.n_timesteps]
 
         # create lists of the sentence words and their corresponding predicted POS tags
         words = []

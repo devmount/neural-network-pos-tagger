@@ -82,7 +82,7 @@ class RNN:
         # initialize input word vectors of shape [batch_size, n_timesteps, word_id]
         self.input_x = tf.placeholder(tf.float32, [None, n_timesteps, 1], name="input_x")
         # initialize input labels of shape [batch_size, n_timesteps]
-        self.input_y = tf.placeholder(tf.int64, [None, n_timesteps], name="input_y")
+        self.input_y = tf.placeholder(tf.int64, [None], name="input_y")
 
         # initialize hidden layer with shape [h_size, n_pos_tags]
         self.w = tf.Variable(tf.truncated_normal([h_size, n_pos_tags], stddev=0.1))
@@ -92,13 +92,14 @@ class RNN:
         outputs, states = tf.nn.dynamic_rnn(cell, self.input_x, dtype=tf.float32)
         # compute the logits for the output layer with shape [batch_size*n_timesteps, n_pos_tags]
         self.logits = tf.matmul(tf.reshape(outputs, [-1, h_size]), self.w)
+        logits = tf.reshape(self.logits, [-1, n_timesteps*n_pos_tags])
         # get labels with shape [batch_size*n_timesteps]
         labels = tf.reshape(self.input_y, [-1])
         # compute the loss
-        self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=self.logits, labels=labels))
+        self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=labels))
 
         # reduce the logits output with the largest value to the output layer size = predictions 
-        self.predictions = tf.argmax(self.logits, axis=1, name="predictions")
+        self.predictions = tf.argmax(logits, axis=1, name="predictions")
         # get the correct predictions by comparing to the given labels
         correct_prediction = tf.equal(self.predictions, labels)
         # compute the overall accuracy
