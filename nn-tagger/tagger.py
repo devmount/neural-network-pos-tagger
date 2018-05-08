@@ -92,7 +92,6 @@ class Tagger:
             # reshape data for RNN time steps
             if self.architecture == 'RNN':
                 x_batch = self.__rnn_reshape(x_batch)
-                # y_batch = self.__rnn_reshape(y_batch)
             self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
             current_step = tf.train.global_step(sess, global_step)
 
@@ -131,10 +130,6 @@ class Tagger:
         # get features and predicted pos ids
         features = self.__rnn_reshape(data.features) if self.architecture == 'RNN' else data.features
         predicted_pos_ids = sess.run(predictions, feed_dict={input_x: features})
-        print(predicted_pos_ids)
-        # if self.architecture == 'RNN':
-        #     # get every N_TIMESTEPSth pos tag
-        #     predicted_pos_ids = predicted_pos_ids[0::self.n_timesteps]
 
         # create lists of the sentence words and their corresponding predicted POS tags
         words = []
@@ -301,7 +296,7 @@ class Tagger:
 
         # create iterable training batches
         if self.architecture == 'RNN':
-            train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs, shuffle=True)
+            train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs, shuffle=False)
         else:
             train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs, shuffle=True)
         test_data = {'x': x_test, 'y': y_test}

@@ -93,7 +93,6 @@ class RNN:
         # compute the logits for the output layer with shape [batch_size*n_timesteps, n_pos_tags]
         self.logits = tf.matmul(tf.reshape(outputs, [-1, h_size]), self.w)
         logits = tf.reshape(self.logits, [-1, n_timesteps*n_pos_tags])
-        # get labels with shape [batch_size*n_timesteps]
         labels = tf.reshape(self.input_y, [-1])
         # compute the loss
         self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=labels))
