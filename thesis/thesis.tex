@@ -331,7 +331,7 @@ The implementation of the proposed RNN architecture utilizes the TensorFlow libr
 
 The hidden layer is build with \tt{tf.nn.rnn\_cell.LSTMCell()}\footnote{This function uses an implementation proposed by S. Hochreiter et. al. in 1997 \cite{hochreiter1997}.}, a function that creates a LSTM recurrent network cell which is then used in \tt{tf.nn.dynamic\_rnn()} to compute the logits for the output layer.
 
-Loss, predictions and accuracy are implemented similar to the FNN and the same optimizer is used.
+Loss, predictions and accuracy are implemented similar to the FNN. Also the same optimizer is used.
 
 % ===================================================================================
 \chapter{Training of Language Models}\label{c.training}
