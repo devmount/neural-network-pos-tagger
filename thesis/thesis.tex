@@ -112,8 +112,10 @@ Diese Arbeit zeigt zwei verschiedene Ansätze für die Sprachmodellierung der Ei
 
 In biology, learning is based on a specific strengthening of the connection of certain nerve cells in the central nervous system by facilitating signal transmission at the synapses through appropriate modifications. Being a huge amendable network of connected neurons the nervous system served as a role model for a research field called \i{Machine Learning}. This term was coined by A. Samuel\footnote{Arthur Lee Samuel was an early researcher in machine learning and artificial intelligence. He developed the first successful self-learning program: the Samuel-Checkers game \cite{samuel1959}.} \cite{samuel1959} in 1959, who distinguished two general approaches to the problem of machine learning: a general-purpose randomly connected Neural Network approach and a special-purpose highly organized network. Following a publication of  W. McCulloch about the comparison of a computer with the nervous system of a flatworm in 1949 \cite{mcculloch1949}, he stated:
 
+\vspace{1em}
 \i{``A comparison between the size of the switching nets\\that can be reasonably constructed or simulated at the present time\\and the size of the neural nets used by animals,\\suggests that we have a long way to go before we obtain practical devices.''}\\
 \parbox{\textwidth}{\hfill \hfill -- Arthur Lee Samuel (1959)}
+\vspace{.5em}
 
 Less than 60 years later, today we have a lot of practical devices using machine learning and artificial intelligence technologies in our everyday life. Especially the processing and understanding of spoken or written natural language has a wide range of applications. One of those applications are advisory artificial conversational agents (ACA), chat-bots in short. They are designed to give natural language answers to natural language questions, making it as easy as possible for users to interact with a special system. \Alex\ is an example of an ACA that is able answer questions about courses and modules of the TU Berlin. This thesis aims to improve the understanding and learning of natural language of \Alex\ with artificial neural networks.
 
@@ -391,14 +393,15 @@ Also the wording occurring in the logs referring to linking words and actions wa
 	\end{tabular}
 	\caption[Sentence Template Improvements]{An excerpt of the extension and improvement of the sentence templates by using inline choices. The last column provides the corresponding English translation for the new sentence template.}
 	\label{t.improved_sentence_templates}
+	\vspace{1em}
 \end{table}
 
 At last \tt{28} new sentence templates were added, that provide a sentence structure that was found in the logs but not in the former template set. The new set contains a total of \tt{100} sentence templates (including single word templates) and can be found in the appendix \ref{c.appendix.sentencetemplates}.
 
-The resulting training data corpus now contains \tt{218.700} tagged sentences consisting of \tt{2.038.490} words. The size of the vocabulary is \tt{9141} words.
+The resulting training data corpus used in this thesis now contains \tt{218.700} tagged sentences consisting of \tt{2.038.490} words. The size of the vocabulary is \tt{9141} words.
 
 \section{Parameter Tuning}\label{c.training.tuning}
-In order to achieve better evaluation results and therefore more correctly tagged words, different training parameters are varied. To see the effect of one training parameter on the resulting language model, one parameter was altered while keeping all other parameters constant.
+In order to achieve better evaluation results and therefore more correctly tagged words, different training parameters are varied. To see the effect of the training parameters on the accuracy of the resulting language model, one parameter was altered while keeping all other parameters constant.
 
 For the training of the FNN models, the following \tt{4} parameters were considered:
 
@@ -409,54 +412,58 @@ For the training of the FNN models, the following \tt{4} parameters were conside
 	\item \b{Number of training epochs} (\tt{\b{n}}) indicates, how often the whole training corpus is processed during training
 \end{itemize}
 
-Based on these \tt{4} parameters, table \ref{t.training.tuning.fnn} shows the different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is \tt{48}, however due to overlapping of configurations of the training groups, the total number of models to be trained with the FNN is \tt{45}.
+Based on these \tt{4} parameters, table \ref{t.training.tuning.fnn} shows different parameter combinations. The emphasized cells show the respective parameter that is variable. The first \tt{4} training groups represent the basic training to see the effect of each parameter in general. The subsequent training groups were additional parameter combinations, taking the evaluation results of the first training groups into account.
 
-\begin{table}[ht]
+The resulting number of models is \tt{66}, however due to overlapping of configurations of the training groups, the total number of distinct models to be trained with the FNN is \tt{62}.
+
+\begin{table}[H]
 	\vspace{2em}
 	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c c c c }
 	\trule
 	\tt{p} & \tt{e} & \tt{s} & \tt{n} & \textsc{Models} \\
 	\drule
-	\cellcolor{orange}\color{white}\b{\tt{0}--\tt{12}} & \tt{50} & \tt{100} & \tt{20} & \tt{13} \\
+	\cellcolor{orange}\color{white}\b{\tt{0}--\tt{12}} & \tt{50} & \tt{100} & \tt{1} & \tt{13} \\
 	\mrule
-	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{25}, \tt{50}--\tt{350}\tablefootnote{With a step size of \tt{50}\label{fifty}}} & \tt{100} & \tt{20} & \tt{11} \\
+	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{25}, \tt{50}--\tt{350}\tablefootnote{With a step size of \tt{50}\label{fifty}}} & \tt{100} & \tt{1} & \tt{11} \\
 	\mrule
-	\tt{1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{10}, \tt{25}, \tt{50}--\tt{600}\footref{fifty}} & \tt{20} & \tt{14} \\
+	\tt{1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{10}, \tt{25}, \tt{50}--\tt{600}\footref{fifty}} & \tt{1} & \tt{14} \\
 	\mrule
 	\tt{1} & \tt{50} & \tt{100} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{20}--\tt{140}\tablefootnote{With a step size of \tt{20}}} & \tt{10} \\
+	\srule
+	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{200}--\tt{600}\footref{fifty}} & \tt{350} & \tt{1} & \tt{9} \\
+	\mrule
+	\tt{1} & \tt{250} & \cellcolor{orange}\color{white}\b{\tt{200}--\tt{600}\footref{fifty}} & \tt{1} & \tt{9} \\
 	\brule
 	\end{tabular}
-	\caption[Parameter combinations of FNN Models]{The parameter configuration for the training of FNN models. The rows represent the \tt{4} training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\tt{\b{p}} (Number of past words), \tt{\b{e}} (Embedding size), \tt{\b{s}} (Hidden layer size), \tt{\b{n}} (Number of training epochs)). The last column shows the resulting number of models for each training group.}
+	\caption[Parameter combinations of FNN Models]{The parameter configuration for the training of FNN models. The rows represent the training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\tt{\b{p}} (Number of past words), \tt{\b{e}} (Embedding size), \tt{\b{s}} (Hidden layer size), \tt{\b{n}} (Number of training epochs)). The last column shows the resulting number of models for each training group.}
 	\label{t.training.tuning.fnn}
+	\vspace{1em}
 \end{table}
 
-For the training of the RNN models, the following \tt{4} parameters were considered:
+For the training of the RNN models, the following \tt{3} parameters were considered:
 
 \begin{itemize}
 	\item \b{Number of time steps} (\tt{\b{t}}) specifies, how many past training steps should be considered for the training of the current word
-	\item \b{Learning rate} (\tt{\b{r}}) used by the gradient descent optimizer for the training
 	\item \b{Hidden layer size} (\tt{\b{s}}) characterizes the dimension of the hidden layer, meaning the number of neurons that the hidden layer consists of
 	\item \b{Number of training epochs} (\tt{\b{n}}) indicates, how often the whole training corpus is processed during training
 \end{itemize}
 
-Based on these \tt{4} parameters, table \ref{t.training.tuning.rnn} shows the different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is \tt{??}, however due to overlapping of configurations of the training groups, the total number of models to be trained with the FNN is \tt{??}.
+Based on these \tt{3} parameters, table \ref{t.training.tuning.rnn} shows different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is \tt{18}, however due to overlapping of configurations of the training groups, the total number of models to be trained with the FNN is \tt{16}.
 
 \begin{table}[ht]
 	\vspace{2em}
 	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c c c c }
 	\trule
-	\tt{t} & \tt{r} & \tt{s} & \tt{n} & \textsc{Models} \\
+	\tt{t} & \tt{s} & \tt{n} & \textsc{Models} \\
 	\drule
-	\cellcolor{orange}\color{white}\b{\tt{0}--\tt{6}} & \tt{.1} & \tt{50} & \tt{10} & \tt{6} \\
+	\cellcolor{orange}\color{white}\b{\tt{0}--\tt{10}} & \tt{50} & \tt{10} & \tt{10} \\
 	\mrule
-	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{.01}, \tt{.05}, \tt{.1}, \tt{.2}} & \tt{50} & \tt{10} & \tt{4} \\
+	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{10}, \tt{25}, \tt{50}, \tt{100}} & \tt{10} & \tt{4} \\
 	\mrule
-	\tt{1} & \tt{.1} & \cellcolor{orange}\color{white}\b{\tt{10}, \tt{25}, \tt{50}, \tt{100}} & \tt{10} & \tt{4} \\
-	\mrule
-	\tt{1} & \tt{.1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{20}} & \tt{4} \\
+	\tt{1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{20}} & \tt{4} \\
 	\brule
 	\end{tabular}
-	\caption[Parameter combinations of RNN Models]{The parameter configuration for the training of RNN models. The rows represent the \tt{4} training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\tt{\b{t}} (number of time steps), \tt{\b{r}} (learning rate), \tt{\b{s}} (hidden layer size), \tt{\b{n}} (number of training epochs)). The last column shows the resulting number of models for each training group.}
+	\caption[Parameter combinations of RNN Models]{The parameter configuration for the training of RNN models. The rows represent the training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\tt{\b{t}} (number of time steps), \tt{\b{s}} (hidden layer size), \tt{\b{n}} (number of training epochs)). The last column shows the resulting number of models for each training group.}
 	\label{t.training.tuning.rnn}
 \end{table}
 
@@ -504,6 +511,7 @@ The tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown}
 	\vspace{3mm}
 	\caption[Evaluation Topics using the Known Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the known test set. It contains a total of \tt{584} tagged sentences, consisting of \tt{4009} word-tag tuples.}
 	\label{t.evaluation_topics_known}
+	\vspace{1em}
 \end{table}
 
 \begin{table}[!ht]
@@ -542,7 +550,7 @@ The tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown}
 \end{table}
 
 \section{Evaluation Results}\label{c.evaluation.results}
-After introducing the test sets, the different training groups were evaluated according to the parameter configuration presented in chapter \ref{c.training.tuning}. The following sections show the evaluation results for the different architectures.
+After introducing the test sets, the different training groups were evaluated according to the parameter configuration presented in chapter \ref{c.training.tuning}. The following sections show the evaluation results of the different architectures for each test set.
 
 \subsection{Feed-Forward Neural Network Models}\label{c.evaluation.results.fnn}
 ...
@@ -575,7 +583,7 @@ After introducing the test sets, the different training groups were evaluated ac
 ...
 
 \subsection{Hidden Markov Models}\label{c.evaluation.results.hmm}
-After evaluating the Neural Network based language models, now the HMM is evaluated. For this purpose the former HMM trained on the basis of the training data created by T. Michael \cite{michael2016} and a new HMM trained on the basis of the training data proposed in this thesis are compared. The evaluation results are shown in figure \ref{f.evaluation.hmm}.
+After evaluating the Neural Network based language models, now the HMM is evaluated as well. For this purpose the former HMM trained on the basis of the training data generated by T. Michael \cite{michael2016} and a new HMM trained on the basis of the training data proposed in this thesis are compared. The evaluation was performed with known and the unknown test and the results are shown in figure \ref{f.evaluation.hmm}.
 
 \begin{figure}[H]
 	\centering\includegraphics[width=.7\textwidth]{images/evaluation_hmm}
@@ -585,26 +593,33 @@ After evaluating the Neural Network based language models, now the HMM is evalua
 
 The former HMM correctly tagged \tt{82.5\%} of the words of the known test and \tt{63.0\%} of the unknown test, whereas the new HMM reached \tt{93.4\%} for the known and \tt{79.3\%} for the unknown test. Clearly the HMM based on the new training data performed significantly better than the former HMM. Especially the result for the unknown test is remarkable for the accuracy increases by more than \tt{16\%}.
 
+It should be noted that the comparison of the former and the new HMM model based on the known test set is only partly representative, given the fact that the known test was not entirely known by the former HMM. Nevertheless the major part of known test set based on training templates, that were already used to build the corpus for the former HMM, which is why it still scored well with more than 4 out of 5 correct tags.
+
 \section{Overall Comparison}\label{c.evaluation.comparison}
 ...
 
 % ===================================================================================
 \chapter{Discussion and Conclusion}\label{c.conclusion}
-...
+The final chapter of this thesis provides an outline of the work of this thesis and the achieved evaluation results. Findings from the evaluation are discussed and possible further research tasks based on this thesis are stated.
 
 \section{Summary}\label{c.conclusion.summary}
-...
+The aim to develop a neural network based part-of-speech tagger for the advisory Artificial Conversational Agent \Alex\ was accomplished within this thesis.
+
+A tagger module was implemented featuring a feed-forward Neural Network as well as a recurrent Neural Network. A training corpus containing tagged sentences was created with the help of an improved set of sentence templates. With both Neural Network architectures, various language models were trained on this corpus via parameter variation. These models were then evaluated with two corresponding tests sets, containing sentences from the training corpus (known data) and unknown sentences.
 
 \section{Discussion}\label{c.conclusion.discussion}
 ...
 
 \section{Future work}\label{c.conclusion.future}
-...
-- additional module to check if generated trainings sentence returns a query result
-- additional parameters to tune: n future words, hidden layer count; rnn embedding size, choice of optimizer, exponential decay for the learning rate, choice of activation function
-- evaluation based on semantical topics (like locations, persons, module titles, etc...)
+Although a high accuracy of the language models was achieved with an improved training corpus and the Neural Network approaches in this thesis, further research could be done in specific areas.
 
-\cite{mueller2015}
+Better than simply deleting training templates that contain a lot of useless combinations of data from the database, an additional module could check these combinations in advance. Depending on the query result of such a data validation module, the generated training sentence will be included or excluded from the training corpus. This way, the general sentence templates can still be used without worrying about meaningless training sentences.
+
+In this thesis, parameters like the number of previous words, the size of the hidden layer, the size of the word embeddings and the number of training epochs were analyzed. Yet there are additional parameters, which can also be examined. For the FNN, possible parameters are the number of subsequent words (in addition to the number of previous words), the number of hidden layers, the type of the activation function for the neurons and the training optimizer. The RNN can utilize word embeddings with a particular embedding size too and the type of the activation function as well as the optimizer are possible additional parameters. Also an exponential decay for the learning rate of the optimizer especially for the RNN could be studied.
+
+When using word embeddings, another possible improvement is the use of pretrained word embeddings instead of randomly initialized ones. It was previously shown that word embeddings that were trained on large German text corpora contain a high level of syntactical and semantical information \cite{mueller2015}.
+
+Furthermore the evaluation results could be extended with a more fine-grained output concerning semantical topics like degrees, locations, persons or module titles. That way a statement can be made about how well the model performs on each topic and if there are significant differences between the evaluation results. This knowledge can than be used to systematically improve the training templates.
 
 % ===================================================================================
 \bibliographystyle{plain}

@@ -173,7 +173,7 @@ class Tagger:
         n_sentences_correct = n_words_correct = n_tags_correct = 0
         tags_wrong = {}
         # get pre-tagged evaluation data
-        text = open(evaluation_file).read()
+        text = open(evaluation_file, encoding="utf8").read()
         text = '\n'.join([s for s in text.splitlines() if s and s[0] != '#'])
         tagged_sentences = text.splitlines()
         n_sentences = len(tagged_sentences)
@@ -404,7 +404,7 @@ class Tagger:
 
         # create replacement mappings
         replacements = []
-        with open(replacement_file, 'r') as f:
+        with open(replacement_file, 'r', encoding="utf8") as f:
             for line in f.readlines():
                 assignments = line.strip().split('=')
                 synonyms, key = assignments[0], assignments[1]
