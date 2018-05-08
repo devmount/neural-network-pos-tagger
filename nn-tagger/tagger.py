@@ -25,7 +25,7 @@ class Tagger:
     """
 
 
-    def __init__(self, architecture=conf.ARCHITECTURE, n_past_words=conf.N_PAST_WORDS, embedding_size=conf.EMBEDDING_SIZE, h_size=conf.HIDDEN_LAYER_SIZE, n_epochs=conf.N_EPOCHS, n_timesteps=conf.N_TIMESTEPS, learning_rate=conf.LEARNING_RATE):
+    def __init__(self, architecture=conf.ARCHITECTURE, n_past_words=conf.N_PAST_WORDS, embedding_size=conf.EMBEDDING_SIZE, h_size=conf.HIDDEN_LAYER_SIZE, n_epochs=conf.N_EPOCHS, n_timesteps=conf.N_TIMESTEPS):
         """
         Takes in the file path to a training file and returns a Tagger object that is able to train and tag sentences
         """
@@ -35,7 +35,6 @@ class Tagger:
         self.vocab_size = conf.VOCAB_SIZE
         self.n_past_words = n_past_words if architecture == 'FNN' else 0
         self.n_timesteps = n_timesteps
-        self.learning_rate = learning_rate
         self.embedding_size = embedding_size
         self.h_size = h_size
         self.test_ratio = conf.TEST_RATIO
@@ -337,7 +336,7 @@ class Tagger:
 
         # load model architecture based on settings, default is FNN (Feed-forward Neural Network)
         if self.architecture == 'RNN':
-            nn_model = model.RNN(self.h_size, n_pos_tags, self.n_timesteps, self.learning_rate)
+            nn_model = model.RNN(self.h_size, n_pos_tags, self.n_timesteps)
         else:
             nn_model = model.FNN(self.vocab_size, self.n_past_words, self.embedding_size, self.h_size, n_pos_tags)
         global_step = tf.Variable(initial_value=0, name="global_step", trainable=False)
@@ -484,7 +483,6 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--hiddensize", type=int, help=" Dimension of the hidden layer")
     parser.add_argument("-n", "--nepochs", type=int, help="Number of training epochs")
     parser.add_argument("-t", "--timesteps", type=int, help="Number of past trained words")
-    parser.add_argument("-r", "--learningrate", type=float, help="Learning rate for gradient descent optimizer")
 
     parser.add_argument("-f", "--force", action='store_true', help="Force operation without confirmation")
     parser.add_argument("-q", "--quiet", action='store_true', help="No output messages")
@@ -497,8 +495,8 @@ if __name__ == "__main__":
         # create tagger instance
         if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
             t = Tagger('FNN', n_past_words=args.pastwords, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
-        elif args.timesteps is not None and args.learningrate is not None and args.hiddensize is not None and args.nepochs is not None:
-            t = Tagger('RNN', n_timesteps=args.timesteps, learning_rate=args.learningrate, h_size=args.hiddensize, n_epochs=args.nepochs)
+        elif args.timesteps is not None and args.hiddensize is not None and args.nepochs is not None:
+            t = Tagger('RNN', n_timesteps=args.timesteps, h_size=args.hiddensize, n_epochs=args.nepochs)
         else:
             t = Tagger()
         try:
@@ -510,8 +508,8 @@ if __name__ == "__main__":
         # create tagger instance
         if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
             t = Tagger('FNN', n_past_words=args.pastwords, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
-        elif args.timesteps is not None and args.learningrate is not None and args.hiddensize is not None and args.nepochs is not None:
-            t = Tagger('RNN', n_timesteps=args.timesteps, learning_rate=args.learningrate, h_size=args.hiddensize, n_epochs=args.nepochs)
+        elif args.timesteps is not None and args.hiddensize is not None and args.nepochs is not None:
+            t = Tagger('RNN', n_timesteps=args.timesteps, h_size=args.hiddensize, n_epochs=args.nepochs)
         else:
             t = Tagger()
         print('The tagged sentence is:')
@@ -521,8 +519,8 @@ if __name__ == "__main__":
         # create tagger instance
         if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
             t = Tagger('FNN', n_past_words=args.pastwords, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
-        elif args.timesteps is not None and args.learningrate is not None and args.hiddensize is not None and args.nepochs is not None:
-            t = Tagger('RNN', n_timesteps=args.timesteps, learning_rate=args.learningrate, h_size=args.hiddensize, n_epochs=args.nepochs)
+        elif args.timesteps is not None and args.hiddensize is not None and args.nepochs is not None:
+            t = Tagger('RNN', n_timesteps=args.timesteps, h_size=args.hiddensize, n_epochs=args.nepochs)
         else:
             t = Tagger()
         if args.inline:

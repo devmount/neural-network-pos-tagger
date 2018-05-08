@@ -19,9 +19,6 @@ N_PAST_WORDS = 4
 # Number of previous training steps to take into account [RNN only]
 N_TIMESTEPS = 3
 
-# Learning rate of an optimizer [RNN only]
-LEARNING_RATE = 0.1
-
 # Dimension of the word embeddings [FNN only]
 EMBEDDING_SIZE = 100
 
@@ -38,7 +35,7 @@ BATCH_SIZE = 64
 N_EPOCHS = 20
 
 # Show evaluation result and save model state after this number of trainings steps
-CHECKPOINT_EVERY = 5000
+CHECKPOINT_EVERY = 1000
 
 # replacement file path
 REPLACEMENT_FILE = 'data/replacement.txt'

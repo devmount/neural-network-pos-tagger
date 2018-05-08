@@ -70,14 +70,13 @@ class RNN:
     """
 
 
-    def __init__(self, h_size, n_pos_tags, n_timesteps, learning_rate):
+    def __init__(self, h_size, n_pos_tags, n_timesteps):
         """
         Initializes the Recurrent Neural Network model
 
         @param h_size: Dimension of the hidden layer
         @param n_pos_tags: Number of existing POS tags
         @param n_timesteps: Number of previous training steps to include
-        @param learning_rate: for gradient descent optimizer
         """
 
         # initialize input word vectors of shape [batch_size, n_timesteps, word]
