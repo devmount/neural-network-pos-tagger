@@ -13,6 +13,7 @@ import tensorflow as tf
 import numpy as np
 import os, shutil, time, argparse
 from texttable import Texttable
+from sklearn.metrics import cohen_kappa_score
 
 import settings as conf
 from loader import TextLoader
@@ -47,6 +48,8 @@ class Tagger:
         self.storage_dir = 'saved'
         self.vocab_path = os.path.join(self.storage_dir, 'vocabulary')
         self.tensor_path = os.path.join(self.storage_dir, 'tensors')
+
+        self.data = None
 
 
     def train(self, training_file_path):
@@ -112,7 +115,7 @@ class Tagger:
         @return a string of space separated word-tag tuples, like "word1/TAG word2/TAG word3/TAG"
         """
 
-        data = TextLoader(self.__replace(sentence.lower()), self.vocab_size, self.n_past_words, self.vocab_path, None, silent)
+        self.data = TextLoader(self.__replace(sentence.lower()), self.vocab_size, self.n_past_words, self.vocab_path, None, silent)
 
         # start tensorflow session
         sess = tf.Session()
@@ -128,17 +131,17 @@ class Tagger:
         predictions = graph.get_operation_by_name("predictions").outputs[0]
         
         # get features and predicted pos ids
-        features = self.__rnn_reshape(data.features) if self.architecture == 'RNN' else data.features
+        features = self.__rnn_reshape(self.data.features) if self.architecture == 'RNN' else self.data.features
         predicted_pos_ids = sess.run(predictions, feed_dict={input_x: features})
 
         # create lists of the sentence words and their corresponding predicted POS tags
         words = []
-        for sentence_word_ids in data.features:
+        for sentence_word_ids in self.data.features:
             word_id = sentence_word_ids[0]
-            words.append(data.id_to_word[word_id])
+            words.append(self.data.id_to_word[word_id])
         predicted_pos = []
         for pred_id in predicted_pos_ids:
-            predicted_pos.append(data.id_to_pos[pred_id])
+            predicted_pos.append(self.data.id_to_pos[pred_id])
 
         # pretty print tagged sentence if enabled
         if pretty_print:
@@ -172,43 +175,50 @@ class Tagger:
         # initialize counter variables
         n_sentences_correct = n_words_correct = n_tags_correct = 0
         tags_wrong = {}
+        true_tags, predicted_tags = [], []
         # get pre-tagged evaluation data
         text = open(evaluation_file, encoding="utf8").read()
         text = '\n'.join([s for s in text.splitlines() if s and s[0] != '#'])
-        tagged_sentences = text.splitlines()
-        n_sentences = len(tagged_sentences)
+        true_sentences = text.splitlines()
+        n_sentences = len(true_sentences)
         # tag data based on trained language model
-        computed_words = self.tag(self.__untag_text(text), False, True).split()
-        computed_sentences = []
-        sentence_lengths = [len(x.split()) for x in tagged_sentences]
+        predicted_words = self.tag(self.__untag_text(text), False, True).split()
+        predicted_sentences = []
+        sentence_lengths = [len(x.split()) for x in true_sentences]
         n_words = sum(sentence_lengths)
         for i, l in enumerate(sentence_lengths):
-            computed_sentences.append(' '.join(computed_words[sum(sentence_lengths[:i]):sum(sentence_lengths[:i])+l]))
+            predicted_sentences.append(' '.join(predicted_words[sum(sentence_lengths[:i]):sum(sentence_lengths[:i])+l]))
 
         # start evaluation
         if not print_inline:
             print('Evaluation starts...')
 
         # compute correct sentences and words
-        for t, c in zip(tagged_sentences, computed_sentences):
-            t, c = t.strip(), c.strip()
+        for t, p in zip(true_sentences, predicted_sentences):
+            t, p = t.strip(), p.strip()
             # check sentences
-            if t == c:
+            if t == p:
                 n_sentences_correct += 1
                 n_words_correct += len(t.split())
                 n_tags_correct += len(t.split())
             else:
-                # check words and tags
-                for tw, cw in zip (t.split(), c.split()):
-                    if tw != cw:
+                # check true and predicted words and tags
+                for tw, pw in zip (t.split(), p.split()):
+                    if tw != pw:
                         # build a custom key: correct_word/tag|wrong_word/tag to count its occurence
-                        key = tw + '|' + cw
+                        key = tw + '|' + pw
                         tags_wrong[key] = tags_wrong[key] + 1 if key in tags_wrong and tags_wrong[key] > 0 else 1
                     # increment counter for matching words and tags
-                    n_words_correct += 1 if tw[:tw.index('/')] == cw[:cw.index('/')] else 0
-                    n_tags_correct += 1 if tw[tw.index('/')+1:] == cw[cw.index('/')+1:] else 0
+                    n_words_correct += 1 if tw[:tw.index('/')] == pw[:pw.index('/')] else 0
+                    n_tags_correct += 1 if tw[tw.index('/')+1:] == pw[pw.index('/')+1:] else 0
+                    # add tag ids to true and predicted tag lists for cohens kappa
+                    true_tags.append(self.data.pos_to_id[tw[tw.index('/')+1:]]) 
+                    predicted_tags.append(self.data.pos_to_id[pw[pw.index('/')+1:]])
+        # calculate cohen's kappa
+        kappa = cohen_kappa_score(true_tags, predicted_tags)
+
         if print_inline:
-            print('%s: %i/%i (%.1f%%) tags correct' % (evaluation_file, n_tags_correct, n_words, n_tags_correct/n_words*100))
+            print('%s: %i/%i (%.1f%%) tags correct, %.3f kappa score' % (evaluation_file, n_tags_correct, n_words, n_tags_correct/n_words*100, kappa))
         else:
             # print ratio of correct sentences, words and tags
             print('\n# RESULTS:\n')
@@ -219,6 +229,7 @@ class Tagger:
             table.add_row([str(n_sentences_correct) + ' / ' + str(n_sentences), n_sentences_correct/n_sentences, 'sentences correct'])
             table.add_row([str(n_words_correct) + ' / ' + str(n_words), n_words_correct/n_words, 'words recognized'])
             table.add_row([str(n_tags_correct) + ' / ' + str(n_words), n_tags_correct/n_words, 'tags correct'])
+            table.add_row(['', kappa, 'kappa score'])
             print(table.draw())
             # show wrong tags
             print('\n# ERRORS:\n')
