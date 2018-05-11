@@ -418,32 +418,43 @@ For the training of the FNN models, the following \tt{4} parameters were conside
 	\item \b{Embedding size} (\tt{\b{e}}) describes the dimension of the word embeddings that were created for each word of the vocabulary during training
 	\item \b{Hidden layer size} (\tt{\b{s}}) characterizes the dimension of the hidden layer, i.e. the number of neurons that constitute the hidden layer
 	\item \b{Number of training epochs} (\tt{\b{n}}) indicates how often the whole training corpus is processed during training
+	\item \b{Activation function} (\tt{\b{a}}) ...
 \end{itemize}
 
-Based on these \tt{4} parameters, table \ref{t.training.tuning.fnn} shows different parameter combinations. The emphasized cells show the respective parameter that is variable. The first \tt{4} training groups represent the basic training process to demonstrate the effect of each parameter in general. The subsequent training groups included additional parameter combinations, taking into account the evaluation results of the first training groups.
+Based on these \tt{5} parameters, table \ref{t.training.tuning.fnn} shows different parameter combinations. The emphasized cells show the respective parameter that is variable. The first \tt{4} training groups represent the basic training process to demonstrate the effect of each parameter in general. The subsequent training groups included additional parameter combinations, taking into account the evaluation results of the first training groups.
 
-The resulting number of models is \tt{66}; however, due to an overlap in configurations of the training groups, the total number of distinct models to be trained with the FNN is \tt{62}.
+The resulting number of models is \tt{99}; however, due to an overlap in configurations of the training groups, the total number of distinct models to be trained with the FNN is \tt{??}.
 
 \begin{table}[H]
 	\vspace{2em}
-	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c c c c }
+	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c c c c c }
 	\trule
-	\tt{p} & \tt{e} & \tt{s} & \tt{n} & \textsc{Models} \\
+	\tt{p} & \tt{e} & \tt{s} & \tt{n} & \tt{a} & \textsc{Models} \\
 	\drule
-	\cellcolor{orange}\color{white}\b{\tt{0}--\tt{12}} & \tt{50} & \tt{100} & \tt{1} & \tt{13} \\
+	\cellcolor{orange}\color{white}\b{\tt{0}--\tt{12}} & \tt{50} & \tt{100} & \tt{1} & \tt{relu} & \tt{13} \\
 	\mrule
-	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{25}, \tt{50}--\tt{700}\tablefootnote{With a step size of \tt{50}\label{fifty}}} & \tt{100} & \tt{1} & \tt{18} \\
+	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{25}} & \tt{100} & \tt{1} & \tt{relu} & \tt{4} \\
 	\mrule
-	\tt{1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{10}, \tt{25}, \tt{50}--\tt{1000}\footref{fifty}} & \tt{1} & \tt{22} \\
+	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{50}--\tt{700}\tablefootnote{With a step size of \tt{50}\label{fifty}}} & \tt{100} & \tt{1} & \tt{relu} & \tt{14} \\
 	\mrule
-	\tt{1} & \tt{50} & \tt{100} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{20}--\tt{140}\tablefootnote{With a step size of \tt{20}}} & \tt{10} \\
+	\tt{1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{10}, \tt{25}} & \tt{1} & \tt{relu} & \tt{2} \\
+	\mrule
+	\tt{1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{50}--\tt{1000}\footref{fifty}} & \tt{1} & \tt{relu} & \tt{20} \\
+	\mrule
+	\tt{1} & \tt{50} & \tt{100} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}} & \tt{relu} & \tt{3} \\
+	\mrule
+	\tt{1} & \tt{50} & \tt{100} & \cellcolor{orange}\color{white}\b{\tt{20}--\tt{140}\tablefootnote{With a step size of \tt{20}}} & \tt{relu} & \tt{7} \\
+	\mrule
+	\tt{1} & \tt{250} & \tt{350} & \tt{1} & \cellcolor{orange}\color{white}\b{\tt{relu}, \tt{[...]}\tablefootnote{The following activation functions were considered: \ftt{relu}, \ftt{relu6}, \ftt{elu}, \ftt{sigmoid}, \ftt{tanh}, \ftt{selu}, \ftt{softplus}, \ftt{softsign}}} & \tt{8} \\
 	\srule
-	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{200}--\tt{600}\footref{fifty}} & \tt{350} & \tt{1} & \tt{9} \\
+	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{200}--\tt{600}\footref{fifty}} & \tt{350} & \tt{1} & \tt{relu} & \tt{9} \\
 	\mrule
-	\tt{1} & \tt{250} & \cellcolor{orange}\color{white}\b{\tt{200}--\tt{600}\footref{fifty}} & \tt{1} & \tt{9} \\
+	\tt{1} & \tt{250} & \cellcolor{orange}\color{white}\b{\tt{200}--\tt{600}\footref{fifty}} & \tt{1} & \tt{relu} & \tt{9} \\
+	\mrule
+	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{50}--\tt{500}\footref{fifty}} & \cellcolor{orange}\color{white}\b{\tt{50}--\tt{500}\footref{fifty}} & \tt{5} & \tt{relu} & \tt{10} \\
 	\brule
 	\end{tabular}
-	\caption[Parameter combinations of FNN Models]{The parameter configuration for training the FNN models. The rows represent the training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\tt{\b{p}} (Number of past words), \tt{\b{e}} (Embedding size), \tt{\b{s}} (Hidden layer size), \tt{\b{n}} (Number of training epochs)). The last column shows the resulting number of models for each training group.}
+	\caption[Parameter combinations of FNN Models]{The parameter configuration for training the FNN models. The rows represent the training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\tt{\b{p}} - number of past words, \tt{\b{e}} - embedding size, \tt{\b{s}} - hidden layer size, \tt{\b{n}} - number of training epochs, \tt{\b{a}} - activation function). The last column shows the resulting number of models for each training group.}
 	\label{t.training.tuning.fnn}
 	\vspace{1em}
 \end{table}
@@ -487,31 +498,30 @@ The sentences are divided into different topics to cover a wide range of possibl
 Tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} show the different topics represented in the known and the unknown test set, the respective number of evaluation sentences and an example sentence to illustrate each topic. Both test sets combined include a total number of \tt{1058} tagged test sentences, consisting of \tt{7678} word-tag tuples.
 
 \begin{table}[!ht]
-	\centering\small\def\arraystretch{1.2}\begin{tabular}{ p{18mm} c L{95mm} }
-	\toprule
+	\centering\small\def\arraystretch{1.5}\begin{tabular}{ p{18mm} c L{95mm} }
+	\trule
 	\textsc{Topic} & \textsc{Sentences} & \multicolumn{1}{L{95mm}}{\textsc{Example}} \\
-	\midrule
-	\midrule
+	\drule
 	ECTS & \tt{44} & \multicolumn{1}{L{95mm}}{\i{Which modules have 6 ECTS}} \\
-	\midrule
+	\mrule
 	Time & \tt{60} & \multicolumn{1}{L{95mm}}{\i{Which courses are on Tuesday}} \\
-	\midrule
+	\mrule
 	Faculty & \tt{56} & \multicolumn{1}{L{95mm}}{\i{All modules of faculty 4}} \\
-	\midrule
+	\mrule
 	Participants & \tt{54} & \multicolumn{1}{L{95mm}}{\i{Which courses are limited to 30 participants}} \\
-	\midrule
+	\mrule
 	Persons & \tt{61} & \multicolumn{1}{L{95mm}}{\i{Which courses are taught by Professor Martinelli}} \\
-	\midrule
+	\mrule
 	Program & \tt{60} & \multicolumn{1}{L{95mm}}{\i{I'm searching for all modules of the computer science program }} \\
-	\midrule
+	\mrule
 	Modules & \tt{80} & \multicolumn{1}{L{95mm}}{\i{Modules with the title Cognitive Algorithms}} \\
-	\midrule
+	\mrule
 	Chair & \tt{50} & \multicolumn{1}{L{95mm}}{\i{All modules of institute Media Science}} \\
-	\midrule
+	\mrule
 	Exam & \tt{32} & \multicolumn{1}{L{95mm}}{\i{Courses with Group Lecture as examination}} \\
-	\midrule
+	\mrule
 	Courses & \tt{45} & \multicolumn{1}{L{95mm}}{\i{When does Internet Security take place}} \\
-	\midrule
+	\mrule
 	Locations & \tt{42} & \multicolumn{1}{L{95mm}}{\i{All courses in room Mainbuilding H 1012}} \\
 	\bottomrule
 	 & \tt{584} & \\
@@ -523,31 +533,30 @@ Tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} sho
 \end{table}
 
 \begin{table}[!ht]
-	\centering\small\def\arraystretch{1.2}\begin{tabular}{ p{18mm} c L{95mm} }
-	\toprule
+	\centering\small\def\arraystretch{1.5}\begin{tabular}{ p{18mm} c L{95mm} }
+	\trule
 	\textsc{Topic} & \textsc{Sentences} & \multicolumn{1}{L{95mm}}{\textsc{Example}} \\
-	\midrule
-	\midrule
+	\drule
 	ECTS & \tt{44} & \multicolumn{1}{L{95mm}}{\i{All modules with 6 ECTS}} \\
-	\midrule
+	\mrule
 	Time & \tt{55} & \multicolumn{1}{L{95mm}}{\i{Courses that take place on Tuesday}} \\
-	\midrule
+	\mrule
 	Faculty & \tt{56} & \multicolumn{1}{L{95mm}}{\i{Show all modules of faculty 4 to me}} \\
-	\midrule
+	\mrule
 	Participants & \tt{54} & \multicolumn{1}{L{95mm}}{\i{List all courses that have a limitation of 30 participants}} \\
-	\midrule
+	\mrule
 	Persons & \tt{58} & \multicolumn{1}{L{95mm}}{\i{Show all courses that are taught by Professor Martinelli}} \\
-	\midrule
+	\mrule
 	Program & \tt{10} & \multicolumn{1}{L{95mm}}{\i{Show all modules of computer science }} \\
-	\midrule
+	\mrule
 	Modules & \tt{60} & \multicolumn{1}{L{95mm}}{\i{Show information about the module Cognitive Algorithms}} \\
-	\midrule
+	\mrule
 	Chair & \tt{20} & \multicolumn{1}{L{95mm}}{\i{All modules that the institute Media Science offers}} \\
-	\midrule
+	\mrule
 	Exam & \tt{45} & \multicolumn{1}{L{95mm}}{\i{Show me all courses that have Group Lecture as examination}} \\
-	\midrule
+	\mrule
 	Courses & \tt{30} & \multicolumn{1}{L{95mm}}{\i{The date of the first meeting of Internet Security }} \\
-	\midrule
+	\mrule
 	Locations & \tt{42} & \multicolumn{1}{L{95mm}}{\i{All courses in auditorium Mainbuilding H 1012}} \\
 	\bottomrule
 	 & \tt{474} & \\
@@ -559,7 +568,7 @@ Tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} sho
 
 The number of correctly tagged words serves as a measure of accuracy for the respective language model. This includes unrecognized words (words that did not occur in the training corpus) that are still tagged correctly. The proportion of correctly tagged words can then be compared for both test sets for each language model.
 
-In addition, the conformity of the language models with the labeled test data is measured by using Cohen's Kappa ($\kappa$)\footnote{Cohen's Kappa is a measurement of the agreement of two raters referring to a given set of categories (in this thesis the set of tags). It was proposed by J. Cohen in 1960 \cite{cohen1960} and considers the possibility of agreement by chance.}. It is defined in equation \ref{e.kappa}.
+In addition, the conformity of the language models with the labeled test data is measured by using Cohen's Kappa ($\kappa$)\footnote{Cohen's Kappa is a measurement of the agreement of two raters referring to a given set of categories (in this thesis the set of tags). It was proposed by J. Cohen in 1960 \cite{cohen1960} and considers the possibility of agreement by chance.}. The definition of Cohen's Kappa is given in equation \ref{e.kappa}.
 
 \begin{equation}
 \kappa = \frac{p_o - p_c}{1 - p_c} \label{e.kappa}
