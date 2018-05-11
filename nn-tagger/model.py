@@ -40,10 +40,8 @@ class FNN:
         # stack the rows to create one vector. -1: "figure out the right size" (accounts for variable batch size)
         self.feature_vector = tf.reshape(self.word_matrix, [-1, (n_past_words + 1) * embedding_size])
 
-        # get size of the feature vector
-        feature_vector_size = int(self.feature_vector.shape[1])
         # initialize weights between input layer and hidden layer
-        w1 = tf.Variable(tf.truncated_normal([feature_vector_size, h_size], stddev=0.1))
+        w1 = tf.Variable(tf.truncated_normal([(n_past_words + 1) * embedding_size, h_size], stddev=0.1))
         # compute rectified linear activation function on hidden layer
         self.h = tf.nn.relu(tf.matmul(self.feature_vector, w1))
         # initialize weights between hidden layer and output layer
@@ -87,10 +85,10 @@ class RNN:
         # initialize hidden layer with shape [h_size, n_pos_tags]
         self.w = tf.Variable(tf.truncated_normal([h_size, n_pos_tags], stddev=0.1))
         # create lstm cell
-        cell = tf.nn.rnn_cell.LSTMCell(h_size, forget_bias=1.0)
+        cell = tf.nn.rnn_cell.LSTMCell(h_size, activation=tf.nn.relu)
         # calculate outputs with shape [batch_size*n_timesteps, h_size]
         outputs, states = tf.nn.dynamic_rnn(cell, self.input_x, dtype=tf.float32)
-        # compute the logits for the output layer with shape [batch_size*n_timesteps, n_pos_tags]
+        # compute the logits for the output layer with shape [batch_size, n_timesteps*n_pos_tags]
         self.logits = tf.matmul(tf.reshape(outputs, [-1, h_size]), self.w)
         logits = tf.reshape(self.logits, [-1, n_timesteps*n_pos_tags])
         labels = tf.reshape(self.input_y, [-1])

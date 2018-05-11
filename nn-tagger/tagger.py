@@ -347,8 +347,7 @@ class Tagger:
         else:
             nn_model = model.FNN(self.vocab_size, self.n_past_words, self.embedding_size, self.h_size, n_pos_tags)
         global_step = tf.Variable(initial_value=0, name="global_step", trainable=False)
-        optimizer = nn_model.optimizer
-        train_op = optimizer.minimize(nn_model.loss, global_step=global_step)
+        train_op = nn_model.optimizer.minimize(nn_model.loss, global_step=global_step)
 
         return nn_model, train_op, global_step
 
