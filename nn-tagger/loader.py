@@ -73,13 +73,13 @@ class TextLoader:
 
     def save_vocab(self, vocab_filename):
         dicts = [self.word_to_id, self.pos_to_id, self.id_to_word, self.id_to_pos]
-        with open(vocab_filename, 'wb') as f:
+        with open(vocab_filename, 'wb', encoding="utf8") as f:
             pickle.dump(dicts, f)
             f.close()
 
 
     def load_vocab(self, vocab_path):
-        with open(vocab_path, 'rb') as f:
+        with open(vocab_path, 'rb', encoding="utf8") as f:
             dicts = pickle.load(f)
             f.close
         self.word_to_id = dicts[0]
@@ -90,13 +90,13 @@ class TextLoader:
 
     def save_tensors(self, tensors_path):
         tensors = [self.features, self.labels]
-        with open(tensors_path, 'wb') as f:
+        with open(tensors_path, 'wb', encoding="utf8") as f:
             pickle.dump(tensors, f)
             f.close()
 
 
     def load_tensors(self, tensors_path):
-        with open(tensors_path, 'rb') as f:
+        with open(tensors_path, 'rb', encoding="utf8") as f:
             tensors = pickle.load(f)
             f.close()
         self.features = tensors[0]
