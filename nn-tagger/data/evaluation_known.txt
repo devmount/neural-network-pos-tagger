@@ -221,10 +221,10 @@ welche/R_LIST module/M_MTSModule sind/X begrenzt/X_ParticipantLimitation auf/X 3
 welche/R_LIST module/M_MTSModule sind/X begrenzt/X_ParticipantLimitation auf/X 300/C_MTSModule:participantLimitation personen/X_ParticipantLimitation
 
 # persons
-welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X als/X 3/C_MTSModule:ects ects/C_MTSModule:ects an/X
-welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X als/X 6/C_MTSModule:ects ects/C_MTSModule:ects an/X
-welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X als/X 9/C_MTSModule:ects ects/C_MTSModule:ects an/X
-welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X als/X 12/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 3/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 6/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 9/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 12/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 3/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 6/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 9/C_MTSModule:ects ects/C_MTSModule:ects an/X
