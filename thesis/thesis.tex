@@ -58,7 +58,7 @@ Unterschrift
 \chapter*{Abstract}
 A part-of-speech tagger is a system which automatically assigns the part of speech to words using contextual information. Potential applications for part-of-speech taggers exist in many areas of computational linguistics including speech recognition, speech synthesis, machine translation or information retrieval in general.
 
-The part-of-speech tagging task of natural language processing is also used in `\Alex', an advisory artificial conversational agent. \Alex\ was developed to answer questions about modules and courses at the Technische Universität Berlin. The system takes the written natural language requests from the user and transforms them into SQL queries. To understand the natural language queries, the system uses a Hidden Markov Model (HMM) to assign tags to each word of the query (part-of-speech tagging). This HMM tagger was trained with manually created training templates that are filled with the data in the database to be queried. The combination of manually created sentence-templates and slot-filling resulted in many training data sentences with the same structure. This often led to wrong tagging results when the HMM tagger was presented with an input sentence, having a structure that does not occur in the training templates.
+The part-of-speech tagging task of natural language processing is also used in `\Alex', an advisory artificial conversational agent. \Alex\ was developed to answer questions about modules and courses at the Technische Universität Berlin. The system takes the written natural language requests from the user and transforms them into SQL queries. To understand the natural language queries, the system uses a hidden Markov model (HMM) to assign tags to each word of the query (part-of-speech tagging). This HMM tagger was trained with manually created training templates that are filled with the data in the database to be queried. The combination of manually created sentence-templates and slot-filling resulted in many training data sentences with the same structure. This often led to wrong tagging results when the HMM tagger was presented with an input sentence, having a structure that does not occur in the training templates.
 
 This thesis shows two different neural network approaches for the language modeling of the input sentences and evaluates and compares both neural network based tagger as well as the HMM based tagger.
 
@@ -110,14 +110,14 @@ Diese Arbeit zeigt zwei verschiedene Ansätze für die Sprachmodellierung der Ei
 
 \i{Learning} is one of the most essential parts of human life. From their first day to their last, humans acquire knowledge and skills. Learning involves progress, additional value, failure and repetition. It enables growth and improvement.
 
-In biology, learning is based on a specific strengthening of the connection of certain nerve cells in the central nervous system by facilitating signal transmission at the synapses through appropriate modifications. As a huge amendable network of connected neurons, the nervous system has been serving as a model for a research field called \i{Machine Learning}. This term was coined by A. Samuel\footnote{Arthur Lee Samuel was an early researcher in machine learning and artificial intelligence. He developed the first successful self-learning program: the Samuel-Checkers game \cite{samuel1959}.} \cite{samuel1959} in 1959, who distinguished between two general approaches of solving the problem of machine learning: a general-purpose randomly connected Neural Network approach and a special-purpose highly organized network. Following a publication of  W. McCulloch about the comparison of a computer with the nervous system of a flatworm in 1949 \cite{mcculloch1949}, Samuel observed:
+In biology, learning is based on a specific strengthening of the connection of certain nerve cells in the central nervous system by facilitating signal transmission at the synapses through appropriate modifications. As a huge amendable network of connected neurons, the nervous system has been serving as a model for a research field called \i{Machine Learning}. This term was coined by A. Samuel\footnote{Arthur Lee Samuel was an early researcher in machine learning and artificial intelligence. He developed the first successful self-learning program: the Samuel-Checkers game \cite{samuel1959}.} \cite{samuel1959} in 1959, who distinguished between two general approaches of solving the problem of machine learning: a general-purpose randomly connected neural network approach and a special-purpose highly organized network. Following a publication of  W. McCulloch about the comparison of a computer with the nervous system of a flatworm in 1949 \cite{mcculloch1949}, Samuel observed:
 
 \vspace{1em}
 \i{``A comparison between the size of the switching nets\\that can be reasonably constructed or simulated at the present time\\and the size of the neural nets used by animals,\\suggests that we have a long way to go before we obtain practical devices.''}\\
 \parbox{\textwidth}{\hfill \hfill -- Arthur Lee Samuel (1959)}
 \vspace{.5em}
 
-Today, less than 60 years later, we have a lot of practical devices that use machine learning and artificial intelligence in our everyday life. Especially the processing and understanding of spoken or written natural language has a wide range of applications today. One of those application areas of application are advisory artificial conversational agents (ACA) or chatbots. They are designed to provide natural language answers to natural language questions, making it as easy as possible for users to interact with a specific system. \Alex\ is an example of an ACA that is designed to answer questions about courses and modules of the TU Berlin. This thesis aims to improve how \Alex\ understands and learns natural language using \i{artificial neural networks} (ANNs).
+Today, less than 60 years later, we have a lot of practical devices that use machine learning and artificial intelligence and, by now, they not only play a role in science but in our everyday life. Especially the processing and understanding of spoken or written natural language has a wide range of applications today. One of those areas of application are advisory artificial conversational agents (ACA) or chatbots. They are designed to provide natural language answers to natural language questions, making it as easy as possible for users to interact with a specific system. \Alex\ is an example of an ACA that is designed to answer questions about courses and modules of the TU Berlin. This thesis aims to improve how \Alex\ understands and learns natural language using \i{artificial neural networks} (ANNs).
 
 \section{Scope of this Thesis}\label{c.introduction.scope}
 This thesis focuses on developing a neural network based part-of-speech tagger for \Alex, the advisory Artificial Conversational Agent, the training of several language models and their evaluation with corresponding test sets.
@@ -140,7 +140,7 @@ This thesis is built upon the work of T. Michael \cite{michael2016}, who describ
 \Alex\ consists of several processing modules:
 
 \begin{itemize}
-	\item The \b{tagging module} uses a Hidden Markov Model to calculate the parts of speech for the user input, later described in chapter \ref{c.alex.hmm}
+	\item The \b{tagging module} uses a hidden Markov model to calculate the parts of speech for the user input, later described in chapter \ref{c.alex.hmm}
 	\item The \b{query generation module} composes actual SQL queries from the tagged output data by recognizing the requested model and the return type
 	\item The \b{filter extraction module} refines the query generator and provides constraint handling for it
 	\item The \b{response generation module} formulates answers for the user input using natural language by processing the generated query, the recognized model and the conversation state.
@@ -148,15 +148,15 @@ This thesis is built upon the work of T. Michael \cite{michael2016}, who describ
 
 Moreover, \Alex\ provides a user interface, which utilizes web technologies and can be accessed via a web browser. Figure \ref{f.alex_ui} shows the user interface, in which the user asked a question and the agent returned the result in tabular form and answered accordingly.
 
-The focus of this thesis lies on the tagging module, as the main objective is to replace the Hidden Markov Model by Artificial Neural Networks.
+The focus of this thesis lies on the tagging module, as the main objective is to replace the hidden Markov model by artificial neural networks.
 
 \subsection{The Hidden Markov Model}\label{c.introduction.related.hmm}
-The Hidden Markov Model (HMM) is a probabilistic finite state machine that solves general classification problems. It uses the observable output data of a system to derive hidden information from it. Among other applications, HMMs are used especially for speech recognition tasks.
+The hidden Markov model (HMM) is a probabilistic finite state machine that solves general classification problems. It uses the observable output data of a system to derive hidden information from it. Among other applications, HMMs are used especially for speech recognition tasks.
 
-The preliminary work for HMMs was done by R. L. Stratonovich. He first described conditional Markov processes in 1960 \cite{stratonovich1960}, which were used in the following years to describe simple Markov Models and later Hidden Markov Models (see Baum et. al. \cite{baum1966}\cite{baum1967}). The latter became a popular solution for automatic recognition of continuous speech \cite{baker1975} along with other applications, such as pattern recognition in general, the analysis of biological sequences (e.g. DNA) \cite{bishop1986} and part-of-speech tagging \cite{kupiec1992}.
+The preliminary work for HMMs was done by R. L. Stratonovich. He first described conditional Markov processes in 1960 \cite{stratonovich1960}, which were used in the following years to describe simple Markov Models and later hidden Markov models (see Baum et. al. \cite{baum1966}\cite{baum1967}). The latter became a popular solution for automatic recognition of continuous speech \cite{baker1975} along with other applications, such as pattern recognition in general, the analysis of biological sequences (e.g. DNA) \cite{bishop1986} and part-of-speech tagging \cite{kupiec1992}.
 
 \subsection{The Artificial Neural Network Model}\label{c.introduction.related.nn}
-Artificial Neural Networks are networks that process information inspired by the biological nervous system. They consist of connected computational units, typically arranged in different layers. Such a unit (also called \i{artificial neuron}) can make calculations based on its inputs and pass the result to the neighboring units. These connections are weighted, so that the weight can be adjusted depending on the activity of the unit. Thus, a model based on the features of the input data can be created.
+Artificial neural networks are networks that process information inspired by the biological nervous system. They consist of connected computational units, typically arranged in different layers. Such a unit (also called \i{artificial neuron}) can make calculations based on its inputs and pass the result to the neighboring units. These connections are weighted, so that the weight can be adjusted depending on the activity of the unit. Thus, a model based on the features of the input data can be created.
 
 Following research by W. McCulloch, W. Pitts \cite{mcculloch1943} and D. Hebb \cite{shaw1986} on arithmetical learning methods, inspired by the connections of neurons in the 1940s, M. Minsky built the first neural network learning machine called SNARC (\i{Stochastic Neural Analog Reinforcement Computer)}\cite{crevier1993} in 1951.
 
@@ -164,9 +164,9 @@ In the late 1950s, F. Rosenblatt developed the \i{Mark I Perceptron} computer an
 
 A publication of M. Minsky and S. Papert \cite{minsky1969} from 1969 analyzed and exposed some significant limitations of the basic perceptron. They pointed out that it is impossible to learn functions without linear separability (e.g. the exclusive-or problem). Due to these limitations and the fact that the processing power of computers at the time was not sufficient for larger neural networks, research interest in artificial neural networks decreased in the following years.
 
-In 1982, J. Hopfield presented a previously described Neural Network with feedback (known as \i{Hopfield network}), that was able to solve optimization problems like the \i{Traveling Salesman Problem}\footnote{The problem of the traveling salesman or round trip problem: The order of places to be visited once should be chosen in such a way that the distance covered is minimal, whereby the last place is the starting point again (round trip).}. Neural Network approaches started to receive more attention again, also due to the first processors based on transistor technology (microprocessors) being introduced to the market in the early 1970s, replacing the previously used tube technology in the following years, which made computers smaller and cheaper and increased their processing capacity.
+In 1982, J. Hopfield presented a previously described neural network with feedback (known as \i{Hopfield network}), that was able to solve optimization problems like the \i{Traveling Salesman Problem}\footnote{The problem of the traveling salesman or round trip problem: The order of places to be visited once should be chosen in such a way that the distance covered is minimal, whereby the last place is the starting point again (round trip).}. Neural network approaches started to receive more attention again, also due to the first processors based on transistor technology (microprocessors) being introduced to the market in the early 1970s, replacing the previously used tube technology in the following years, which made computers smaller and cheaper and increased their processing capacity.
 
-For the task of POS tagging, Neural Network models were now able to outperform HMM based taggers. H. Schmid created and trained a multilayer Feed-forward Neural Network in 1994 and was able to show that it performed better than an HMM tagger \cite{schmid1994} at that time. In 2000, Ma et. al. ran a series of comparative experiments that proved that results of a neural network tagger can be superior to those of statistical models like the HMM \cite{ma2000}.
+For the task of POS tagging, neural network models were now able to outperform HMM based taggers. H. Schmid created and trained a multilayer Feed-forward neural network in 1994 and was able to show that it performed better than an HMM tagger \cite{schmid1994} at that time. In 2000, Ma et. al. ran a series of comparative experiments that proved that results of a neural network tagger can be superior to those of statistical models like the HMM \cite{ma2000}.
 
 \section{Structure of this Thesis}\label{c.introduction.structure}
 This first chapter outlined the subject of natural language processing and part-of-speech tagging in general as an introduction.
@@ -183,7 +183,7 @@ In conclusion, \ref{c.conclusion} discusses and summarizes the evaluation result
 
 % ===================================================================================
 \chapter{\Alex: Artificial Conversational Agent}\label{c.alex}
-\i{Design and Implementation of an Advisory Artificial Conversational Agent} by T. Michael \cite{michael2016} provides a detailed and comprehensive description of \Alex\ as a compilation of different modules. This chapter focuses on components that are relevant for language processing and were therefore adapted during this thesis: The retrieval and processing of training data (section \ref{c.alex.data}), the Hidden Markov Model tagger (section \ref{c.alex.hmm}) and the tagging interface (section \ref{c.alex.tagging}).
+\i{Design and Implementation of an Advisory Artificial Conversational Agent} by T. Michael \cite{michael2016} provides a detailed and comprehensive description of \Alex\ as a compilation of different modules. This chapter focuses on components that are relevant for language processing and were therefore adapted during this thesis: The retrieval and processing of training data (section \ref{c.alex.data}), the hidden Markov model tagger (section \ref{c.alex.hmm}) and the tagging interface (section \ref{c.alex.tagging}).
 
 \section{System Overview}\label{c.alex.overview}
 The modular structure of \Alex\ facilitates the separation of different functions and therefore simplifies the replaceability of certain functionalities. Besides a module crawler for current data retrieval of web content for the database and a front-end interface module, \Alex\ offers a tagging module. This module enables the training of a language model as well as the assignment of tags to words of a given input sentence.
@@ -193,7 +193,7 @@ Figure \ref{f.alex.components} shows the original architecture of \Alex. The fol
 \begin{itemize}
 	\item The \b{HMM Training Data} is replaced by training data that was generated with improved training sentence templates (see chapter \ref{c.training.data} for a comprehensive explanation)
 	\item \b{Training Data Loading and Slot Filling} are used to generate the new training data
-	\item The \b{HMM Tagger} is replaced by a Neural Network based tagger
+	\item The \b{HMM Tagger} is replaced by a neural network based tagger
 	\item \b{Part of Speech Tagging} of input sentences is realized by the tagging function of the new tagger
 \end{itemize}
 
@@ -208,10 +208,10 @@ In order to teach \Alex\ to assign tags to words correctly, depending on their c
 
 A sentence template is a sentence that provides the structure of a possible tagged training sentence with proper syntax for slot filling. It consists either of special placeholders for specific data from the database (e.g. module titles), inline choices (e.g. the same sentence with each day of the week) or a marker to simply duplicate the sentence. The different slot filling forms can be combined or used multiple times in one sentence\footnote{T. Michael describes the training data structure in detail in chapter 3.4.2 of \i{Design and Implementation of an Advisory Artificial Conversational Agent} \cite{michael2016}.}.
 
-For training the Neural Network Models in this thesis, this slot filling mechanism is adopted and improved for the training with Artificial Neural Networks (see chapter \ref{c.training}).
+For training the neural network models in this thesis, this slot filling mechanism is adopted and improved for the training with artificial neural networks (see chapter \ref{c.training}).
 
 \section{The Hidden Markov Model Tagger}\label{c.alex.hmm}
-As described in section \ref{c.introduction.related.hmm} \ of the introduction, the Hidden Markov Model (HMM) is a statistical tool that uses observable output data of a system to derive hidden information from it. Areas of application are image processing, gesture recognition and natural language processing tasks, such as speech recognition in general and part-of-speech tagging in particular.
+As described in section \ref{c.introduction.related.hmm} \ of the introduction, the hidden Markov model (HMM) is a statistical tool that uses observable output data of a system to derive hidden information from it. Areas of application are image processing, gesture recognition and natural language processing tasks, such as speech recognition in general and part-of-speech tagging in particular.
 
 In case of POS tagging, the observable states of the HMM represent the given sequence of words, whereas the hidden states represent the corresponding parts of speech. The HMM calculates the joint probability of the whole sequence of hidden states based on transmission and output probabilities. Subsequently, it finds the maximum probability of all possible state sequences and determines as a result, which parts of speech most likely correspond to the words of the input sequence.
 
@@ -225,14 +225,14 @@ Figure \ref{f.hmm_structure} illustrates an example of a state sequence with thr
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/hmm_structure}
 	\vspace{.8em}
-	\caption[Structure of a Hidden Markov Model]{An example of a state sequence of three hidden states (tag1 -- tag3) and an observed sequence of three words (word1 -- word3) in a Hidden Markov Model. $p_{start}$ denotes the starting probability, $p_{trans}$ the transmission probabilities between hidden states and $p_{out}$ the output probabilities between a hidden state and an output.}
+	\caption[Structure of a Hidden Markov Model]{An example of a state sequence of three hidden states (tag1 -- tag3) and an observed sequence of three words (word1 -- word3) in a hidden Markov model. $p_{start}$ denotes the starting probability, $p_{trans}$ the transmission probabilities between hidden states and $p_{out}$ the output probabilities between a hidden state and an output.}
 	\label{f.hmm_structure}
 	\vspace{.8em}
 \end{figure}
 
 For the purpose of finding corresponding parts of speech to a given input sentence, an HMM is included in \Alex. According to T. Michael \cite{michael2016}, a tagging scheme was developed to extract exactly the information from user input that is needed to successfully create a database query and to return the information the user asked for. This tagging scheme was intentionally built to be domain independent, creating the opportunity to develop a version of \Alex\ for any topic based on an appropriate database and training data.
 
-To maintain this universal applicability as well as the compatibility with other modules of \Alex, the Neural Network approaches presented in this thesis use the same tagging scheme \Alex\ already utilizes. For a better understanding of the evaluation results in chapter \ref{c.evaluation}, table \ref{t.tagging_scheme} gives an overview of the 6 different classes of tags that \Alex uses.
+To maintain this universal applicability as well as the compatibility with other modules of \Alex, the neural network approaches presented in this thesis use the same tagging scheme \Alex\ already utilizes. For a better understanding of the evaluation results in chapter \ref{c.evaluation}, table \ref{t.tagging_scheme} gives an overview of the 6 different classes of tags that \Alex uses.
 
 \begin{table}[H]
 	\small\def\arraystretch{1.5}\begin{tabular}{ p{2mm} L{48mm} p{35mm} p{40mm} }
@@ -258,7 +258,7 @@ To maintain this universal applicability as well as the compatibility with other
 \end{table}
 
 \section{Tagging Interface}\label{c.alex.tagging}
-As described in the previous chapter, the implementation of the tagging module of \Alex\ utilizes a Hidden Markov Model for part-of-speech tagging. \Alex\ uses an already existing implementation of the HMM Tagger from the Natural Language Toolkit (NLTK)\footnote{The Natural Language Toolkit is a collection of \i{Python} programming libraries for natural language processing, see \link{http://nltk.org}}, called \tt{HiddenMarkovModelTagger}.
+As described in the previous chapter, the implementation of the tagging module of \Alex\ utilizes a hidden Markov model for part-of-speech tagging. \Alex\ uses an already existing implementation of the HMM Tagger from the Natural Language Toolkit (NLTK)\footnote{The Natural Language Toolkit is a collection of \i{Python} programming libraries for natural language processing, see \link{http://nltk.org}}, called \tt{HiddenMarkovModelTagger}.
 
 To replace the existing tagger, a new tagger has to provide a class with two methods: \tt{train} and \tt{tag}. These methods are used to create the language model and apply it to unknown data.
 
@@ -277,18 +277,18 @@ The output is a corresponding list of tuples containing a word and its assigned 
 
 % ===================================================================================
 \chapter{Part-of-Speech Tagging with Neural Networks}\label{c.postagging}
-Chapter \ref{c.introduction.related.nn} introduced Neural Networks as a possible approach for POS tagging. The current chapter presents two different Neural Network architectures and their implementation that is later used to train and evaluate language models with the objective of comparing their POS tagging accuracy with the accuracy of the HMM tagger that \Alex\ uses.
+Chapter \ref{c.introduction.related.nn} introduced neural networks as a possible approach for POS tagging. The current chapter presents two different neural network architectures and their implementation that is later used to train and evaluate language models with the objective of comparing their POS tagging accuracy with the accuracy of the HMM tagger that \Alex\ uses.
 
-In general, a Neural Network represents a mathematical function, which is able to assign specific output data to corresponding input data. This assignment is learned by processing input data whose output is known. Thus, it belongs to the category of supervised learning\footnote{\i{Supervised Learning} describes the process of gaining knowledge with the help of labeled data. Depending on the capability of the supervised learning algorithm to generalize from the given data, this knowledge can then be applied to unknown data.}.
+In general, a neural network represents a mathematical function, which is able to assign specific output data to corresponding input data. This assignment is learned by processing input data whose output is known. Thus, it belongs to the category of supervised learning\footnote{\i{Supervised Learning} describes the process of gaining knowledge with the help of labeled data. Depending on the capability of the supervised learning algorithm to generalize from the given data, this knowledge can then be applied to unknown data.}.
 
 The network itself emerges from the interconnection of nodes (the artificial neurons), that are usually arranged in different layers. Each node represents a non-linear\footnote{The non-linearity is important because linear functions cannot describe some mutual exclusive feature combinations.} activation function that calculates an output, depending on the sum of its inputs. Possible activation functions are the sigmoid function, the hyperbolic tangent or the maximum function.
 
-The training effect is achieved by weighting the connections of the nodes and adjust these weights during training. The weights of Neural Networks are typically represented by real numbers. The adjustments are defined by a learning algorithm that utilizes a particular learning method. Using the initial or current weights of the network, an error (also called \i{loss}) between the prediction and the given label can be computed on the last layer (the output layer) with the help of a corresponding loss function. The training objective is to minimize the loss function of the current state of the network and adjust the weights accordingly. This can be achieved by using \i{backpropagation} with \i{stochastic gradient descent}.
+The training effect is achieved by weighting the connections of the nodes and adjust these weights during training. The weights of neural networks are typically represented by real numbers. The adjustments are defined by a learning algorithm that utilizes a particular learning method. Using the initial or current weights of the network, an error (also called \i{loss}) between the prediction and the given label can be computed on the last layer (the output layer) with the help of a corresponding loss function. The training objective is to minimize the loss function of the current state of the network and adjust the weights accordingly. This can be achieved by using \i{backpropagation} with \i{stochastic gradient descent}.
 
 The POS tagging task requires the processing of words which are represented as character strings. For easier handling, each word is mapped to an integer value (the word id).
 
 \section{Feed-forward Neural Network Model}\label{c.postagging.fnn}
-Feed-forward Neural Networks are a common type of ANNs, that consist of an input and an output layer with one or more hidden layers in between. An FNN propagates information through the network only in the forward direction, from the input to the output layer.
+Feed-forward neural networks are a common type of ANNs, that consist of an input and an output layer with one or more hidden layers in between. An FNN propagates information through the network only in the forward direction, from the input to the output layer.
 
 \subsection{Architecture}\label{c.postagging.fnn.architecture}
 The FNN architecture that is used in this thesis is shown in figure \ref{f.fnn.structure}. The current word and the configured number of preceding words are each converted into word embeddings. These embeddings are reshaped to one vector, called the feature vector, which serves as the input layer for the neural network. The FNN contains one hidden layer, which is connected to the input layer with weight matrix \tt{V}. The output layer represents the set of existing POS tags and is connected to the hidden layer with weight matrix \tt{W}.
@@ -297,14 +297,14 @@ For each word of every sentence of the training corpus, a feature vector is buil
 
 \begin{figure}[ht]
 	\includegraphics[width=\textwidth]{images/fnn_structure}
-	\caption[Structure of a Feed-forward Neural Network]{The structure of a feed-forward neural network. The feature vector is built by the embeddings of the corresponding input word at position \tt{p} and by its \tt{3} preceding words (the number of predecessors may vary, of course).}
+	\caption[Structure of a Feed-forward Neural Network]{The structure of a feed-forward neural network. The feature vector is built by the embeddings of the corresponding input word at position \tt{p} and by its \tt{3} preceding words (the number of predecessors may vary, of course). \tt{V} and \tt{W} are weight matrices with respective matrix dimensions of $\textsf{feature vector size} \times \textsf{hidden layer size}$ for \tt{V} and $\textsf{hidden layer size} \times \textsf{number of POS tags}$ for \tt{W}.}
 	\label{f.fnn.structure}
 \end{figure}
 
 \subsection{Implementation}\label{c.postagging.fnn.implementation}
 To implement the presented FNN architecture, the open source machine learning framework \i{TensorFlow}\footnote{TensorFlow is a library written in Python, that is utilized for high performance numerical computations especially for the area of machine learning. In this thesis, TensorFlow version 1.8 is used.\\See the official TensorFlow website: \link{https://www.tensorflow.org}} is used. In the following descriptions, all functions starting with \tt{tf} are functions from the TensorFlow library.
 
-The nodes of the input layer are populated by the feature vector. To create the feature vector, an embedding matrix with the dimensions of vocabulary size $\times$ embedding size is created and initially filled with random normal distributed values\footnote{The generated values follow a normal distribution with mean of 0 and standard deviation of 0.1, except that values whose magnitude is more than 2 standard deviations from the mean are dropped (truncated) and re-picked. See the TensorFlow documentation.}, using the \tt{tf.truncated\_normal()} function. This matrix is used to retrieve the vectors for the current word and its predecessors via \tt{tf.nn.embedding\_lookup} and reshape them to one single vector, the feature vector. Figure \ref{f.fnn.feature} illustrates the creation of the feature vector.
+The nodes of the input layer are populated by the feature vector. To create the feature vector, an embedding matrix with the dimensions of $\textsf{vocabulary size} \times \textsf{embedding size}$ is created and initially filled with random normal distributed values\footnote{The generated values follow a normal distribution with mean of 0 and standard deviation of 0.1, except that values whose magnitude is more than two standard deviations from the mean are dropped (truncated) and re-picked. See the TensorFlow documentation.}, using the \tt{tf.truncated\_normal()} function. This matrix is used to retrieve the vectors for the current word and its predecessors via \tt{tf.nn.embedding\_lookup} and reshape them to one single vector, the feature vector. Figure \ref{f.fnn.feature} illustrates the creation of the feature vector.
 
 \begin{figure}[ht]
 	\vspace{1.5em}
@@ -322,7 +322,7 @@ The predictions are calculated with the \tt{tf.argmax()} function, that reduces 
 
 
 \section{Recurrent Neural Network Model}\label{c.postagging.rnn}
-Similar to FNNs, recurrent Neural Networks (RNNs) also consist of an input, a hidden and an output layer. The main difference is that information is not only propagated forward linearly, but that information from previous training steps are also taken into account in RNNs.
+Similar to FNNs, recurrent neural networks (RNNs) also consist of an input, a hidden and an output layer. The main difference is that information is not only propagated forward linearly, but that information from previous training steps are also taken into account in RNNs.
 
 \subsection{Architecture}\label{c.postagging.rnn.architecture}
 Figure \ref{f.rnn.structure} illustrates the architecture of an RNN, which was implemented for this thesis. Unlike the FNN, the RNN only uses word ids as input features and does not utilize word embeddings. It contains one hidden layer, which is populated with the current input word on the one hand and by the output of the hidden layer of a previous training step on the other hand. This makes the RNN capable of memorizing information from the past. This capability can also be described as a long short-term memory (\i{LSTM}), emphasized in orange in figure \ref{f.rnn.structure}. The output layer represents the set of existing POS tags and is connected to the hidden layer with weight matrix
@@ -332,20 +332,20 @@ Each word of every sentence of the training corpus represents an input feature, 
 
 \begin{figure}[ht]
 	\includegraphics[width=\textwidth]{images/rnn_structure}
-	\caption[Structure of a Recurrent Neural Network]{The structure of a recurrent neural network. The feature vector is the initial vector of the corresponding input word at time \tt{t}. The output of the hidden layer from previously trained words (here at time \tt{x}) is fed back into the same hidden layer for the current word.}
+	\caption[Structure of a Recurrent Neural Network]{The structure of a recurrent neural network. The feature vector is the initial vector of the corresponding input word at time \tt{t}. The output of the hidden layer from previously trained words (here at time \tt{t-x}) is populated back into the same hidden layer for the current word. \tt{V}, \tt{X} and \tt{W} are weight matrices with respective matrix dimensions of $\textsf{feature vector size} \times \textsf{hidden layer size}$ for \tt{V}, $\textsf{hidden layer size} \times \textsf{hidden layer size}$ for \tt{X} and $\textsf{hidden layer size} \times \textsf{number of POS tags}$ for \tt{W}.}
 	\label{f.rnn.structure}
 \end{figure}
 
 \subsection{Implementation}\label{c.postagging.rnn.implementation}
 The implementation of the proposed RNN architecture utilizes the TensorFlow library as well. Besides the word id of the current word, the input layer has an additional dimension describing the number of past training steps that are considered for the current training step.
 
-The hidden layer is built using \tt{tf.nn.rnn\_cell.LSTMCell()}\footnote{This function uses an implementation proposed by S. Hochreiter et. al. in 1997 \cite{hochreiter1997}.}, a function that creates an LSTM recurrent network cell which is then used in \tt{tf.nn.dynamic\_rnn()} to compute the logits for the output layer.
+The hidden layer is built using \tt{tf.nn.rnn\_cell.LSTMCell()}\footnote{This function uses an implementation proposed by S. Hochreiter et. al. in 1997 \cite{hochreiter1997}.}, a function that creates a long short-term memory (LSTM) recurrent network cell which is then used in \tt{tf.nn.dynamic\_rnn()} to compute the logits for the output layer.
 
 Loss, predictions and accuracy are implemented in a similar way as in the FNN. In addition, the same optimizer is used.
 
 % ===================================================================================
 \chapter{Training of Language Models}\label{c.training}
-An optimal language model using the Neural Network approach proposed in this thesis, requires as much annotated training data as possible. The following sections describe the generation of tagged training data and the training of different language models, due to parameter variation, based on this generated training corpus.
+An optimal language model using the neural network approach proposed in this thesis, requires as much annotated training data as possible. The following sections describe the generation of tagged training data and the training of different language models, due to parameter variation, based on this generated training corpus.
 
 \section{Training Data Corpus}\label{c.training.data}
 To create a training corpus with tagged sentences, the already existing sentence template set of \Alex\ is used as the basis for an improved and extended template set. In addition, a log of user input data\footnote{The log data that was available for this thesis started on 30th of August, 2017 until 27th of April, 2018 and contained \tt{1293} entries of user input.} provides useful information on possible input sentences, that are not yet considered in the template set.
@@ -383,7 +383,7 @@ To address this issue, the following adjustments were made for the new template 
 	\item The slot \tt{\{Program:degree\}} was partly replaced by the inline choice \tt{(bachelor|master|diplom)}, which included the main terms requested in the logs.
 \end{itemize}
 
-Furthermore, the wording occurring in the logs referring to linking words and actions were improved with the help of inline choices. The following table shows those improvements, comparing the previous and the new sentence template:
+Furthermore, wording referring to linking words and actions, which occurs in the logs, was improved with the help of inline choices. The following table shows those improvements, comparing the previous and the new sentence template:
 
 \begin{table}[H]
 	\small\def\arraystretch{1.5}\begin{tabular}{ L{43mm} L{43mm} p{43mm} }
@@ -591,7 +591,7 @@ After introducing the test sets, all training groups were evaluated according to
 ...
 
 \subsection{Hidden Markov Models}\label{c.evaluation.results.hmm}
-After evaluating the Neural Network based language models, the HMM is evaluated in the following. For this purpose, the previous HMM which was trained on the basis of the training data generated by T. Michael \cite{michael2016} is compared to a new HMM trained on the basis of the training data proposed in this thesis. The evaluation was carried out using the known and the unknown test; the results are presented in figure \ref{f.evaluation.hmm}.
+After evaluating the neural network based language models, the HMM is evaluated in the following. For this purpose, the previous HMM which was trained on the basis of the training data generated by T. Michael \cite{michael2016} is compared to a new HMM trained on the basis of the training data proposed in this thesis. The evaluation was carried out using the known and the unknown test; the results are presented in figure \ref{f.evaluation.hmm}.
 
 \begin{figure}[H]
 	\centering\includegraphics[width=.7\textwidth]{images/evaluation_hmm}
@@ -613,13 +613,13 @@ The final chapter summarizes the work of this thesis and the evaluation results 
 \section{Summary}\label{c.conclusion.summary}
 The aim to develop a neural network based part-of-speech tagger for the advisory Artificial Conversational Agent \Alex\ was accomplished within the scope of this thesis.
 
-A tagger module was implemented featuring a feed-forward Neural Network as well as a recurrent Neural Network. A training corpus containing tagged sentences was created with the help of an improved set of sentence templates. With both Neural Network architectures, various language models were trained on this corpus using parameter variation. These models were then evaluated with two corresponding tests sets, containing sentences from the training corpus (known data) and unknown sentences.
+A tagger module was implemented featuring a feed-forward neural network as well as a recurrent neural network. A training corpus containing tagged sentences was created with the help of an improved set of sentence templates. With both neural network architectures, various language models were trained on this corpus using parameter variation. These models were then evaluated with two corresponding tests sets, containing sentences from the training corpus (known data) and unknown sentences.
 
 \section{Discussion}\label{c.conclusion.discussion}
 ...
 
 \section{Future work}\label{c.conclusion.future}
-Although a high accuracy of the language models was achieved with an improved training corpus and the Neural Network approaches used in this thesis, further research could be done in certain areas to fine-tune and improve the templates as well as the tagging results.
+Although a high accuracy of the language models was achieved with an improved training corpus and the neural network approaches used in this thesis, further research could be done in certain areas to fine-tune and improve the templates as well as the tagging results.
 
 As demonstrated in the preceding chapters, the methodology used in this thesis was found to be appropriate for an initial exploration into improving the tagging results. Going forward, however, there are certain areas and components of the methodology that could be optimized, which will be outlined in the following.
 
