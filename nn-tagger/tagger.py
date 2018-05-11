@@ -129,7 +129,7 @@ class Tagger:
         graph = tf.get_default_graph()
         input_x = graph.get_operation_by_name("input_x").outputs[0]
         predictions = graph.get_operation_by_name("predictions").outputs[0]
-        
+
         # get features and predicted pos ids
         features = self.__rnn_reshape(self.data.features) if self.architecture == 'RNN' else self.data.features
         predicted_pos_ids = sess.run(predictions, feed_dict={input_x: features})
