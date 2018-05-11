@@ -318,7 +318,7 @@ The hidden layer nodes are also initialized with random normal distributed value
 
 Finally, the values for the output layer (the logits) are computed using a matrix multiplication of the outputs of the RELUs and the weight matrix \tt{W} using the \tt{tf.matmul()} function. Subsequently, the loss can be calculated by computing the sparse softmax cross entropy between input labels and logits, using the \tt{tf.nn.sparse\_softmax\_cross\_entropy\_with\_logits()} function.
 
-The predictions are calculated with the \tt{tf.argmax()} function, that reduces the logits to the largest value, which represents the predicted POS tag. The function \tt{tf.train.AdamOptimizer()}\footnote{The Adam algorithm is an optimizer that was proposed by D. Kingma et. al. in 2014 \cite{kingma2014}.} enables backpropagation with stochastic gradient descent to optimize the computations and results during training.
+The predictions are calculated with the \tt{tf.argmax()} function, that reduces the logits to the largest value, which represents the predicted POS tag. The function \tt{tf.train.AdamOptimizer()}\footnote{The Adam algorithm is an optimizer that was proposed by D. Kingma et. al. in 2014 \cite{kingma2014}. It provides a computationally efficient gradient-based optimization of stochastic objective functions.} enables backpropagation with stochastic gradient descent to optimize the computations and results during training.
 
 
 \section{Recurrent Neural Network Model}\label{c.postagging.rnn}
@@ -339,7 +339,7 @@ Each word of every sentence of the training corpus represents an input feature, 
 \subsection{Implementation}\label{c.postagging.rnn.implementation}
 The implementation of the proposed RNN architecture utilizes the TensorFlow library as well. Besides the word id of the current word, the input layer has an additional dimension describing the number of past training steps that are considered for the current training step.
 
-The hidden layer is built using \tt{tf.nn.rnn\_cell.LSTMCell()}\footnote{This function uses an implementation proposed by S. Hochreiter et. al. in 1997 \cite{hochreiter1997}.}, a function that creates a long short-term memory (LSTM) recurrent network cell which is then used in \tt{tf.nn.dynamic\_rnn()} to compute the logits for the output layer.
+The hidden layer is built using \tt{tf.nn.rnn\_cell.LSTMCell()}\footnote{This function uses an implementation proposed by S. Hochreiter et. al. in 1997 \cite{hochreiter1997}.}, a function that creates a long short-term memory (LSTM) cell for recurrent networks which is then used in \tt{tf.nn.dynamic\_rnn()} to compute the logits for the output layer.
 
 Loss, predictions and accuracy are implemented in a similar way as in the FNN. In addition, the same optimizer is used.
 
@@ -383,7 +383,7 @@ To address this issue, the following adjustments were made for the new template 
 	\item The slot \tt{\{Program:degree\}} was partly replaced by the inline choice \tt{(bachelor|master|diplom)}, which included the main terms requested in the logs.
 \end{itemize}
 
-Furthermore, wording referring to linking words and actions, which occurs in the logs, was improved with the help of inline choices. The following table shows those improvements, comparing the previous and the new sentence template:
+Furthermore, wording referring to linking words and actions, which occurs in the logs, was improved with the help of inline choices. The following table shows an excerpt of those improvements, comparing the previous and the new sentence template:
 
 \begin{table}[H]
 	\small\def\arraystretch{1.5}\begin{tabular}{ L{43mm} L{43mm} p{43mm} }
@@ -404,7 +404,7 @@ Furthermore, wording referring to linking words and actions, which occurs in the
 	\vspace{1em}
 \end{table}
 
-At last \tt{28} new sentence templates were added, which provide a sentence structure that was found in the logs but not in the previous template set. The new set contains a total of \tt{100} sentence templates (including single word templates) and can be found in the appendix \ref{c.appendix.sentencetemplates}.
+All in all, the new set of sentence templates contains \tt{36} templates, which are exactly the same as in the old set, \tt{29} templates that were slightly modified or extended while maintaining the same tag sequence and \tt{35} new sentence templates. The latter were created according to a sentence structure that was found in the logs but not in the previous template set. Therefore, the new set contains a total of \tt{100} sentence templates (including single word templates) and can be found in the appendix \ref{c.appendix.sentencetemplates}.
 
 The resulting training data corpus used in this thesis contains \tt{218.700} tagged sentences consisting of \tt{2.038.490} words, with a vocabulary of \tt{9141} words.
 
@@ -557,8 +557,39 @@ Tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} sho
 	\label{t.evaluation_topics_unknown}
 \end{table}
 
+The number of correctly tagged words serves as a measure of accuracy for the respective language model. This includes unrecognized words (words that did not occur in the training corpus) that are still tagged correctly. The proportion of correctly tagged words can then be compared for both test sets for each language model.
+
+In addition, the conformity of the language models with the labeled test data is measured by using Cohen's Kappa ($\kappa$)\footnote{Cohen's Kappa is a measurement of the agreement of two raters referring to a given set of categories (in this thesis the set of tags). It was proposed by J. Cohen in 1960 \cite{cohen1960} and considers the possibility of agreement by chance.}. It is defined in equation \ref{e.kappa}.
+
+\begin{equation}
+\kappa = \frac{p_o - p_c}{1 - p_c} \label{e.kappa}
+\end{equation}
+
+$p_o$ represents the measured agreement and $p_c$ the randomly expected agreement. Most values are between the perfect agreement ($\kappa = 1$) and an agreement only by chance ($\kappa = 0$). Values lower than zero are interpreted as an agreement that is even worse than an agreement by chance. There are different interpretations of the level of agreement for the different values of $\kappa$. Table \ref{t.evaluation.kappa} presents an interpretation based on a proposal of J. Landis et. al. \cite{landis1977} is used in this thesis.
+
+\begin{table}[!ht]
+	\centering\small\def\arraystretch{1.5}\begin{tabular}{ r l }
+	\trule
+	\textsc{Cohen's Kappa} & \textsc{Interpretation} \\
+	\srule
+	$\kappa \leq 0.2$ \ \ & Poor agreement \\
+	\mrule
+	$0.2 < \kappa \leq 0.4$ \ \ & Fair agreement \\
+	\mrule
+	$0.4 < \kappa \leq 0.6$ \ \ & Moderate agreement \\
+	\mrule
+	$0.6 < \kappa \leq 0.8$ \ \ & Good agreement \\
+	\mrule
+	$0.8 < \kappa \leq 1.0$ \ \ & Very good agreement \\
+	\brule
+	\end{tabular}
+	\vspace{.8em}
+	\caption[Interpretation of Cohen's Kappa]{The interpretation of Cohen's Kappa for different levels of agreement of two raters.}
+	\label{t.evaluation.kappa}
+\end{table}
+
 \section{Evaluation Results}\label{c.evaluation.results}
-After introducing the test sets, all training groups were evaluated according to the parameter configuration presented in chapter \ref{c.training.tuning}. The following sections show the evaluation results of the different architectures for each test set.
+After introducing the test sets and the evaluation methodology, all training groups were evaluated according to the parameter configuration presented in chapter \ref{c.training.tuning}. The following sections show the evaluation results of the different architectures for each test set.
 
 \subsection{Feed-Forward Neural Network Models}\label{c.evaluation.results.fnn}
 ...
@@ -601,7 +632,7 @@ After evaluating the neural network based language models, the HMM is evaluated 
 
 The previous HMM tagged \tt{82.5\%} of the words of the known test and \tt{63.0\%} of the unknown test correctly, whereas it was \tt{93.4\%} for the known and \tt{79.3\%} for the unknown test for the new HMM. It was evident that the HMM, which was based on the new training data, performed significantly better than the previous HMM. Especially the result for the unknown test is remarkable, as the accuracy increases by more than \tt{16\%}.
 
-It should be noted that the comparison of the previous and the new HMM model based on the known test has some limitations, as the known test was not fully known to the previous HMM. Nevertheless, the major part of the known test set was based on training templates that were already used to build the corpus for the previous HMM, which is why it still scored well with more than 4 correct tags out of 5.
+It should be noted that the comparison of the previous and the new HMM model based on the known test has some limitations, as the known test was not fully known\footnote{As described in chapter \ref{c.evaluation.test}, the known test contains \tt{584} sentences. \tt{375} sentences are included in he corpus of the previous HMM, resulting in \tt{35.8\%} of the sentences of the known test, that were completely unknown to the previous HMM.} to the previous HMM. Nevertheless, the major part of the known test set was based on training templates that were already used to build the corpus for the previous HMM, which is why it still scored well with more than 4 correct tags out of 5.
 
 \section{Overall Comparison}\label{c.evaluation.comparison}
 ...
