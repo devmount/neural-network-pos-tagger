@@ -493,9 +493,9 @@ After a short description of how the evaluation tests were created, this chapter
 \section{Test Design}\label{c.evaluation.test}
 To evaluate the trained language models, two test sets were designed: a test set containing a selection of tagged sentences that actually exist in the training corpus (here called the \i{known test}) and a test set, for which the structure of the sentences in the known test was modified in a way that it remains semantically meaningful but does not occur in the training corpus (called the \i{unknown test}). The unknown test deliberately contains words, which do not exist in the vocabulary of the training corpus in order to assess how the model handles completely unknown data.
 
-The sentences are divided into different topics to cover a wide range of possible input data. A balanced number of sentences was included in the different areas to ensure that the evaluation result does not depend on only one or two topics.
+The sentences are divided into different topics to cover a wide range of possible input data. A reasonably balanced number of sentences was included in the different areas to ensure that the evaluation result does not depend on only one or two topics.
 
-Tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} show the different topics represented in the known and the unknown test set, the respective number of evaluation sentences and an example sentence to illustrate each topic. Both test sets combined include a total number of \tt{1058} tagged test sentences, consisting of \tt{7678} word-tag tuples.
+Tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} show the different topics represented in the known and the unknown test set, the respective number of evaluation sentences and an example sentence to illustrate each topic. Both test sets combined include a total number of \tt{1094} tagged test sentences, consisting of \tt{7986} word-tag tuples.
 
 \begin{table}[!ht]
 	\centering\small\def\arraystretch{1.5}\begin{tabular}{ p{18mm} c L{95mm} }
@@ -504,13 +504,13 @@ Tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} sho
 	\drule
 	ECTS & \tt{44} & \multicolumn{1}{L{95mm}}{\i{Which modules have 6 ECTS}} \\
 	\mrule
-	Time & \tt{60} & \multicolumn{1}{L{95mm}}{\i{Which courses are on Tuesday}} \\
+	Time & \tt{72} & \multicolumn{1}{L{95mm}}{\i{Which courses are on Tuesday}} \\
 	\mrule
 	Faculty & \tt{56} & \multicolumn{1}{L{95mm}}{\i{All modules of faculty 4}} \\
 	\mrule
 	Participants & \tt{54} & \multicolumn{1}{L{95mm}}{\i{Which courses are limited to 30 participants}} \\
 	\mrule
-	Persons & \tt{61} & \multicolumn{1}{L{95mm}}{\i{Which courses are taught by Professor Martinelli}} \\
+	Persons & \tt{85} & \multicolumn{1}{L{95mm}}{\i{Which courses are taught by Professor Martinelli}} \\
 	\mrule
 	Program & \tt{60} & \multicolumn{1}{L{95mm}}{\i{I'm searching for all modules of the computer science program }} \\
 	\mrule
@@ -524,10 +524,10 @@ Tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} sho
 	\mrule
 	Locations & \tt{42} & \multicolumn{1}{L{95mm}}{\i{All courses in room Mainbuilding H 1012}} \\
 	\bottomrule
-	 & \tt{584} & \\
+	 & \tt{620} & \\
 	\end{tabular}
 	\vspace{3mm}
-	\caption[Evaluation Topics using the Known Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the known test set. It contains a total of \tt{584} tagged sentences, consisting of \tt{4009} word-tag tuples.}
+	\caption[Evaluation Topics using the Known Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the known test set. It contains a total of \tt{620} tagged sentences, consisting of \tt{4317} word-tag tuples.}
 	\label{t.evaluation_topics_known}
 	\vspace{1em}
 \end{table}
@@ -641,7 +641,7 @@ After evaluating the neural network based language models, the HMM is evaluated 
 
 The previous HMM tagged \tt{82.5\%} of the words of the known test and \tt{63.0\%} of the unknown test correctly, whereas it was \tt{93.4\%} for the known and \tt{79.3\%} for the unknown test for the new HMM. It was evident that the HMM, which was based on the new training data, performed significantly better than the previous HMM. Especially the result for the unknown test is remarkable, as the accuracy increases by more than \tt{16\%}.
 
-It should be noted that the comparison of the previous and the new HMM model based on the known test has some limitations, as the known test was not fully known\footnote{As described in chapter \ref{c.evaluation.test}, the known test contains \tt{584} sentences. \tt{375} sentences are included in he corpus of the previous HMM, resulting in \tt{35.8\%} of the sentences of the known test, that were completely unknown to the previous HMM.} to the previous HMM. Nevertheless, the major part of the known test set was based on training templates that were already used to build the corpus for the previous HMM, which is why it still scored well with more than 4 correct tags out of 5.
+It should be noted that the comparison of the previous and the new HMM model based on the known test has some limitations, as the known test was not fully known\footnote{As described in chapter \ref{c.evaluation.test}, the known test contains \tt{620} sentences. \tt{388} sentences are included in he corpus of the previous HMM, resulting in \tt{37.4\%} of the sentences of the known test, that were unknown to the previous HMM.} to the previous HMM. Nevertheless, the major part of the known test set was based on training templates that were already used to build the corpus for the previous HMM, which is why it still scored well with more than 4 correct tags out of 5.
 
 \section{Overall Comparison}\label{c.evaluation.comparison}
 ...

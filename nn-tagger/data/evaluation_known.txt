@@ -105,6 +105,18 @@ welche/R_LIST course/M_Course sind/X am/X fr/C_CourseDate:day
 welche/R_LIST course/M_Course sind/X am/X fr/C_CourseDate:day nach/Q_GT 16/C_CourseDate:startTime uhr/C_CourseDate:startTime
 welche/R_LIST course/M_Course sind/X am/X fr/C_CourseDate:day vor/Q_LT 16/C_CourseDate:startTime uhr/C_CourseDate:startTime
 welche/R_LIST course/M_Course sind/X am/X fr/C_CourseDate:day um/X_CourseDate:startTime 16/C_CourseDate:startTime uhr/C_CourseDate:startTime
+course/M_Course die/X am/X sa/C_CourseDate:day angeboten/X werden/X
+welche/R_LIST course/M_Course werden/X an/X einem/X sa/C_CourseDate:day angeboten/X
+welche/R_LIST course/M_Course finden/X sa/C_CourseDate:day statt/X
+welche/R_LIST course/M_Course finden/X am/X sa/C_CourseDate:day statt/X
+welche/R_LIST course/M_Course finden/X am/X sa/C_CourseDate:day nach/Q_GT 16/C_CourseDate:startTime uhr/C_CourseDate:startTime statt/X
+welche/R_LIST course/M_Course finden/X am/X sa/C_CourseDate:day vor/Q_LT 16/C_CourseDate:startTime uhr/C_CourseDate:startTime statt/X
+welche/R_LIST course/M_Course finden/X am/X sa/C_CourseDate:day um/X_CourseDate:startTime 16/C_CourseDate:startTime uhr/C_CourseDate:startTime statt/X
+welche/R_LIST course/M_Course sind/X sa/C_CourseDate:day
+welche/R_LIST course/M_Course sind/X am/X sa/C_CourseDate:day
+welche/R_LIST course/M_Course sind/X am/X sa/C_CourseDate:day nach/Q_GT 16/C_CourseDate:startTime uhr/C_CourseDate:startTime
+welche/R_LIST course/M_Course sind/X am/X sa/C_CourseDate:day vor/Q_LT 16/C_CourseDate:startTime uhr/C_CourseDate:startTime
+welche/R_LIST course/M_Course sind/X am/X sa/C_CourseDate:day um/X_CourseDate:startTime 16/C_CourseDate:startTime uhr/C_CourseDate:startTime
 
 # faculty
 welche/R_LIST studiengang/M_Program von/X der/X fakultät/X_Institute:faculty 1/C_Institute:faculty gibt/X es/X
@@ -222,20 +234,44 @@ welche/R_LIST module/M_MTSModule sind/X begrenzt/X_ParticipantLimitation auf/X 3
 
 # persons
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 3/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 4/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 5/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 6/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 7/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 8/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 9/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 10/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 11/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X 12/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 3/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 4/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 5/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 6/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 7/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 8/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 9/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 10/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 11/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X genau/Q_EQ als/X 12/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 3/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 4/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 5/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 6/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 7/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 8/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 9/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 10/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 11/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X mehr/Q_GT als/X 12/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 3/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 4/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 5/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 6/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 7/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 8/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 9/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 10/C_MTSModule:ects ects/C_MTSModule:ects an/X
+welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 11/C_MTSModule:ects ects/C_MTSModule:ects an/X
 welche/R_LIST personen/M_Person bieten/X module/R_MTSModule:title mit/X weniger/Q_LT als/X 12/C_MTSModule:ects ects/C_MTSModule:ects an/X
 wer/M_Person ist/X der/X verantworliche/X_Person des/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
 wer/M_Person ist/X verantworliche/X für/X das/X module/X_MTSModule:title anwendungssystemprojekt/C_MTSModule:title
