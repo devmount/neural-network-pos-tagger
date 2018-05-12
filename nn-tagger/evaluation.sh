@@ -48,3 +48,36 @@ for n in 1 5 10 20 40 60 80 100 120 140; do
         python3.6 tagger.py --evaluate data/evaluation_unknown.txt -p 1 -e 50 -s 100 -n $n -i
     fi
 done
+
+printf "\n## Embedding Size II:\n"
+for e in 200 250 300 350 400 450 500 550 600; do
+    if [ -d "storage/fnn-1-$e-350-1" ]; then
+        printf "Model fnn-1-$e-350-1\n"
+        python3.6 tagger.py --reset -fq
+        cp storage/fnn-1-$e-350-1/* saved/
+        python3.6 tagger.py --evaluate data/evaluation_known.txt -p 1 -e $e -s 350 -n 1 -i
+        python3.6 tagger.py --evaluate data/evaluation_unknown.txt -p 1 -e $e -s 350 -n 1 -i
+    fi
+done
+
+printf "\n## Hidden Layer Size II:\n"
+for s in 200 250 300 350 400 450 500 550 600; do
+    if [ -d "storage/fnn-1-250-$s-1" ]; then
+        printf "Model fnn-1-250-$s-1\n"
+        python3.6 tagger.py --reset -fq
+        cp storage/fnn-1-250-$s-1/* saved/
+        python3.6 tagger.py --evaluate data/evaluation_known.txt -p 1 -e 250 -s $s -n 1 -i
+        python3.6 tagger.py --evaluate data/evaluation_unknown.txt -p 1 -e 250 -s $s -n 1 -i
+    fi
+done
+
+printf "\n## Network Size:\n"
+for n in {50..500..50}; do
+    if [ -d "storage/fnn-1-$n-$n-5" ]; then
+        printf "Model fnn-1-$n-$n-5\n"
+        python3.6 tagger.py --reset -fq
+        cp storage/fnn-1-$n-$n-5/* saved/
+        python3.6 tagger.py --evaluate data/evaluation_known.txt -p 1 -e $n -s $n -n 5 -i
+        python3.6 tagger.py --evaluate data/evaluation_unknown.txt -p 1 -e $n -s $n -n 5 -i
+    fi
+done
