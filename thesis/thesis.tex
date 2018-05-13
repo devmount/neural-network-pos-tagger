@@ -283,21 +283,46 @@ In general, a neural network represents a mathematical function, which is able t
 
 The network itself emerges from the interconnection of nodes (the artificial neurons), that are usually arranged in different layers. Each node represents a non-linear\footnote{The non-linearity is important because linear functions cannot describe some mutual exclusive feature combinations.} activation function that calculates an output, depending on the sum of its inputs. Possible activation functions are the sigmoid function, the hyperbolic tangent or the maximum function.
 
-The training effect is achieved by weighting the connections of the nodes and adjust these weights during training. The weights of neural networks are typically represented by real numbers. The adjustments are defined by a learning algorithm that utilizes a particular learning method. Using the initial or current weights of the network, an error (also called \i{loss}) between the prediction and the given label can be computed on the last layer (the output layer) with the help of a corresponding loss function. The training objective is to minimize the loss function of the current state of the network and adjust the weights accordingly. This can be achieved by using \i{backpropagation} with \i{stochastic gradient descent}.
+The training effect is achieved by weighting the connections of the nodes and adjust these weights during training. The weights of neural networks are typically represented by real numbers. The adjustments are defined by a learning algorithm that utilizes a particular learning method. Using the initial or current weights of the network, an error (also called \i{loss}) between the prediction and the given label can be computed on the last layer (the output layer) with the help of a corresponding loss function. The training objective is to minimize the loss function of the current state of the network and adjust the weights accordingly. This can be achieved by using \i{backpropagation} with \i{stochastic gradient descent} (SGD).
 
-The POS tagging task requires the processing of words which are represented as character strings. For easier handling, each word is mapped to an integer value (the word id).
+The POS tagging task requires the processing of words which are represented as character strings. For computational processing, each word is mapped to an integer value (the word id).
 
 \section{Feed-forward Neural Network Model}\label{c.postagging.fnn}
 Feed-forward neural networks are a common type of ANNs, that consist of an input and an output layer with one or more hidden layers in between. An FNN propagates information through the network only in the forward direction, from the input to the output layer.
 
 \subsection{Architecture}\label{c.postagging.fnn.architecture}
-The FNN architecture that is used in this thesis is shown in figure \ref{f.fnn.structure}. The current word and the configured number of preceding words are each converted into word embeddings. These embeddings are reshaped to one vector, called the feature vector, which serves as the input layer for the neural network. The FNN contains one hidden layer, which is connected to the input layer with weight matrix \tt{V}. The output layer represents the set of existing POS tags and is connected to the hidden layer with weight matrix \tt{W}.
+The FNN architecture that is used in this thesis is shown in figure \ref{f.fnn.structure}. The current word and the configured number of preceding words are each converted into word embeddings. These embeddings are reshaped to one vector, called the feature vector, which serves as the input layer for the neural network. The FNN contains one hidden layer, which is connected to the input layer with weight matrix $V$. The output layer represents the set of existing POS tags and is connected to the hidden layer with weight matrix $W$.
 
 For each word of every sentence of the training corpus, a feature vector is built and the data is sequentially propagated to both the hidden and the output layer, predicting a POS tag for the current word and calculating the current loss and accuracy. After propagating the error back to adjust the weights and reduce the loss, the next training step is executed.
 
+The outputs of the hidden layer are typically computed with the rectified linear activation function (the \i{rectifier}). These nodes are therefore also called \i{rectified linear units} (RELUs). However, the effect of 8 different activation functions is examined in this thesis too. Figure \ref{f.postagging.activation} illustrates the qualitative plot of each function. The presented activation functions can be separated into two different types of nonlinearities: The first two (\tt{RELU} and \tt{RELU6}) are continuous functions but not everywhere differentiable, the other functions (\tt{ELU}, \tt{SIGMOID}, \tt{TANH}, \tt{SELU}, \tt{SOFTPLUS} and \tt{SOFTSIGN}) are continuously differentiable.
+
+\begin{figure}[H]
+\centering
+\subcaptionbox{\tt{RELU}\label{f.postagging.activation.relu}}
+{\includegraphics[width=0.325\textwidth]{images/activation_relu}}
+\subcaptionbox{\tt{RELU6}\label{f.postagging.activation.relu6}}
+{\includegraphics[width=0.325\textwidth]{images/activation_relu6}}
+\subcaptionbox{\tt{ELU}\label{f.postagging.activation.elu}}
+{\includegraphics[width=0.325\textwidth]{images/activation_elu}}
+\subcaptionbox{\tt{SIGMOID}\label{f.postagging.activation.sigmoid}}
+{\includegraphics[width=0.325\textwidth]{images/activation_sigmoid}}
+\subcaptionbox{\tt{TANH}\label{f.postagging.activation.tanh}}
+{\includegraphics[width=0.325\textwidth]{images/activation_tanh}}
+\subcaptionbox{\tt{SELU}\label{f.postagging.activation.selu}}
+{\includegraphics[width=0.325\textwidth]{images/activation_selu}}
+\subcaptionbox{\tt{SOFTPLUS}\label{f.postagging.activation.softplus}}
+{\includegraphics[width=0.325\textwidth]{images/activation_softplus}}
+\subcaptionbox{\tt{SOFTSIGN}\label{f.postagging.activation.softsign}}
+{\includegraphics[width=0.325\textwidth]{images/activation_softsign}}
+\vspace{1em}
+\caption[Activation Functions]{Qualitative illustration of 8 different activation functions that provide different types of nonlinearities. \tt{RELU} and \tt{RELU6} are continuous but not everywhere differentiable functions, the other functions are continuously differentiable.}
+\label{f.postagging.activation}
+\end{figure}
+
 \begin{figure}[ht]
 	\includegraphics[width=\textwidth]{images/fnn_structure}
-	\caption[Structure of a Feed-forward Neural Network]{The structure of a feed-forward neural network. The feature vector is built by the embeddings of the corresponding input word at position \tt{p} and by its \tt{3} preceding words (the number of predecessors may vary, of course). \tt{V} and \tt{W} are weight matrices with respective matrix dimensions of $\textsf{feature vector size} \times \textsf{hidden layer size}$ for \tt{V} and $\textsf{hidden layer size} \times \textsf{number of POS tags}$ for \tt{W}.}
+	\caption[Structure of a Feed-forward Neural Network]{The structure of a feed-forward neural network. The feature vector is built by the embeddings of the corresponding input word at position $p$ and by its 3 preceding words (the number of predecessors may vary, of course). $V$ and $W$ are weight matrices with respective matrix dimensions of $\textsf{feature vector size} \times \textsf{hidden layer size}$ for $V$ and $\textsf{hidden layer size} \times \textsf{number of POS tags}$ for $W$.}
 	\label{f.fnn.structure}
 \end{figure}
 
@@ -314,25 +339,53 @@ The nodes of the input layer are populated by the feature vector. To create the 
 	\vspace{.5em}
 \end{figure}
 
-The hidden layer nodes are also initialized with random normal distributed values. Their outputs are computed with the rectified linear activation function (the \i{rectifier}), utilizing the \tt{tf.nn.relu()} function. These nodes are therefore also called \i{rectified linear units} (RELUs).
+The hidden layer nodes are also initialized with random normal distributed values. Their outputs are computed with one of the activation functions presented in figure \ref{f.postagging.activation}. Table \ref{t.postagging.activation} lists the activation functions with their respective computation formula and the corresponding TensorFlow function.
+
+\begin{table}[!ht]
+	\centering\small\def\arraystretch{1.5}\begin{tabular}{ p{23mm} p{62mm} l }
+	\trule
+	\textsc{Name} & \textsc{Definition} & \textsc{TensorFlow} \\
+	\srule
+	\tt{RELU} & $a(x)=\max(x,0)$ & \tt{tf.nn.relu()} \\
+	\midrule
+	\tt{RELU6} & $a(x)=\min(\max(x,0))$ & \tt{tf.nn.relu6()} \\
+	\midrule
+	\tt{ELU} & $f(x)=\begin{cases}e^x-1,& \text{if } x<0\\x, & \text{otherwise}\end{cases}$ & \tt{tf.nn.elu()} \\
+	\midrule
+	\tt{SIGMOID} & $f(x)=\frac{1}{1+e^{-x}} $ & \tt{tf.nn.sigmoid()} \\
+	\midrule
+	\tt{TANH} & $f(x)=\tanh{x} $ & \tt{tf.nn.tanh()} \\
+	\midrule
+	\tt{SELU} & $f(x)=\lambda\begin{cases}\alpha (e^x-1),& \text{if } x<0\\x, & \text{otherwise}\end{cases} $ & \tt{tf.nn.selu()} \\
+	\midrule
+	\tt{SOFTPLUS} & $f(x)=\log{(e^x+1)} $ & \tt{tf.nn.softplus()} \\
+	\midrule
+	\tt{SOFTSIGN} & $f(x)=\frac{x}{|x+1|} $ & \tt{tf.nn.softsign()} \\
+	\brule
+	\end{tabular}
+	\vspace{.8em}
+	\caption[Activation Functions]{Definitions and TensorFlow Implementations of 8 different activation functions.}
+	\label{t.postagging.activation}
+\end{table}
 
 Finally, the values for the output layer (the logits) are computed using a matrix multiplication of the outputs of the RELUs and the weight matrix \tt{W} using the \tt{tf.matmul()} function. Subsequently, the loss can be calculated by computing the sparse softmax cross entropy between input labels and logits, using the \tt{tf.nn.sparse\_softmax\_cross\_entropy\_with\_logits()} function.
 
 The predictions are calculated with the \tt{tf.argmax()} function, that reduces the logits to the largest value, which represents the predicted POS tag. The function \tt{tf.train.AdamOptimizer()}\footnote{The Adam algorithm is an optimizer that was proposed by D. Kingma et. al. in 2014 \cite{kingma2014}. It provides a computationally efficient gradient-based optimization of stochastic objective functions.} enables backpropagation with stochastic gradient descent to optimize the computations and results during training.
 
+The implementation of the FNN POS tagger that was developed for this thesis is based on an existing TensorFlow POS tagger implementation by M. Rahtz\footnote{The POS tagger is licensed under GNU GPL v3.0 and was retrieved on 15th January 2018.\\\link{https://github.com/mrahtz/tensorflow-pos-tagger}}.
 
 \section{Recurrent Neural Network Model}\label{c.postagging.rnn}
 Similar to FNNs, recurrent neural networks (RNNs) also consist of an input, a hidden and an output layer. The main difference is that information is not only propagated forward linearly, but that information from previous training steps are also taken into account in RNNs.
 
 \subsection{Architecture}\label{c.postagging.rnn.architecture}
 Figure \ref{f.rnn.structure} illustrates the architecture of an RNN, which was implemented for this thesis. Unlike the FNN, the RNN only uses word ids as input features and does not utilize word embeddings. It contains one hidden layer, which is populated with the current input word on the one hand and by the output of the hidden layer of a previous training step on the other hand. This makes the RNN capable of memorizing information from the past. This capability can also be described as a long short-term memory (\i{LSTM}), emphasized in orange in figure \ref{f.rnn.structure}. The output layer represents the set of existing POS tags and is connected to the hidden layer with weight matrix
-\tt{W}.
+$W$.
 
 Each word of every sentence of the training corpus represents an input feature, which is propagated to the hidden and the output layer together with information from previous training steps. Similar to the processing of FNNs, the POS tag is predicted for the current word and the current loss and accuracy are calculated. After propagating the error back to adjust the weights and reduce the loss, the next training step is executed, taking the current training step into account.
 
 \begin{figure}[ht]
 	\includegraphics[width=\textwidth]{images/rnn_structure}
-	\caption[Structure of a Recurrent Neural Network]{The structure of a recurrent neural network. The feature vector is the initial vector of the corresponding input word at time \tt{t}. The output of the hidden layer from previously trained words (here at time \tt{t-x}) is populated back into the same hidden layer for the current word. \tt{V}, \tt{X} and \tt{W} are weight matrices with respective matrix dimensions of $\textsf{feature vector size} \times \textsf{hidden layer size}$ for \tt{V}, $\textsf{hidden layer size} \times \textsf{hidden layer size}$ for \tt{X} and $\textsf{hidden layer size} \times \textsf{number of POS tags}$ for \tt{W}.}
+	\caption[Structure of a Recurrent Neural Network]{The structure of a recurrent neural network. The feature vector is the initial vector of the corresponding input word at time $t$. The output of the hidden layer from previously trained words (here at time $t-x$) is populated back into the same hidden layer for the current word. $V$, $X$ and $W$ are weight matrices with respective matrix dimensions of $\textsf{feature vector size} \times \textsf{hidden layer size}$ for $V$, $\textsf{hidden layer size} \times \textsf{hidden layer size}$ for $X$ and $\textsf{hidden layer size} \times \textsf{number of POS tags}$ for $W$.}
 	\label{f.rnn.structure}
 \end{figure}
 
@@ -341,18 +394,18 @@ The implementation of the proposed RNN architecture utilizes the TensorFlow libr
 
 The hidden layer is built using \tt{tf.nn.rnn\_cell.LSTMCell()}\footnote{This function uses an implementation proposed by S. Hochreiter et. al. in 1997 \cite{hochreiter1997}.}, a function that creates a long short-term memory (LSTM) cell for recurrent networks which is then used in \tt{tf.nn.dynamic\_rnn()} to compute the logits for the output layer.
 
-Loss, predictions and accuracy are implemented in a similar way as in the FNN. In addition, the same optimizer is used.
+Loss, predictions and accuracy are implemented in a similar way as in the FNN. In addition, the same optimizer (\tt{tf.train.AdamOptimizer()}) is used.
 
 % ===================================================================================
 \chapter{Training of Language Models}\label{c.training}
 An optimal language model using the neural network approach proposed in this thesis, requires as much annotated training data as possible. The following sections describe the generation of tagged training data and the training of different language models, due to parameter variation, based on this generated training corpus.
 
 \section{Training Data Corpus}\label{c.training.data}
-To create a training corpus with tagged sentences, the already existing sentence template set of \Alex\ is used as the basis for an improved and extended template set. In addition, a log of user input data\footnote{The log data that was available for this thesis started on 30th of August, 2017 until 27th of April, 2018 and contained \tt{1293} entries of user input.} provides useful information on possible input sentences, that are not yet considered in the template set.
+To create a training corpus with tagged sentences, the already existing sentence template set of \Alex\ is used as the basis for an improved and extended template set. In addition, a log of user input data\footnote{The log data that was available for this thesis started on 30th of August, 2017 until 27th of April, 2018 and contained 1293 entries of user input.} provides useful information on possible input sentences, that are not yet considered in the template set.
 
-As described in chapter \ref{c.alex.data}, the HMM tagger of \Alex\ uses \tt{72} sentence templates to generate annotated training data. However, the distribution of the generated sentences is highly unbalanced. Due to the combination of placeholders for different database fields and models, which are semantically meaningless, a huge number of training sentences exist that are only partially suitable for training.
+As described in chapter \ref{c.alex.data}, the HMM tagger of \Alex\ uses 72 sentence templates to generate annotated training data. However, the distribution of the generated sentences is highly unbalanced. Due to the combination of placeholders for different database fields and models, which are semantically meaningless, a huge number of training sentences exist that are only partially suitable for training.
 
-An analysis of the generated training corpus that was used to train the HMM tagger showed that one single template of the \tt{72} sentence templates created more than \tt{84\%} of the whole training corpus. This sentence template is the following\footnote{The corresponding English translation of this sentence template is: \i{Which modules are held by Professor <firstname> <lastname>}}:
+An analysis of the generated training corpus that was used to train the HMM tagger showed that one single template of the 72 sentence templates created more than 84\% of the whole training corpus. This sentence template is the following\footnote{The corresponding English translation of this sentence template is: \i{Which modules are held by Professor <firstname> <lastname>}}:
 
 \vbox{\begin{Verbatim}[fontsize=\scriptsize]
 Welche   Module  werden von   Prof   {Person:firstname} {Person:lastname} angeboten
@@ -365,7 +418,7 @@ R_LIST M_MTSModule  X    X  X_Person C_Person:fullname  C_Person:fullname     X
 
 It combines all first names and all last names of each existing person in the database, leading to a huge number of name combinations that do not exist.
 
-Another example is the combination of study program degrees and program names. This combination exists in \tt{5} of the \tt{72} sentence templates, i.e. all degrees are assigned to all study programs \tt{5} times, although not every combination exists in reality. The following is an example of one of these sentence templates\footnote{The corresponding English translation of this sentence template is: \i{Which modules can I attend to in <program-degree> <program-name>}}:
+Another example is the combination of study program degrees and program names. This combination exists in 5 of the 72 sentence templates, i.e. all degrees are assigned to all study programs 5 times, although not every combination exists in reality. The following is an example of one of these sentence templates\footnote{The corresponding English translation of this sentence template is: \i{Which modules can I attend to in <program-degree> <program-name>}}:
 
 \vbox{\begin{Verbatim}[fontsize=\scriptsize]
 Welche   Module    kann ich  im  {Program:degree}  {Program:name} belegen
@@ -379,7 +432,7 @@ R_LIST M_MTSModule  X    X   X   C_Program:degree  C_Program:name    X
 To address this issue, the following adjustments were made for the new template set were made:
 
 \begin{itemize}
-	\item Because the number of occurrences is very low in the log database, the slot \tt{\{Person:firstname\}} was removed completely from the sentence template, which limits the user input to last names only\footnote{This might seem like a degradation but is justified by the fact, that only \tt{3} of \tt{1293} log entries (\tt{0.2\%}) even contained a first name, always followed by the last name. In this specific use case, where all persons are professors and lecturers, using the last name only is a reasonable approach.}.
+	\item Because the number of occurrences is very low in the log database, the slot \tt{\{Person:firstname\}} was removed completely from the sentence template, which limits the user input to last names only\footnote{This might seem like a degradation but is justified by the fact, that only 3 of 1293 log entries (0.2\%) even contained a first name, always followed by the last name. In this specific use case, where all persons are professors and lecturers, using the last name only is a reasonable approach.}.
 	\item The slot \tt{\{Program:degree\}} was partly replaced by the inline choice \tt{(bachelor|master|diplom)}, which included the main terms requested in the logs.
 \end{itemize}
 
@@ -404,98 +457,95 @@ Furthermore, wording referring to linking words and actions, which occurs in the
 	\vspace{1em}
 \end{table}
 
-All in all, the new set of sentence templates contains \tt{36} templates, which are exactly the same as in the old set, \tt{29} templates that were slightly modified or extended while maintaining the same tag sequence and \tt{35} new sentence templates. The latter were created according to a sentence structure that was found in the logs but not in the previous template set. Therefore, the new set contains a total of \tt{100} sentence templates (including single word templates) and can be found in the appendix \ref{c.appendix.sentencetemplates}.
+All in all, the new set of sentence templates contains 36 templates, which are exactly the same as in the old set, 29 templates that were slightly modified or extended while maintaining the same tag sequence and 35 new sentence templates. The latter were created according to a sentence structure that was found in the logs but not in the previous template set. Therefore, the new set contains a total of 100 sentence templates (including single word templates) and can be found in the appendix \ref{c.appendix.sentencetemplates}.
 
-The resulting training data corpus used in this thesis contains \tt{218.700} tagged sentences consisting of \tt{2.038.490} words, with a vocabulary of \tt{9141} words.
+The resulting training data corpus used in this thesis contains 218.700 tagged sentences consisting of 2.038.490 words, with a vocabulary of 9141 words.
 
 \section{Parameter Tuning}\label{c.training.tuning}
-In order to achieve better evaluation results and therefore more words that are tagged correctly, several training parameters are changed. To see the effect of the training parameters on the accuracy of the resulting language model, one parameter was altered while keeping all other parameters constant.
+In order to achieve better evaluation results and therefore more words that are tagged correctly, several training parameters are changed. To see the effect of the training parameters on the accuracy of the resulting language model, one parameter was altered while keeping all other parameters constant. The gained knowledge from the evaluation of these models was subsequently used to train further models with tuned parameters.
 
-For the training of the FNN models, the following \tt{4} parameters were considered:
+For the training of the FNN models, the following 5 parameters were considered:
 
 \begin{itemize}
-	\item \b{Number of past words} (\tt{\b{p}}) specifies how many preceding words should be considered for the training of the current word
-	\item \b{Embedding size} (\tt{\b{e}}) describes the dimension of the word embeddings that were created for each word of the vocabulary during training
-	\item \b{Hidden layer size} (\tt{\b{s}}) characterizes the dimension of the hidden layer, i.e. the number of neurons that constitute the hidden layer
-	\item \b{Number of training epochs} (\tt{\b{n}}) indicates how often the whole training corpus is processed during training
-	\item \b{Activation function} (\tt{\b{a}}) ...
+	\item \b{Number of past words} (\i{\b{p}}) specifies how many preceding words should be considered for the training of the current word
+	\item \b{Embedding size} (\i{\b{e}}) describes the dimension of the word embeddings that were created for each word of the vocabulary during training
+	\item \b{Hidden layer size} (\i{\b{s}}) characterizes the dimension of the hidden layer, i.e. the number of neurons that constitute the hidden layer
+	\item \b{Number of training epochs} (\i{\b{n}}) indicates how often the whole training corpus is processed during training
+	\item \b{Activation function} (\i{\b{a}}) constitutes a mathematical function that processes input information on each artificial neuron of the network to calculate a corresponding output
 \end{itemize}
 
-Based on these \tt{5} parameters, table \ref{t.training.tuning.fnn} shows different parameter combinations. The emphasized cells show the respective parameter that is variable. The first \tt{4} training groups represent the basic training process to demonstrate the effect of each parameter in general. The subsequent training groups included additional parameter combinations, taking into account the evaluation results of the first training groups.
+Based on these 5 parameters, table \ref{t.training.tuning.fnn} shows different parameter combinations. The emphasized cells show the respective parameter that is variable. The first 4 training groups represent the basic training process to demonstrate the effect of each parameter in general. The subsequent training groups included additional parameter combinations, taking into account the evaluation results of the first training groups.
 
-The resulting number of models is \tt{99}; however, due to an overlap in configurations of the training groups, the total number of distinct models to be trained with the FNN is \tt{??}.
+The resulting number of models is 99; however, due to an overlap in configurations of the training groups, the total number of distinct models to be trained with the FNN is 93.
 
 \begin{table}[H]
 	\vspace{2em}
-	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c c c c c }
+	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c >{\centering}p{20mm} >{\centering}p{18mm} >{\centering}p{18mm} c c }
 	\trule
-	\tt{p} & \tt{e} & \tt{s} & \tt{n} & \tt{a} & \textsc{Models} \\
+	\textsc{Group} & \tt{p} & \tt{e} & \tt{s} & \tt{n} & \tt{a} & \textsc{Models} \\
 	\drule
-	\cellcolor{orange}\color{white}\b{\tt{0}--\tt{12}} & \tt{50} & \tt{100} & \tt{1} & \tt{relu} & \tt{13} \\
+	\i{1} & \cellcolor{orange}\color{white}\b{\tt{0}--\tt{12}} & \tt{50} & \tt{100} & \tt{1} & \tt{relu} & \i{13} \\
 	\mrule
-	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{25}} & \tt{100} & \tt{1} & \tt{relu} & \tt{4} \\
+	\i{2} & \tt{1} & \cellcolor{orange}\b{\color{white}\tt{1}, \tt{5}, \tt{10}, \tt{25}, \newline \tt{50}--\tt{700}\tablefootnote{With a step size of \ftt{50}\label{fifty}}} & \tt{100} & \tt{1} & \tt{relu} & \i{18} \\
 	\mrule
-	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{50}--\tt{700}\tablefootnote{With a step size of \tt{50}\label{fifty}}} & \tt{100} & \tt{1} & \tt{relu} & \tt{14} \\
+	\i{3} & \tt{1} & \tt{50} & \cellcolor{orange}\b{\color{white}\tt{10}, \tt{25}, \newline \tt{50}--\tt{1000}\footref{fifty}} & \tt{1} & \tt{relu} & \i{22} \\
 	\mrule
-	\tt{1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{10}, \tt{25}} & \tt{1} & \tt{relu} & \tt{2} \\
-	\mrule
-	\tt{1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{50}--\tt{1000}\footref{fifty}} & \tt{1} & \tt{relu} & \tt{20} \\
-	\mrule
-	\tt{1} & \tt{50} & \tt{100} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}} & \tt{relu} & \tt{3} \\
-	\mrule
-	\tt{1} & \tt{50} & \tt{100} & \cellcolor{orange}\color{white}\b{\tt{20}--\tt{140}\tablefootnote{With a step size of \tt{20}}} & \tt{relu} & \tt{7} \\
-	\mrule
-	\tt{1} & \tt{250} & \tt{350} & \tt{1} & \cellcolor{orange}\color{white}\b{\tt{relu}, \tt{[...]}\tablefootnote{The following activation functions were considered: \ftt{relu}, \ftt{relu6}, \ftt{elu}, \ftt{sigmoid}, \ftt{tanh}, \ftt{selu}, \ftt{softplus}, \ftt{softsign}}} & \tt{8} \\
+	\i{4} & \tt{1} & \tt{50} & \tt{100} & \cellcolor{orange}\b{\color{white}\tt{1}, \tt{5}, \tt{10}, \newline \tt{20}--\tt{140}\tablefootnote{With a step size of \ftt{20}}} & \tt{relu} & \i{10} \\
 	\srule
-	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{200}--\tt{600}\footref{fifty}} & \tt{350} & \tt{1} & \tt{relu} & \tt{9} \\
+	\i{5} & \tt{1} & \cellcolor{orange}\b{\color{white}\tt{200}--\tt{600}\footref{fifty}} & \tt{350} & \tt{1} & \tt{relu} & \i{9} \\
 	\mrule
-	\tt{1} & \tt{250} & \cellcolor{orange}\color{white}\b{\tt{200}--\tt{600}\footref{fifty}} & \tt{1} & \tt{relu} & \tt{9} \\
+	\i{6} & \tt{1} & \tt{250} & \cellcolor{orange}\b{\color{white}\tt{200}--\tt{600}\footref{fifty}} & \tt{1} & \tt{relu} & \i{9} \\
 	\mrule
-	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{50}--\tt{500}\footref{fifty}} & \cellcolor{orange}\color{white}\b{\tt{50}--\tt{500}\footref{fifty}} & \tt{5} & \tt{relu} & \tt{10} \\
+	\i{7} & \tt{1} & \cellcolor{orange}\b{\color{white}\tt{50}--\tt{500}\footref{fifty}} & \cellcolor{orange}\b{\color{white}\tt{50}--\tt{500}\footref{fifty}} & \tt{5} & \tt{relu} & \i{10} \\
+	\mrule
+	\i{8} & \tt{1} & \tt{250} & \tt{350} & \tt{1} & \cellcolor{orange}\color{white}\b{\tt{[...]}\tablefootnote{The following 8 activation functions were considered: \ftt{relu}, \ftt{relu6}, \ftt{elu}, \ftt{sigmoid}, \ftt{tanh}, \ftt{selu}, \ftt{softplus}, \ftt{softsign}}} & \i{8} \\
 	\brule
 	\end{tabular}
-	\caption[Parameter combinations of FNN Models]{The parameter configuration for training the FNN models. The rows represent the training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\tt{\b{p}} - number of past words, \tt{\b{e}} - embedding size, \tt{\b{s}} - hidden layer size, \tt{\b{n}} - number of training epochs, \tt{\b{a}} - activation function). The last column shows the resulting number of models for each training group.}
+	\caption[Parameter combinations of FNN Models]{The parameter configuration for training the FNN models. The rows represent the training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\i{\b{p}} - number of past words, \i{\b{e}} - embedding size, \i{\b{s}} - hidden layer size, \i{\b{n}} - number of training epochs, \i{\b{a}} - activation function). The first column denotes the group number (for referencing training groups) whereas the last column shows the resulting number of models for each training group.}
 	\label{t.training.tuning.fnn}
 	\vspace{1em}
 \end{table}
 
-For the training of the RNN models, the following \tt{3} parameters were considered:
+For the training of the RNN models, the following 4 parameters were considered:
 
 \begin{itemize}
-	\item \b{Number of time steps} (\tt{\b{t}}) specifies how many past training steps should be considered for the training of the current word
-	\item \b{Hidden layer size} (\tt{\b{s}}) characterizes the dimension of the hidden layer, i.e. the number of neurons that constitute the hidden layer
-	\item \b{Number of training epochs} (\tt{\b{n}}) indicates how often the whole training corpus is processed during training
+	\item \b{Number of time steps} (\i{\b{t}}) specifies how many past training steps should be considered for the training of the current word
+	\item \b{Hidden layer size} (\i{\b{s}}) characterizes the dimension of the hidden layer (as in the FNN)
+	\item \b{Number of training epochs} (\i{\b{n}}) indicates how often the whole training corpus is processed (as in the FNN)
+	\item \b{Activation function} (\i{\b{a}}) constitutes a mathematical function (as in the FNN)
 \end{itemize}
 
-Based on these \tt{3} parameters, table \ref{t.training.tuning.rnn} shows different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is \tt{18}; however, due to an overlap in configurations of the training groups, the total number of models to be trained with the RNN is \tt{16}.
+Based on these 4 parameters, table \ref{t.training.tuning.rnn} shows different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is 37; however, due to an overlap in configurations of the training groups, the total number of models to be trained with the RNN is 35.
 
 \begin{table}[ht]
 	\vspace{2em}
-	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c c c c }
+	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c c c c c }
 	\trule
-	\tt{t} & \tt{s} & \tt{n} & \textsc{Models} \\
+	\textsc{Group} & \tt{t} & \tt{s} & \tt{n} & \tt{a} & \textsc{Models} \\
 	\drule
-	\cellcolor{orange}\color{white}\b{\tt{0}--\tt{10}} & \tt{50} & \tt{10} & \tt{10} \\
+	\i{9} & \cellcolor{orange}\color{white}\b{\tt{0}--\tt{12}} & \tt{50} & \tt{1} & \tt{relu} & \i{12} \\
 	\mrule
-	\tt{1} & \cellcolor{orange}\color{white}\b{\tt{10}, \tt{25}, \tt{50}, \tt{100}} & \tt{10} & \tt{4} \\
+	\i{10} & \tt{1} & \cellcolor{orange}\color{white}\b{\tt{10}, \tt{25}, \tt{50}--\tt{500}\tablefootnote{With a step size of \ftt{50}\label{fiftyrnn}}} & \tt{1} & \tt{relu} & \i{12} \\
 	\mrule
-	\tt{1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{20}} & \tt{4} \\
+	\i{11} & \tt{1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{20}--\tt{80}\tablefootnote{With a step size of \ftt{20}\label{twentyrnn}}} & \tt{relu} & \i{7} \\
+	\srule
+	\i{12} & \tt{8} & \tt{50} & \tt{5} & \cellcolor{orange}\color{white}\b{\tt{[...]}\tablefootnote{For the RNN the same 8 activation functions as for the FNN are used.}} & \i{8} \\
 	\brule
 	\end{tabular}
-	\caption[Parameter combinations of RNN Models]{The parameter configuration for the training of RNN models. The rows represent the training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\tt{\b{t}} (number of time steps), \tt{\b{s}} (hidden layer size), \tt{\b{n}} (number of training epochs)). The last column shows the resulting number of models for each training group.}
+	\caption[Parameter combinations of RNN Models]{The parameter configuration for the training of RNN models. The rows represent the training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\i{\b{t}} (number of time steps), \i{\b{s}} (hidden layer size), \i{\b{n}} (number of training epochs), \i{\b{a}} - activation function). The last column shows the resulting number of models for each training group.}
 	\label{t.training.tuning.rnn}
 \end{table}
 
 % ===================================================================================
 \chapter{Evaluation and Comparison}\label{c.evaluation}
-After a short description of how the evaluation tests were created, this chapter provides the evaluation results of all models that were trained using the variation of training parameters previously described. Additionally, for each training group, the evaluation results are presented and the three different architectures (FNN, RNN and HMM) are compared.
+After giving a short description of how the evaluation tests were created, this chapter provides the evaluation results of all models of the 12 training groups that were trained using the variation of training parameters previously described. In addition to the results of each training group, the three different architectures (FNN, RNN and HMM) are compared.
 
 \section{Test Design}\label{c.evaluation.test}
 To evaluate the trained language models, two test sets were designed: a test set containing a selection of tagged sentences that actually exist in the training corpus (here called the \i{known test}) and a test set, for which the structure of the sentences in the known test was modified in a way that it remains semantically meaningful but does not occur in the training corpus (called the \i{unknown test}). The unknown test deliberately contains words, which do not exist in the vocabulary of the training corpus in order to assess how the model handles completely unknown data.
 
 The sentences are divided into different topics to cover a wide range of possible input data. A reasonably balanced number of sentences was included in the different areas to ensure that the evaluation result does not depend on only one or two topics.
 
-Tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} show the different topics represented in the known and the unknown test set, the respective number of evaluation sentences and an example sentence to illustrate each topic. Both test sets combined include a total number of \tt{1094} tagged test sentences, consisting of \tt{7986} word-tag tuples.
+Tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} show the different topics represented in the known and the unknown test set, the respective number of evaluation sentences and an example sentence to illustrate each topic. Both test sets combined include a total number of 1094 tagged test sentences, consisting of 7986 word-tag tuples.
 
 \begin{table}[!ht]
 	\centering\small\def\arraystretch{1.5}\begin{tabular}{ p{18mm} c L{95mm} }
@@ -527,7 +577,7 @@ Tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} sho
 	 & \tt{620} & \\
 	\end{tabular}
 	\vspace{3mm}
-	\caption[Evaluation Topics using the Known Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the known test set. It contains a total of \tt{620} tagged sentences, consisting of \tt{4317} word-tag tuples.}
+	\caption[Evaluation Topics using the Known Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the known test set. It contains a total of 620 tagged sentences, consisting of 4317 word-tag tuples.}
 	\label{t.evaluation_topics_known}
 	\vspace{1em}
 \end{table}
@@ -562,11 +612,11 @@ Tables \ref{t.evaluation_topics_known} and \ref{t.evaluation_topics_unknown} sho
 	 & \tt{474} & \\
 	\end{tabular}
 	\vspace{3mm}
-	\caption[Evaluation Topics using the Unknown Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the unknown test set. It contains a total of \tt{474} tagged sentences, consisting of \tt{3669} word-tag tuples.}
+	\caption[Evaluation Topics using the Unknown Test Set]{The evaluation topics, the number of tagged test sentences and an example sentence for each topic in the unknown test set. It contains a total of 474 tagged sentences, consisting of 3669 word-tag tuples.}
 	\label{t.evaluation_topics_unknown}
 \end{table}
 
-The number of correctly tagged words serves as a measure of accuracy for the respective language model. This includes unrecognized words (words that did not occur in the training corpus) that are still tagged correctly. The proportion of correctly tagged words can then be compared for both test sets for each language model.
+The number of correctly tagged words serves as a measure of accuracy for the respective language model. This includes unrecognized words (words that did not occur in the training corpus) that are nevertheless tagged correctly. The proportion of correctly tagged words can then be compared for both test sets for each language model.
 
 In addition, the conformity of the language models with the labeled test data is measured by using Cohen's Kappa ($\kappa$)\footnote{Cohen's Kappa is a measurement of the agreement of two raters referring to a given set of categories (in this thesis the set of tags). It was proposed by J. Cohen in 1960 \cite{cohen1960} and considers the possibility of agreement by chance.}. The definition of Cohen's Kappa is given in equation \ref{e.kappa}.
 
@@ -574,7 +624,7 @@ In addition, the conformity of the language models with the labeled test data is
 \kappa = \frac{p_o - p_c}{1 - p_c} \label{e.kappa}
 \end{equation}
 
-$p_o$ represents the measured agreement and $p_c$ the randomly expected agreement. Most values are between the perfect agreement ($\kappa = 1$) and an agreement only by chance ($\kappa = 0$). Values lower than zero are interpreted as an agreement that is even worse than an agreement by chance. There are different interpretations of the level of agreement for the different values of $\kappa$. Table \ref{t.evaluation.kappa} presents an interpretation based on a proposal of J. Landis et. al. \cite{landis1977} is used in this thesis.
+$p_o$ represents the measured agreement and $p_c$ the randomly expected agreement. Most values are between the perfect agreement ($\kappa = 1$) and an agreement only by chance ($\kappa = 0$). Values lower than zero are interpreted as an agreement that is even worse than an agreement by chance. There are different interpretations of the level of agreement for the different values of $\kappa$. Table \ref{t.evaluation.kappa} presents an interpretation based on a proposal of J. Landis et. al. \cite{landis1977}, which is used in this thesis.
 
 \begin{table}[!ht]
 	\centering\small\def\arraystretch{1.5}\begin{tabular}{ r l }
@@ -601,30 +651,60 @@ $p_o$ represents the measured agreement and $p_c$ the randomly expected agreemen
 After introducing the test sets and the evaluation methodology, all training groups were evaluated according to the parameter configuration presented in chapter \ref{c.training.tuning}. The following sections show the evaluation results of the different architectures for each test set.
 
 \subsection{Feed-Forward Neural Network Models}\label{c.evaluation.results.fnn}
-...
+The \b{first training group} for the FNN refers to parameter $p$: the number of preceding words that are used to build the feature vector. Figure \ref{f.evaluation.fnn.p} presents the achieved accuracy for both tests.
 
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/evaluation_fnn_p}
-	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN for parameter \tt{p}: the number of preceding words. Number of correctly tagged words in percent.}
+	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN for parameter $p$: the number of preceding words. Number of correctly tagged words in percent.}
 	\label{f.evaluation.fnn.p}
 \end{figure}
 
+For the known test, the model with $p=1$ clearly achieves the highest accuracy with 86.1\% correctly tagged words. It also has the highest kappa score with $\kappa=0.802$. With more than one preceding word, the accuracy decreases. The best result (65.1\% accuracy and $\kappa=0.588$) for the unknown test was reached by the model trained with not preceding words at all, whereby it should be noted that the results of the two following models with 1 or 2 preceding words are almost as precise as the first one. With more than 2 preceding words, the accuracy decreases.
+
+The \b{second training group} was tested with 18 different values for the embedding size $e$ of the input words for the FNN. The results are presented in figure \ref{f.evaluation.fnn.e}. With a few exceptions, the accuracy for the known test slightly increases with larger embeddings, reaching a maximum of 90.5\% (and $\kappa=0.801$) on an embedding size of 600. The highest accuracy (70.1\%, $\kappa=0.639$) for the unknown test was reached by the model with an embedding size of 450.
+
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/evaluation_fnn_e}
-	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN for parameter \tt{e}: the embedding size. Number of correctly tagged words in percent.}
+	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN for parameter $e$: the embedding size. Number of correctly tagged words in percent.}
 	\label{f.evaluation.fnn.e}
 \end{figure}
 
+The results of the evaluation of \b{Training group 3} that varied the size of the hidden layer $s$ is illustrated in figure \ref{f.evaluation.fnn.s}.
+
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/evaluation_fnn_s}
-	\caption[FNN Evaluation: Hidden Layer Size]{The evaluation results of the FNN for parameter \tt{s}: the size of the hidden layer. Number of correctly tagged words in percent.}
+	\caption[FNN Evaluation: Hidden Layer Size]{The evaluation results of the FNN for parameter $s$: the size of the hidden layer. Number of correctly tagged words in percent.}
 	\label{f.evaluation.fnn.s}
 \end{figure}
 
+An accuracy of 89.1\% was achieved on the known test with a hidden layer size of 50 neurons, however the highest kappa value $\kappa=0.813$ was assigned to a hidden layer size of 350. Although the accuracy of the models with $s<500$ seems to be a bit higher, no clear trend can be observed. The situation is similar for the unknown test, except that the accuracy for models with $s>450$ occurs higher and less fluctuating. The best result (71.5\%, $\kappa=0.643$) was reached by the model with $s=700$, however the highest kappa value $\kappa=0.649$ was assigned to a hidden layer size of 450.
+
+For \b{training group 4} models were trained with different numbers of training epochs $n$. Figure \ref{f.evaluation.fnn.n} presents the results.
+
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/evaluation_fnn_n}
-	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN for parameter \tt{n}: the number of training epochs. Number of correctly tagged words in percent.}
+	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN for parameter $n$: the number of training epochs. Number of correctly tagged words in percent.}
 	\label{f.evaluation.fnn.n}
+\end{figure}
+
+Overall, all models of the different training epochs achieved similar results on the known test. However, the model with $n=80$ stands out a bit with the highest accuracy of 87.7\% and the second highest $\kappa=0.808$. For the unknown test, the model with only 5 training epochs achieved a maximum accuracy of 68.8\% and $\kappa=0.622$.
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{images/evaluation_fnn_e2}
+	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN for parameter $n$: the number of training epochs. Number of correctly tagged words in percent.}
+	\label{f.evaluation.fnn.e2}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{images/evaluation_fnn_s2}
+	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN for parameter $n$: the number of training epochs. Number of correctly tagged words in percent.}
+	\label{f.evaluation.fnn.s2}
+\end{figure}
+
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{images/evaluation_fnn_a}
+	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN for parameter $n$: the number of training epochs. Number of correctly tagged words in percent.}
+	\label{f.evaluation.fnn.a}
 \end{figure}
 
 \subsection{Recurrent Neural Network Models}\label{c.evaluation.results.rnn}
@@ -634,14 +714,19 @@ After introducing the test sets and the evaluation methodology, all training gro
 After evaluating the neural network based language models, the HMM is evaluated in the following. For this purpose, the previous HMM which was trained on the basis of the training data generated by T. Michael \cite{michael2016} is compared to a new HMM trained on the basis of the training data proposed in this thesis. The evaluation was carried out using the known and the unknown test; the results are presented in figure \ref{f.evaluation.hmm}.
 
 \begin{figure}[H]
-	\centering\includegraphics[width=.7\textwidth]{images/evaluation_hmm}
-	\caption[HMM Evaluation]{The evaluation results of the previous HMM trained by T. Michael \cite{michael2016} and the new HMM based on the new training data proposed in this thesis.}
-	\label{f.evaluation.hmm}
+\centering
+\subcaptionbox{HMM\label{f.evaluation.hmm.a}}
+{\includegraphics[width=0.495\textwidth]{images/evaluation_hmm}}
+\subcaptionbox{HMM with Kappa\label{f.evaluation.hmm.k}}
+{\includegraphics[width=0.495\textwidth]{images/evaluation_hmm_k}}
+\vspace{1em}
+\caption[HMM Evaluation]{The evaluation results of the previous HMM trained by T. Michael \cite{michael2016} and the new HMM based on the new training data proposed in this thesis.}
+\label{f.evaluation.hmm}
 \end{figure}
 
-The previous HMM tagged \tt{82.5\%} of the words of the known test and \tt{63.0\%} of the unknown test correctly, whereas it was \tt{93.4\%} for the known and \tt{79.3\%} for the unknown test for the new HMM. It was evident that the HMM, which was based on the new training data, performed significantly better than the previous HMM. Especially the result for the unknown test is remarkable, as the accuracy increases by more than \tt{16\%}.
+The previous HMM tagged 82.5\% of the words of the known test and 63.0\% of the unknown test correctly, whereas it was 93.4\% for the known and 79.3\% for the unknown test for the new HMM. It was evident that the HMM, which was based on the new training data, performed significantly better than the previous HMM. Especially the result for the unknown test is remarkable, as the accuracy increases by more than 16\%.
 
-It should be noted that the comparison of the previous and the new HMM model based on the known test has some limitations, as the known test was not fully known\footnote{As described in chapter \ref{c.evaluation.test}, the known test contains \tt{620} sentences. \tt{388} sentences are included in he corpus of the previous HMM, resulting in \tt{37.4\%} of the sentences of the known test, that were unknown to the previous HMM.} to the previous HMM. Nevertheless, the major part of the known test set was based on training templates that were already used to build the corpus for the previous HMM, which is why it still scored well with more than 4 correct tags out of 5.
+It should be noted that the comparison of the previous and the new HMM model based on the known test has some limitations, as the known test was not fully known\footnote{As described in chapter \ref{c.evaluation.test}, the known test contains 620 sentences. 388 sentences are included in he corpus of the previous HMM, resulting in 37.4\% of the sentences of the known test, that were unknown to the previous HMM.} to the previous HMM. Nevertheless, the major part of the known test set was based on training templates that were already used to build the corpus for the previous HMM, which is why it still scored well with more than 4 correct tags out of 5.
 
 \section{Overall Comparison}\label{c.evaluation.comparison}
 ...
@@ -657,6 +742,7 @@ A tagger module was implemented featuring a feed-forward neural network as well 
 
 \section{Discussion}\label{c.conclusion.discussion}
 ...
+- unknown generally lower -> guessing of tags
 
 \section{Future work}\label{c.conclusion.future}
 Although a high accuracy of the language models was achieved with an improved training corpus and the neural network approaches used in this thesis, further research could be done in certain areas to fine-tune and improve the templates as well as the tagging results.
