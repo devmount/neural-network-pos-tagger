@@ -28,7 +28,7 @@
    & \\
   \b{Date} & 18th May 2018 \\
   \b{1st supervisor} & Prof. Dr.-Ing. Sebastian Möller \\
-  \b{2nd supervisor} & Dr. Axel Küpper \\
+  \b{2nd supervisor} & Prof. Dr. Axel Küpper \\
 \end{tabular}
 
 \end{center}
@@ -847,6 +847,12 @@ After evaluating the neural network models and the hidden Markov models each for
 \label{f.evaluation.comparison}
 \end{figure}
 
+The FNN model achieved the highest accuracy as well as the highest kappa score for the known test, closely followed by the HMM2 model, which was only slightly less accurate. The difference between these two models is only 0.2\% ($\Delta\kappa=0.017$). With a kappa score more than 0.8, both models offer a very good agreement with the labeled test data. However, the HMM1 model still reached a good agreement. The RNN model tagged less than a half of the words of the known test correctly, barely reaching a moderate agreement with the labeled test data.
+
+The result of the unknown test is a bit more clear. The highest accuracy as well as the highest kappa score was reached by the HMM2 model, followed by the FNN model with a difference of 7.28\% ($\Delta\kappa=0.084$). With a kappa score more than 0.6, both models offer a good agreement with the labeled test data, whereas the FNN1 model reaches a moderate agreement. Similar to the known test result, the RNN tagged less than a half of the words correctly, offering only a fair agreement with the labeled test data.
+
+Overall, every model achieved a higher accuracy and a higher kappa score on the know test than on the unknown test. While this is an expected result, the differences between the accuracy of known and unknown test vary for each model. While this difference is relatively small for the RNN model (5.84\%), the models of HMM1 and HMM2 show differences of 17.88\% and 13.14\%. The largest difference can be observed for the FNN model, that tagged 20.63\% of the words of the known test more correctly than those of the unknown test.
+
 % ===================================================================================
 \chapter{Discussion and Conclusion}\label{c.conclusion}
 The final chapter summarizes the work of this thesis and the evaluation results achieved. It discusses the evaluation findings and reveals potential areas for further research based on the knowledge gained in this thesis.
@@ -854,7 +860,7 @@ The final chapter summarizes the work of this thesis and the evaluation results 
 \section{Summary}\label{c.conclusion.summary}
 The aim to develop a neural network based part-of-speech tagger for the advisory Artificial Conversational Agent \Alex\ was accomplished within the scope of this thesis.
 
-A tagger module was implemented featuring a feed-forward neural network as well as a recurrent neural network. A training corpus containing tagged sentences was created with the help of an improved set of sentence templates. With both neural network architectures, various language models were trained on this corpus using parameter variation. These models were then evaluated with two corresponding tests sets, containing sentences from the training corpus (known data) and unknown sentences.
+A tagger module was implemented featuring a feed-forward neural network as well as a recurrent neural network. A training corpus containing tagged sentences was created with the help of an improved set of sentence templates. With both neural network architectures, various language models were trained on this corpus using parameter variation. These models were then evaluated with two corresponding tests sets, containing sentences from the training corpus (known data) and unknown sentences, that were derived from user log data.
 
 \section{Discussion}\label{c.conclusion.discussion}
 ...
