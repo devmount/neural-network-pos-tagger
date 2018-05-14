@@ -679,7 +679,7 @@ The results of the evaluation of \b{Training group 3} that varied the size of th
 	\label{f.evaluation.fnn.s}
 \end{figure}
 
-An accuracy of 89.1\% was achieved on the known test with a hidden layer size of 50 neurons, however the highest kappa value $\kappa=0.813$ was assigned to a hidden layer size of 350. Although the accuracy of the models with $s<500$ seems to be a bit higher, no clear trend can be observed. The situation is similar for the unknown test, except that the accuracy for models with $s>450$ occurs higher and less fluctuating. The best result (71.5\%, $\kappa=0.643$) was reached by the model with $s=700$, however the highest kappa value $\kappa=0.649$ was assigned to a hidden layer size of 450.
+The highest accuracy of 89.1\% was achieved on the known test with a hidden layer size of 50 neurons, however the highest kappa value $\kappa=0.813$ was assigned to a hidden layer size of 350. Although the accuracy of the models with $s<500$ seems to be a bit higher, no clear trend can be observed. The situation is similar for the unknown test, except that the accuracy for models with $s>450$ occurs higher and less fluctuating. The best result (71.5\%, $\kappa=0.643$) was reached by the model with $s=700$, however the highest kappa value $\kappa=0.649$ was assigned to a hidden layer size of 450.
 
 For \b{training group 4} models were trained with different numbers of training epochs $n$. Figure \ref{f.evaluation.fnn.n} presents the results.
 
@@ -709,19 +709,27 @@ Similar to training group 3, \b{training group 6} refers to the hidden layer siz
 	\label{f.evaluation.fnn.s2}
 \end{figure}
 
-This parameter configuration performed slightly better comparing to training group 3. Evaluating the known test, the highest accuracy of 91.4\% ($\kappa=0.807$) was again reached by the model with hidden layer size $s=350$. Nevertheless, the highest kappa value $\kappa=0.821$ was assigned to the model with $s=500$, which however achieved a slightly lower accuracy of 90.8\%. For the unknown test, the model with $s=450$ has tagged most words correctly (70.9\%, $\kappa=0.643$).
+This parameter configuration performed slightly better for both tests comparing to training group 3. Evaluating the known test, the highest accuracy of 91.4\% ($\kappa=0.807$) was again reached by the model with hidden layer size $s=350$. Nevertheless, the highest kappa value $\kappa=0.821$ was assigned to the model with $s=500$, which however achieved a slightly lower accuracy of 90.8\%. For the unknown test, the model with $s=450$ has tagged most words correctly (70.9\%, $\kappa=0.643$).
+
+\b{Training group 7} increases the size of the whole network by enlarging the embedding size $e$ and the hidden layer size $s$ at the same time (combined to paramter $es$. The results are presented in figure \ref{f.evaluation.fnn.es}. The value on the horizontal axis is the respective size for both, the embeddings and the hidden layer.
 
 \begin{figure}[H]
 	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_fnn_es}
-	\caption[FNN Evaluation: Network Size]{The evaluation results of the FNN for parameter $n$: the number of training epochs.}
+	\caption[FNN Evaluation: Network Size]{The evaluation results of the FNN for enlarging the whole network by increasing the embedding size $e$ and the hidden layer size $s$ at the same time.}
 	\label{f.evaluation.fnn.es}
 \end{figure}
 
+The highest accuracy of 90.6\% ($\kappa=0.802$) was achieved by the model with $es=300$ for the known test, however the highest kappa value $\kappa=0.809$ was assigned to a dimension of $es=500$. The best result for the unknown test was reached by $es=200$ with an accuracy of 70.5\% and $\kappa=0.639$.
+
+The \b{last training group} refers to parameter $a$: the activation function (the different activation functions used for training were introduced in chapter \ref{c.postagging.fnn.architecture}). The result for the accuracy of 8 models that were trained each with another activation function is presented in figure \ref{f.evaluation.rnn.a}. The configuration of the other training parameters was based on the results of the preceding training groups, using $e=250$ and $s=350$. The number of training epochs was chosen with respect to reasonable training times.
+
 \begin{figure}[H]
 	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_fnn_a}
-	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN for parameter $n$: the number of training epochs.}
+	\caption[FNN Evaluation: Activation Function]{The evaluation results of the FNN for parameter $a$: the activation function.}
 	\label{f.evaluation.fnn.a}
 \end{figure}
+
+For the known test, the model using \tt{RELU6} as activation function achieves the highest accuracy with 92.6\% correctly tagged words and the highest kappa score with $\kappa=0.818$. The same model also outperforms the other models for the unknown test, reaching an accuracy of 72.0\% and $\kappa=0.654$.
 
 \subsection{Recurrent Neural Network Models}\label{c.evaluation.results.rnn}
 \begin{figure}[H]
