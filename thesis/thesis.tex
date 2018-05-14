@@ -484,26 +484,26 @@ The resulting number of models is 99; however, due to an overlap in configuratio
 	\vspace{2em}
 	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c >{\centering}p{20mm} >{\centering}p{18mm} >{\centering}p{18mm} c c }
 	\trule
-	\textsc{Group} & \tt{p} & \tt{e} & \tt{s} & \tt{n} & \tt{a} & \textsc{Models} \\
+	\textsc{Group} & $p$ & $e$ & $s$ & $n$ & $a$ & \textsc{Models} \\
 	\drule
-	\i{1} & \cellcolor{orange}\color{white}\b{\tt{0}--\tt{12}} & \tt{50} & \tt{100} & \tt{1} & \tt{relu} & \i{13} \\
+	\i{1} & \b{0--12} & 50 & 100 & 1 & relu & \i{13} \\
 	\mrule
-	\i{2} & \tt{1} & \cellcolor{orange}\b{\color{white}\tt{1}, \tt{5}, \tt{10}, \tt{25}, \newline \tt{50}--\tt{700}\tablefootnote{With a step size of \ftt{50}\label{fifty}}} & \tt{100} & \tt{1} & \tt{relu} & \i{18} \\
+	\i{2} & 1 & \b{1, 5, 10, 25,\newline 50--700}\tablefootnote{With a step size of 50\label{fifty}} & 100 & 1 & relu & \i{18} \\
 	\mrule
-	\i{3} & \tt{1} & \tt{50} & \cellcolor{orange}\b{\color{white}\tt{10}, \tt{25}, \newline \tt{50}--\tt{1000}\footref{fifty}} & \tt{1} & \tt{relu} & \i{22} \\
+	\i{3} & 1 & 50 & \b{10, 25,\newline 50--1000}\footref{fifty} & 1 & relu & \i{22} \\
 	\mrule
-	\i{4} & \tt{1} & \tt{50} & \tt{100} & \cellcolor{orange}\b{\color{white}\tt{1}, \tt{5}, \tt{10}, \newline \tt{20}--\tt{140}\tablefootnote{With a step size of \ftt{20}}} & \tt{relu} & \i{10} \\
+	\i{4} & 1 & 50 & 100 & \b{1, 5, 10, \newline 20--140}\tablefootnote{With a step size of 20} & relu & \i{10} \\
 	\srule
-	\i{5} & \tt{1} & \cellcolor{orange}\b{\color{white}\tt{200}--\tt{600}\footref{fifty}} & \tt{350} & \tt{1} & \tt{relu} & \i{9} \\
+	\i{5} & 1 & \b{200--600}\footref{fifty} & 350 & 1 & relu & \i{9} \\
 	\mrule
-	\i{6} & \tt{1} & \tt{250} & \cellcolor{orange}\b{\color{white}\tt{200}--\tt{600}\footref{fifty}} & \tt{1} & \tt{relu} & \i{9} \\
+	\i{6} & 1 & 250 & \b{200--600}\footref{fifty} & 1 & relu & \i{9} \\
 	\mrule
-	\i{7} & \tt{1} & \cellcolor{orange}\b{\color{white}\tt{50}--\tt{500}\footref{fifty}} & \cellcolor{orange}\b{\color{white}\tt{50}--\tt{500}\footref{fifty}} & \tt{5} & \tt{relu} & \i{10} \\
+	\i{7} & 1 & \b{50--500}\footref{fifty} & \b{50--500}\footref{fifty} & 5 & relu & \i{10} \\
 	\mrule
-	\i{8} & \tt{1} & \tt{250} & \tt{350} & \tt{1} & \cellcolor{orange}\color{white}\b{\tt{[...]}\tablefootnote{The following 8 activation functions were considered: \ftt{relu}, \ftt{relu6}, \ftt{elu}, \ftt{sigmoid}, \ftt{tanh}, \ftt{selu}, \ftt{softplus}, \ftt{softsign}}} & \i{8} \\
+	\i{8} & 1 & 250 & 350 & 5 & \b{relu, ...}\tablefootnote{The following 8 activation functions were considered: \ftt{RELU}, \ftt{RELU6}, \ftt{ELU}, \ftt{SIGMOID}, \ftt{TANH}, \ftt{SELU}, \ftt{SOFTPLUS}, \ftt{SOFTSIGN}. See chapter \ref{c.postagging.fnn.architecture}} & \i{8} \\
 	\brule
 	\end{tabular}
-	\caption[Parameter combinations of FNN Models]{The parameter configuration for training the FNN models. The rows represent the training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\i{\b{p}} - number of past words, \i{\b{e}} - embedding size, \i{\b{s}} - hidden layer size, \i{\b{n}} - number of training epochs, \i{\b{a}} - activation function). The first column denotes the group number (for referencing training groups) whereas the last column shows the resulting number of models for each training group.}
+	\caption[Parameter combinations of FNN Models]{The parameter configuration for training the FNN models. The rows represent the training groups with the corresponding variable parameter (in bold), while the columns represent the single training parameters (\i{\b{p}} - number of past words, \i{\b{e}} - embedding size, \i{\b{s}} - hidden layer size, \i{\b{n}} - number of training epochs, \i{\b{a}} - activation function). The first column denotes the group number (for referencing training groups) whereas the last column shows the resulting number of models for each training group.}
 	\label{t.training.tuning.fnn}
 	\vspace{1em}
 \end{table}
@@ -523,18 +523,19 @@ Based on these 4 parameters, table \ref{t.training.tuning.rnn} shows different p
 	\vspace{2em}
 	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c c c c c }
 	\trule
-	\textsc{Group} & \tt{t} & \tt{s} & \tt{n} & \tt{a} & \textsc{Models} \\
+	\textsc{Group} & $t$ & $s$ & $n$ & $a$ & \textsc{Models} \\
 	\drule
-	\i{9} & \cellcolor{orange}\color{white}\b{\tt{0}--\tt{12}} & \tt{50} & \tt{1} & \tt{relu} & \i{12} \\
+	\i{9} & \b{0--12} & 50 & 1 & relu & \i{12} \\
 	\mrule
-	\i{10} & \tt{1} & \cellcolor{orange}\color{white}\b{\tt{10}, \tt{25}, \tt{50}--\tt{500}\tablefootnote{With a step size of \ftt{50}\label{fiftyrnn}}} & \tt{1} & \tt{relu} & \i{12} \\
+	\i{10} & 1 & \b{10, 25, 50--500}\tablefootnote{With a step size of 50\label{fiftyrnn}} & 1 & relu & \i{12} \\
 	\mrule
-	\i{11} & \tt{1} & \tt{50} & \cellcolor{orange}\color{white}\b{\tt{1}, \tt{5}, \tt{10}, \tt{20}--\tt{80}\tablefootnote{With a step size of \ftt{20}\label{twentyrnn}}} & \tt{relu} & \i{7} \\
+	\i{11} & 1 & 50 & \b{1, 5, 10, 20--80}\tablefootnote{With a step size of 20\label{twentyrnn}} & relu & \i{7} \\
 	\srule
-	\i{12} & \tt{8} & \tt{50} & \tt{5} & \cellcolor{orange}\color{white}\b{\tt{[...]}\tablefootnote{For the RNN the same 8 activation functions as for the FNN are used.}} & \i{8} \\
+	\i{12} & 8 & 50 & 5 & \b{relu, ...}\tablefootnote{For the RNN the same 8 activation functions as for the FNN are used.} & \i{8} \\
 	\brule
 	\end{tabular}
-	\caption[Parameter combinations of RNN Models]{The parameter configuration for the training of RNN models. The rows represent the training groups with the corresponding variable parameter (orange cells), while the columns represent the single training parameters (\i{\b{t}} (number of time steps), \i{\b{s}} (hidden layer size), \i{\b{n}} (number of training epochs), \i{\b{a}} - activation function). The first column denotes the group number (for referencing training groups) whereas the last column shows the resulting number of models for each training group.}
+	\vspace{3mm}
+	\caption[Parameter combinations of RNN Models]{The parameter configuration for the training of RNN models. The rows represent the training groups with the corresponding variable parameter (in bold), while the columns represent the single training parameters (\i{\b{t}} (number of time steps), \i{\b{s}} (hidden layer size), \i{\b{n}} (number of training epochs), \i{\b{a}} - activation function). The first column denotes the group number (for referencing training groups) whereas the last column shows the resulting number of models for each training group.}
 	\label{t.training.tuning.rnn}
 \end{table}
 
