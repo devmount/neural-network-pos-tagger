@@ -122,7 +122,7 @@ Today, less than 60 years later, we have a lot of practical devices that use mac
 \section{Scope of this Thesis}\label{c.introduction.scope}
 This thesis focuses on developing a neural network based part-of-speech tagger for \Alex, the advisory Artificial Conversational Agent, the training of several language models and their evaluation with corresponding test sets.
 
-In order to devise the new language models, two different neural network architectures are implemented: a feed-forward neural network and a recurrent neural network. For the training of both neural network implementations, a corpus of tagged language data is generated with the help of various input templates, which are created based on logged user input data.
+In order to devise the new language models, two different neural network architectures are implemented: a feed-forward neural network and a recurrent neural network. For the training of both neural network implementations, an improved training corpus of tagged language data is generated with the help of various input templates, which are created based on logged user input data.
 
 To evaluate the language models, a data set of known data\footnote{Data, that was already used for the training of the model} and unknown data\footnote{Data, that includes words and sentence structures, that didn't occur in the training data sets} is created. Both neural network models and the HMM are compared to each other using this evaluation.
 
@@ -382,6 +382,8 @@ Figure \ref{f.rnn.structure} illustrates the architecture of an RNN, which was i
 $W$.
 
 Each word of every sentence of the training corpus represents an input feature, which is propagated to the hidden and the output layer together with information from previous training steps. Similar to the processing of FNNs, the POS tag is predicted for the current word and the current loss and accuracy are calculated. After propagating the error back to adjust the weights and reduce the loss, the next training step is executed, taking the current training step into account.
+
+The outputs of the hidden layer are calculated utilizing the same activation functions that were used for the FNN (see figure \ref{t.postagging.activation}).
 
 \begin{figure}[ht]
 	\includegraphics[width=\textwidth]{images/rnn_structure}
@@ -648,14 +650,14 @@ $p_o$ represents the measured agreement and $p_c$ the randomly expected agreemen
 \end{table}
 
 \section{Evaluation Results}\label{c.evaluation.results}
-After introducing the test sets and the evaluation methodology, all training groups were evaluated according to the parameter configuration presented in chapter \ref{c.training.tuning}. The following sections show the evaluation results of the different architectures for each test set.
+After introducing the test sets and the evaluation methodology, all training groups were evaluated according to the parameter configuration presented in chapter \ref{c.training.tuning}. The following sections present the evaluation results of the different architectures for each test set with corresponding figures for the accuracy of the respective model. For a clearer overview in the evaluation sections itself, the figures showing the results for Cohen's Kappa can be found in the appendix \ref{c.appendix.kappa.fnn} and \ref{c.appendix.kappa.rnn}.
 
 \subsection{Feed-Forward Neural Network Models}\label{c.evaluation.results.fnn}
 The \b{first training group} for the FNN refers to parameter $p$: the number of preceding words that are used to build the feature vector. Figure \ref{f.evaluation.fnn.p} presents the achieved accuracy for both tests.
 
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{images/evaluation_fnn_p}
-	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN for parameter $p$: the number of preceding words. Number of correctly tagged words in percent.}
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_fnn_p}
+	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN for parameter $p$: the number of preceding words.}
 	\label{f.evaluation.fnn.p}
 \end{figure}
 
@@ -664,16 +666,16 @@ For the known test, the model with $p=1$ clearly achieves the highest accuracy w
 The \b{second training group} was tested with 18 different values for the embedding size $e$ of the input words for the FNN. The results are presented in figure \ref{f.evaluation.fnn.e}. With a few exceptions, the accuracy for the known test slightly increases with larger embeddings, reaching a maximum of 90.5\% (and $\kappa=0.801$) on an embedding size of 600. The highest accuracy (70.1\%, $\kappa=0.639$) for the unknown test was reached by the model with an embedding size of 450.
 
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{images/evaluation_fnn_e}
-	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN for parameter $e$: the embedding size. Number of correctly tagged words in percent.}
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_fnn_e}
+	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN for parameter $e$: the embedding size.}
 	\label{f.evaluation.fnn.e}
 \end{figure}
 
 The results of the evaluation of \b{Training group 3} that varied the size of the hidden layer $s$ is illustrated in figure \ref{f.evaluation.fnn.s}.
 
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{images/evaluation_fnn_s}
-	\caption[FNN Evaluation: Hidden Layer Size]{The evaluation results of the FNN for parameter $s$: the size of the hidden layer. Number of correctly tagged words in percent.}
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_fnn_s}
+	\caption[FNN Evaluation: Hidden Layer Size]{The evaluation results of the FNN for parameter $s$: the size of the hidden layer.}
 	\label{f.evaluation.fnn.s}
 \end{figure}
 
@@ -682,33 +684,69 @@ An accuracy of 89.1\% was achieved on the known test with a hidden layer size of
 For \b{training group 4} models were trained with different numbers of training epochs $n$. Figure \ref{f.evaluation.fnn.n} presents the results.
 
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{images/evaluation_fnn_n}
-	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN for parameter $n$: the number of training epochs. Number of correctly tagged words in percent.}
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_fnn_n}
+	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN for parameter $n$: the number of training epochs.}
 	\label{f.evaluation.fnn.n}
 \end{figure}
 
-Overall, all models of the different training epochs achieved similar results on the known test. However, the model with $n=80$ stands out a bit with the highest accuracy of 87.7\% and the second highest $\kappa=0.808$. For the unknown test, the model with only 5 training epochs achieved a maximum accuracy of 68.8\% and $\kappa=0.622$.
+Overall, all models of the different training epochs achieved similar results on the known test and there is no discernible tendency. However, the model with $n=80$ stands out a bit with the highest accuracy of 87.7\% and the second highest $\kappa=0.808$. For the unknown test, the model with only 5 training epochs achieved a maximum accuracy of 68.8\% and $\kappa=0.622$.
+
+Similar to training group 2, \b{training group 5} refers to the embedding size $e$, but utilizing a larger hidden layer size ($s=350$). The results are presented in figure {\ref{f.evaluation.fnn.e2}}.
 
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{images/evaluation_fnn_e2}
-	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN for parameter $n$: the number of training epochs. Number of correctly tagged words in percent.}
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_fnn_e2}
+	\caption[FNN Evaluation: Embedding Size II]{The evaluation results of the FNN for the embedding size $e$ with a larger hidden layer size $s=350$.}
 	\label{f.evaluation.fnn.e2}
 \end{figure}
 
+Comparing to training group 2, the results were slightly better. Evaluating the known test, the highest accuracy of 91.4\% ($\kappa=0.807$) was reached by a model with embedding size $e=250$. Nevertheless, the highest kappa value $\kappa=0.818$ was assigned to the model with $e=500$, which however achieved a lower accuracy of 87.8\%. For the unknown test, the model with $e=550$ has tagged most words correctly (70.7\%, $\kappa=0.640$).
+
+Similar to training group 3, \b{training group 6} refers to the hidden layer size $s$, but using a larger embedding size ($e=250$). Figure {\ref{f.evaluation.fnn.s2}} presents the results.
+
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{images/evaluation_fnn_s2}
-	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN for parameter $n$: the number of training epochs. Number of correctly tagged words in percent.}
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_fnn_s2}
+	\caption[FNN Evaluation: Hidden Layer Size II]{The evaluation results of the FNN for the hidden layer size $s$ with a larger embedding size $e=250$.}
 	\label{f.evaluation.fnn.s2}
 \end{figure}
 
+This parameter configuration performed slightly better comparing to training group 3. Evaluating the known test, the highest accuracy of 91.4\% ($\kappa=0.807$) was again reached by the model with hidden layer size $s=350$. Nevertheless, the highest kappa value $\kappa=0.821$ was assigned to the model with $s=500$, which however achieved a slightly lower accuracy of 90.8\%. For the unknown test, the model with $s=450$ has tagged most words correctly (70.9\%, $\kappa=0.643$).
+
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{images/evaluation_fnn_a}
-	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN for parameter $n$: the number of training epochs. Number of correctly tagged words in percent.}
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_fnn_es}
+	\caption[FNN Evaluation: Network Size]{The evaluation results of the FNN for parameter $n$: the number of training epochs.}
+	\label{f.evaluation.fnn.es}
+\end{figure}
+
+\begin{figure}[H]
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_fnn_a}
+	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN for parameter $n$: the number of training epochs.}
 	\label{f.evaluation.fnn.a}
 \end{figure}
 
 \subsection{Recurrent Neural Network Models}\label{c.evaluation.results.rnn}
-...
+\begin{figure}[H]
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_rnn_t}
+	\caption[RNN Evaluation: Number of Time Steps]{The evaluation results of the RNN: Cohen's Kappa for parameter $t$: the number of time steps.}
+	\label{f.evaluation.rnn.t}
+\end{figure}
+
+\begin{figure}[H]
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_rnn_s}
+	\caption[RNN Evaluation: Hidden Layer Size]{The evaluation results of the RNN: Cohen's Kappa for parameter $s$: the size of the hidden layer.}
+	\label{f.evaluation.rnn.s}
+\end{figure}
+
+\begin{figure}[H]
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_rnn_n}
+	\caption[RNN Evaluation: Number of Training Epochs]{The evaluation results of the RNN: Cohen's Kappa for parameter $n$: the number of training epochs.}
+	\label{f.evaluation.rnn.n}
+\end{figure}
+
+\begin{figure}[H]
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_rnn_a}
+	\caption[RNN Evaluation: Activation Function]{The evaluation results of the RNN: Cohen's Kappa for parameter $a$: the type of the activation function.}
+	\label{f.evaluation.rnn.a}
+\end{figure}
 
 \subsection{Hidden Markov Models}\label{c.evaluation.results.hmm}
 After evaluating the neural network based language models, the HMM is evaluated in the following. For this purpose, the previous HMM which was trained on the basis of the training data generated by T. Michael \cite{michael2016} is compared to a new HMM trained on the basis of the training data proposed in this thesis. The evaluation was carried out using the known and the unknown test; the results are presented in figure \ref{f.evaluation.hmm}.
@@ -730,6 +768,17 @@ It should be noted that the comparison of the previous and the new HMM model bas
 
 \section{Overall Comparison}\label{c.evaluation.comparison}
 ...
+
+\begin{figure}[H]
+\centering
+\subcaptionbox{Comparsion of Accuracy\label{f.evaluation.comparison.a}}
+{\includegraphics[width=0.495\textwidth]{images/comparison}}
+\subcaptionbox{Comparison of Kappa Score\label{f.evaluation.comparison.k}}
+{\includegraphics[width=0.495\textwidth]{images/comparison_k}}
+\vspace{1em}
+\caption[Comparison of all Architectures]{The evaluation results of the previous HMM model trained by T. Michael \cite{michael2016}, the new HMM model trained on the new training data proposed in this thesis, the best FNN and the best RNN model.}
+\label{f.evaluation.comparison}
+\end{figure}
 
 % ===================================================================================
 \chapter{Discussion and Conclusion}\label{c.conclusion}
@@ -769,5 +818,88 @@ All in all, this thesis has demonstrated several ways of improving the tagger, w
 
 \section{Set of sentence templates}\label{c.appendix.sentencetemplates}
 \lstinputlisting[language=plain, label={l.trainingtemplate}]{listings/training_template.txt}
+
+\newpage
+
+\section{FNN Evaluation: Cohen's Kappa}\label{c.appendix.kappa.fnn}
+\vspace{-13mm}
+\begin{figure}[H]
+	\centering\includegraphics[width=\textwidth]{images/evaluation_fnn_e_k}
+	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN: Cohen's Kappa for parameter $e$: the embedding size.}
+	\label{f.evaluation.fnn.e.k}
+\end{figure}
+
+\vspace{-13mm}
+\begin{figure}[H]
+	\centering\includegraphics[width=\textwidth]{images/evaluation_fnn_s_k}
+	\caption[FNN Evaluation: Hidden Layer Size]{The evaluation results of the FNN: Cohen's Kappa for parameter $s$: the size of the hidden layer.}
+	\label{f.evaluation.fnn.s.k}
+\end{figure}
+
+\vspace{-11mm}
+\begin{figure}[H]
+	\centering\includegraphics[width=\textwidth]{images/evaluation_fnn_n_k}
+	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN: Cohen's Kappa for parameter $n$: the number of training epochs.}
+	\label{f.evaluation.fnn.n.k}
+\end{figure}
+
+\vspace{-11mm}
+\begin{figure}[H]
+	\centering\includegraphics[width=\textwidth]{images/evaluation_fnn_e2_k}
+	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN: Cohen's Kappa for parameter $n$: the number of training epochs.}
+	\label{f.evaluation.fnn.e2.k}
+\end{figure}
+
+\vspace{-11mm}
+\begin{figure}[H]
+	\centering\includegraphics[width=\textwidth]{images/evaluation_fnn_s2_k}
+	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN: Cohen's Kappa for parameter $n$: the number of training epochs.}
+	\label{f.evaluation.fnn.s2.k}
+\end{figure}
+
+\vspace{-11mm}
+\begin{figure}[H]
+	\centering\includegraphics[width=\textwidth]{images/evaluation_fnn_es_k}
+	\caption[FNN Evaluation: Network Size]{The evaluation results of the FNN: Cohen's Kappa for uniform scaling of parameters $e$ ad $s$, increasing the whole network size.}
+	\label{f.evaluation.fnn.es.k}
+\end{figure}
+
+\vspace{-11mm}
+\begin{figure}[H]
+	\centering\includegraphics[width=\textwidth]{images/evaluation_fnn_a_k}
+	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN: Cohen's Kappa for parameter $n$: the number of training epochs.}
+	\label{f.evaluation.fnn.a.k}
+\end{figure}
+
+\newpage
+
+\section{RNN Evaluation: Cohen's Kappa}\label{c.appendix.kappa.rnn}
+\vspace{-13mm}
+\begin{figure}[H]
+	\centering\includegraphics[width=\textwidth]{images/evaluation_rnn_t_k}
+	\caption[RNN Evaluation: Number of Time Steps]{The evaluation results of the RNN: Cohen's Kappa for parameter $t$: the number of time steps.}
+	\label{f.evaluation.rnn.t.k}
+\end{figure}
+
+\vspace{-13mm}
+\begin{figure}[H]
+	\centering\includegraphics[width=\textwidth]{images/evaluation_rnn_s_k}
+	\caption[RNN Evaluation: Hidden Layer Size]{The evaluation results of the RNN: Cohen's Kappa for parameter $s$: the size of the hidden layer.}
+	\label{f.evaluation.rnn.s.k}
+\end{figure}
+
+\vspace{-11mm}
+\begin{figure}[H]
+	\centering\includegraphics[width=\textwidth]{images/evaluation_rnn_n_k}
+	\caption[RNN Evaluation: Number of Training Epochs]{The evaluation results of the RNN: Cohen's Kappa for parameter $n$: the number of training epochs.}
+	\label{f.evaluation.rnn.n.k}
+\end{figure}
+
+\vspace{-11mm}
+\begin{figure}[H]
+	\centering\includegraphics[width=\textwidth]{images/evaluation_rnn_a_k}
+	\caption[RNN Evaluation: Activation Function]{The evaluation results of the RNN: Cohen's Kappa for parameter $a$: the type of the activation function.}
+	\label{f.evaluation.rnn.a.k}
+\end{figure}
 
 \end{document}
