@@ -481,18 +481,17 @@ Based on these 5 parameters, table \ref{t.training.tuning.fnn} shows different p
 The resulting number of models is 99; however, due to an overlap in configurations of the training groups, the total number of distinct models to be trained with the FNN is 93.
 
 \begin{table}[H]
-	\vspace{2em}
 	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c >{\centering}p{20mm} >{\centering}p{18mm} >{\centering}p{18mm} c c }
 	\trule
 	\textsc{Group} & $p$ & $e$ & $s$ & $n$ & $a$ & \textsc{Models} \\
 	\drule
 	\i{1} & \b{0--12} & 50 & 100 & 1 & relu & \i{13} \\
 	\mrule
-	\i{2} & 1 & \b{1, 5, 10, 25,\newline 50--700}\tablefootnote{With a step size of 50\label{fifty}} & 100 & 1 & relu & \i{18} \\
+	\i{2} & 1 & \b{1, 5, 10, 25, 50--700}\tablefootnote{With a step size of 50\label{fifty}} & 100 & 1 & relu & \i{18} \\
 	\mrule
-	\i{3} & 1 & 50 & \b{10, 25,\newline 50--1000}\footref{fifty} & 1 & relu & \i{22} \\
+	\i{3} & 1 & 50 & \b{10, 25, 50--1000}\footref{fifty} & 1 & relu & \i{22} \\
 	\mrule
-	\i{4} & 1 & 50 & 100 & \b{1, 5, 10, \newline 20--140}\tablefootnote{With a step size of 20} & relu & \i{10} \\
+	\i{4} & 1 & 50 & 100 & \b{1, 5, 10, 20--140}\tablefootnote{With a step size of 20} & relu & \i{10} \\
 	\srule
 	\i{5} & 1 & \b{200--600}\footref{fifty} & 350 & 1 & relu & \i{9} \\
 	\mrule
@@ -503,6 +502,7 @@ The resulting number of models is 99; however, due to an overlap in configuratio
 	\i{8} & 1 & 250 & 350 & 5 & \b{relu, ...}\tablefootnote{The following 8 activation functions were considered: \ftt{RELU}, \ftt{RELU6}, \ftt{ELU}, \ftt{SIGMOID}, \ftt{TANH}, \ftt{SELU}, \ftt{SOFTPLUS}, \ftt{SOFTSIGN}. See chapter \ref{c.postagging.fnn.architecture}} & \i{8} \\
 	\brule
 	\end{tabular}
+	\vspace{.5em}
 	\caption[Parameter combinations of FNN Models]{The parameter configuration for training the FNN models. The rows represent the training groups with the corresponding variable parameter (in bold), while the columns represent the single training parameters (\i{\b{p}} - number of past words, \i{\b{e}} - embedding size, \i{\b{s}} - hidden layer size, \i{\b{n}} - number of training epochs, \i{\b{a}} - activation function). The first column denotes the group number (for referencing training groups) whereas the last column shows the resulting number of models for each training group.}
 	\label{t.training.tuning.fnn}
 	\vspace{1em}
@@ -798,6 +798,7 @@ It should be noted that the comparison of the previous and the new HMM model bas
 \section{Overall Comparison}\label{c.evaluation.comparison}
 After evaluating the neural network models and the hidden Markov models each for its own, the different architectures are now compared to each other. Therefore, the evaluation results of the best FNN model proposed in chapter \ref{c.evaluation.results.fnn}, the best RNN model found in chapter \ref{c.evaluation.results.rnn} and the two HMM models evaluated in chapter \ref{c.evaluation.results.hmm} are summarized in table \ref{t.evaluation.comparison} and illustrated in figure \ref{f.evaluation.comparison}.
 
+\vspace{.5em}
 \begin{table}[!ht]
 	\centering
 	\hfill
@@ -860,26 +861,33 @@ The final chapter summarizes the work of this thesis and the evaluation results 
 \section{Summary}\label{c.conclusion.summary}
 The aim to develop a neural network based part-of-speech tagger for the advisory Artificial Conversational Agent \Alex\ was accomplished within the scope of this thesis.
 
-A tagger module was implemented featuring a feed-forward neural network as well as a recurrent neural network. A training corpus containing tagged sentences was created with the help of an improved set of sentence templates. With both neural network architectures, various language models were trained on this corpus using parameter variation. These models were then evaluated with two corresponding tests sets, containing sentences from the training corpus (known data) and unknown sentences, that were derived from user log data.
+The different modules of \Alex\ were analyzed to gain information about the language processing, the generation of training data and the hidden Markov model tagger and its interface.
+
+Based on this knowledge, a tagger module was implemented featuring a feed-forward neural network as well as a recurrent neural network architecture. A training corpus containing tagged sentences was generated with the help of an improved set of sentence templates. With both neural network architectures, several language models were trained on this corpus using parameter variation. These models were then evaluated with two corresponding tests sets, containing sentences from the training corpus (known data) and unknown sentences, that were derived from user log data. Also the hidden Markov model \Alex\ already utilizes for POS tagging was evaluated with these test sets, as well as an HMM that was trained on the new training data, proposed in this thesis.
+
+After evaluating the trained language models it could be shown that the HMM based on the new training data significantly performed better than the previous HMM tagger, especially on unknown evaluation data. It was also shown that a tagger based on a feed-forward neural network was able to outperform this new HMM tagger on known evaluation data.
 
 \section{Discussion}\label{c.conclusion.discussion}
-...
-- unknown generally lower -> guessing of tags
+According to the evaluation results, the FNN model achieved the highest accuracy for known data and would therefore be preferred for productive use. However, the HMM model performed significantly better on unknown data. Given the fact that a chatbot has to deal with a lot of unknown input data due to users that do not know the limits of the chatbots knowledge and capabilities, the result of the unknown test is more important for the choice of the language model to use in \Alex.
+
+When reviewing the overall comparison of the trained language models, it is apparent that the results of the recurrent neural network models are particularly poor. These models tagged not even half of the words of the test sets correctly. Given the fact, that the RNN architecture in this thesis does only utilize word ids rather than word embeddings, a possible reason is that there are too few input features to describe the single words and propagate the respective information through the network. This is evidenced by the evaluation result of the FNN model that was trained with an embedding size of 1, which is the same as using word ids. This model was the only model of the FNN architectures that reached a poor result as the RNN models.
+
+Another important factor, which should be taken into account especially when the database is changed or replaced, is the training time of the neural network models. Depending on the parameter configuration, the training of a model could take several hours. However, in this thesis the training of the FNN model with the best evaluation results took half an hour, which should still be usable when (as it is the case for \Alex) the database is only updated every semester.
 
 \section{Future work}\label{c.conclusion.future}
-Although a high accuracy of the language models was achieved with an improved training corpus and the neural network approaches used in this thesis, further research could be done in certain areas to fine-tune and improve the templates as well as the tagging results.
+Although a high accuracy of the language models was achieved with an improved training corpus and the neural network approach used in this thesis, further research could be done in certain areas to fine-tune and improve the training templates as well as the tagging results.
 
 As demonstrated in the preceding chapters, the methodology used in this thesis was found to be appropriate for an initial exploration into improving the tagging results. Going forward, however, there are certain areas and components of the methodology that could be optimized, which will be outlined in the following.
 
 Rather than manually deleting training templates that contain a lot of useless combinations of data from the database, an additional module could check these combinations automatically in advance. Depending on the query result of such a data validation module, the generated training sentence would then be included or excluded from the training corpus. This way, the general sentence templates can still be used knowing that meaningless training sentences will not be considered.
 
-In this thesis, parameters that were thought to influence the tagging results, such as the number of previous words, the size of the hidden layer, the size of the word embeddings and the number of training epochs were analyzed. Yet there are additional parameters, which could also be examined to improve the accuracy further. For the FNN, parameters of possible interest are the number of subsequent words (in addition to the number of previous words), the number of hidden layers, the type of the activation function for the neurons and the training optimizer. The use of word embeddings with a particular embedding size for the RNN could be interesting too, as well as the type of the activation function and the optimizer, which are possible additional parameters. Moreover, an exponential decay for the learning rate of the optimizer, especially for the RNN, could be explored.
+In this thesis, parameters that were thought to influence the tagging results, such as the number of previous words, the size of the hidden layer, the size of the word embeddings, the number of training epochs and the type of the activation function were analyzed. Yet there are additional parameters, which could also be examined to improve the accuracy further. For the FNN, parameters of possible interest are the number of subsequent words (in addition to the number of previous words), the number of hidden layers and the training optimizer. The use of word embeddings with a particular embedding size for the RNN could be interesting too, as well as the training optimizer, which are possible additional parameters. Moreover, an exponential decay for the learning rate of the optimizer, especially for the RNN, could be explored.
 
 Another potential way to improve the tagging accuracy, could be to use pretrained instead of randomly initialized word embeddings in the training process. This is a relevant direction to explore, as it was previously shown that word embeddings that were trained on large German text corpora contain a high level of syntactical and semantical information \cite{mueller2015}.
 
 Furthermore, to improve the evaluation process, it could be extended with a more fine-grained output concerning semantical topics such as degrees, locations, persons or module titles. This way, a statement could be made about how well the model performs on each topic and if there are significant differences between the evaluation results. This knowledge could then be used to systematically improve the training templates.
 
-All in all, this thesis has demonstrated several ways of improving the tagger, which is not only of importance for the scope of this thesis and \Alex\ but which can also be used as a starting point for improving other chatbots, or systems that use a POS tagger in general.
+All in all, this thesis has demonstrated a way of implementing, training and evaluating a neural network based tagger, which is not only of importance for the scope of this thesis and \Alex\ but which can also be used as a starting point for improving other chatbots, or systems that use a POS tagger in general.
 
 % ===================================================================================
 \bibliographystyle{plain}
