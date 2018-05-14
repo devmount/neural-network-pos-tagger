@@ -141,7 +141,10 @@ class Tagger:
             words.append(self.data.id_to_word[word_id])
         predicted_pos = []
         for pred_id in predicted_pos_ids:
-            predicted_pos.append(self.data.id_to_pos[pred_id])
+            if pred_id in self.data.id_to_pos:
+                predicted_pos.append(self.data.id_to_pos[pred_id])
+            else:
+                predicted_pos.append(self.data.id_to_pos[0])
 
         # pretty print tagged sentence if enabled
         if pretty_print:
