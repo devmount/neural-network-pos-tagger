@@ -394,7 +394,7 @@ class Tagger:
 
         if train:
             step, loss, accuracy, _, summaries = sess.run(standard_ops + train_ops, feed_dict)
-            print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="\r", flush=True)
+            # print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="\r", flush=True)
         else:
             step, loss, accuracy, summaries = sess.run(standard_ops + test_ops, feed_dict)
             print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="", flush=True)
