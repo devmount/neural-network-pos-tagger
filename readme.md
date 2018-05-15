@@ -4,28 +4,36 @@
 
 This master thesis aims to improve the natural language understanding of an artificial conversational agent, that uses a Hidden Markov Model to calculate Part-of-Speech tags for input words. In order to achieve better results especially for uncommon word combinations and sentence structures, two new classification models are implemented and evaluated: a Feed-forward Neural Network and a Recurrent Neural Network.
 
-## TOC (presumably)
+## TOC
 
 - Introduction
   - Scope of this Thesis
   - Related Work
+    - The Hidden Markov Model
+    - The Artificial Neural Network Model
   - Structure of this Thesis
 - Alex: Artificial Conversational Agent
   - System Overview
-  - Hidden Markov Model
+  - Training Data
+  - The Hidden Markov Model Tagger
   - Tagging Interface
-- Part-of-Speech Tagging
+- Part-of-Speech Tagging with Neural Networks
   - Feed-forward Neural Network Model
     - Architecture
     - Implementation
   - Recurrent Neural Network Model
     - Architecture
     - Implementation
-- Training
-  - Data Retrieval
+- Training of Language Models
+  - Training Data Corpus
   - Parameter Tuning
 - Evaluation and Comparison
   - Test Design
+  - Evaluation Results
+    - Feed-forward Neural Network Models
+    - Recurrent Neural Network Models
+    - Hidden Markov Models
+  - Overall Comparison
 - Discussion and Conclusion
   - Summary
   - Discussion
