@@ -66,7 +66,7 @@ class Tagger:
 
         # get training and test data and the number of existing POS tags
         train_batches, test_data, n_pos_tags = self.__load_data(training_file_path)
-        x_test = self.__rnn_reshape(test_data['x']) if self.architecture == 'RNN' else test_data['x']
+        x_test = test_data['x']
         y_test = test_data['y']
 
         # initialize the model by starting session and specifying initial values for the tensorflow variables
@@ -93,8 +93,8 @@ class Tagger:
         for batch in train_batches:
             x_batch, y_batch = zip(*batch)
             # reshape data for RNN time steps
-            if self.architecture == 'RNN':
-                x_batch = self.__rnn_reshape(x_batch)
+            # if self.architecture == 'RNN':
+            #     x_batch = self.__rnn_reshape(x_batch)
             self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
             current_step = tf.train.global_step(sess, global_step)
 
@@ -131,7 +131,7 @@ class Tagger:
         predictions = graph.get_operation_by_name("predictions").outputs[0]
 
         # get features and predicted pos ids
-        features = self.__rnn_reshape(self.data.features) if self.architecture == 'RNN' else self.data.features
+        features = self.data.features
         predicted_pos_ids = sess.run(predictions, feed_dict={input_x: features})
 
         # create lists of the sentence words and their corresponding predicted POS tags
@@ -309,10 +309,7 @@ class Tagger:
         y_test, y_train = y[:idx], y[idx:]
 
         # create iterable training batches
-        if self.architecture == 'RNN':
-            train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs, shuffle=False)
-        else:
-            train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs, shuffle=True)
+        train_batches = self.__batch_iterator(list(zip(x_train, y_train)), self.n_epochs, shuffle=True)
         test_data = {'x': x_test, 'y': y_test}
 
         return (train_batches, test_data, n_pos_tags)
@@ -346,7 +343,7 @@ class Tagger:
 
         # load model architecture based on settings, default is FNN (Feed-forward Neural Network)
         if self.architecture == 'RNN':
-            nn_model = model.RNN(self.h_size, n_pos_tags, self.n_timesteps)
+            nn_model = model.RNN(self.vocab_size, self.n_timesteps, self.embedding_size, self.h_size, n_pos_tags)
         else:
             nn_model = model.FNN(self.vocab_size, self.n_past_words, self.embedding_size, self.h_size, n_pos_tags)
         global_step = tf.Variable(initial_value=0, name="global_step", trainable=False)
@@ -397,7 +394,7 @@ class Tagger:
 
         if train:
             step, loss, accuracy, _, summaries = sess.run(standard_ops + train_ops, feed_dict)
-            print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="\r", flush=True)
+            # print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="\r", flush=True)
         else:
             step, loss, accuracy, summaries = sess.run(standard_ops + test_ops, feed_dict)
             print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="", flush=True)
@@ -504,8 +501,8 @@ if __name__ == "__main__":
         # create tagger instance
         if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
             t = Tagger('FNN', n_past_words=args.pastwords, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
-        elif args.timesteps is not None and args.hiddensize is not None and args.nepochs is not None:
-            t = Tagger('RNN', n_timesteps=args.timesteps, h_size=args.hiddensize, n_epochs=args.nepochs)
+        elif args.timesteps is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
+            t = Tagger('RNN', n_timesteps=args.timesteps, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
         else:
             t = Tagger()
         try:
@@ -517,8 +514,8 @@ if __name__ == "__main__":
         # create tagger instance
         if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
             t = Tagger('FNN', n_past_words=args.pastwords, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
-        elif args.timesteps is not None and args.hiddensize is not None and args.nepochs is not None:
-            t = Tagger('RNN', n_timesteps=args.timesteps, h_size=args.hiddensize, n_epochs=args.nepochs)
+        elif args.timesteps is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
+            t = Tagger('RNN', n_timesteps=args.timesteps, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
         else:
             t = Tagger()
         print('The tagged sentence is:')
@@ -528,8 +525,8 @@ if __name__ == "__main__":
         # create tagger instance
         if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
             t = Tagger('FNN', n_past_words=args.pastwords, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
-        elif args.timesteps is not None and args.hiddensize is not None and args.nepochs is not None:
-            t = Tagger('RNN', n_timesteps=args.timesteps, h_size=args.hiddensize, n_epochs=args.nepochs)
+        elif args.timesteps is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
+            t = Tagger('RNN', n_timesteps=args.timesteps, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
         else:
             t = Tagger()
         if args.inline:
