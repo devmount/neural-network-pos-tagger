@@ -41,15 +41,14 @@ This master thesis aims to improve the natural language understanding of an arti
 
 ## Setup
 
-Check if Python 3 is installed:
+Check if Python version >= 3.5 is installed:
 
     $ python --version
     Python 3.6.3
 
 Install dependencies:
 
-    pip install tensorflow
-    pip install texttable
+    pip install tensorflow texttable sklearn scipy
 
 If the installation was successful, change to the directory of the Tagger and everything should be ready to run properly:
 
@@ -59,19 +58,51 @@ If the installation was successful, change to the directory of the Tagger and ev
 
 ### Configuration
 
-The `settings.py` script contains the following configuration options:
+Static settings are located in the `settings.py` script. It contains the following configuration options:
 
 | option | description |
 | ------ | ----------- |
-| `TRAINING_FILE_PATH` | Path to a file with tagged sentences of this form: word1/TAG word2/TAG ... |
-| `VOCAB_SIZE` | Presumable dimension of the vocabulary (number of distinct words) |
-| `N_PAST_WORDS` | Number of preceding words to take into account for the POS tag training of the current word |
-| `EMBEDDING_SIZE` | Dimension of the word embeddings |
+| `ARCHITECTURE` | Neural network architecture that will be used. Possible values: 'FNN', 'RNN' |
+| `VOCAB_SIZE` | Setup dimension of the vocabulary |
+| `N_PAST_WORDS` | Number of preceding words to take into account for the POS tag training of the current word (FNN only) |
+| `N_TIMESTEPS` | Number of previous training steps to take into account (RNN only) |
+| `EMBEDDING_SIZE` | Dimension of the word embeddings (FNN only) |
 | `H_SIZE` | Dimension of the hidden layer |
 | `TEST_RATIO` | Ratio of test data extracted from the training data |
 | `BATCH_SIZE` | Size of the training batches |
 | `N_EPOCHS` | Number of training epochs |
 | `CHECKPOINT_EVERY` | Evaluate and save model state after this number of trainings steps |
+| `REPLACEMENT_FILE` | Preprocess training data by normalizing terms with the helo of replacements, stored in this file |
+
+Training, evaluation and tagging can be executed using the `tagger.py` script, which represents the core script of this toolkit. Its general usage is:
+
+    python tagger.py [-h] [--train TRAIN] [--tag TAG] [--evaluate EVALUATE]
+                     [--reset] [-p PASTWORDS] [-e EMBEDDINGSIZE] [-s HIDDENSIZE]
+                     [-n NEPOCHS] [-t TIMESTEPS] [-f] [-q] [-i]
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --train TRAIN         Invokes training of a language model on given corpus
+      --tag TAG             Tags a given sentence with the pretrained language
+                            model
+      --evaluate EVALUATE   Evaluates pretrained language model with a given
+                            evaluation file
+      --reset               Removes all stored training and log data
+      -p PASTWORDS, --pastwords PASTWORDS
+                            Number of preceding words to take into account
+      -e EMBEDDINGSIZE, --embeddingsize EMBEDDINGSIZE
+                            Dimension of the word embeddings
+      -s HIDDENSIZE, --hiddensize HIDDENSIZE
+                            Dimension of the hidden layer
+      -n NEPOCHS, --nepochs NEPOCHS
+                            Number of training epochs
+      -t TIMESTEPS, --timesteps TIMESTEPS
+                            Number of past trained words
+      -f, --force           Force operation without confirmation
+      -q, --quiet           No output messages
+      -i, --inline          Only one line output
+
+However, the following sections explain the usage of the specific flags for each action.
 
 ### Training
 
