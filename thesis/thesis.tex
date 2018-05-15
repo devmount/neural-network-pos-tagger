@@ -501,7 +501,7 @@ The resulting number of models is 99; however, due to an overlap in configuratio
 	\mrule
 	\i{7} & 1 & \b{50--500}\footref{fifty} & \b{50--500}\footref{fifty} & 5 & relu & \i{10} \\
 	\mrule
-	\i{8} & 1 & 250 & 350 & 5 & \b{relu, ...}\tablefootnote{The following 8 activation functions were considered: \ftt{RELU}, \ftt{RELU6}, \ftt{ELU}, \ftt{SIGMOID}, \ftt{TANH}, \ftt{SELU}, \ftt{SOFTPLUS}, \ftt{SOFTSIGN}. See chapter \ref{c.postagging.fnn.architecture}} & \i{8} \\
+	\i{8} & 1 & 250 & 350 & 5 & \b{relu, ...}\tablefootnote{The following 8 activation functions were considered: \ftt{RELU}, \ftt{RELU6}, \ftt{ELU}, \ftt{SIGMOID}, \ftt{TANH}, \ftt{SELU}, \ftt{SOFTPLUS} and \ftt{SOFTSIGN}. See chapter \ref{c.postagging.fnn.architecture}} & \i{8} \\
 	\brule
 	\end{tabular}
 	\vspace{.5em}
@@ -519,7 +519,7 @@ For the training of the RNN models, the following 4 parameters were considered:
 	\item \b{Activation function} (\i{\b{a}}) constitutes a mathematical function (as in the FNN)
 \end{itemize}
 
-Based on these 4 parameters, table \ref{t.training.tuning.rnn} shows different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is 37; however, due to an overlap in configurations of the training groups, the total number of models to be trained with the RNN is 35.
+Based on these 4 parameters, table \ref{t.training.tuning.rnn} shows different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is 40; however, due to an overlap in configurations of the training groups, the total number of models to be trained with the RNN is 38.
 
 \begin{table}[ht]
 	\vspace{2em}
@@ -531,9 +531,9 @@ Based on these 4 parameters, table \ref{t.training.tuning.rnn} shows different p
 	\mrule
 	\i{10} & 1 & \b{10, 25, 50--500}\tablefootnote{With a step size of 50\label{fiftyrnn}} & 1 & relu & \i{12} \\
 	\mrule
-	\i{11} & 1 & 50 & \b{1, 5, 10, 20--80}\tablefootnote{With a step size of 20\label{twentyrnn}} & relu & \i{7} \\
+	\i{11} & 1 & 50 & \b{1, 5, 10, 20--100}\tablefootnote{With a step size of 20\label{twentyrnn}} & relu & \i{8} \\
 	\srule
-	\i{12} & 8 & 50 & 5 & \b{relu, ...}\tablefootnote{For the RNN the same 8 activation functions as for the FNN are used.} & \i{8} \\
+	\i{12} & 8 & 50 & 5 & \b{relu, ...}\tablefootnote{For the RNN the same 8 activation functions as for the FNN are used: \ftt{RELU}, \ftt{RELU6}, \ftt{ELU}, \ftt{SIGMOID}, \ftt{TANH}, \ftt{SELU}, \ftt{SOFTPLUS} and \ftt{SOFTSIGN}. See chapter \ref{c.postagging.fnn.architecture}} & \i{8} \\
 	\brule
 	\end{tabular}
 	\vspace{3mm}
@@ -841,9 +841,9 @@ After evaluating the neural network models and the hidden Markov models each for
 
 \begin{figure}[H]
 \centering
-\subcaptionbox{Comparsion of Accuracy\label{f.evaluation.comparison.a}}
+\subcaptionbox{Comparsion of the accuracy\label{f.evaluation.comparison.a}}
 {\includegraphics[width=0.495\textwidth]{images/comparison}}
-\subcaptionbox{Comparison of Kappa Score\label{f.evaluation.comparison.k}}
+\subcaptionbox{Comparison of the kappa score\label{f.evaluation.comparison.k}}
 {\includegraphics[width=0.495\textwidth]{images/comparison_k}}
 \vspace{1em}
 \caption[Comparison of all Architectures]{The evaluation results of the previous HMM model trained by T. Michael \cite{michael2016}, the new HMM model trained on the new training data proposed in this thesis, the best FNN and the best RNN model found after evaluating the different training groups.}
