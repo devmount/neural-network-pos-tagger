@@ -66,7 +66,7 @@ class Tagger:
 
         # get training and test data and the number of existing POS tags
         train_batches, test_data, n_pos_tags = self.__load_data(training_file_path)
-        x_test = test_data['x']
+        x_test = self.__rnn_reshape(test_data['x']) if self.architecture == 'RNN' else test_data['x']
         y_test = test_data['y']
 
         # initialize the model by starting session and specifying initial values for the tensorflow variables
@@ -93,8 +93,8 @@ class Tagger:
         for batch in train_batches:
             x_batch, y_batch = zip(*batch)
             # reshape data for RNN time steps
-            # if self.architecture == 'RNN':
-            #     x_batch = self.__rnn_reshape(x_batch)
+            if self.architecture == 'RNN':
+                x_batch = self.__rnn_reshape(x_batch)
             self.__step(sess, nn_model, standard_ops, train_ops, test_ops, x_batch, y_batch, summary_writer, train=True)
             current_step = tf.train.global_step(sess, global_step)
 
@@ -131,7 +131,7 @@ class Tagger:
         predictions = graph.get_operation_by_name("predictions").outputs[0]
 
         # get features and predicted pos ids
-        features = self.data.features
+        features = self.__rnn_reshape(self.data.features) if self.architecture == 'RNN' else self.data.features
         predicted_pos_ids = sess.run(predictions, feed_dict={input_x: features})
 
         # create lists of the sentence words and their corresponding predicted POS tags
@@ -394,7 +394,7 @@ class Tagger:
 
         if train:
             step, loss, accuracy, _, summaries = sess.run(standard_ops + train_ops, feed_dict)
-            # print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="\r", flush=True)
+            print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="\r", flush=True)
         else:
             step, loss, accuracy, summaries = sess.run(standard_ops + test_ops, feed_dict)
             print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="", flush=True)
@@ -468,9 +468,9 @@ class Tagger:
             for t in range(self.n_timesteps):
                 # if no predecessors are available (at the beginning of the list), add the firsts element
                 if t <= i:
-                    batch.append(flat_batches[i-t])
+                    batch.extend(flat_batches[i-t])
                 else:
-                    batch.append(flat_batches[0])
+                    batch.extend(flat_batches[0])
             batches.append(batch)
         return batches
 

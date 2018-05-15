@@ -35,7 +35,7 @@ BATCH_SIZE = 16
 N_EPOCHS = 20
 
 # Show evaluation result and save model state after this number of trainings steps
-CHECKPOINT_EVERY = 5000
+CHECKPOINT_EVERY = 500
 
 # replacement file path
 REPLACEMENT_FILE = 'data/replacement.txt'

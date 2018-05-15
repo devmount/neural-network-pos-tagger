@@ -64,7 +64,7 @@ printf "# RNN MODEL TRAINING\n"
 # mkdir storage
 
 printf "\n## N Timesteps:\n"
-for t in {0..12}; do
+for t in {1..12}; do
     if [ ! -d "storage/rnn-$t-50-50-1" ]; then
         mkdir storage/rnn-$t-50-50-1
         { time python tagger.py --train data/training.corpus -t $t -e 50 -s 50 -n 1 ; } > storage/rnn-$t-50-50-1/training.txt 2>&1

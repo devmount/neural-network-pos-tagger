@@ -93,17 +93,19 @@ class RNN:
         self.w = tf.Variable(tf.truncated_normal([h_size, n_pos_tags], stddev=0.1))
         # create lstm cell
         cell = tf.nn.rnn_cell.LSTMCell(h_size, activation=tf.nn.relu)
-        # calculate output
+        # calculate outputs with shape [batch_size*n_timesteps, h_size]
         outputs, states = tf.nn.dynamic_rnn(cell, self.feature_vector, dtype=tf.float32)
-        # compute the logits for the output layer
+        # compute the logits for the output layer with shape [batch_size, n_timesteps*n_pos_tags]
         self.logits = tf.matmul(tf.reshape(outputs, [-1, h_size]), self.w)
+        logits = tf.reshape(self.logits, [-1, n_timesteps*n_pos_tags])
+        labels = tf.reshape(self.input_y, [-1])
         # compute the loss
-        self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=self.logits, labels=self.input_y))
+        self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=labels))
 
         # reduce the logits output with the largest value to the output layer size = predictions 
-        self.predictions = tf.argmax(self.logits, axis=1, name="predictions")
+        self.predictions = tf.argmax(logits, axis=1, name="predictions")
         # get the correct predictions by comparing to the given labels
-        correct_prediction = tf.equal(self.predictions, self.input_y)
+        correct_prediction = tf.equal(self.predictions, labels)
         # compute the overall accuracy
         self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
