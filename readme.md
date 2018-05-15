@@ -106,7 +106,7 @@ However, the following sections explain the usage of the specific flags for each
 
 ### Training
 
-To train the Tagger call the `tagger.py` script with the `--train` flag. According to your configuration, the batch training will start. Once you reached a sufficient accuracy, you can interrupt the training with <kbd>CTRL</kbd>+<kbd>C</kbd> or wait till the training process finishes.
+To train the Tagger call the `tagger.py` script with the `--train` flag. According to your static configuration, the batch training will start. Once you reached a sufficient accuracy, you can interrupt the training with <kbd>CTRL</kbd>+<kbd>C</kbd> or wait till the training process finishes.
 
     $ python tagger.py --train data/test.corpus
     Training starts...
@@ -117,6 +117,14 @@ To train the Tagger call the `tagger.py` script with the `--train` flag. Accordi
     Step 100: loss 0.9, accuracy 91% - saved model checkpoint to 'saved/model-100'
     Step 200: loss 0.2, accuracy 98% - saved model checkpoint to 'saved/model-200'
     Step 300: loss 0.0, accuracy 100% - saved model checkpoint to 'saved/model-300'
+
+You can also call the script with inline configuration. To train a model using the FNN architecture, use the flags `-p`, `-e`, `-s`, and `-n`. It is required to use all 4 flags, otherwise the static configuration from the `settings.py` will be used. An example call would be:
+
+    python tagger.py --train data/test.corpus -p 1 -e 250 -s 350 -n 5
+
+To train a model using the RNN architecture, use the flags `-t`, `-s`, and `-n`. It is required to use all r flags, otherwise the static configuration from the `settings.py` will be used. An example call would be:
+
+    python tagger.py --train data/test.corpus -t 8 -s 50 -n 5
 
 ### Tagging
 
