@@ -59,9 +59,6 @@ It was shown, that the new training corpus proposed in this thesis significantly
 This thesis thus demonstrates ways of improving tagging results and natural language output at the example of \Alex, which can be used for similar application areas in the field of NLP.
 
 % ===================================================================================
-\BlankPage
-
-% ===================================================================================
 \chapter*{Zusammenfassung}
 Der Artificial Conversational Agent \Alex\ wurde entwickelt, um Fragen zu Modulen und Lehrveranstaltungen an der Technischen Universität Berlin zu beantworten. Es verwendet Part-of-speech Tagging, um natürliche Sprache zu verarbeiten und sie in eine Datenbankabfrage zu konvertieren. Um die natürliche Sprache zu verstehen, verwendet das System ein Hidden-Markov-Model (HMM), um jedem Wort der Eingabe Wortarten zuzuweisen (Part-of-speech Tagging). Dieser HMM-Tagger wird mit manuell erstellten Trainingsvorlagen trainiert, die mit den Daten der abzufragenden Datenbank gefüllt werden. Die manuell erstellten Satzvorlagen führen zu vielen Trainingsdatensätzen mit gleicher Struktur, was zu ungenauen Tagging-Ergebnissen und inkorrekten Datenbankabfragen bei Eingabesätzen mit unbekannter Struktur oder unbekannten Wörtern führte.
 
@@ -70,9 +67,6 @@ Diese Arbeit stellt zwei verschiedene Ansätze neuronaler Netzwerke für die Spr
 Es wurde gezeigt, dass der in dieser Arbeit vorgeschlagene neue Trainingskorpus das von \Alex\ verwendete HMM signifikant verbessert und dass ein auf neuronalen Netzwerken basierender Tagger in der Lage ist, den HMM Tagger bei bekannten Daten zu übertreffen.
 
 Diese Arbeit demonstriert Verbesserungen eines Part-of-Speech Taggers am Beispiel von \Alex\, welche für ähnliche Anwendungsbereiche der natürlichen Sprachverarbeitung eingesetzt werden können.
-
-% ===================================================================================
-\BlankPage
 
 % ===================================================================================
 \tableofcontents
@@ -156,6 +150,8 @@ This thesis is built upon the work of T. Michael \cite{michael2016}, who describ
 Moreover, \Alex\ provides a user interface, which utilizes web technologies and can be accessed via a web browser. Figure \ref{f.alex_ui} shows the user interface, in which the user asked a question and the agent returned the result in tabular form and answered accordingly.
 
 The focus of this thesis lies on the tagging module. As outlined in Chapter \ref{c.introduction.scope}, the main objective is to replace the hidden Markov model by artificial neural networks. Both approaches with their historical context are introduced in the following.
+
+\newpage
 
 \subsection{The Hidden Markov Model}\label{c.introduction.related.hmm}
 The hidden Markov model (HMM) is a probabilistic finite state machine that solves general classification problems. It uses the observable output data of a system to derive hidden information from it. Among other applications, HMMs are used especially for speech recognition tasks.
@@ -518,6 +514,8 @@ The resulting number of models is 99; however, due to an overlap in configuratio
 	\vspace{1em}
 \end{table}
 
+\newpage
+
 For the training of the RNN models, the following 5 parameters were considered:
 
 \begin{itemize}
@@ -530,8 +528,10 @@ For the training of the RNN models, the following 5 parameters were considered:
 
 Based on these 5 parameters, Table \ref{t.training.tuning.rnn} shows different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is 47; however, due to an overlap in configurations of the training groups, the total number of models to be trained with the RNN is 44.
 
-\begin{table}[ht]
-	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c >{\centering}p{20mm} c c c c }
+All in all, a total of 140 distinct models are trained, given the parameter specification for the two neural network architectures above.
+
+\begin{table}[H]
+	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c >{\centering}p{20mm} >{\centering}p{20mm} c c c }
 	\trule
 	\textsc{Group} & $t$ & $e$ & $s$ & $n$ & $a$ & \textsc{Models} \\
 	\drule
@@ -836,9 +836,9 @@ After evaluating the neural network based language models, the HMM is evaluated 
 
 \begin{figure}[H]
 \centering
-\subcaptionbox{HMM\label{f.evaluation.hmm.a}}
+\subcaptionbox{Accuracy of correctly tagged words\label{f.evaluation.hmm.a}}
 {\includegraphics[width=0.495\textwidth]{images/evaluation_hmm}}
-\subcaptionbox{HMM with Kappa\label{f.evaluation.hmm.k}}
+\subcaptionbox{Cohen's Kappa\label{f.evaluation.hmm.k}}
 {\includegraphics[width=0.495\textwidth]{images/evaluation_hmm_k}}
 \vspace{1em}
 \caption[HMM Evaluation]{The evaluation results of the previous HMM trained by T. Michael \cite{michael2016} and the new HMM based on the new training data proposed in this thesis.}
@@ -919,12 +919,12 @@ The different modules of \Alex\ were analyzed to gain information about its lang
 
 Based on this knowledge, a tagger module was implemented featuring a feed-forward neural network as well as a recurrent neural network architecture. A training corpus containing tagged sentences was generated with the help of an improved set of sentence templates. With both neural network architectures, several language models were trained on this corpus using parameter variation. These models were then evaluated with two corresponding tests sets, containing sentences from the training corpus (known data) and unknown sentences, that were derived from user log data. Furthermore, both the hidden Markov model, which \Alex\ already utilizes for POS tagging and an HMM that was trained on the new training data, proposed in this thesis, were evaluated with these test sets.
 
-After evaluating the trained language models, it could be shown that the HMM based on new training data significantly performed better than the previous HMM tagger, especially on unknown data. It was also shown that a tagger based on a feed-forward neural network was able to outperform this new HMM tagger on known evaluation data.
+After evaluating the trained language models, it could be shown that the HMM based on new training data significantly performed better than the previous HMM tagger, especially on unknown data. It was also shown that a tagger based on a feed-forward neural network was able to outperform this new HMM tagger on known evaluation data. Both, feed-forward and recurrent neural network models, achieved a higher accuracy than the HMM \Alex\ utilized before.
 
 \section{Discussion}\label{c.conclusion.discussion}
-According to the evaluation results, the FNN model achieved the highest accuracy for known data and would therefore be preferred for productive use. However, the HMM model based on the new training corpus (HMM2) performed significantly better on unknown data. Given the fact that a chatbot has to deal with a lot of unknown input data due to users that do not know the limits of the chatbots knowledge and capabilities, the result of the unknown test is more important for the choice of the language model to use in \Alex.
+According to the evaluation results, the FNN model achieved the highest accuracy for known data and would therefore be preferred for productive use. However, the HMM model based on the new training corpus (HMM2) performed significantly better on unknown data, showing the ability to generalize better. Given the fact that a chatbot has to deal with a lot of unknown input data due to users that do not know the limits of the chatbots knowledge and capabilities, the result of the unknown test is more important for the choice of the language model to use in \Alex.
 
-When reviewing the comparison of the two hidden Markov models for the unknown test, it is apparent that the quality of the training data is of great importance. The improvements on the training corpus proposed in this thesis caused a higher accuracy in word tagging of more than 16\%. However, the training data still has a fixed structure due to its origin in the sentence templates, which is a possible reason for the lower accuracy of the neural network approaches on the unknown data.
+When reviewing the comparison of the two hidden Markov models for the unknown test, it is apparent that the quality of the training data is of great importance. The improvements on the training corpus proposed in this thesis caused a higher accuracy in word tagging of more than 16\%. However, the training data still has a fixed structure due to its origin in the sentence templates, which is a possible reason for the lower accuracy of the neural network approaches on the unknown data. The effect of the structure of the training data is especially evident in the results for the recurrent neural network, which created less accurate language models compared to the FNN.
 
 Another important factor, which should be taken into account, especially when the database is changed or replaced, is the training time of neural network models. Depending on the parameter configuration, the training of a model could take several hours. However, in this thesis, the FNN model that performed best had a training time of 30 minutes, which should still be a feasible solution when the database is only updated every semester (as it is the case for \Alex).
 
@@ -1009,7 +1009,7 @@ All in all, this thesis demonstrated a way of implementing, training and evaluat
 \vspace{-11mm}
 \begin{figure}[H]
 	\centering\includegraphics[width=\textwidth]{images/evaluation_fnn_a_k}
-	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN: Cohen's Kappa for parameter $n$: the number of training epochs.}
+	\caption[FNN Evaluation: Activation Function]{The evaluation results of the FNN: Cohen's Kappa for parameter $a$: the activation function.}
 	\label{f.evaluation.fnn.a.k}
 \end{figure}
 
