@@ -45,7 +45,7 @@ Hiermit versichere ich, dass ich die vorliegende Arbeit selbstständig verfasst 
 Die Arbeit hat in gleicher oder ähnlicher Fassung noch keiner anderen Prüfungsbehörde vorgelegen.
 \vspace{10mm}
 
-Berlin, den \today\\
+Berlin, den 16. Mai 2018\\
 
 \vspace{1cm}
 \rule{.5\textwidth}{.5pt}\\
@@ -69,11 +69,13 @@ This thesis thus demonstrates ways of improving tagging results and natural lang
 
 % ===================================================================================
 \chapter*{Zusammenfassung}
-Der Artificial Conversational Agent \Alex\ wurde entwickelt, um Fragen zu Modulen und Lehrveranstaltungen an der Technischen Universität Berlin zu beantworten. Es verwendet Part-of-speech Tagging, um natürliche Sprache zu verarbeiten und sie in eine Datenbankabfrage zu konvertieren. Um die natürliche Sprache zu verstehen, verwendet das System ein Hidden-Markov-Model (HMM), um jedem Wort der Eingabe Wortarten zuzuweisen (Part-of-speech Tagging). Dieser HMM-Tagger wird mit manuell erstellten Trainingsvorlagen trainiert, die mit den Daten der abzufragenden Datenbank gefüllt werden. Die manuell erstellten Satzvorlagen führen zu vielen Trainingsdatensätzen mit gleicher Struktur, was zu ungenauen Tagging-Ergebnissen und falschen Datenbankabfragen bei Eingabesätzen mit unbekannter Struktur oder unbekannten Wörtern führte.
+Der Artificial Conversational Agent \Alex\ wurde entwickelt, um Fragen zu Modulen und Lehrveranstaltungen an der Technischen Universität Berlin zu beantworten. Es verwendet Part-of-speech Tagging, um natürliche Sprache zu verarbeiten und sie in eine Datenbankabfrage zu konvertieren. Um die natürliche Sprache zu verstehen, verwendet das System ein Hidden-Markov-Model (HMM), um jedem Wort der Eingabe Wortarten zuzuweisen (Part-of-speech Tagging). Dieser HMM-Tagger wird mit manuell erstellten Trainingsvorlagen trainiert, die mit den Daten der abzufragenden Datenbank gefüllt werden. Die manuell erstellten Satzvorlagen führen zu vielen Trainingsdatensätzen mit gleicher Struktur, was zu ungenauen Tagging-Ergebnissen und inkorrekten Datenbankabfragen bei Eingabesätzen mit unbekannter Struktur oder unbekannten Wörtern führte.
 
-Diese Arbeit stellt zwei verschiedene Ansätze neuronaler Netzwerke für die Sprachmodellierung der Eingabesätze für einen Chatbot wie \Alex\ vor. Basierend auf Trainingssatzvorlagen, die mit realen Benutzerdaten erweitert und verbessert wurden, wurde ein Trainingskorpus erstellt. Zur Beurteilung der Genauigkeit der Sprachmodelle wurden zwei Tests entwickelt, die bekannte Daten (Sätze aus dem Trainingskorpus) und unbekannte Daten enthalten.
+Diese Arbeit stellt zwei verschiedene Ansätze neuronaler Netzwerke für die Sprachmodellierung der Eingabesätze für einen Chatbot wie \Alex\ vor. Basierend auf Trainingssatzvorlagen, die mit realen Benutzerdaten erweitert und verbessert wurden, wurde ein neuer Trainingskorpus erstellt. Zur Beurteilung der Genauigkeit der Sprachmodelle wurden zwei Tests entwickelt, die bekannte Daten (Sätze aus dem Trainingskorpus) und unbekannte Daten enthalten.
 
 Es wurde gezeigt, dass der in dieser Arbeit vorgeschlagene neue Trainingskorpus das von \Alex\ verwendete HMM signifikant verbessert und dass ein auf neuronalen Netzwerken basierender Tagger in der Lage ist, den HMM Tagger bei bekannten Daten zu übertreffen.
+
+Diese Arbeit demonstriert Verbesserungen eines Part-of-Speech Taggers am Beispiel von \Alex\, welche für ähnliche Anwendungsbereiche der natürlichen Sprachverarbeitung eingesetzt werden können.
 
 % ===================================================================================
 \BlankPage
@@ -127,22 +129,24 @@ In biology, learning is based on a specific strengthening of the connection of c
 \parbox{\textwidth}{\hfill \hfill -- Arthur Lee Samuel (1959)}
 \vspace{.5em}
 
-Today, less than 60 years later, we have a lot of practical devices that use machine learning and artificial intelligence and, by now, they not only play a role in science but in our everyday life. Especially the processing and understanding of spoken or written natural language has a wide range of applications today. One of those areas of application are advisory artificial conversational agents (ACA) or chatbots. They are designed to provide natural language answers to natural language questions, making it as easy as possible for users to interact with a specific system. \Alex\ is an example of an ACA that is designed to answer questions about courses and modules of the TU Berlin. This thesis aims to improve how \Alex\ understands and learns natural language using \i{artificial neural networks} (ANNs).
+Today, less than 60 years later, we have a lot of practical devices that use machine learning and artificial intelligence and, by now, they not only play a role in science but in our everyday life. Especially the processing and understanding of spoken or written natural language has a wide range of applications today. One of those areas of application are advisory artificial conversational agents (ACA) or chatbots. They are designed to provide natural language answers to natural language questions, making it as easy as possible for users to interact with a specific system. \Alex\ is an example of an ACA that is designed to answer questions about courses and modules of the TU Berlin. It utilizes a statistical method (the \i{hidden Markov model}) to assign special parts of speech to the words of the input sentence (part-of-speech tagging). This enables \Alex\ to extract information that is necessary to create a database query and return the corresponding answer for the users question.
 
 \section{Scope of this Thesis}\label{c.introduction.scope}
-This thesis focuses on developing a neural network based part-of-speech tagger for \Alex, the advisory Artificial Conversational Agent, the training of several language models and their evaluation with corresponding test sets.
+In general, this thesis aims to improve how \Alex\, the advisory Artificial Conversational Agent, understands and learns natural language using \i{artificial neural networks} (ANNs) for the task of assigning parts of speech to words. Therefore, this thesis focuses on developing a neural network based part-of-speech tagger for \Alex, the training of several language models and their evaluation with corresponding test sets.
 
-In order to devise the new language models, two different neural network architectures are implemented: a feed-forward neural network and a recurrent neural network. For the training of both neural network implementations, an improved training corpus of tagged language data is generated with the help of various input templates, which are created based on logged user input data.
+In order to devise the new language models, two different neural network architectures are implemented: a feed-forward neural network and a recurrent neural network. For the purpose of training both neural network implementations, an important part of this thesis is the generation of an improved training corpus of tagged language data with the help of various input templates, which are created based on logged user input data.
 
 To evaluate the language models, a data set of known data\footnote{Data, that was already used for the training of the model} and unknown data\footnote{Data, that includes words and sentence structures, that didn't occur in the training data sets} is created. Both neural network models and the HMM are compared to each other using this evaluation.
 
 According to the evaluation results, the initial HMM based part-of-speech tagger is then replaced by a new tagger. To guarantee a seamless integration, the new tagger is implemented as a separate module with the same program interface that the old tagger already utilizes. This way, no other components of the conversational agent have to be changed and the effort of the replacement is kept to a minimum.
 
 \section{Related Work}\label{c.introduction.related}
-This thesis is built upon the work of T. Michael \cite{michael2016}, who describes the design and implementation of \Alex\ in detail. The conversational agent was implemented to help students of the TU Berlin to organize their studies by providing a simple way to gain information about modules and courses. It utilizes two separate already existing baseline systems by merging their data into one relational database. This database is  used as the central access point for the information that users want to retrieve.
+This thesis is built upon the work of T. Michael \cite{michael2016}, who describes the design and implementation of \Alex\ in detail. The conversational agent was implemented to help students of the TU Berlin to organize their studies by providing a simple way to gain information about modules and courses. It utilizes two separate already existing baseline systems by merging their data into one relational database. This database is used as the central access point for the information that users want to retrieve.
 
+\vspace{1em}
 \begin{figure}[H]
 	\includegraphics[width=\textwidth]{images/alex_screencapture}
+	\vspace{.1em}
 	\caption[User Interface of \Alex]{The user interface of \Alex. The left section contains the conversation with the agent and a user entry field. The right section shows the result of the generated database query in tabular form.\\In this example, the user asked for all courses of the subject \i{computer science} that provide 9 ECTS and are scheduled on a Monday. The agent answered accordingly and provided a list of 9 courses that fulfill the conditions.\\This image was captured on 21st April 2018.}
 	\label{f.alex_ui}
 \end{figure}
@@ -158,7 +162,7 @@ This thesis is built upon the work of T. Michael \cite{michael2016}, who describ
 
 Moreover, \Alex\ provides a user interface, which utilizes web technologies and can be accessed via a web browser. Figure \ref{f.alex_ui} shows the user interface, in which the user asked a question and the agent returned the result in tabular form and answered accordingly.
 
-The focus of this thesis lies on the tagging module, as the main objective is to replace the hidden Markov model by artificial neural networks.
+The focus of this thesis lies on the tagging module. As outlined in Chapter \ref{c.introduction.scope}, the main objective is to replace the hidden Markov model by artificial neural networks. Both approaches with their historical context are introduced in the following.
 
 \subsection{The Hidden Markov Model}\label{c.introduction.related.hmm}
 The hidden Markov model (HMM) is a probabilistic finite state machine that solves general classification problems. It uses the observable output data of a system to derive hidden information from it. Among other applications, HMMs are used especially for speech recognition tasks.
@@ -242,7 +246,7 @@ Figure \ref{f.hmm_structure} illustrates an example of a state sequence with thr
 
 For the purpose of finding corresponding parts of speech to a given input sentence, an HMM is included in \Alex. According to T. Michael \cite{michael2016}, a tagging scheme was developed to extract exactly the information from user input that is needed to successfully create a database query and to return the information the user asked for. This tagging scheme was intentionally built to be domain independent, creating the opportunity to develop a version of \Alex\ for any topic based on an appropriate database and training data.
 
-To maintain this universal applicability as well as the compatibility with other modules of \Alex, the neural network approaches presented in this thesis use the same tagging scheme \Alex\ already utilizes. For a better understanding of the evaluation results in Chapter \ref{c.evaluation}, Table \ref{t.tagging_scheme} gives an overview of the 6 different classes of tags that \Alex uses.
+To maintain this universal applicability as well as the compatibility with other modules of \Alex, the neural network approaches presented in this thesis use the same tagging scheme \Alex\ already utilizes. For a better understanding of the evaluation results in Chapter \ref{c.evaluation}, Table \ref{t.tagging_scheme} gives an overview of the 6 different classes of tags that \Alex\ uses.
 
 \begin{table}[H]
 	\small\def\arraystretch{1.5}\begin{tabular}{ p{2mm} L{48mm} p{35mm} p{40mm} }
@@ -303,11 +307,11 @@ The POS tagging task requires the processing of words which are represented as c
 Feed-forward neural networks are a common type of ANNs, that consist of an input and an output layer with one or more hidden layers in between. An FNN propagates information through the network only in the forward direction, from the input to the output layer.
 
 \subsection{Architecture}\label{c.postagging.fnn.architecture}
-The FNN architecture that is used in this thesis is shown in Figure \ref{f.fnn.structure}. The current word and the configured number of preceding words are each converted into word embeddings. These embeddings are reshaped to one vector, called the feature vector, which serves as the input layer for the neural network. The FNN contains one hidden layer, which is connected to the input layer with weight matrix $V$. The output layer represents the set of existing POS tags and is connected to the hidden layer with weight matrix $W$.
+The FNN architecture that is used in this thesis is shown in Figure \ref{f.fnn.structure}. The current word and the configured number of preceding words are each converted into word embeddings\footnote{Word embeddings are mathematical representations of words, usually presented as a vector of real numbers. While one-hot encoded word vectors have the size of the vocabulary, word embeddings maintain a dimensionality reduction to improve performance while maintaining feature information.}. These embeddings are reshaped to one vector, called the feature vector, which serves as the input layer for the neural network. The FNN contains one hidden layer, which is connected to the input layer with weight matrix $V$. The output layer represents the set of existing POS tags and is connected to the hidden layer with weight matrix $W$.
 
 For each word of every sentence of the training corpus, a feature vector is built and the data is sequentially propagated to both the hidden and the output layer, predicting a POS tag for the current word and calculating the current loss and accuracy. After propagating the error back to adjust the weights and reduce the loss, the next training step is executed.
 
-The outputs of the hidden layer are typically computed with the rectified linear activation function (the \i{rectifier}). These nodes are therefore also called \i{rectified linear units} (RELUs). However, the effect of 8 different activation functions is examined in this thesis too. Figure \ref{f.postagging.activation} illustrates the qualitative plot of each function. The presented activation functions can be separated into two different types of nonlinearities: The first two (\tt{RELU} and \tt{RELU6}) are continuous functions but not everywhere differentiable, the other functions (\tt{ELU}, \tt{SIGMOID}, \tt{TANH}, \tt{SELU}, \tt{SOFTPLUS} and \tt{SOFTSIGN}) are continuously differentiable.
+The outputs of the hidden layer are typically computed with the rectified linear activation function (the \i{rectifier}). These nodes are therefore also called \i{rectified linear units} (RELUs). However, the effect of 8 different activation functions is examined in this thesis too. Figure \ref{f.postagging.activation} illustrates the qualitative plot of each function. The presented activation functions can be separated into two different types of nonlinearities: \tt{RELU}\footnote{\i{Rectified Linear Unit}, Nair et. al. \cite{nair2010}}, \tt{RELU6} and \tt{SELU}\footnote{\i{Scaled Exponential Linear Units}, Klambauer et. al. \cite{klambauer2017}} are continuous functions but not everywhere differentiable, the other functions (\tt{ELU}\footnote{\i{Exponential Linear Units}, Clevert et. al. \cite{clevert2015}}, \tt{SIGMOID}\footnote{Also known as Logistic function or SoftStep}, \tt{TANH}, \tt{SOFTPLUS}\footnote{Glorot et. al. \cite{glorot2011}} and \tt{SOFTSIGN}\footnote{Bergstra et. al. \cite{bergstra2009}}) are continuously differentiable.
 
 \begin{figure}[H]
 \centering
@@ -328,7 +332,7 @@ The outputs of the hidden layer are typically computed with the rectified linear
 \subcaptionbox{\tt{SOFTSIGN}\label{f.postagging.activation.softsign}}
 {\includegraphics[width=0.325\textwidth]{images/activation_softsign}}
 \vspace{1em}
-\caption[Activation Functions]{Qualitative illustration of 8 different activation functions that provide different types of nonlinearities. \tt{RELU} and \tt{RELU6} are continuous but not everywhere differentiable functions, the other functions are continuously differentiable.}
+\caption[Activation Functions]{Qualitative illustration of 8 different activation functions that provide different types of nonlinearities. \tt{RELU}, \tt{RELU6} and \tt{SELU} are continuous but not everywhere differentiable functions, the other functions are continuously differentiable.}
 \label{f.postagging.activation}
 \end{figure}
 
@@ -370,12 +374,12 @@ The hidden layer nodes are also initialized with random normal distributed value
 	\midrule
 	\tt{SELU} & $f(x)=\lambda\begin{cases}\alpha (e^x-1),& \text{if } x<0\\x, & \text{otherwise}\end{cases} $ & \tt{tf.nn.selu()} \\
 	\midrule
-	\tt{SOFTPLUS} & $f(x)=\log{(e^x+1)} $ & \tt{tf.nn.softplus()} \\
+	\tt{SOFTPLUS} & $f(x)=\ln{(e^x+1)} $ & \tt{tf.nn.softplus()} \\
 	\midrule
 	\tt{SOFTSIGN} & $f(x)=\frac{x}{|x+1|} $ & \tt{tf.nn.softsign()} \\
-	\brule
+	\bottomrule
 	\end{tabular}
-	\vspace{.8em}
+	\vspace{1em}
 	\caption[Activation Functions]{Definitions and TensorFlow Implementations of 8 different activation functions.}
 	\label{t.postagging.activation}
 \end{table}
@@ -408,7 +412,7 @@ The implementation of the proposed RNN architecture utilizes the TensorFlow libr
 
 The hidden layer is built using \tt{tf.nn.rnn\_cell.LSTMCell()}\footnote{This function uses an implementation proposed by S. Hochreiter et. al. in 1997 \cite{hochreiter1997}.}, a function that creates a long short-term memory (LSTM) cell for recurrent networks which is then used in \tt{tf.nn.dynamic\_rnn()} to compute the logits for the output layer.
 
-Loss, predictions and accuracy are implemented in a similar way as in the FNN. In addition, the same optimizer (\tt{tf.train.AdamOptimizer()}) is used.
+Loss, predictions and accuracy are implemented in the same way as in the FNN. In addition, the same optimizer (\tt{tf.train.AdamOptimizer()}) is used.
 
 % ===================================================================================
 \chapter{Training of Language Models}\label{c.training}
