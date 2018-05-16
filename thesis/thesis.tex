@@ -36,9 +36,6 @@
 \pagestyle{scrheadings} % normale Kopf- und Fußzeilen für den Rest
 
 % ===================================================================================
-\BlankPage
-
-% ===================================================================================
 \chapter*{Eidesstattliche Erklärung}
 Hiermit versichere ich, dass ich die vorliegende Arbeit selbstständig verfasst und keine anderen als die angegebenen Quellen und Hilfsmittel benutzt habe. Alle Ausführungen, die anderen veröffentlichten oder nicht veröffentlichten Schriften wörtlich oder sinngemäß entnommen wurden, habe ich kenntlich gemacht.
 
@@ -50,9 +47,6 @@ Berlin, den 16. Mai 2018\\
 \vspace{1cm}
 \rule{.5\textwidth}{.5pt}\\
 Unterschrift
-
-% ===================================================================================
-\BlankPage
 
 % ===================================================================================
 \chapter*{Abstract}
@@ -132,19 +126,18 @@ In biology, learning is based on a specific strengthening of the connection of c
 Today, less than 60 years later, we have a lot of practical devices that use machine learning and artificial intelligence and, by now, they not only play a role in science but in our everyday life. Especially the processing and understanding of spoken or written natural language has a wide range of applications today. One of those areas of application are advisory artificial conversational agents (ACA) or chatbots. They are designed to provide natural language answers to natural language questions, making it as easy as possible for users to interact with a specific system. \Alex\ is an example of an ACA that is designed to answer questions about courses and modules of the TU Berlin. It utilizes a statistical method (the \i{hidden Markov model}) to assign special parts of speech to the words of the input sentence (part-of-speech tagging). This enables \Alex\ to extract information that is necessary to create a database query and return the corresponding answer for the users question.
 
 \section{Scope of this Thesis}\label{c.introduction.scope}
-In general, this thesis aims to improve how \Alex\, the advisory Artificial Conversational Agent, understands and learns natural language using \i{artificial neural networks} (ANNs) for the task of assigning parts of speech to words. Therefore, this thesis focuses on developing a neural network based part-of-speech tagger for \Alex, the training of several language models and their evaluation with corresponding test sets.
+In general, this thesis aims to improve how \Alex\, the advisory Artificial Conversational Agent, understands and learns natural language using \i{artificial neural networks} (ANNs) for the task of assigning parts of speech to words. Therefore, this thesis focuses on developing a neural network based part-of-speech tagger for \Alex, the creation of a corpus of training data, the training of several language models and their evaluation with corresponding test sets.
 
 In order to devise the new language models, two different neural network architectures are implemented: a feed-forward neural network and a recurrent neural network. For the purpose of training both neural network implementations, an important part of this thesis is the generation of an improved training corpus of tagged language data with the help of various input templates, which are created based on logged user input data.
 
 To evaluate the language models, a data set of known data\footnote{Data, that was already used for the training of the model} and unknown data\footnote{Data, that includes words and sentence structures, that didn't occur in the training data sets} is created. Both neural network models and the HMM are compared to each other using this evaluation.
 
-According to the evaluation results, the initial HMM based part-of-speech tagger is then replaced by a new tagger. To guarantee a seamless integration, the new tagger is implemented as a separate module with the same program interface that the old tagger already utilizes. This way, no other components of the conversational agent have to be changed and the effort of the replacement is kept to a minimum.
+According to the evaluation results, the new tagger, which is proposed in this thesis, should provide the possibility to replace the initial HMM based part-of-speech tagger. To guarantee a seamless integration, the new tagger is implemented as a separate module with the same program interface that the old tagger already utilizes. This way, no other components of the conversational agent have to be changed and the effort of the replacement is kept to a minimum.
 
 \section{Related Work}\label{c.introduction.related}
 This thesis is built upon the work of T. Michael \cite{michael2016}, who describes the design and implementation of \Alex\ in detail. The conversational agent was implemented to help students of the TU Berlin to organize their studies by providing a simple way to gain information about modules and courses. It utilizes two separate already existing baseline systems by merging their data into one relational database. This database is used as the central access point for the information that users want to retrieve.
 
-\vspace{1em}
-\begin{figure}[H]
+\begin{figure}[ht]
 	\includegraphics[width=\textwidth]{images/alex_screencapture}
 	\vspace{.1em}
 	\caption[User Interface of \Alex]{The user interface of \Alex. The left section contains the conversation with the agent and a user entry field. The right section shows the result of the generated database query in tabular form.\\In this example, the user asked for all courses of the subject \i{computer science} that provide 9 ECTS and are scheduled on a Monday. The agent answered accordingly and provided a list of 9 courses that fulfill the conditions.\\This image was captured on 21st April 2018.}
@@ -394,21 +387,22 @@ The implementation of the FNN POS tagger that was developed for this thesis is b
 Similar to FNNs, recurrent neural networks (RNNs) also consist of an input, a hidden and an output layer. The main difference is that information is not only propagated forward linearly, but that information from previous training steps are also taken into account in RNNs.
 
 \subsection{Architecture}\label{c.postagging.rnn.architecture}
-Figure \ref{f.rnn.structure} illustrates the architecture of an RNN, which was implemented for this thesis. Unlike the FNN, the RNN only uses word ids as input features and does not utilize word embeddings. It contains one hidden layer, which is populated with the current input word on the one hand and by the output of the hidden layer of a previous training step on the other hand. This makes the RNN capable of memorizing information from the past. This capability can also be described as a long short-term memory (\i{LSTM}), emphasized in orange in Figure \ref{f.rnn.structure}. The output layer represents the set of existing POS tags and is connected to the hidden layer with weight matrix
-$W$.
+Figure \ref{f.rnn.structure} illustrates the architecture of an RNN, which was implemented for this thesis. Like the FNN, the RNN uses word embeddings as input features. It contains one hidden layer, which is populated with the embedding of the current input word on the one hand and by the output of the hidden layer of a previous training step on the other hand. This makes the RNN capable of memorizing information from the past. This capability can also be described as a long short-term memory (\i{LSTM}), emphasized in orange in Figure \ref{f.rnn.structure}. The output layer represents the set of existing POS tags and is connected to the hidden layer with weight matrix $W$.
 
-Each word of every sentence of the training corpus represents an input feature, which is propagated to the hidden and the output layer together with information from previous training steps. Similar to the processing of FNNs, the POS tag is predicted for the current word and the current loss and accuracy are calculated. After propagating the error back to adjust the weights and reduce the loss, the next training step is executed, taking the current training step into account.
+The word embedding of each word of every sentence in the training corpus represents the input feature vector, which is propagated to the hidden and the output layer together with information from previous training steps. Similar to the processing of FNNs, the POS tag is predicted for the current word and the current loss and accuracy are calculated. After propagating the error back to adjust the weights and reduce the loss, the next training step is executed, taking the current training step into account.
 
 The outputs of the hidden layer are calculated utilizing the same activation functions that were used for the FNN (see Figure \ref{t.postagging.activation}).
 
 \begin{figure}[ht]
 	\includegraphics[width=\textwidth]{images/rnn_structure}
-	\caption[Structure of a Recurrent Neural Network]{The structure of a recurrent neural network. The feature vector is the initial vector of the corresponding input word at time $t$. The output of the hidden layer from previously trained words (here at time $t-x$) is populated back into the same hidden layer for the current word. $V$, $X$ and $W$ are weight matrices with respective matrix dimensions of $\textsf{feature vector size} \times \textsf{hidden layer size}$ for $V$, $\textsf{hidden layer size} \times \textsf{hidden layer size}$ for $X$ and $\textsf{hidden layer size} \times \textsf{number of POS tags}$ for $W$.}
+	\caption[Structure of a Recurrent Neural Network]{The structure of a recurrent neural network. The feature vector is the initial vector of the corresponding input word at time $t$. The output of the hidden layer from previously trained words (here at time $t-x$) is populated back into the same hidden layer for the current word. $V$, $X$ and $W$ are weight matrices with respective matrix dimensions of $\textsf{embedding size} \times \textsf{hidden layer size}$ for $V$, $\textsf{hidden layer size} \times \textsf{hidden layer size}$ for $X$ and $\textsf{hidden layer size} \times \textsf{number of POS tags}$ for $W$.}
+	\vspace{3mm}
 	\label{f.rnn.structure}
 \end{figure}
+\vspace{1em}
 
 \subsection{Implementation}\label{c.postagging.rnn.implementation}
-The implementation of the proposed RNN architecture utilizes the TensorFlow library as well. Besides the word id of the current word, the input layer has an additional dimension describing the number of past training steps that are considered for the current training step.
+The implementation of the proposed RNN architecture utilizes the TensorFlow library as well. Besides the embedding of the current word, the feature vector now has an additional dimension describing the number of past training steps that are considered for the current training step.
 
 The hidden layer is built using \tt{tf.nn.rnn\_cell.LSTMCell()}\footnote{This function uses an implementation proposed by S. Hochreiter et. al. in 1997 \cite{hochreiter1997}.}, a function that creates a long short-term memory (LSTM) cell for recurrent networks which is then used in \tt{tf.nn.dynamic\_rnn()} to compute the logits for the output layer.
 
@@ -524,40 +518,42 @@ The resulting number of models is 99; however, due to an overlap in configuratio
 	\vspace{1em}
 \end{table}
 
-For the training of the RNN models, the following 4 parameters were considered:
+For the training of the RNN models, the following 5 parameters were considered:
 
 \begin{itemize}
 	\item \b{Number of time steps} (\i{\b{t}}) specifies how many past training steps should be considered for the training of the current word
+	\item \b{Embedding size} (\i{\b{e}}) describes the dimension of the word embeddings (as in the FNN)
 	\item \b{Hidden layer size} (\i{\b{s}}) characterizes the dimension of the hidden layer (as in the FNN)
 	\item \b{Number of training epochs} (\i{\b{n}}) indicates how often the whole training corpus is processed (as in the FNN)
 	\item \b{Activation function} (\i{\b{a}}) constitutes a mathematical function (as in the FNN)
 \end{itemize}
 
-Based on these 4 parameters, Table \ref{t.training.tuning.rnn} shows different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is 40; however, due to an overlap in configurations of the training groups, the total number of models to be trained with the RNN is 38.
+Based on these 5 parameters, Table \ref{t.training.tuning.rnn} shows different parameter combinations. The emphasized cells show the respective parameter that is variable. The resulting number of models is 47; however, due to an overlap in configurations of the training groups, the total number of models to be trained with the RNN is 44.
 
 \begin{table}[ht]
-	\vspace{2em}
-	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c c c c c }
+	\centering\small\def\arraystretch{1.5}\begin{tabular}{ c c >{\centering}p{20mm} c c c c }
 	\trule
-	\textsc{Group} & $t$ & $s$ & $n$ & $a$ & \textsc{Models} \\
+	\textsc{Group} & $t$ & $e$ & $s$ & $n$ & $a$ & \textsc{Models} \\
 	\drule
-	\i{9} & \b{0--12} & 50 & 1 & relu & \i{12} \\
+	\i{9} & \b{1--10} & 50 & 50 & 1 & relu & \i{10} \\
 	\mrule
-	\i{10} & 1 & \b{10, 25, 50--500}\tablefootnote{With a step size of 50\label{fiftyrnn}} & 1 & relu & \i{12} \\
+	\i{10} & 1 & \b{1, 5, 10, 20, 50--400}\tablefootnote{With a step size of 50\label{fiftyrnn}} & 50 & 1 & relu & \i{12} \\
 	\mrule
-	\i{11} & 1 & 50 & \b{1, 5, 10, 20--100}\tablefootnote{With a step size of 20\label{twentyrnn}} & relu & \i{8} \\
+	\i{11} & 1 & 50 & \b{10, 25, 50--500}\footref{fiftyrnn} & 1 & relu & \i{12} \\
+	\mrule
+	\i{12} & 1 & 50 & 50 & \b{1, 5--20}\tablefootnote{With a step size of 5\label{fivernn}} & relu & \i{5} \\
 	\srule
-	\i{12} & 8 & 50 & 5 & \b{relu, ...}\tablefootnote{For the RNN the same 8 activation functions as for the FNN are used: \ftt{RELU}, \ftt{RELU6}, \ftt{ELU}, \ftt{SIGMOID}, \ftt{TANH}, \ftt{SELU}, \ftt{SOFTPLUS} and \ftt{SOFTSIGN}. See Chapter \ref{c.postagging.fnn.architecture}} & \i{8} \\
+	\i{13} & 6 & 50 & 50 & 1 & \b{relu, ...}\tablefootnote{For the RNN the same 8 activation functions as for the FNN are used: \ftt{RELU}, \ftt{RELU6}, \ftt{ELU}, \ftt{SIGMOID}, \ftt{TANH}, \ftt{SELU}, \ftt{SOFTPLUS} and \ftt{SOFTSIGN}. See Chapter \ref{c.postagging.fnn.architecture}} & \i{8} \\
 	\brule
 	\end{tabular}
 	\vspace{3mm}
-	\caption[Parameter combinations of RNN Models]{The parameter configuration for the training of RNN models. The rows represent the training groups with the corresponding variable parameter (in bold), while the columns represent the single training parameters (\i{\b{t}} (number of time steps), \i{\b{s}} (hidden layer size), \i{\b{n}} (number of training epochs), \i{\b{a}} - activation function). The first column denotes the group number (for referencing training groups) whereas the last column shows the resulting number of models for each training group.}
+	\caption[Parameter combinations of RNN Models]{The parameter configuration for the training of RNN models. The rows represent the training groups with the corresponding variable parameter (in bold), while the columns represent the single training parameters (\i{\b{t}} (number of time steps), \i{\b{e}} (embedding size), \i{\b{s}} (hidden layer size), \i{\b{n}} (number of training epochs), \i{\b{a}} - activation function). The first column denotes the group number (for referencing training groups) whereas the last column shows the resulting number of models for each training group.}
 	\label{t.training.tuning.rnn}
 \end{table}
 
 % ===================================================================================
 \chapter{Evaluation and Comparison}\label{c.evaluation}
-After giving a short description of how the evaluation tests were created, this chapter provides the evaluation results of all models of the 12 training groups that were trained using the variation of training parameters previously described. In addition to the results of each training group, the three different architectures (FNN, RNN and HMM) are compared.
+After giving a short description of how the evaluation tests were created, this chapter provides the evaluation results of all models of the 13 training groups that were trained using the variation of training parameters previously described. In addition to the results of each training group, the three different architectures (FNN, RNN and HMM) are compared.
 
 \section{Test Design}\label{c.evaluation.test}
 To evaluate the trained language models, two test sets were designed: a test set containing a selection of tagged sentences that actually exist in the training corpus (here called the \i{known test}) and a test set, for which the structure of the sentences in the known test was modified in a way that it remains semantically meaningful but does not occur in the training corpus (called the \i{unknown test}). The unknown test deliberately contains words, which do not exist in the vocabulary of the training corpus in order to assess how the model handles completely unknown data.
@@ -661,13 +657,18 @@ $p_o$ represents the measured agreement and $p_c$ the randomly expected agreemen
 	$0.8 < \kappa \leq 1.0$ \ \ & Very good agreement \\
 	\brule
 	\end{tabular}
-	\vspace{.8em}
+	\vspace{3mm}
 	\caption[Interpretation of Cohen's Kappa]{The interpretation of Cohen's Kappa for different levels of agreement of two raters, based on a proposal of J. Landis et. al. \cite{landis1977}.}
 	\label{t.evaluation.kappa}
 \end{table}
+\vspace{1em}
+
+\newpage
 
 \section{Evaluation Results}\label{c.evaluation.results}
 After introducing the test sets and the evaluation methodology, all training groups were evaluated according to the parameter configuration presented in Chapter \ref{c.training.tuning}. The following sections present the evaluation results of the different architectures for each test set, including the corresponding accuracy values for each model. To improve readability in the evaluation sections themselves, the figures showing the results for Cohen's Kappa can be found in appendices \ref{c.appendix.kappa.fnn} and \ref{c.appendix.kappa.rnn}.
+
+\newpage
 
 \subsection{Feed-Forward Neural Network Models}\label{c.evaluation.results.fnn}
 The \b{first training group} for the FNN refers to parameter $p$: the number of preceding words that are used to build the feature vector. Figure \ref{f.evaluation.fnn.p} presents the accuracy achieved for both tests.
@@ -680,13 +681,19 @@ The \b{first training group} for the FNN refers to parameter $p$: the number of 
 
 For the known test, the model with $p=1$ clearly achieves the highest accuracy with 86.1\% correctly tagged words. It also has the highest kappa score with $\kappa=0.802$. With more than one preceding word, the accuracy decreases. The best result (65.1\% accuracy and $\kappa=0.588$) for the unknown test was reached by the model trained without any preceding words at all. It should be noted, however, that the results of the two following models with 1 or 2 preceding words are almost as precise as the first one. With more than 2 preceding words, the accuracy decreases.
 
-\b{Training group 2} included the evaluation based on 18 different values for the embedding size $e$ of the input words for the FNN. The results are presented in Figure \ref{f.evaluation.fnn.e}. With a few exceptions, the accuracy for the known test  increases slightly with larger embeddings, reaching a maximum of 90.5\% (and $\kappa=0.801$) on an embedding size of 600. The highest accuracy (70.1\%, $\kappa=0.639$) for the unknown test was reached by the model with an embedding size of 450.
+\newpage
+
+\b{Training group 2} included the evaluation based on 18 different values for the embedding size $e$ of the input words for the FNN. The results are presented in Figure \ref{f.evaluation.fnn.e}.
 
 \begin{figure}[H]
 	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_fnn_e}
-	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN for parameter $e$: the embedding size.}
+	\caption[FNN Evaluation: Embedding Size]{The evaluation results of the FNN for parameter $e$: the embedding size.}
 	\label{f.evaluation.fnn.e}
 \end{figure}
+
+With a few exceptions, the accuracy for the known test  increases slightly with larger embeddings, reaching a maximum of 90.5\% (and $\kappa=0.801$) on an embedding size of 600. The highest accuracy (70.1\%, $\kappa=0.639$) for the unknown test was reached by the model with an embedding size of 450.
+
+\newpage
 
 The results of the evaluation of \b{training group 3}, which varied the size of the hidden layer $s$, is illustrated in Figure \ref{f.evaluation.fnn.s}.
 
@@ -698,6 +705,8 @@ The results of the evaluation of \b{training group 3}, which varied the size of 
 
 The highest accuracy of 89.1\% was achieved on the known test with a hidden layer size of 50 neurons, however, the highest kappa value $\kappa=0.813$ was assigned to a hidden layer size of 350. Although the accuracy of the models with $s<500$ seems to be slightly higher, no clear trend can be observed. The case is similar for the unknown test, except that models with $s>450$ have a higher, less fluctuating accuracy. The best result (71.5\%, $\kappa=0.643$) was reached by the model with $s=700$, however, the highest kappa value $\kappa=0.649$ was assigned to a hidden layer size of 450.
 
+\newpage
+
 For \b{training group 4}, models were trained with different numbers of training epochs $n$. Figure \ref{f.evaluation.fnn.n} presents the results.
 
 \begin{figure}[H]
@@ -707,6 +716,8 @@ For \b{training group 4}, models were trained with different numbers of training
 \end{figure}
 
 Overall, all models of the different training epochs achieved similar results on the known test without a discernible tendency. However, the model with $n=80$ stands out slightly, with the highest accuracy of 87.7\% and the second highest $\kappa=0.808$. For the unknown test, the model with only 5 training epochs achieved a maximum accuracy of 68.8\% and $\kappa=0.622$.
+
+\newpage
 
 Similar to training group 2, \b{training group 5} refers to the embedding size $e$, but utilizing a larger hidden layer size ($s=350$). The results are presented in Figure {\ref{f.evaluation.fnn.e2}}.
 
@@ -718,6 +729,8 @@ Similar to training group 2, \b{training group 5} refers to the embedding size $
 
 Compared to training group 2, the results were slightly better. Evaluating the known test, the highest accuracy of 91.4\% ($\kappa=0.807$) was reached by a model with embedding size $e=250$. Nevertheless, the highest kappa value $\kappa=0.818$ was assigned to the model with $e=500$, which achieved a lower accuracy of 87.8\%. For the unknown test, the model with $e=550$ tagged the most words correctly (70.7\%, $\kappa=0.640$).
 
+\newpage
+
 Similar to training group 3, \b{training group 6} refers to the hidden layer size $s$, with the difference of using a larger embedding size ($e=250$). Figure {\ref{f.evaluation.fnn.s2}} presents the results.
 
 \begin{figure}[H]
@@ -727,6 +740,8 @@ Similar to training group 3, \b{training group 6} refers to the hidden layer siz
 \end{figure}
 
 This parameter configuration performed slightly better for both tests comparing to training group 3. Evaluating the known test, the highest accuracy of 91.4\% ($\kappa=0.807$) was again reached by the model with hidden layer size $s=350$. Nevertheless, the highest kappa value $\kappa=0.821$ was assigned to the model with $s=500$, which achieved a slightly lower accuracy of 90.8\%. For the unknown test, the model with $s=450$ tagged the most words correctly (70.9\%, $\kappa=0.643$).
+
+\newpage
 
 \b{Training group 7} increases the size of the whole network by enlarging the embedding size $e$ and the hidden layer size $s$ at the same time (combined to parameter $es$. The results are presented in Figure \ref{f.evaluation.fnn.es}. The value on the horizontal axis represents both, the embedding size and the hidden layer size.
 
@@ -738,8 +753,11 @@ This parameter configuration performed slightly better for both tests comparing 
 
 The highest accuracy of 90.6\% ($\kappa=0.802$) was achieved by the model with $es=300$ for the known test, however the highest kappa value $\kappa=0.809$ was assigned to a dimension of $es=500$. The best result for the unknown test was reached by $es=200$ with an accuracy of 70.5\% and $\kappa=0.639$.
 
+\newpage
+
 The last training group for the FNN, \b{training group 8}, refers to parameter $a$: the activation function (all activation functions used for training were introduced in Chapter \ref{c.postagging.fnn.architecture}). The accuracy results of 8 models that were trained with different activation function each is presented in Figure \ref{f.evaluation.fnn.a}. The configuration of the other training parameters was based on the results of the preceding training groups, using $t=1$, $e=250$ and $s=350$. The number of training epochs was chosen with respect to a reasonable training time.
 
+\vspace{-2em}
 \begin{figure}[H]
 	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_fnn_a}
 	\caption[FNN Evaluation: Activation Function]{The evaluation results of the FNN for parameter $a$: the activation function.}
@@ -751,47 +769,67 @@ For the known test, the model using \tt{RELU6} as activation function achieves t
 Considering the evaluation results of all 8 training groups for the FNN, the model with the following parameter configuration was found to achieve the highest accuracy, as well as the highest kappa value: one preceding word, embedding size of 250, hidden layer size of 350, 5 training epochs and \tt{RELU5} as the activation function.
 
 \subsection{Recurrent Neural Network Models}\label{c.evaluation.results.rnn}
-The first training group for the RNN, \b{training group 9}, contains models trained with 12 different time steps $t$. The evaluation result is presented in Figure \ref{f.evaluation.rnn.t}.
+The first training group for the RNN, \b{training group 9}, contains models trained with 10 different time steps $t$. The evaluation result is presented in Figure \ref{f.evaluation.rnn.t}.
 
 \begin{figure}[H]
-	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_rnn_t}
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_rnn2_t}
 	\caption[RNN Evaluation: Number of Time Steps]{The evaluation results of the RNN: Cohen's Kappa for parameter $t$: the number of time steps.}
 	\label{f.evaluation.rnn.t}
 \end{figure}
 
-Overall, all models of the different time steps achieved similar results on both tests and there is no discernible tendency. However, for both tests, the model with $t=8$ stands out a bit with the highest accuracy of 43.1\% and $\kappa=0.341$ for the known test and 37.4\% and $\kappa=0.260$ for the unknown test.
+Overall, all models based on the different time steps achieved similar results on both tests without a discernible tendency. However, for both tests, the models with $t=4$ and $t=6$ stands out with the highest accuracy of 81.3\% and $\kappa=0.728$ for the known test and 68.4\% and $\kappa=0.631$ for the unknown test for $t=6$.
 
-The results of the evaluation of \b{Training group 10} that varied the size of the hidden layer $s$ is illustrated in Figure \ref{f.evaluation.rnn.s}.
+\newpage
+
+\b{Training group 10} included the evaluation based on 12 different values for the embedding size $e$ of the input words for the RNN. The results are presented in Figure \ref{f.evaluation.rnn.e}.
 
 \begin{figure}[H]
-	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_rnn_s}
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_rnn2_e}
+	\caption[RNN Evaluation: Embedding Size]{The evaluation results of the RNN for parameter $e$: the embedding size.}
+	\label{f.evaluation.rnn.e}
+\end{figure}
+
+With a few exceptions, the accuracy for both tests increases slightly with larger embeddings, reaching a maximum of 81.6\% ($\kappa=0.723$) for the known test and 68.9\% ($\kappa=0.635$) for the unknown test utilizing an embedding size of 300. Models with embedding sizes of 150 and 400 achieved a similar but slightly lower accuracy.
+
+\newpage
+
+The evaluation results of \b{training group 11}, which varied the size of the hidden layer $s$ is illustrated in Figure \ref{f.evaluation.rnn.s}.
+
+\begin{figure}[H]
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_rnn2_s}
 	\caption[RNN Evaluation: Hidden Layer Size]{The evaluation results of the RNN: Cohen's Kappa for parameter $s$: the size of the hidden layer.}
 	\label{f.evaluation.rnn.s}
 \end{figure}
 
-For $s\geq50$, no clear trend can be observed for both test results. Evaluating the known test, the highest accuracy of 42.6\% ($\kappa=0.333$) was reached by a model with hidden layer size $s=500$. Nevertheless, the highest kappa value $\kappa=0.334$ was assigned to the model with $s=350$, which however achieved a lower accuracy of 41.95\%. For the unknown test, the model with $s=150$ has tagged most words correctly (36.9\%, $\kappa=0.257$).
+In general, models with a higher hidden layer size achieved a higher accuracy on both tests. Evaluating the known test, the highest accuracy of 81.8\% ($\kappa=0.726$) was reached by a model with hidden layer size $s=400$. For the unknown test, the model with $s=250$ tagged the most words correctly (69.1\%, $\kappa=0.632$). Nevertheless, the highest kappa value $\kappa=0.636$ was assigned to the model with $s=400$ again, which achieved a slightly lower accuracy of 68.98\%.
 
-\b{Training group 11} included the evaluation with 8 different numbers of training epochs $e$. The results are presented in Figure \ref{f.evaluation.rnn.n}.
+\newpage
+
+\b{Training group 12} included the evaluation based on 5 different numbers of training epochs $e$. The results are presented in Figure \ref{f.evaluation.rnn.n}.
 
 \begin{figure}[H]
-	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_rnn_n}
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_rnn2_n}
 	\caption[RNN Evaluation: Number of Training Epochs]{The evaluation results of the RNN: Cohen's Kappa for parameter $n$: the number of training epochs.}
 	\label{f.evaluation.rnn.n}
 \end{figure}
 
-For the known test, the model with $n=40$ achieved the highest number of correctly tagged words of 44.8\% ($\kappa=0.356$). However, a higher kappa value $\kappa=0.359$ was reached with $n=5$. The same applies to the unknown test: $n=40$ achieved the highest accuracy 39.3\% ($\kappa=0.289$) and $n=5$ the highest kappa value $\kappa=0.291$.
+For both tests, the model with $n=5$ achieved the highest number of correctly tagged words: 82.2\% ($\kappa=0.721$) for the known test and 69.5\% ($\kappa=0.642$) for the unknown test. For higher numbers of training epochs ($s>5$), the accuracy decreases for more than 5\%.
 
-The last training group, \b{training group 12}, refers to parameter $a$: the activation function (see Chapter \ref{c.postagging.fnn.architecture}). The result for the accuracy of 8 models that were trained each with another activation function is presented in Figure \ref{f.evaluation.rnn.a}. The configuration of the time step parameter was based on the results of training group 9, using $t=8$. The size of the hidden layer ($s=50$) and the number of training epochs ($n=5$) were chosen with respect to a reasonable training time.
+\newpage
+
+The last training group, \b{training group 13}, refers to parameter $a$: the activation function (see Chapter \ref{c.postagging.fnn.architecture}). The result for the accuracy of 8 models that were trained with a different activation function each is presented in Figure \ref{f.evaluation.rnn.a}. The configuration of the time step parameter was based on the results of training group 9, using $t=6$. The embedding size ($e=50$) size of the hidden layer ($s=50$) and the number of training epochs ($n=1$) were chosen with respect to a reasonable training time.
 
 \begin{figure}[H]
-	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_rnn_a}
-	\caption[RNN Evaluation: Activation Function]{The evaluation results of the RNN: Cohen's Kappa for parameter $a$: the type of the activation function.}
+	\hspace{-5mm}\includegraphics[width=1.07\textwidth]{images/evaluation_rnn2_a}
+	\caption[RNN Evaluation: Activation Function]{The evaluation results of the RNN: Cohen's Kappa for parameter $a$: the type of activation function.}
 	\label{f.evaluation.rnn.a}
 \end{figure}
 
-The best evaluation results of this training group regarding accuracy were achieved by the model utilizing the \tt{SOFTSIGN} activation function. For the known test, an accuracy of 47.95\% ($\kappa=0.403$) and for the unknown test, an accuracy of 42.1\% ($\kappa=0.324$) was achieved. However, the highest kappa values were reached by models with an activation function of \tt{SELU} ($\kappa=0.406$) and \tt{TANH} ($\kappa=0.324$).
+The best evaluation results of this training group regarding accuracy were achieved by the model utilizing the \tt{RELU} activation function. For the known test, an accuracy of 81.3\% ($\kappa=0.728$) and for the unknown test, an accuracy of 68.4\% ($\kappa=0.631$) was achieved. The other models of this training group reached an accuracy with a maximum of 77.1\%.
 
-Considering the evaluation results of all 4 training groups for the RNN, the model with the following parameter configuration was found to achieve the highest accuracy: 8 time steps, hidden layer size of 50, 5 training epochs and \tt{SOFTSIGN} as activation function.
+\newpage
+
+Considering the evaluation results of all 5 training groups for the RNN, the model with the following parameter configuration was found to achieve the highest accuracy: one time step, embedding size of 50, hidden layer size of 50, 5 training epochs and \tt{RELU} as activation function.
 
 \subsection{Hidden Markov Models}\label{c.evaluation.results.hmm}
 After evaluating the neural network based language models, the HMM is evaluated in the following. For this purpose, the previous HMM (also called \i{HMM1}) which was trained on the basis of the training data generated by T. Michael \cite{michael2016} is compared to a new HMM (\i{HMM2}) trained on the basis of the training data proposed in this thesis. The evaluation was carried out using the known and the unknown test developed in this thesis; the results are presented in Figure \ref{f.evaluation.hmm}.
@@ -809,7 +847,7 @@ After evaluating the neural network based language models, the HMM is evaluated 
 
 The previous HMM tagged 82.5\% of the words of the known test and 63.0\% of the unknown test correctly, whereas it was 93.4\% for the known and 79.3\% for the unknown test for the new HMM. It was evident that the HMM, which was based on the new training data, performed significantly better than the previous HMM. Especially the result for the unknown test is remarkable, as the accuracy increases by more than 16\%.
 
-It should be noted that the comparison of the previous and the new HMM model based on the known test has some limitations, as the known test was not fully known\footnote{As described in Chapter \ref{c.evaluation.test}, the known test contains 620 sentences. 388 sentences are included in he corpus of the previous HMM, resulting in 37.4\% of the sentences of the known test, that were unknown to the previous HMM.} to the previous HMM. Nevertheless, the major part of the known test set was based on training templates that were already used to build the corpus for the previous HMM, which is why it still scored well with more than 4 correct tags out of 5.
+It should be noted that the comparison of the previous and the new HMM model based on the known test has some limitations, as the known test was not fully known\footnote{As described in Chapter \ref{c.evaluation.test}, the known test contains 620 sentences. 388 sentences are included in the corpus of the previous HMM, resulting in 37.4\% of the sentences of the known test, that were unknown to the previous HMM.} to the previous HMM. Nevertheless, the major part of the known test set was based on training templates that were already used to build the corpus for the previous HMM, which is why it still scored well with more than 4 correct tags out of 5.
 
 \section{Overall Comparison}\label{c.evaluation.comparison}
 After evaluating the neural network models and the hidden Markov models separately, the different architectures will now be compared to each other. For this purpose, the evaluation results of the best FNN model proposed in Chapter \ref{c.evaluation.results.fnn}, the best RNN model found in Chapter \ref{c.evaluation.results.rnn} and the two HMM models evaluated in Chapter \ref{c.evaluation.results.hmm} are summarized in Table \ref{t.evaluation.comparison} and illustrated in Figure \ref{f.evaluation.comparison}.
@@ -829,7 +867,7 @@ After evaluating the neural network models and the hidden Markov models separate
 	\mrule
 	FNN  & \b{92.63\%} & \b{0.818} \\
 	\mrule
-	RNN  & 47.95\%     & 0.403     \\
+	RNN  & 82.21\%     & 0.721     \\
 	\brule
 	\end{tabular}}
 	\hfill
@@ -844,7 +882,7 @@ After evaluating the neural network models and the hidden Markov models separate
 	\mrule
 	FNN  & 72.01\%     & 0.654     \\
 	\mrule
-	RNN  & 42.11\%     & 0.321     \\
+	RNN  & 69.47\%     & 0.642     \\
 	\brule
 	\end{tabular}}
 	\hfill
@@ -856,19 +894,19 @@ After evaluating the neural network models and the hidden Markov models separate
 \begin{figure}[H]
 \centering
 \subcaptionbox{Comparison of the accuracy\label{f.evaluation.comparison.a}}
-{\includegraphics[width=0.495\textwidth]{images/comparison}}
+{\includegraphics[width=0.495\textwidth]{images/comparison2}}
 \subcaptionbox{Comparison of the kappa score\label{f.evaluation.comparison.k}}
-{\includegraphics[width=0.495\textwidth]{images/comparison_k}}
+{\includegraphics[width=0.495\textwidth]{images/comparison2_k}}
 \vspace{1em}
 \caption[Comparison of all Architectures]{The evaluation results of the previous HMM model trained by T. Michael \cite{michael2016}, the new HMM model trained on the new training data proposed in this thesis, the best FNN and the best RNN model according to the evaluation of the different training groups.}
 \label{f.evaluation.comparison}
 \end{figure}
 
-The FNN model achieved the highest accuracy as well as the highest kappa score for the known test, closely followed by the HMM2 model, which was only slightly less accurate. The difference between these two models is only 0.2\% ($\Delta\kappa=0.017$). With a kappa score of more than 0.8, both models offer a very good agreement with the labeled test data. However, the HMM1 model still reached a good agreement. The RNN model tagged less than 50\% of the words of the known test correctly, thus barely reaching a moderate agreement with the labeled test data.
+The FNN model achieved the highest accuracy as well as the highest kappa score for the known test, closely followed by the HMM2 model, which was only slightly less accurate. The difference between these two models is only 0.2\% ($\Delta\kappa=0.017$). With a kappa score of more than 0.8, both models offer a very good agreement with the labeled test data. However, the RNN and the HMM1 models still reached a good agreement, tagging more than 80\% of the words correctly.
 
-The result of the unknown test is a bit more distinctive. The highest accuracy as well as the highest kappa score was reached by the HMM2 model, followed by the FNN model with a difference of 7.28\% ($\Delta\kappa=0.084$). With a kappa score of more than 0.6, both models offer a good agreement with the labeled test data, whereas the FNN1 model reaches a moderate agreement. Similarly to the known test result, the RNN tagged less than 50\% of the words correctly, offering only a fair agreement with the labeled test data.
+The result of the unknown test is a bit more distinctive. The highest accuracy as well as the highest kappa score was reached by the HMM2 model, followed by the FNN model with a difference of 7.28\% ($\Delta\kappa=0.084$). With a kappa score of more than 0.6, both models as well as the RNN model offer a good agreement with the labeled test data. Although the FNN model performed better than the RNN model, the differences between the results of both are very small (2.53\%, $\Delta\kappa=0.012$). The FNN1 model reaches a moderate agreement with the labeled test data, tagging less than two-thirds of the words correctly.
 
-Overall, every model achieved a higher accuracy and a higher kappa score on the know test than on the unknown test. While this is an expected result, the differences between the accuracy of known and unknown test vary for each model. While this difference is relatively small for the RNN model (5.84\%), the models of HMM1 and HMM2 show differences of 17.88\% and 13.14\%. The largest difference can be observed in the FNN model, which tagged an additional 20.63\% of the words of the known test correctly, compared to those of the unknown test.
+Overall, every model achieved a higher accuracy and a higher kappa score on the know test than on the unknown test. While this is an expected result, the differences between the accuracy of known and unknown test vary for each model. While this difference is smaller for the HMM2 and RNN model (13.14\% and 12.74\%), the HMM1 model shows a difference of 17.88\%. The largest difference can be observed in the FNN model, which tagged an additional 20.63\% of the words of the known test correctly, compared to those of the unknown test.
 
 % ===================================================================================
 \chapter{Discussion and Conclusion}\label{c.conclusion}
@@ -884,9 +922,9 @@ Based on this knowledge, a tagger module was implemented featuring a feed-forwar
 After evaluating the trained language models, it could be shown that the HMM based on new training data significantly performed better than the previous HMM tagger, especially on unknown data. It was also shown that a tagger based on a feed-forward neural network was able to outperform this new HMM tagger on known evaluation data.
 
 \section{Discussion}\label{c.conclusion.discussion}
-According to the evaluation results, the FNN model achieved the highest accuracy for known data and would therefore be preferred for productive use. However, the HMM model performed significantly better on unknown data. Given the fact that a chatbot has to deal with a lot of unknown input data due to users that do not know the limits of the chatbots knowledge and capabilities, the result of the unknown test is more important for the choice of the language model to use in \Alex.
+According to the evaluation results, the FNN model achieved the highest accuracy for known data and would therefore be preferred for productive use. However, the HMM model based on the new training corpus (HMM2) performed significantly better on unknown data. Given the fact that a chatbot has to deal with a lot of unknown input data due to users that do not know the limits of the chatbots knowledge and capabilities, the result of the unknown test is more important for the choice of the language model to use in \Alex.
 
-When reviewing the overall comparison of the trained language models, it is apparent that the results of the recurrent neural network models are particularly poor. These models tagged less than 50\% of the words of the test sets correctly. Given the fact that the RNN architecture in this thesis does only utilize word ids rather than word embeddings, a possible explanation for this is that there are too few input features to describe the individual words and propagate the respective information through the network. This is evidenced by the evaluation result of the FNN model that was trained with an embedding size of 1, which is the same as using word ids. This model was the only model of the FNN architectures that reached a poor result like the RNN models.
+When reviewing the comparison of the two hidden Markov models for the unknown test, it is apparent that the quality of the training data is of great importance. The improvements on the training corpus proposed in this thesis caused a higher accuracy in word tagging of more than 16\%. However, the training data still has a fixed structure due to its origin in the sentence templates, which is a possible reason for the lower accuracy of the neural network approaches on the unknown data.
 
 Another important factor, which should be taken into account, especially when the database is changed or replaced, is the training time of neural network models. Depending on the parameter configuration, the training of a model could take several hours. However, in this thesis, the FNN model that performed best had a training time of 30 minutes, which should still be a feasible solution when the database is only updated every semester (as it is the case for \Alex).
 
@@ -897,7 +935,7 @@ Furthermore, as demonstrated in the preceding chapters, the methodology used in 
 
 Rather than manually deleting training templates that contain a lot of superfluous combinations of data from the database, an additional module could check these combinations automatically in advance. Depending on the query result of such a data validation module, the generated training sentence would then be included or excluded from the training corpus. This way, the general sentence templates can still be used knowing that meaningless training sentences will not be considered.
 
-In this thesis, parameters that were thought to influence the tagging results, such as the number of previous words, the size of the hidden layer, the size of the word embeddings, the number of training epochs and the type of the activation function were analyzed. Yet there are additional parameters, which could also be examined to improve the accuracy further. For the FNN, parameters of possible interest are the number of subsequent words (in addition to the number of previous words), the number of hidden layers and the training optimizer. The use of word embeddings with a particular embedding size for the RNN could be interesting too, as well as the training optimizer, which are possible additional parameters. Moreover, an exponential decay for the learning rate of the optimizer, especially for the RNN, could be explored.
+In this thesis, parameters that were thought to influence the tagging results, such as the number of previous words, the number of time steps, the size of the hidden layer, the size of the word embeddings, the number of training epochs and the type of activation function were analyzed. Yet there are additional parameters, which could also be examined to improve the accuracy further. For the FNN, parameters of possible interest are the number of subsequent words (in addition to the number of previous words), the number of hidden layers and the training optimizer. The use of multiple LSTM cells for the RNN could be interesting too, as well as the training optimizer, which are possible additional parameters. Moreover, an exponential decay for the learning rate of the optimizer, especially for the RNN, could be explored.
 
 Another potential way to improve the tagging accuracy, could be to use pretrained instead of randomly initialized word embeddings in the training process. This is a relevant direction to explore, as it was previously shown that word embeddings that were trained on large German text corpora contain a high level of syntactical and semantical information \cite{mueller2015}.
 
@@ -929,7 +967,7 @@ All in all, this thesis demonstrated a way of implementing, training and evaluat
 \vspace{-13mm}
 \begin{figure}[H]
 	\centering\includegraphics[width=\textwidth]{images/evaluation_fnn_e_k}
-	\caption[FNN Evaluation: Number of Past Words]{The evaluation results of the FNN: Cohen's Kappa for parameter $e$: the embedding size.}
+	\caption[FNN Evaluation: Embedding Size]{The evaluation results of the FNN: Cohen's Kappa for parameter $e$: the embedding size.}
 	\label{f.evaluation.fnn.e.k}
 \end{figure}
 
@@ -950,14 +988,14 @@ All in all, this thesis demonstrated a way of implementing, training and evaluat
 \vspace{-11mm}
 \begin{figure}[H]
 	\centering\includegraphics[width=\textwidth]{images/evaluation_fnn_e2_k}
-	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN: Cohen's Kappa for parameter $n$: the number of training epochs.}
+	\caption[FNN Evaluation: Embedding Size for a larger Hidden Layer]{The evaluation results of the FNN: Cohen's Kappa for parameter $e$: the embedding size with a higher hidden layer $s=350$.}
 	\label{f.evaluation.fnn.e2.k}
 \end{figure}
 
 \vspace{-11mm}
 \begin{figure}[H]
 	\centering\includegraphics[width=\textwidth]{images/evaluation_fnn_s2_k}
-	\caption[FNN Evaluation: Number of Training Epochs]{The evaluation results of the FNN: Cohen's Kappa for parameter $n$: the number of training epochs.}
+	\caption[FNN Evaluation: Hidden Layer for larger Embeddings]{The evaluation results of the FNN: Cohen's Kappa for parameter $s$: the hidden layer size for larger embeddings $e=250$.}
 	\label{f.evaluation.fnn.s2.k}
 \end{figure}
 
@@ -980,29 +1018,36 @@ All in all, this thesis demonstrated a way of implementing, training and evaluat
 \section{RNN Evaluation: Cohen's Kappa}\label{c.appendix.kappa.rnn}
 \vspace{-13mm}
 \begin{figure}[H]
-	\centering\includegraphics[width=\textwidth]{images/evaluation_rnn_t_k}
+	\centering\includegraphics[width=\textwidth]{images/evaluation_rnn2_t_k}
 	\caption[RNN Evaluation: Number of Time Steps]{The evaluation results of the RNN: Cohen's Kappa for parameter $t$: the number of time steps.}
 	\label{f.evaluation.rnn.t.k}
 \end{figure}
 
 \vspace{-13mm}
 \begin{figure}[H]
-	\centering\includegraphics[width=\textwidth]{images/evaluation_rnn_s_k}
+	\centering\includegraphics[width=\textwidth]{images/evaluation_rnn2_e_k}
+	\caption[RNN Evaluation: Embedding Size]{The evaluation results of the RNN: Cohen's Kappa for parameter $e$: the size of the word embeddings.}
+	\label{f.evaluation.rnn.e.k}
+\end{figure}
+
+\vspace{-13mm}
+\begin{figure}[H]
+	\centering\includegraphics[width=\textwidth]{images/evaluation_rnn2_s_k}
 	\caption[RNN Evaluation: Hidden Layer Size]{The evaluation results of the RNN: Cohen's Kappa for parameter $s$: the size of the hidden layer.}
 	\label{f.evaluation.rnn.s.k}
 \end{figure}
 
 \vspace{-11mm}
 \begin{figure}[H]
-	\centering\includegraphics[width=\textwidth]{images/evaluation_rnn_n_k}
+	\centering\includegraphics[width=\textwidth]{images/evaluation_rnn2_n_k}
 	\caption[RNN Evaluation: Number of Training Epochs]{The evaluation results of the RNN: Cohen's Kappa for parameter $n$: the number of training epochs.}
 	\label{f.evaluation.rnn.n.k}
 \end{figure}
 
 \vspace{-11mm}
 \begin{figure}[H]
-	\centering\includegraphics[width=\textwidth]{images/evaluation_rnn_a_k}
-	\caption[RNN Evaluation: Activation Function]{The evaluation results of the RNN: Cohen's Kappa for parameter $a$: the type of the activation function.}
+	\centering\includegraphics[width=\textwidth]{images/evaluation_rnn2_a_k}
+	\caption[RNN Evaluation: Activation Function]{The evaluation results of the RNN: Cohen's Kappa for parameter $a$: the type of activation function.}
 	\label{f.evaluation.rnn.a.k}
 \end{figure}
 
