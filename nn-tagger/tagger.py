@@ -1,6 +1,7 @@
 """
-This tagger module provides the training of a language model via a Feed-forward Neural Network
-and the assignment of tags to the words of a given untagged sentence.
+This tagger module provides the training of a language model via a Neural Network architecture,
+the assignment of tags to the words of a given untagged sentence
+and the evaluation of a trained language model
 
 @see https://www.tensorflow.org/get_started/mnist/pros
 @see https://www.tensorflow.org/versions/master/api_docs/python/tf/nn
@@ -29,6 +30,13 @@ class Tagger:
     def __init__(self, architecture=conf.ARCHITECTURE, n_past_words=conf.N_PAST_WORDS, embedding_size=conf.EMBEDDING_SIZE, h_size=conf.HIDDEN_LAYER_SIZE, n_epochs=conf.N_EPOCHS, n_timesteps=conf.N_TIMESTEPS):
         """
         Takes in the file path to a training file and returns a Tagger object that is able to train and tag sentences
+
+        @param architecture: Type of neural network architecture. Possible values: FNN|RNN 
+        @param n_past_words: Number of preceding words to take into account for the POS tag training of the current word (FNN only)
+        @param embedding_size: Dimension of the word embeddings
+        @param h_size: Dimension of the hidden layer
+        @param n_epochs: Number of training epochs
+        @param n_timesteps: Number of previous training steps to include (RNN only)
         """
 
         # initialize given parameters
@@ -49,6 +57,7 @@ class Tagger:
         self.vocab_path = os.path.join(self.storage_dir, 'vocabulary')
         self.tensor_path = os.path.join(self.storage_dir, 'tensors')
 
+        # loaded model data
         self.data = None
 
 
@@ -168,6 +177,9 @@ class Tagger:
     def evaluate(self, evaluation_file, print_inline=False):
         """
         Evaluates a previously trained model with a given evaluation file
+
+        @param evaluation_file: path to the file containing the evaluation data
+        @param print_inline: Output main evaluation result in one line
         """
 
         # check if evaluation file exists
@@ -249,6 +261,9 @@ class Tagger:
     def reset(self, force=False, quiet=False):
         """
         Executes a reset by deleting all training and logging data
+
+        @param force: surpress the security question and directly delete data
+        @param quiet: surpress all output messages
         """
 
         answer = 'yes' if force else input('Really delete all training data and log files? [Yes/no] ')
@@ -318,6 +333,10 @@ class Tagger:
     def __batch_iterator(self, data, num_epochs, shuffle=True):
         """
         Generates a batch iterator for a dataset
+
+        @param data: Training data to iterate
+        @param num_epochs: Number of training epochs
+        @param shuffle: Shuffle training data after each training epoch
         """
 
         data = np.array(data)
@@ -339,6 +358,8 @@ class Tagger:
     def __model_init(self, n_pos_tags):
         """
         Initializes a Feed-Forward Neural Network model
+
+        @param n_pos_tags: Number of POS tags; equals to the size of the output layer of the neural networks
         """
 
         # load model architecture based on settings, default is FNN (Feed-forward Neural Network)
@@ -355,6 +376,9 @@ class Tagger:
     def __logging_init(self, nn_model, graph):
         """
         Set up logging that the progress can be visualised in TensorBoard
+
+        @param nn_model: the current neural network model
+        @param graph: tensorflow graph
         """
 
         # Add ops to record summaries for loss and accuracy...
@@ -387,14 +411,14 @@ class Tagger:
 
     def __step(self, sess, model, standard_ops, train_ops, test_ops, x, y, summary_writer, train):
         """
-        Execute one training step
+        Execute one training step or a checkpoint step
         """
 
         feed_dict = {model.input_x: x, model.input_y: y}
 
         if train:
             step, loss, accuracy, _, summaries = sess.run(standard_ops + train_ops, feed_dict)
-            # print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="\r", flush=True)
+            print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="\r", flush=True)
         else:
             step, loss, accuracy, summaries = sess.run(standard_ops + test_ops, feed_dict)
             print("Step %d: loss %.1f, accuracy %d%%" % (step, loss, 100 * accuracy), end="", flush=True)
@@ -402,9 +426,14 @@ class Tagger:
         summary_writer.add_summary(summaries, step)
 
 
-    def __replace(self, sentence, replacement_file=conf.REPLACEMENT_FILE, is_tagged=False):
+    def __replace(self, sentence, replacement_file=conf.REPLACEMENT_FILE):
         """
-        Replaces synonyms with uniform description
+        Replaces synonyms with corresponding uniform tokens, specified in a replacement file
+
+        @param sentence: input sentence to replace words in
+        @param replacement_file: file that contains replacement data of format "synonym1,synonym2=token" each line 
+
+        @return sentence with replaced words
         """
 
         # check if replacement file exists
@@ -438,6 +467,10 @@ class Tagger:
     def __untag_sentence(self, sentence):
         """
         Removes tags from a tagged sentence
+
+        @param sentence: sentence of format "word1/TAG1 word2/TAG2"
+
+        @return sentence without tags of format "word1 word2"
         """
 
         words = []
@@ -449,6 +482,10 @@ class Tagger:
     def __untag_text(self, text):
         """
         Removes tags from a tagged text (one sentence per line)
+
+        @param text: text consisiting one sentence per line of format "word1/TAG1 word2/TAG2"
+
+        @return text without tags of format "word1 word2"
         """
 
         sentences = []
@@ -459,7 +496,11 @@ class Tagger:
 
     def __rnn_reshape(self, flat_batches):
         """
-        reshapes flat batch list of shape [batch_size, 1] to shape [batch_size, n_timesteps, 1]
+        reshapes flat batch list to a shape with the additional dimension of time
+
+        @param flat_batches: batches of shape [batch_size, 1]
+
+        @return batches of shape shape [batch_size, n_timesteps, 1]
         """
 
         batches = []
@@ -479,17 +520,18 @@ class Tagger:
 if __name__ == "__main__":
     # get script arguments
     parser = argparse.ArgumentParser()
+    # actions
     parser.add_argument("--train", type=str, help="Invokes training of a language model on given corpus")
     parser.add_argument("--tag", type=str, help="Tags a given sentence with the pretrained language model")
     parser.add_argument("--evaluate", type=str, help="Evaluates pretrained language model with a given evaluation file")
     parser.add_argument("--reset", action='store_true', help="Removes all stored training and log data")
-
+    # model parameters
     parser.add_argument("-p", "--pastwords", type=int, help="Number of preceding words to take into account")
     parser.add_argument("-e", "--embeddingsize", type=int, help="Dimension of the word embeddings")
     parser.add_argument("-s", "--hiddensize", type=int, help=" Dimension of the hidden layer")
     parser.add_argument("-n", "--nepochs", type=int, help="Number of training epochs")
     parser.add_argument("-t", "--timesteps", type=int, help="Number of past trained words")
-
+    # additional meta parameters
     parser.add_argument("-f", "--force", action='store_true', help="Force operation without confirmation")
     parser.add_argument("-q", "--quiet", action='store_true', help="No output messages")
     parser.add_argument("-i", "--inline", action='store_true', help="Only one line output")

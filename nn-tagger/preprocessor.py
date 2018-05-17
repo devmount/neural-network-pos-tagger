@@ -91,7 +91,7 @@ class Corpus:
         parser = argparse.ArgumentParser()
         parser.add_argument("--source", type=str, help="Path to a training_set file from hmm")
         parser.add_argument("--target", type=str, help="File to store the created corpus in")
-        parser.add_argument("--shuffle", type=str, help="Shuffles all lines in given corpus file")
+        parser.add_argument("-s", "--shuffle", type=str, help="Shuffles all lines in given corpus file")
 
         return parser.parse_args()
 

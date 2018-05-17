@@ -72,9 +72,11 @@ class RNN:
         """
         Initializes the Recurrent Neural Network model
 
+        @param vocab_size: Dimension of the vocabulary (number of distinct words)
+        @param n_timesteps: Number of previous training steps to include
+        @param embedding_size: Dimension of the word embeddings
         @param h_size: Dimension of the hidden layer
         @param n_pos_tags: Number of existing POS tags
-        @param n_timesteps: Number of previous training steps to include
         """
 
         # initialize input word vectors of shape [batch_size, n_timesteps, word_id]
@@ -95,17 +97,17 @@ class RNN:
         cell = tf.nn.rnn_cell.LSTMCell(h_size, activation=tf.nn.relu)
         # calculate outputs with shape [batch_size*n_timesteps, h_size]
         outputs, states = tf.nn.dynamic_rnn(cell, self.feature_vector, dtype=tf.float32)
-        # compute the logits for the output layer with shape [batch_size, n_timesteps*n_pos_tags]
+        # compute the logits for the output layer
         self.logits = tf.matmul(tf.reshape(outputs, [-1, h_size]), self.w)
+        # reshape logits to make the first dimension fit the batch size/labels: [batch_size, n_timesteps*n_pos_tags]
         logits = tf.reshape(self.logits, [-1, n_timesteps*n_pos_tags])
-        labels = tf.reshape(self.input_y, [-1])
         # compute the loss
-        self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=labels))
+        self.loss = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=self.input_y))
 
         # reduce the logits output with the largest value to the output layer size = predictions 
         self.predictions = tf.argmax(logits, axis=1, name="predictions")
         # get the correct predictions by comparing to the given labels
-        correct_prediction = tf.equal(self.predictions, labels)
+        correct_prediction = tf.equal(self.predictions, self.input_y)
         # compute the overall accuracy
         self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
 
