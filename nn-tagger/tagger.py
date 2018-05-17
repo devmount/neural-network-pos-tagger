@@ -554,10 +554,10 @@ if __name__ == "__main__":
     # invoke tagging of a given sentence
     if args.tag is not None:
         # create tagger instance
-        if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
-            t = Tagger('FNN', n_past_words=args.pastwords, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
-        elif args.timesteps is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
-            t = Tagger('RNN', n_timesteps=args.timesteps, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
+        if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None:
+            t = Tagger('FNN', n_past_words=args.pastwords, embedding_size=args.embeddingsize, h_size=args.hiddensize)
+        elif args.timesteps is not None and args.embeddingsize is not None and args.hiddensize is not None:
+            t = Tagger('RNN', n_timesteps=args.timesteps, embedding_size=args.embeddingsize, h_size=args.hiddensize)
         else:
             t = Tagger()
         print('The tagged sentence is:')
@@ -565,10 +565,10 @@ if __name__ == "__main__":
     # invoke evaluation
     if args.evaluate is not None:
         # create tagger instance
-        if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
-            t = Tagger('FNN', n_past_words=args.pastwords, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
-        elif args.timesteps is not None and args.embeddingsize is not None and args.hiddensize is not None and args.nepochs is not None:
-            t = Tagger('RNN', n_timesteps=args.timesteps, embedding_size=args.embeddingsize, h_size=args.hiddensize, n_epochs=args.nepochs)
+        if args.pastwords is not None and args.embeddingsize is not None and args.hiddensize is not None:
+            t = Tagger('FNN', n_past_words=args.pastwords, embedding_size=args.embeddingsize, h_size=args.hiddensize)
+        elif args.timesteps is not None and args.embeddingsize is not None and args.hiddensize is not None:
+            t = Tagger('RNN', n_timesteps=args.timesteps, embedding_size=args.embeddingsize, h_size=args.hiddensize)
         else:
             t = Tagger()
         if args.inline:

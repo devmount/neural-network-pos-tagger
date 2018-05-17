@@ -118,22 +118,32 @@ To train the Tagger call the `tagger.py` script with the `--train` flag. Accordi
     Step 200: loss 0.2, accuracy 98% - saved model checkpoint to 'saved/model-200'
     Step 300: loss 0.0, accuracy 100% - saved model checkpoint to 'saved/model-300'
 
-You can also call the script with inline configuration. To train a model using the FNN architecture, use the flags `-p`, `-e`, `-s`, and `-n`. It is required to use all 4 flags, otherwise the static configuration from the `settings.py` will be used. An example call would be:
+You can also call the script with inline configuration. To train a model using the FNN architecture, use the flags `-p`, `-e`, `-s`, and `-n`. It is required to use exactly these 4 flags, otherwise the static configuration from the `settings.py` will be used. An example call would be:
 
     python tagger.py --train data/test.corpus -p 1 -e 250 -s 350 -n 5
 
-To train a model using the RNN architecture, use the flags `-t`, `-s`, and `-n`. It is required to use all r flags, otherwise the static configuration from the `settings.py` will be used. An example call would be:
+To train a model using the RNN architecture, use the flags `-t`, `-e`, `-s`, and `-n`. It is required to use exaclty these 4 flags, otherwise the static configuration from the `settings.py` will be used. An example call would be:
 
-    python tagger.py --train data/test.corpus -t 8 -s 50 -n 5
+    python tagger.py --train data/test.corpus -t 8 -e 100 -s 100 -n 5
 
 ### Tagging
 
-To tag a sentence with a pretrained model call the `tagger.py` script with the `--tag` parameter with a sentence to be tagged. Now a tag is attached to every word.
+To tag a sentence with a pretrained model call the `tagger.py` script with the `--tag` parameter followed by sentence to be tagged. Now a tag is attached to every word.
 
     $ python tagger.py --tag "Show all modules of Bachelor Informatics"
     The tagged sentence is:
      Show     all       modules     of       Bachelor         Informatics
     R_LIST   R_LIST   M_MTSModule    X    C_Program:degree   C_Program:name
+
+Make sure that the `settings.py` is configured with the same values that were used to train the model, otherwise the tagger cannot load the pretrained model correctly.
+
+If you don't want to be bothered by the `settings.py`, you can also call the script with inline configuration. To tag a sentence using the FNN architecture, use the flags `-p`, `-e` and `-s`. It is required to use exactly these 3 flags, otherwise the static configuration from the `settings.py` will be used. An example call would be:
+
+    python tagger.py --tag "Show all modules of Bachelor Informatics" -p 1 -e 250 -s 350
+
+To tag a sentence using the RNN architecture, use the flags `-t`, `-e` and `-s`. It is required to use exactly these 3 flags, otherwise the static configuration from the `settings.py` will be used. An example call would be:
+
+    python tagger.py --tag "Show all modules of Bachelor Informatics" -t 8 -e 100 -s 100
 
 ### Evaluation
 
@@ -149,6 +159,7 @@ To evaluate a pretrained model on an external test set call the `tagger.py` scri
       20 / 29   0.690   sentences correct
     207 / 208   0.995   words recognized
     197 / 208   0.947   tags correct
+                0.966   kappa score
 
     # ERRORS:
 
@@ -162,6 +173,19 @@ To evaluate a pretrained model on an external test set call the `tagger.py` scri
 
  Make sure that the `settings.py` is configured with the same values that were used to train the model, otherwise the evaluation cannot load the pretrained model.
 
+ If you don't want to be bothered by the `settings.py`, you can also call the script with inline configuration. To tag a sentence using the FNN architecture, use the flags `-p`, `-e` and `-s`. It is required to use exactly these 3 flags, otherwise the static configuration from the `settings.py` will be used. An example call would be:
+
+    python tagger.py --evaluate data/evaluation.txt -p 1 -e 250 -s 350
+
+To tag a sentence using the RNN architecture, use the flags `-t`, `-e` and `-s`. It is required to use exactly these 3 flags, otherwise the static configuration from the `settings.py` will be used. An example call would be:
+
+    python tagger.py --evaluate data/evaluation.txt -t 8 -e 100 -s 100
+
+If you don't need the list of errors in the evaluation result, you can also print it in one line, adding the `-i` flag, i.e.:
+
+    $ python tagger.py --evaluate data/evaluation.txt -p 1 -e 250 -s 350 -i
+    data/evaluation_known.txt: 197/208 (94.7%) tags correct, 0.966 kappa score
+
 ### Reset
 
 To reset the tagger and delete all previously created files call the `tagger.py` script with the `--reset` flag and confirm with 'Yes' (or <kbd>Enter</kbd>):
@@ -169,6 +193,14 @@ To reset the tagger and delete all previously created files call the `tagger.py`
     $ python tagger.py --reset
     Really delete all training data and log files? [Yes/no]
     Reset was executed. All files successfully deleted.
+
+If you don't want to be bothered by a security question, you can use the `-f` flag to force a direct deletion:
+
+    python tagger.py --reset -f
+
+If you even don't want to be bothered by any output messages, you can use the `-q` flag to force a quiet deletion:
+
+    python tagger.py --reset -q
 
 ## Links
 
