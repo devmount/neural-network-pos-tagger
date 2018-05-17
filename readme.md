@@ -19,7 +19,9 @@ If the installation was successful, change to the directory of the Tagger and ev
 
     cd fnn-tagger/
 
-## Usage
+## Script Usage
+
+The single python scripts of this toolkit can be called directly, documented in the following.
 
 ### Configuration
 
@@ -166,6 +168,45 @@ If you don't want to be bothered by a security question, you can use the `-f` fl
 If you even don't want to be bothered by any output messages, you can use the `-q` flag to force a quiet deletion:
 
     python tagger.py --reset -q
+
+## API Usage
+
+This toolkit is designed to be used in other applictions. The API is documented in the following.
+
+### Configuration
+
+Import the tagging script properly according to your directory structure, i.e.:
+
+    import tagger as nn
+
+To instantiate the tagger, just call the `Tagger()` class. Without any parameters, the static configuration from the `settings.py` will be used:
+
+    t = nn.Tagger()
+
+If you prefer inline configuration, pass the corresponding parameters according to the neural network architecture (the FNN needs `n_past_words`, the RNN needs `n_timesteps`). See these two examples, one for each architecture:
+
+    t = nn.Tagger('FNN', n_past_words=1, embedding_size=250, h_size=350, n_epochs=5)
+    t = nn.Tagger('RNN', n_timesteps=8, embedding_size=100, h_size=100, n_epochs=5)
+
+### Training
+
+To train the initialized tagger, just call the `train()` method with the path to the corpus file, i.e.:
+
+    t.train('data/test.corpus')
+
+The trained model will be stored in the `saved/` directory.
+
+### Tagging
+
+A sentence can by tagged with a pretrained model by calling the `tag()` method. You have additional parameters to print the tagging output to the console or mute console messages concering model loading completely.
+
+    tagged_sentence = t.tag('Show all modules of Bachelor Informatics', pretty_print=True, silent=False)
+
+### Evaluation
+
+To evaluate a pretrained model, calle the `evaluate()` method. You have an additional parameter to print the main evaluation results in one single line.
+
+    t.evaluate('data/evaluation.txt', print_inline=False)
 
 ## Resources
 
