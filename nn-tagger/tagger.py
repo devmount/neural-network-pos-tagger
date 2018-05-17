@@ -114,7 +114,7 @@ class Tagger:
                 print(" - saved model checkpoint to '%s'" % path)
 
 
-    def tag(self, sentence, pretty_print=False, silent=False):
+    def tag(self, sentence, format_list=False, pretty_print=False, silent=False):
         """
         Tags a given sentence with the help of a previously trained model
 
@@ -123,6 +123,10 @@ class Tagger:
         @param silent: no print output messages
         @return a string of space separated word-tag tuples, like "word1/TAG word2/TAG word3/TAG"
         """
+
+        # check input format and transform to a sentence space separated words
+        if format_list:
+            sentence = ' '.join(sentence)
 
         self.data = TextLoader(self.__replace(sentence.lower()), self.vocab_size, self.n_past_words, self.vocab_path, None, silent)
 
@@ -166,12 +170,14 @@ class Tagger:
 
         # merge word and tag lists
         word_pos_tuples = zip(words, predicted_pos)
-        annotated_words = []
-        for tup in word_pos_tuples:
-            annotated_word = '%s/%s' % (tup[0], tup[1])
-            annotated_words.append(annotated_word)
-
-        return ' '.join(annotated_words)
+        if format_list:
+            return list(word_pos_tuples)
+        else:
+            annotated_words = []
+            for tup in word_pos_tuples:
+                annotated_word = '%s/%s' % (tup[0], tup[1])
+                annotated_words.append(annotated_word)
+            return ' '.join(annotated_words)
 
 
     def evaluate(self, evaluation_file, print_inline=False):
@@ -197,7 +203,7 @@ class Tagger:
         true_sentences = text.splitlines()
         n_sentences = len(true_sentences)
         # tag data based on trained language model
-        predicted_words = self.tag(self.__untag_text(text), False, True).split()
+        predicted_words = self.tag(self.__untag_text(text), pretty_print=False, silent=True).split()
         predicted_sentences = []
         sentence_lengths = [len(x.split()) for x in true_sentences]
         n_words = sum(sentence_lengths)
@@ -561,7 +567,7 @@ if __name__ == "__main__":
         else:
             t = Tagger()
         print('The tagged sentence is:')
-        t.tag(args.tag, True, True)
+        t.tag(args.tag, pretty_print=True, silent=True)
     # invoke evaluation
     if args.evaluate is not None:
         # create tagger instance

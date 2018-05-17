@@ -29,7 +29,7 @@ Static settings are located in the `settings.py` script. It contains the followi
 
 | option | description |
 | ------ | ----------- |
-| `ARCHITECTURE` | Neural network architecture that will be used. Possible values: 'FNN', 'RNN' |
+| `ARCHITECTURE` | Neural network architecture that will be used. Possible values: `FNN`, `RNN` |
 | `VOCAB_SIZE` | Setup dimension of the vocabulary |
 | `N_PAST_WORDS` | Number of preceding words to take into account for the POS tag training of the current word (FNN only) |
 | `N_TIMESTEPS` | Number of previous training steps to take into account (RNN only) |
@@ -198,9 +198,16 @@ The trained model will be stored in the `saved/` directory.
 
 ### Tagging
 
-A sentence can by tagged with a pretrained model by calling the `tag()` method. You have additional parameters to print the tagging output to the console or mute console messages concering model loading completely.
+A sentence can by tagged with a pretrained model by calling the `tag()` method. You have additional parameters to print the tagging output in tabular form to the console (`pretty_print`) or mute console messages concering model loading completely (`silent`).
 
-    tagged_sentence = t.tag('Show all modules of Bachelor Informatics', pretty_print=True, silent=False)
+    tagged_sentence = t.tag('Show all modules of Bachelor Informatics', format_list=False, pretty_print=True, silent=False)
+
+If you want to process lists instead of strings, you can use `format_list=True` as parameter. Now the input sentence has to be a list of words, an the output will be a list of word tag tuples:
+
+    $ sentence = ['Show', 'all', 'modules', 'of', 'Bachelor', 'Informatics']
+    $ tagged_sentence = t.tag(sentence, format_list=True, pretty_print=False, silent=True)
+    $ print list(tagged_sentece)
+    [('Show', 'R_LIST'), ('all', 'R_LIST'), ('modules', 'M_MTSModule'), ('of', 'X'), ('Bachelor', 'C_Program:degree'), ('Informatics', 'C_Program:name')]
 
 ### Evaluation
 

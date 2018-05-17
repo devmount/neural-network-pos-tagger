@@ -5,7 +5,7 @@ Settings for the Tagger
 import os
 
 # ingore tensorflow compilation warnings
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 # architecture: FNN|RNN
 ARCHITECTURE = 'FNN'
