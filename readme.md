@@ -4,7 +4,7 @@
 
 This toolkit was implemented during my master's thesis, that aimed to improve the natural language understanding of an artificial conversational agent. This agent utilized a Hidden Markov Model to calculate Part-of-Speech tags for input words. In order to achieve better results, two different classification architectures are implemented and evaluated: a Feed-forward Neural Network and a Recurrent Neural Network.
 
-This repository contains the toolkit to train and evaluate language models for POS tagging and tag input sentences according to a trained model. It provides the possibility to use the python scripts directly as well as an API.
+This repository contains the toolkit to train and evaluate language models for POS tagging and tag input sentences according to a trained model. It provides the possibility to use the python scripts directly as well as an API and is licensed under GPL-3.0.
 
 ## Setup
 
