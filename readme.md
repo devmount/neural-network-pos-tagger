@@ -2,7 +2,7 @@
 
 > Part-of-Speech Tagging with Neural Networks for a conversational agent
 
-This toolkit was implemented during my master's thesis, that aimed to improve the natural language understanding of an artificial conversational agent. This agent uses a Hidden Markov Model to calculate Part-of-Speech tags for input words. In order to achieve better results especially for uncommon word combinations and sentence structures, two new classification models are implemented and evaluated: a Feed-forward Neural Network and a Recurrent Neural Network.
+This toolkit was implemented during my master's thesis, that aimed to improve the natural language understanding of an artificial conversational agent. This agent uses a Hidden Markov Model to calculate Part-of-Speech tags for input words. In order to achieve better results especially for uncommon word combinations and sentence structures, two different classification architectures are implemented and evaluated: a Feed-forward Neural Network and a Recurrent Neural Network.
 
 ## Setup
 
@@ -11,7 +11,7 @@ Check if Python version >= 3.5 is installed:
     $ python --version
     Python 3.6.3
 
-Install dependencies:
+Install dependencies (consider using a virtual environment):
 
     pip install tensorflow texttable sklearn scipy
 
@@ -198,7 +198,7 @@ The trained model will be stored in the `saved/` directory.
 
 ### Tagging
 
-A sentence can by tagged with a pretrained model by calling the `tag()` method. You have additional parameters to print the tagging output in tabular form to the console (`pretty_print`) or mute console messages concering model loading completely (`silent`).
+A sentence can by tagged with a pretrained model by calling the `tag()` method. You have additional parameters to print the tagging output in tabular form to the console (`pretty_print`) or mute console messages concerning model loading completely (`silent`).
 
     tagged_sentence = t.tag('Show all modules of Bachelor Informatics', format_list=False, pretty_print=True, silent=False)
 
@@ -222,7 +222,7 @@ To evaluate a pretrained model, calle the `evaluate()` method. You have an addit
 - <https://www.tensorflow.org/get_started/mnist/pros>
 - <https://www.tensorflow.org/versions/master/api_docs/python/tf/nn>
 
-### Example Tagger
+### POS Tagger
 
 - <https://github.com/mrahtz/tensorflow-pos-tagger>
 - <https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/3_NeuralNetworks/recurrent_network.ipynb>
