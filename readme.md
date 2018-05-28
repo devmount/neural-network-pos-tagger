@@ -2,7 +2,9 @@
 
 > Part-of-Speech Tagging with Neural Networks for a conversational agent
 
-This toolkit was implemented during my master's thesis, that aimed to improve the natural language understanding of an artificial conversational agent. This agent uses a Hidden Markov Model to calculate Part-of-Speech tags for input words. In order to achieve better results especially for uncommon word combinations and sentence structures, two different classification architectures are implemented and evaluated: a Feed-forward Neural Network and a Recurrent Neural Network.
+This toolkit was implemented during my master's thesis, that aimed to improve the natural language understanding of an artificial conversational agent. This agent utilized a Hidden Markov Model to calculate Part-of-Speech tags for input words. In order to achieve better results, two different classification architectures are implemented and evaluated: a Feed-forward Neural Network and a Recurrent Neural Network.
+
+This repository contains the toolkit to train and evaluate language models for POS tagging and tag input sentences according to a trained model. It provides the possibility to use the python scripts directly as well as an API.
 
 ## Setup
 
