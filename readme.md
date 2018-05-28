@@ -1,4 +1,4 @@
-# Neural Network POS Tagging
+# Neural Network POS Tagger
 
 > Part-of-Speech Tagging with Neural Networks for a conversational agent
 
