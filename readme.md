@@ -228,3 +228,13 @@ To evaluate a pretrained model, calle the `evaluate()` method. You have an addit
 
 - <https://github.com/mrahtz/tensorflow-pos-tagger>
 - <https://github.com/aymericdamien/TensorFlow-Examples/blob/master/notebooks/3_NeuralNetworks/recurrent_network.ipynb>
+
+---
+
+If you like and use this POS tagger and want to give some love back, feel free to...
+
+<p align="center">
+  <a href="https://www.buymeacoffee.com/devmount" target="_blank">
+  <img alt="Buy me a coffee" src="https://user-images.githubusercontent.com/5441654/44213163-60a91100-a16d-11e8-9d5d-7d862cae7b7c.png">
+  </a>
+</p>
