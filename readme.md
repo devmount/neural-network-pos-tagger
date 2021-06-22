@@ -15,7 +15,7 @@ Check if Python version >= 3.5 is installed:
 
 Install dependencies (consider using a virtual environment):
 
-    pip install tensorflow texttable sklearn scipy
+    pip install -r requirements.txt
 
 If the installation was successful, change to the directory of the Tagger and everything should be ready to run properly:
 
